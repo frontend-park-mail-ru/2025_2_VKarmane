@@ -1,0 +1,41 @@
+{
+  "name": "2025_2_vkarmane",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm run compile:templates",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:templates": "handlebars public/templates/components/ public/templates/pages/ -f public/templates/templates.js -e hbs -k"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2025_2_VKarmane.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2025_2_VKarmane/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2025_2_VKarmane#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "handlebars": "^4.7.8",
+    "morgan": "^1.10.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@eslint/css": "^0.11.1",
+    "@eslint/js": "^9.36.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "prettier": "3.6.2"
+  }
+}

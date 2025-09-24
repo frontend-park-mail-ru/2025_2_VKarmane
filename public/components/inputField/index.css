@@ -1,0 +1,25 @@
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-field {
+  width: 100%;
+  font-family: "Montserrat", sans-serif;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 17px;
+  font-size: 1rem;
+  background: white;
+  transition: border-color 0.2s;
+  margin-bottom: 1.25rem;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #194bfa;
+}
+
+.input-field::placeholder {
+  color: #9ca3af;
+}

@@ -1,0 +1,10 @@
+@import "./pages/login/login.css";
+@import "./pages/signup/Signup.css";
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../public/static/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}

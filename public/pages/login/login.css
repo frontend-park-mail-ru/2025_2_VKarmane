@@ -1,0 +1,264 @@
+@import "../../components/startbutton/index.css";
+@import "../../components/inputField/index.css";
+@import "../../components/absenceText/index.css";
+@import "../../components/category/index.css";
+@import "../../components/expenseCard/index.css";
+
+div {
+  font-family: "Montserrat", sans-serif;
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+.login-section {
+  flex: 1.2;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-form {
+  width: 506px;
+  height: 470px;
+  margin: auto;
+  max-width: 400px;
+}
+
+.login-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.forgot-password {
+  text-align: center;
+  margin: 1rem 0 2rem 0;
+}
+
+.forgot-password a {
+  color: #194bfa;
+  font-family: "Montserrat", sans-serif;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.register-link a {
+  color: #194bfa;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.preview-section {
+  flex: 1;
+  justify-content: center;
+  justify-items: center;
+  background: linear-gradient(135deg, #e16040 0%, #eb5b1d 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.planero-logo {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  z-index: 2;
+}
+
+.phone-mockup {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  padding: 1.5rem;
+  margin: 10px;
+  /* height: 530px; */
+  display: flex;
+  gap: 3rem;
+  /* justify-content: space-between; */
+  justify-self: center;
+}
+
+.mockup-header {
+  height: 15%;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.mockup-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.statistics-section {
+  height: 100%;
+}
+
+.card-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-more {
+  color: #194bfa;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.expense-chart {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 1rem auto;
+}
+
+.chart-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #8bff91 0deg 90deg,
+    #ff80ea 90deg 180deg,
+    #ffda8f 180deg 270deg,
+    #94f1ff 270deg 360deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.chart-center {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+.category-tags {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.expense-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.expense-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  float: right;
+  margin-top: -0.5rem;
+}
+
+.avatar-purple {
+  background: #8a2be2;
+}
+.avatar-pink {
+  background: #e76c91;
+}
+
+.bottom-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  z-index: 2;
+}
+
+.decorative-dots {
+  position: absolute;
+  width: 60px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.decorative-dots::before,
+.decorative-dots::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  top: 0;
+}
+
+.decorative-dots::before {
+  left: 0;
+}
+.decorative-dots::after {
+  right: 0;
+}
+
+.phone-mockup-container-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 450px;
+  height: 360px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+}
+.phone-mockup-container-inner {
+  background: rgba(255, 255, 255, 0.5);
+  width: 420px;
+  height: auto;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vectors-bottom {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vector-row {
+  align-items: center;
+  align-content: center;
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+}
