@@ -1,0 +1,49 @@
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.service-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 12px;
+}
+
+.service-icon.beeline {
+  background: #ffcc00;
+  color: #000;
+}
+.service-icon.spotify {
+  background: #1db954;
+}
+.service-icon.tg_oil {
+  background: #0088cc;
+}
+
+.service-info {
+  flex: 1;
+}
+
+.service-name {
+  color: #171d29;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.service-date {
+  color: #8d8d8d;
+  font-size: 12px;
+}
+
+.service-amount {
+  color: #171d29;
+  font-size: 14px;
+  font-weight: 600;
+}
