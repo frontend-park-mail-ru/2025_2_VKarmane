@@ -19,7 +19,7 @@
           };
 
       return (
-        '<div class="absence-text">\r\n  ' +
+        '<div class="absence-text">\n  ' +
         alias4(
           ((helper =
             (helper =
@@ -82,7 +82,7 @@
               })
             : helper),
         ) +
-        "</a>\r\n</div>"
+        "</a>\n</div>"
       );
     },
     useData: true,
@@ -105,7 +105,7 @@
           };
 
       return (
-        '<span\r\n  class="category-tag"\r\n  style="background: ' +
+        '<span\n  class="category-tag"\n  style="background: ' +
         alias4(
           ((helper =
             (helper =
@@ -126,7 +126,7 @@
               })
             : helper),
         ) +
-        ';"\r\n>' +
+        ';"\n>' +
         alias4(
           ((helper =
             (helper =
@@ -172,7 +172,7 @@
           };
 
       return (
-        '<div class="expense-card">\r\n  <div class="expense-amount">' +
+        '<div class="expense-card">\n  <div class="expense-amount">' +
         alias4(
           ((helper =
             (helper =
@@ -213,7 +213,7 @@
               })
             : helper),
         ) +
-        '</div>\r\n  <div class="expense-label">' +
+        '</div>\n  <div class="expense-label">' +
         alias4(
           ((helper =
             (helper =
@@ -234,7 +234,7 @@
               })
             : helper),
         ) +
-        "</div>\r\n  " +
+        "</div>\n  " +
         ((stack1 =
           ((helper =
             (helper =
@@ -256,7 +256,7 @@
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n</div>"
+        "\n</div>"
       );
     },
     useData: true,
@@ -279,7 +279,7 @@
           };
 
       return (
-        '<div class="input-group">\r\n  <input\r\n    type="' +
+        '<div class="input-group">\n  <input\n    type="' +
         alias4(
           ((helper =
             (helper =
@@ -300,7 +300,7 @@
               })
             : helper),
         ) +
-        '"\r\n    name="' +
+        '"\n    name="' +
         alias4(
           ((helper =
             (helper =
@@ -321,7 +321,7 @@
               })
             : helper),
         ) +
-        '"\r\n    class="input-field"\r\n    placeholder="' +
+        '"\n    class="input-field"\n    placeholder="' +
         alias4(
           ((helper =
             (helper =
@@ -342,7 +342,7 @@
               })
             : helper),
         ) +
-        '"\r\n  />\r\n</div>'
+        '"\n  />\n</div>'
       );
     },
     useData: true,
@@ -365,7 +365,7 @@
           };
 
       return (
-        '<div class="service-item">\r\n  <div class="service-icon ' +
+        '<div class="service-item">\n  <div class="service-icon ' +
         alias4(
           ((helper =
             (helper =
@@ -407,7 +407,7 @@
               })
             : helper),
         ) +
-        '</div>\r\n  <div class="service-info">\r\n    <div class="service-name">' +
+        '</div>\n  <div class="service-info">\n    <div class="service-name">' +
         alias4(
           ((helper =
             (helper =
@@ -428,7 +428,7 @@
               })
             : helper),
         ) +
-        '</div>\r\n    <div class="service-date">' +
+        '</div>\n    <div class="service-date">' +
         alias4(
           ((helper =
             (helper =
@@ -450,7 +450,7 @@
               })
             : helper),
         ) +
-        '</div>\r\n  </div>\r\n  <div class="service-amount">-' +
+        '</div>\n  </div>\n  <div class="service-amount">-' +
         alias4(
           ((helper =
             (helper =
@@ -490,7 +490,7 @@
               })
             : helper),
         ) +
-        "</div>\r\n</div>"
+        "</div>\n</div>"
       );
     },
     useData: true,
@@ -632,7 +632,7 @@
       return (
         "                  " +
         ((stack1 = container.lambda(depth0, depth0)) != null ? stack1 : "") +
-        "\r\n"
+        "\n"
       );
     },
     compiler: [8, ">= 4.3.0"],
@@ -652,7 +652,7 @@
           };
 
       return (
-        '<div class="container">\r\n  <div class="login-section">\r\n    <form id="login">\r\n\r\n      <div class="login-form">\r\n        <h1 class="login-title">' +
+        '<div class="container">\n  <div class="login-section">\n    <form id="login">\n\n      <div class="login-form">\n        <h1 class="login-title">' +
         container.escapeExpression(
           ((helper =
             (helper =
@@ -673,7 +673,7 @@
               })
             : helper),
         ) +
-        "</h1>\r\n\r\n        " +
+        "</h1>\n\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -696,7 +696,7 @@
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n\r\n        " +
+        "\n\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -719,7 +719,7 @@
             : helper)) != null
           ? stack1
           : "") +
-        '\r\n\r\n        <div class="forgot-password">\r\n          <a href="#">Забыли пароль?</a>\r\n        </div>\r\n        <div>\r\n          ' +
+        '\n\n        <div class="forgot-password">\n          <a href="#">Забыли пароль?</a>\n        </div>\n        <div>\n          ' +
         ((stack1 =
           ((helper =
             (helper =
@@ -742,7 +742,7 @@
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n        </div>\r\n\r\n        " +
+        "\n        </div>\n\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -765,7 +765,7 @@
             : helper)) != null
           ? stack1
           : "") +
-        '\r\n      </div>\r\n    </form>\r\n\r\n  </div>\r\n\r\n  <div class="preview-section">\r\n    <div class="planero-logo">PLANERO</div>\r\n    <div>\r\n      <div class="phone-mockup-container-outer">\r\n        <div class="phone-mockup-container-inner">\r\n          <div class="phone-mockup">\r\n            <div class="statistics-section">\r\n              <div class="mockup-header">\r\n                <div class="mockup-title">Расходы за июль</div>\r\n\r\n              </div>\r\n              <div class="expense-chart">\r\n                <div class="chart-circle">\r\n                  <div class="chart-center">₽102 907</div>\r\n                </div>\r\n              </div>\r\n              <div class="category-tags">\r\n' +
+        '\n      </div>\n    </form>\n\n  </div>\n\n  <div class="preview-section">\n    <div class="planero-logo">PLANERO</div>\n    <div>\n      <div class="phone-mockup-container-outer">\n        <div class="phone-mockup-container-inner">\n          <div class="phone-mockup">\n            <div class="statistics-section">\n              <div class="mockup-header">\n                <div class="mockup-title">Расходы за июль</div>\n\n              </div>\n              <div class="expense-chart">\n                <div class="chart-circle">\n                  <div class="chart-center">₽102 907</div>\n                </div>\n              </div>\n              <div class="category-tags">\n' +
         ((stack1 = lookupProperty(helpers, "each").call(
           alias1,
           depth0 != null ? lookupProperty(depth0, "categories") : depth0,
@@ -783,7 +783,7 @@
         )) != null
           ? stack1
           : "") +
-        '              </div>\r\n\r\n            </div>\r\n            <div\r\n              style="display: flex; flex-direction: column;"\r\n              class="card-section"\r\n            >\r\n              <div style="display: flex; justify-content: flex-end;">\r\n                <a href="#" class="show-more">показать больше</a>\r\n              </div>\r\n\r\n              <div class="expense-cards">\r\n' +
+        '              </div>\n\n            </div>\n            <div\n              style="display: flex; flex-direction: column;"\n              class="card-section"\n            >\n              <div style="display: flex; justify-content: flex-end;">\n                <a href="#" class="show-more">показать больше</a>\n              </div>\n\n              <div class="expense-cards">\n' +
         ((stack1 = lookupProperty(helpers, "each").call(
           alias1,
           depth0 != null ? lookupProperty(depth0, "expenseCards") : depth0,
@@ -801,7 +801,7 @@
         )) != null
           ? stack1
           : "") +
-        '              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class="vectors-bottom">\r\n        <div class="vector-row">\r\n          <img src="../../static/imgs/Vector.png" alt="" />\r\n          <div class="bottom-text">Планируй вместе с нами!</div>\r\n          <img src="../../static/imgs/Vector.png" alt="" />\r\n        </div>\r\n        <div class="vector-row">\r\n          <img src="../../static/imgs/Vector.png" alt="" />\r\n          <img src="../../static/imgs/Vector.png" alt="" />\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>'
+        '              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div class="vectors-bottom">\n        <div class="vector-row">\n          <img src="../../static/imgs/Vector.png" alt="" />\n          <div class="bottom-text">Планируй вместе с нами!</div>\n          <img src="../../static/imgs/Vector.png" alt="" />\n        </div>\n        <div class="vector-row">\n          <img src="../../static/imgs/Vector.png" alt="" />\n          <img src="../../static/imgs/Vector.png" alt="" />\n        </div>\n\n      </div>\n    </div>\n\n  </div>\n</div>'
       );
     },
     useData: true,
@@ -811,9 +811,9 @@
       var stack1;
 
       return (
-        "                        " +
+        "          " +
         ((stack1 = container.lambda(depth0, depth0)) != null ? stack1 : "") +
-        "\r\n"
+        "\n"
       );
     },
     compiler: [8, ">= 4.3.0"],
@@ -833,7 +833,7 @@
           };
 
       return (
-        '<div class="container">\r\n\r\n  <div class="preview-section">\r\n            <div class="decorative-leaves">\r\n                <div class="leaf"></div>\r\n                <div class="leaf"></div>\r\n                <div class="leaf"></div>\r\n            </div>\r\n\r\n            <div class="dashboard-mockup">\r\n                <div class="income-section">\r\n                    <div class="income-item">\r\n                        <div class="income-label">Доход:</div>\r\n                        <div class="income-amount">₽125,677</div>\r\n                    </div>\r\n                    <div class="income-item">\r\n                        <div class="income-label">Расход:</div>\r\n                        <div class="income-amount">₽73,566</div>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class="chart-container">\r\n                    <div class="chart-bars">\r\n                        <div class="chart-bar" style="height: 40%"></div>\r\n                        <div class="chart-bar" style="height: 60%"></div>\r\n                        <div class="chart-bar" style="height: 80%"></div>\r\n                        <div class="chart-bar" style="height: 90%"></div>\r\n                            <div class="chart-bar active" style="height: 100%"></div>\r\n                        \r\n                        <div class="chart-bar" style="height: 70%"></div>\r\n                        <div class="chart-bar" style="height: 85%"></div>\r\n                        <div class="chart-bar" style="height: 95%"></div>\r\n                        <div class="chart-bar" style="height: 75%"></div>\r\n                        <div class="chart-bar" style="height: 65%"></div>\r\n                        <div class="chart-bar" style="height: 45%"></div>\r\n                        <div class="chart-bar" style="height: 55%"></div>\r\n                    </div>\r\n                    <div class="chart-labels">\r\n                        <span>9 сентября</span>\r\n                        <span>10 сентября</span>\r\n                        <span>11 сентября</span>\r\n                        <span>12 сентября</span>\r\n                        <span>13 сентября</span>\r\n                    </div>\r\n                    <div style="position: absolute; top: 20px; right: 20px; background: #333; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">\r\n                        ₽10,573\r\n                    </div>\r\n                </div>\r\n\r\n                <div class="services-list">\r\n' +
+        '<div class="container">\n\n  <div class="preview-section">\n    <div class="decorative-leaves">\n      <div class="leaf"></div>\n      <div class="leaf"></div>\n      <div class="leaf"></div>\n    </div>\n\n    <div class="dashboard-mockup">\n      <div class="income-section">\n        <div class="income-item">\n          <div class="income-label">Доход:</div>\n          <div class="income-amount">₽125,677</div>\n        </div>\n        <div class="income-item">\n          <div class="income-label">Расход:</div>\n          <div class="income-amount">₽73,566</div>\n        </div>\n      </div>\n\n      <div class="chart-container">\n        <div class="chart-bars">\n          <div class="chart-bar" style="height: 40%"></div>\n          <div class="chart-bar" style="height: 60%"></div>\n          <div class="chart-bar" style="height: 80%"></div>\n          <div class="chart-bar" style="height: 90%"></div>\n          <div class="chart-bar active" style="height: 100%"></div>\n\n          <div class="chart-bar" style="height: 70%"></div>\n          <div class="chart-bar" style="height: 85%"></div>\n          <div class="chart-bar" style="height: 95%"></div>\n          <div class="chart-bar" style="height: 75%"></div>\n          <div class="chart-bar" style="height: 65%"></div>\n          <div class="chart-bar" style="height: 45%"></div>\n          <div class="chart-bar" style="height: 55%"></div>\n        </div>\n        <div class="chart-labels">\n          <span>9 сентября</span>\n          <span>10 сентября</span>\n          <span>11 сентября</span>\n          <span>12 сентября</span>\n          <span>13 сентября</span>\n        </div>\n        <div\n          style="position: absolute; top: 20px; right: 20px; background: #333; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;"\n        >\n          ₽10,573\n        </div>\n      </div>\n\n      <div class="services-list">\n' +
         ((stack1 = lookupProperty(helpers, "each").call(
           alias1,
           depth0 != null ? lookupProperty(depth0, "items") : depth0,
@@ -844,14 +844,14 @@
             inverse: container.noop,
             data: data,
             loc: {
-              start: { line: 51, column: 20 },
-              end: { line: 53, column: 33 },
+              start: { line: 53, column: 8 },
+              end: { line: 55, column: 17 },
             },
           },
         )) != null
           ? stack1
           : "") +
-        '                </div>\r\n            </div>\r\n\r\n            <div class="content-section">\r\n                <div class="bottom-text">Планируй, Управляй и Приумножай</div>\r\n                <p class="description">\r\n                    Наш сервис поможет тебе правильно распределить твои финансы, \r\n                    чтобы ты мог копить не на что-то, а на что-то ради чего-то: \r\n                    на мечту, свободу и уверенность в завтрашнем дне.\r\n                </p>\r\n                <div class="pagination">\r\n                    <div class="pagination-dot"></div>\r\n                    <div class="pagination-dot active"></div>\r\n                    <div class="pagination-dot"></div>\r\n                </div>\r\n                <div class="planero-logo">PLANERO</div>\r\n            </div>\r\n\r\n            <div class="decorative-patterns">\r\n                <div class="pattern" style="bottom: 0;"></div>\r\n                <div class="pattern" style="bottom: 20px; transform: scaleX(-1);"></div>\r\n                <div class="pattern" style="bottom: 40px;"></div>\r\n            </div>\r\n    </div>\r\n\r\n\r\n    <div class="signup-section">\r\n    <form id="signup">\r\n\r\n      <div class="signup-form">\r\n        <h1 class="signup-title">' +
+        '      </div>\n    </div>\n\n    <div class="content-section">\n      <div class="bottom-text">Планируй, Управляй и Приумножай</div>\n      <p class="description">\n        Наш сервис поможет тебе правильно распределить твои финансы, чтобы ты\n        мог копить не на что-то, а на что-то ради чего-то: на мечту, свободу и\n        уверенность в завтрашнем дне.\n      </p>\n      <div class="pagination">\n        <div class="pagination-dot"></div>\n        <div class="pagination-dot active"></div>\n        <div class="pagination-dot"></div>\n      </div>\n      <div class="planero-logo">PLANERO</div>\n    </div>\n\n    <div class="decorative-patterns">\n      <div class="pattern" style="bottom: 0;"></div>\n      <div class="pattern" style="bottom: 20px; transform: scaleX(-1);"></div>\n      <div class="pattern" style="bottom: 40px;"></div>\n    </div>\n  </div>\n\n  <div class="signup-section">\n    <form id="signup">\n\n      <div class="signup-form">\n        <h1 class="signup-title">' +
         container.escapeExpression(
           ((helper =
             (helper =
@@ -866,13 +866,13 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 84, column: 33 },
-                  end: { line: 84, column: 42 },
+                  start: { line: 85, column: 33 },
+                  end: { line: 85, column: 42 },
                 },
               })
             : helper),
         ) +
-        "</h1>\r\n\r\n        " +
+        "</h1>\n\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -888,14 +888,14 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 86, column: 8 },
-                  end: { line: 86, column: 24 },
+                  start: { line: 87, column: 8 },
+                  end: { line: 87, column: 24 },
                 },
               })
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n        " +
+        "\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -911,14 +911,14 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 87, column: 8 },
-                  end: { line: 87, column: 24 },
+                  start: { line: 88, column: 8 },
+                  end: { line: 88, column: 24 },
                 },
               })
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n        " +
+        "\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -934,14 +934,14 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 88, column: 8 },
-                  end: { line: 88, column: 27 },
+                  start: { line: 89, column: 8 },
+                  end: { line: 89, column: 27 },
                 },
               })
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n\r\n        <div>\r\n          " +
+        "\n\n        <div>\n          " +
         ((stack1 =
           ((helper =
             (helper =
@@ -957,14 +957,14 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 91, column: 10 },
-                  end: { line: 91, column: 28 },
+                  start: { line: 92, column: 10 },
+                  end: { line: 92, column: 28 },
                 },
               })
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n        </div>\r\n\r\n        " +
+        "\n        </div>\n\n        " +
         ((stack1 =
           ((helper =
             (helper =
@@ -980,14 +980,14 @@
                 hash: {},
                 data: data,
                 loc: {
-                  start: { line: 94, column: 8 },
-                  end: { line: 94, column: 25 },
+                  start: { line: 95, column: 8 },
+                  end: { line: 95, column: 25 },
                 },
               })
             : helper)) != null
           ? stack1
           : "") +
-        "\r\n      </div>\r\n    </form>\r\n\r\n  </div>\r\n</div>"
+        "\n      </div>\n    </form>\n\n  </div>\n</div>"
       );
     },
     useData: true,

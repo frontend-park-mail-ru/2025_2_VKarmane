@@ -6,76 +6,91 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 
 export class LoginPage {
-  render(container) {
+  constructor() {
+    this.startButton = new StartButton();
+    this.inputField = new InputField();
+    this.absText = new absenceText();
+    this.category = new Category();
+    this.expCard = new ExpenseCard();
+  }
+
+  async render(container) {
     const template = Handlebars.templates["Login"];
-    const startButton = new StartButton();
-    const inputField = new InputField();
-    const absText = new absenceText();
-    const category = new Category();
-    const expCard = new ExpenseCard();
     const expCards = [
-      expCard.getSelf(
+      this.expCard.getSelf(
         "₽",
         50102,
         "Планируемый расход за период",
         "Сбалансировано",
       ),
-      expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
+      this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-      category.getSelf("green", "Банковские"),
-      category.getSelf("red", "Развлечения"),
-      category.getSelf("pink", "Покупки"),
-      category.getSelf("blue", "Подписки"),
+      this.category.getSelf("green", "Банковские"),
+      this.category.getSelf("red", "Развлечения"),
+      this.category.getSelf("pink", "Покупки"),
+      this.category.getSelf("blue", "Подписки"),
     ];
     const data = {
       title: "Войти",
-      loginInput: inputField.getSelf("login", "login", "логин"),
-      passwordInput: inputField.getSelf("password", "password", "пароль"),
-      absenceText: absText.getSelf(
+      loginInput: this.inputField.getSelf("login", "login", "логин"),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      absenceText: this.absText.getSelf(
         "Нет аккаунта?",
         config.signup.href,
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
-      loginButton: startButton.getSelf("login", "Войти"),
+      loginButton: this.startButton.getSelf("login", "Войти"),
       categories: categories,
     };
     container.innerHTML = template(data);
 
-    const form = container.querySelector("#login");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const login = form.querySelector('input[name="login"]').value;
-      const password = form.querySelector('input[name="password"]').value;
+    await this.setupEventListeners(container);
+  }
 
-      fetch("/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          login: login,
-          password: password,
-        }),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          if (response.status !== "ok") {
-            if (response.text === "wrong login or password") {
-              const errorLogin = form.querySelector('input[name="login"]');
-              const errorPassword = form.querySelector(
-                'input[name="password"]',
-              );
-              inputField.setError(
-                [errorLogin, errorPassword],
-                "Неверный логин или пароль",
-              );
-              return;
-            }
-            return;
-          }
-        });
+  async handleLoginRequest(form) {
+    const login = form.querySelector('input[name="login"]').value;
+    const password = form.querySelector('input[name="password"]').value;
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        login: login,
+        password: password,
+      }),
+    });
+
+    const result = await response.json();
+    this.checkResultStatus(result, form);
+  }
+
+  checkResultStatus(result, form) {
+    if (result.status !== "ok") {
+      if (result.text === "wrong login or password") {
+        this.setLoginFailedError(form);
+      }
+      return;
+    }
+    return;
+  }
+
+  setLoginFailedError(form) {
+    const errorLogin = form.querySelector('input[name="login"]');
+    const errorPassword = form.querySelector('input[name="password"]');
+    this.inputField.setError(
+      [errorLogin, errorPassword],
+      "Неверный логин или пароль",
+    );
+  }
+
+  async setupEventListeners(container) {
+    const form = container.querySelector("#login");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      await this.handleLoginRequest(form);
     });
 
     const signupLink = container.querySelector(".absence-text a");

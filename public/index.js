@@ -18,29 +18,29 @@ export const config = {
   },
 };
 
-function renderUserPage() {
+async function renderUserPage() {
   const a = 1;
   const b = 2;
   // TODO сделать fetch
   if (a !== b) {
-    goToPage(config.login);
+    await goToPage(config.login);
     return;
   }
 }
 
-function renderLoginPage() {
+async function renderLoginPage() {
   const page = new LoginPage();
-  page.render(rootElement);
+  await page.render(rootElement);
 }
 
-function renderSignUpPage() {
+async function renderSignUpPage() {
   const page = new SignUpPage();
-  page.render(rootElement);
+  await page.render(rootElement);
 }
 
-export function goToPage(pageToGo) {
+export async function goToPage(pageToGo) {
   rootElement.innerHTML = "";
-  pageToGo.render();
+  await pageToGo.render();
 }
 
 renderUserPage();
