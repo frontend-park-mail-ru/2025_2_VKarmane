@@ -5,8 +5,7 @@ import { serviceItem } from "../../components/serviceItem/index.js";
 
 export class SignUpPage {
   render(container) {
-    const page = document.createElement("div");
-    const template = Handlebars.templates["SignUp.hbs"];
+    const template = Handlebars.templates["SignUp"];
     const startButton = new StartButton();
     const inputField = new InputField();
     const absText = new absenceText();
@@ -50,7 +49,7 @@ export class SignUpPage {
       passwordInput: inputField.getSelf("password", "password", "пароль"),
       absenceText: absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
-      loginButton: startButton.getSelf("signup", "Зарегистрироваться"),
+      signUpButton: startButton.getSelf("signup", "Зарегистрироваться"),
     };
     container.innerHTML = template(data);
 
@@ -60,6 +59,33 @@ export class SignUpPage {
       const login = form.querySelector('input[name="login"]').value;
       const email = form.querySelector('input[name="email"]').value;
       const password = form.querySelector('input[name="password"]').value;
+
+      fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          login: login,
+          email: email,
+          password: password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.status !== "ok") {
+            if (response.text === "occupied email") {
+              const errorInput = form.querySelector('input[name="email"]');
+              inputField.setError([errorInput], "Адрес уже зарегистрирован");
+              return;
+            } else if (response.text === "occupied login") {
+              const errorInput = form.querySelector('input[name="login"]');
+              inputField.setError([errorInput], "Такой логин уже существует");
+              return;
+            }
+            return;
+          }
+        });
     });
   }
 }

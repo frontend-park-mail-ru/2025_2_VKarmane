@@ -7,7 +7,7 @@ import { goToPage, config } from "../../index.js";
 
 export class LoginPage {
   render(container) {
-    const template = Handlebars.templates["Login.hbs"];
+    const template = Handlebars.templates["Login"];
     const startButton = new StartButton();
     const inputField = new InputField();
     const absText = new absenceText();
@@ -49,29 +49,33 @@ export class LoginPage {
       const login = form.querySelector('input[name="login"]').value;
       const password = form.querySelector('input[name="password"]').value;
 
-      console.log("Login:", login);
-      console.log("Password:", password);
-
-      if (login !== "a" || password !== "b") {
-        const passwordInputGroup = form.querySelector(
-          ".input-group:nth-child(3)",
-        );
-        let errElem = passwordInputGroup.querySelector(".login-error");
-
-        if (!errElem) {
-          errElem = document.createElement("div");
-          errElem.classList.add("login-error");
-          errElem.style.color = "red";
-          errElem.style.fontSize = "0.875rem";
-          passwordInputGroup.appendChild(errElem);
-        }
-        errElem.textContent = "Неверный логин или пароль";
-      } else {
-        const err = document.querySelector(".login-error");
-        if (err) {
-          err.remove();
-        }
-      }
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          login: login,
+          password: password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.status !== "ok") {
+            if (response.text === "wrong login or password") {
+              const errorLogin = form.querySelector('input[name="login"]');
+              const errorPassword = form.querySelector(
+                'input[name="password"]',
+              );
+              inputField.setError(
+                [errorLogin, errorPassword],
+                "Неверный логин или пароль",
+              );
+              return;
+            }
+            return;
+          }
+        });
     });
 
     const signupLink = container.querySelector(".absence-text a");

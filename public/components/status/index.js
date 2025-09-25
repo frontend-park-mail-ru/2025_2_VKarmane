@@ -5,7 +5,7 @@ export class Status {
   };
 
   getSelf(status) {
-    const template = Handlebars.templates["Status.hbs"];
+    const template = Handlebars.templates["Status"];
     return template({ color: this.#statusColors[status], status });
   }
 }
