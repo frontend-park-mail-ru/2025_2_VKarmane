@@ -20,7 +20,7 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-  res.status(403).json({ status: "n", text: "occupied login" });
+  res.status(403).json({ status: "n", text: "occupied email" });
 });
 
 const port = process.env.PORT || 3000;

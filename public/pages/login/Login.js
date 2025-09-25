@@ -4,6 +4,7 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
+import { Validator } from "../../utils/validation.js";
 
 export class LoginPage {
   constructor() {
@@ -52,6 +53,11 @@ export class LoginPage {
   async handleLoginRequest(form) {
     const login = form.querySelector('input[name="login"]').value;
     const password = form.querySelector('input[name="password"]').value;
+
+    if (!this.validateInput(login, password, form)) {
+      return;
+    }
+
     const response = await fetch("/login", {
       method: "POST",
       headers: {
@@ -70,20 +76,17 @@ export class LoginPage {
   checkResultStatus(result, form) {
     if (result.status !== "ok") {
       if (result.text === "wrong login or password") {
-        this.setLoginFailedError(form);
+        this.setInputsError(form, "Неверный логин или пароль");
       }
       return;
     }
     return;
   }
 
-  setLoginFailedError(form) {
+  setInputsError(form, text_error) {
     const errorLogin = form.querySelector('input[name="login"]');
     const errorPassword = form.querySelector('input[name="password"]');
-    this.inputField.setError(
-      [errorLogin, errorPassword],
-      "Неверный логин или пароль",
-    );
+    this.inputField.setError([errorLogin, errorPassword], text_error);
   }
 
   async setupEventListeners(container) {
@@ -98,5 +101,23 @@ export class LoginPage {
       e.preventDefault();
       goToPage(config.signup);
     });
+  }
+
+  validateInput(login, password, form) {
+    const validator = new Validator();
+
+    const setInputErrorAndReturn = (fieldName, fieldValue) => {
+      let error = validator.validate(fieldName, fieldValue);
+      if (error !== undefined) {
+        this.setInputsError(form, error);
+        return false;
+      }
+      return true;
+    };
+
+    return (
+      setInputErrorAndReturn("login", login) &&
+      setInputErrorAndReturn("password", password)
+    );
   }
 }

@@ -3,6 +3,7 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
+import { Validator } from "../../utils/validation.js";
 
 export class SignUpPage {
   constructor() {
@@ -67,6 +68,10 @@ export class SignUpPage {
     const email = form.querySelector('input[name="email"]').value;
     const password = form.querySelector('input[name="password"]').value;
 
+    if (!this.validateInput(login, email, password, form)) {
+      return;
+    }
+
     const response = await fetch("/signup", {
       method: "POST",
       headers: {
@@ -86,22 +91,22 @@ export class SignUpPage {
   checkResultStatus(result, form) {
     if (result.status !== "ok") {
       if (result.text === "occupied email") {
-        this.setEmailError(form);
+        this.setInputsError(form, "Адрес уже зарегистрирован");
       } else if (result.text === "occupied login") {
-        this.setLoginError(form);
+        this.setInputsError(form, "Такой логин уже существует");
       }
       return;
     }
   }
 
-  setEmailError(form) {
-    const errorInput = form.querySelector('input[name="email"]');
-    this.inputField.setError([errorInput], "Адрес уже зарегистрирован");
-  }
-
-  setLoginError(form) {
-    const errorInput = form.querySelector('input[name="login"]');
-    this.inputField.setError([errorInput], "Такой логин уже существует");
+  setInputsError(form, text_error) {
+    const loginInput = form.querySelector('input[name="login"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const passwordInput = form.querySelector('input[name="password"]');
+    this.inputField.setError(
+      [loginInput, emailInput, passwordInput],
+      text_error,
+    );
   }
 
   async setupEventListeners(container) {
@@ -120,5 +125,25 @@ export class SignUpPage {
         goToPage(config.login);
       });
     }
+  }
+
+  validateInput(login, email, password, form) {
+    const validator = new Validator();
+
+    const setInputErrorAndReturn = (fieldName, fieldValue) => {
+      console.log(fieldName);
+      let error = validator.validate(fieldName, fieldValue);
+      if (error !== undefined) {
+        this.setInputsError(form, error);
+        return false;
+      }
+      return true;
+    };
+
+    return (
+      setInputErrorAndReturn("login", login) &&
+      setInputErrorAndReturn("email", email) &&
+      setInputErrorAndReturn("password", password)
+    );
   }
 }
