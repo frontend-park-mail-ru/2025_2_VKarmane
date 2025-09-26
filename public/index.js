@@ -28,7 +28,7 @@ function renderUserPage() {
   //   return;
   // }
     const page = new MainPage();
-    page.render();
+    page.render(rootElement);
 }
 
 function renderLoginPage() {

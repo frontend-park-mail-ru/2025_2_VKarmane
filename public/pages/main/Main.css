@@ -31,12 +31,14 @@ body {
     font-weight: bold;
     font-size: 40px;
     margin-left: 30px;
-    padding-top: 30px;
+    padding-top: 4px;
 }
 
 .balance{
     margin-left: 30px;
     float: left;
+    position: relative;
+    top: -15px;
 }
 
 .balance-text{
@@ -120,6 +122,7 @@ body {
     width: 85px; /* Ширина в пикселях */
     height: 85px; /* Высота в пикселях */
     background-color: #FFFFFF;
+    background-image: url("../../static/imgs/logo.png");
     border-radius: 15px;
     background-size: cover;
     background-position: center;
@@ -134,6 +137,7 @@ body {
     background-position: center;
     border: none;
     background-color: transparent;
+    background-image: url("../../static/imgs/main_page.png");
 
 }
 
@@ -145,6 +149,7 @@ body {
     background-position: center;
     border: none;
     background-color: transparent;
+    background-image: url("../../static/imgs/main_page_hover.png");
 }
 
 .mainPage{
@@ -158,6 +163,7 @@ body {
     height: 57px;
     width: 57px;
     background-size: cover;
+    background-image: url("../../static/imgs/logout.png");
     background-position: center;
     border: none;
     background-color: transparent;
@@ -170,6 +176,7 @@ body {
     width: 57px;
     background-size: cover;
     background-position: center;
+    background-image: url("../../static/imgs/logout_hover.png");
     border: none;
     background-color: transparent;
 }

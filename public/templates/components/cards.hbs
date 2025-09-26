@@ -4,16 +4,16 @@
             Карта №1
         </h3>
         <div class="CheckSum">
-            <h2 class="FactSum">{{ card1.balance }} ₽</h2>
+            <h2 class="FactSum">{{ balance }} ₽</h2>
         </div>
-        {{#if FactBalance.hasUpdateFactPlan }}
+        {{#if hasUpdateFactPlan }}
             <div class="Fact-balance-text" style="display: flex">
-                <p class="Fact-plus-text" >+{{ card1.updateCardFortwoWeek }}₽&nbsp;<p>
+                <p class="Fact-plus-text" >+{{  has_update_for_2_week }}₽&nbsp;<p>
                 <p class="Fact-text"> за последние 2 недели</p>
             </div>
         {{else}}
             <div class="Fact-balance-text" style="display: flex">
-                <p class="Fact-minus-text" >{{ card1.updateFactFortwoWeek }}₽&nbsp;<p>
+                <p class="Fact-minus-text" >{{ has_update_for_2_week }}₽&nbsp;<p>
                 <p class="Fact-text"> за последние 2 недели</p>
             </div>
         {{/if}}

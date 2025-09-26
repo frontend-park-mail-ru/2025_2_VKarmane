@@ -1,12 +1,13 @@
 export class FactBal {
-    getSelf(FactSum, PrevFactSum,updateFactFortwoWee) {
+    getSelf(FactSum, PrevFactSum,updateFactFortwoWeek) {
         const template = Handlebars.templates["FactBalance"];
-        var informationsAboutSign = updateFactFortwoWee > 0;
-        var procents = (FactSum / (PrevFactSum / 100)) - 100
+        var informationsAboutSign = updateFactFortwoWeek > 0;
+        var procents = Math.abs(FactSum / (PrevFactSum / 100) - 100).toFixed(1);
         return template ({
             FactSum : FactSum,
-            GetBalance: informationsAboutSign,
-            updateFactFortwoWeek : procents
+            updateFactFortwoWeek : updateFactFortwoWeek,
+            hasUpdateFactPlan : informationsAboutSign,
+            GetBalance : procents,
         });
     }
 }
