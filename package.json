@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npm run compile:templates",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile:templates": "handlebars public/templates/components public/templates/pages/ -f public/templates/templates.js -e hbs -k"
+    "compile:templates": "handlebars public/templates/components public/templates/pages/ -f dist/templates/templates.js -e hbs -k"
   },
   "repository": {
     "type": "git",
