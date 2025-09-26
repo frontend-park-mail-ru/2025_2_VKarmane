@@ -13,7 +13,7 @@ export class SignUpPage {
     this.servItem = new serviceItem();
   }
 
-  async render(container) {
+  render(container) {
     const template = Handlebars.templates["SignUp"];
 
     const serviceItems = [
@@ -60,7 +60,7 @@ export class SignUpPage {
     };
 
     container.innerHTML = template(data);
-    await this.setupEventListeners(container);
+    this.setupEventListeners(container);
   }
 
   async handleSignUpRequest(form) {
@@ -95,8 +95,8 @@ export class SignUpPage {
       } else if (result.text === "occupied login") {
         this.setInputsError(form, "Такой логин уже существует");
       }
-      return;
     }
+    goToPage(config.login)
   }
 
   setInputsError(form, text_error) {
@@ -109,12 +109,12 @@ export class SignUpPage {
     );
   }
 
-  async setupEventListeners(container) {
+  setupEventListeners(container) {
     const form = container.querySelector("#signup");
     if (form) {
-      form.addEventListener("submit", async (e) => {
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-        await this.handleSignUpRequest(form);
+        this.handleSignUpRequest(form);
       });
     }
 

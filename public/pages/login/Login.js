@@ -15,7 +15,7 @@ export class LoginPage {
     this.expCard = new ExpenseCard();
   }
 
-  async render(container) {
+  render(container) {
     const template = Handlebars.templates["Login"];
     const expCards = [
       this.expCard.getSelf(
@@ -47,7 +47,7 @@ export class LoginPage {
     };
     container.innerHTML = template(data);
 
-    await this.setupEventListeners(container);
+    this.setupEventListeners(container);
   }
 
   async handleLoginRequest(form) {
@@ -89,11 +89,11 @@ export class LoginPage {
     this.inputField.setError([errorLogin, errorPassword], text_error);
   }
 
-  async setupEventListeners(container) {
+  setupEventListeners(container) {
     const form = container.querySelector("#login");
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      await this.handleLoginRequest(form);
+      this.handleLoginRequest(form);
     });
 
     const signupLink = container.querySelector(".absence-text a");
