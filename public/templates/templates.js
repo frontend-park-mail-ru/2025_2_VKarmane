@@ -350,20 +350,20 @@ templates['main'] = template({"compiler":[8,">= 4.3.0"],"main":function(containe
         return undefined
     };
 
-  return "<div class=\"container\">\r\n    <div class=\"LeftPart\">\r\n        "
+  return "<div class=\"container\">\n    <div class=\"LeftPart\">\n        "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"menu") || (depth0 != null ? lookupProperty(depth0,"menu") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"menu","hash":{},"data":data,"loc":{"start":{"line":3,"column":8},"end":{"line":3,"column":20}}}) : helper))) != null ? stack1 : "")
-    + "\r\n    </div>\r\n    <div id=\"main\">\r\n        <h1 class=\"general\">Общее</h1>\r\n        <div style=\"max-width: 54%;\">\r\n            <div class=\"balance\">\r\n                <h2 class=\"balance-text\">\r\n                    Баланс\r\n                </h2>\r\n                "
+    + "\n    </div>\n    <div id=\"main\">\n        <h1 class=\"general\">Общее</h1>\n        <div style=\"max-width: 54%;\">\n            <div class=\"balance\">\n                <h2 class=\"balance-text\">\n                    Баланс\n                </h2>\n                "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"FactBal") || (depth0 != null ? lookupProperty(depth0,"FactBal") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"FactBal","hash":{},"data":data,"loc":{"start":{"line":12,"column":16},"end":{"line":12,"column":31}}}) : helper))) != null ? stack1 : "")
-    + "\r\n                "
+    + "\n                "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"PlanBal") || (depth0 != null ? lookupProperty(depth0,"PlanBal") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"PlanBal","hash":{},"data":data,"loc":{"start":{"line":13,"column":16},"end":{"line":13,"column":31}}}) : helper))) != null ? stack1 : "")
-    + "\r\n                "
+    + "\n                "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"Add") || (depth0 != null ? lookupProperty(depth0,"Add") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Add","hash":{},"data":data,"loc":{"start":{"line":14,"column":16},"end":{"line":14,"column":27}}}) : helper))) != null ? stack1 : "")
-    + "\r\n            </div>\r\n            <div class=\"banks\">\r\n                <h2>\r\n                    Счета\r\n                </h2>\r\n                <div class=\"card_handler\" style=\"display: flex;\">\r\n                    "
+    + "\n            </div>\n            <div class=\"banks\">\n                <h2>\n                    Счета\n                </h2>\n                <div class=\"card_handler\" style=\"display: flex;\">\n                    "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"cards") || (depth0 != null ? lookupProperty(depth0,"cards") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"cards","hash":{},"data":data,"loc":{"start":{"line":21,"column":20},"end":{"line":21,"column":33}}}) : helper))) != null ? stack1 : "")
-    + "\r\n                        <div class=\"card_but_hand\">\r\n                            "
+    + "\n                        <div class=\"card_but_hand\">\n                            "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"addCard") || (depth0 != null ? lookupProperty(depth0,"addCard") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"addCard","hash":{},"data":data,"loc":{"start":{"line":23,"column":28},"end":{"line":23,"column":43}}}) : helper))) != null ? stack1 : "")
-    + "\r\n                        </div>\r\n                </div>\r\n                "
+    + "\n                        </div>\n                </div>\n                "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"operations") || (depth0 != null ? lookupProperty(depth0,"operations") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"operations","hash":{},"data":data,"loc":{"start":{"line":26,"column":16},"end":{"line":26,"column":34}}}) : helper))) != null ? stack1 : "")
-    + "\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
+    + "\n            </div>\n        </div>\n    </div>\n</div>\n";
 },"useData":true});
 })();
