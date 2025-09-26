@@ -69,24 +69,32 @@ export class LoginPage {
       }),
     });
 
+    
+    const status = response.status;
     const result = await response.json();
-    this.checkResultStatus(result, form);
+    this.checkResultStatus(status, result, form);
   }
 
-  checkResultStatus(result, form) {
-    if (result.status !== "ok") {
-      if (result.text === "wrong login or password") {
-        this.setInputsError(form, "Неверный логин или пароль");
-      }
-      return;
+  checkResultStatus(status, result, form) {
+    if (status == 200) {
+      document.cookie = `token=${result.token}`;
+      goToPage(config.user_page);
+    } else if (status == 401) {
+      this.setInputsError(form, "Неверный логин или пароль")
+    } else if (status == 500) {
+      this.setServerError()
     }
-    return;
   }
 
-  setInputsError(form, text_error) {
+  setServerError() {
+    const form = document.querySelector(".login-form");
+    this.setInputsError(form, "При авторизации произошла ошибка. Повторите попытку позже", false);
+  }
+
+  setInputsError(form, text_error, to_color = true) {
     const errorLogin = form.querySelector('input[name="login"]');
     const errorPassword = form.querySelector('input[name="password"]');
-    this.inputField.setError([errorLogin, errorPassword], text_error);
+    this.inputField.setError([errorLogin, errorPassword], to_color, text_error);
   }
 
   setupEventListeners(container) {

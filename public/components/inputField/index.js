@@ -4,7 +4,7 @@ export class InputField {
     return template({ type, name, text });
   }
 
-  setError(inputs, text_error = "") {
+  setError(inputs, to_color, text_error = "") {
     if (!inputs) {
       return;
     }
@@ -25,9 +25,10 @@ export class InputField {
       errElem.textContent = text_error;
       group.appendChild(errElem);
     }
-
-    inputs.forEach((element) => {
-      element.style.borderColor = "red";
-    });
+    if (to_color) {
+      inputs.forEach((element) => {
+        element.style.borderColor = "red";
+      });
+    }
   }
 }

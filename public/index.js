@@ -13,7 +13,7 @@ export const config = {
     render: renderLoginPage,
   },
   signup: {
-    href: "/signup",
+    href: "/register",
     render: renderSignUpPage,
   },
 };
