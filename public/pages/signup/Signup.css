@@ -1,0 +1,373 @@
+@import "../../components/startButton/index.css";
+@import "../../components/inputField/index.css";
+@import "../../components/absenceText/index.css";
+@import "../../components/category/index.css";
+@import "../../components/expenseCard/index.css";
+@import "../../components/serviceItem/index.css";
+
+div {
+  font-family: "Montserrat", sans-serif;
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+.signup-section {
+  flex: 1.2;
+  background: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.signup-form {
+  width: 506px;
+  height: 470px;
+  margin: auto;
+  max-width: 400px;
+}
+
+.signup-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.register-link a {
+  color: #194bfa;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.preview-section {
+  flex: 1;
+  justify-content: center;
+  justify-items: center;
+  background: linear-gradient(135deg, #e16040 0%, #eb5b1d 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.planero-logo {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.statistics-section {
+  height: 100%;
+}
+
+.card-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-more {
+  color: #194bfa;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.expense-chart {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 1rem auto;
+}
+
+.category-tags {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.bottom-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  z-index: 2;
+}
+
+.decorative-leaves {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 120px;
+  height: 80px;
+  opacity: 0.3;
+}
+
+.leaf {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50% 0 50% 0;
+}
+
+.leaf:nth-child(1) {
+  width: 40px;
+  height: 60px;
+  top: 0;
+  left: 0;
+  transform: rotate(-20deg);
+}
+
+.leaf:nth-child(2) {
+  width: 35px;
+  height: 50px;
+  top: 10px;
+  left: 25px;
+  transform: rotate(10deg);
+}
+
+.leaf:nth-child(3) {
+  width: 30px;
+  height: 45px;
+  top: 20px;
+  left: 50px;
+  transform: rotate(40deg);
+}
+
+.dashboard-mockup {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 480px;
+  margin-bottom: 10px;
+  margin: 1rem, auto, 2rem;
+}
+
+.income-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.income-item {
+  text-align: center;
+}
+
+.income-label {
+  color: #8d8d8d;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.income-amount {
+  color: #171d29;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.report-notification {
+  background: #f0f9ff;
+  border: 1px solid #e0f2fe;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-icon {
+  width: 24px;
+  height: 24px;
+  background: #22c55e;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+}
+
+.report-text {
+  flex: 1;
+}
+
+.report-title {
+  color: #171d29;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.report-time {
+  color: #8d8d8d;
+  font-size: 12px;
+}
+
+.chart-container {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  height: 120px;
+  margin-bottom: 12px;
+  gap: 4px;
+}
+
+.chart-bar {
+  background: #333333;
+  border-radius: 2px;
+  min-width: 8px;
+  flex: 1;
+  max-width: 16px;
+}
+
+.chart-bar.active {
+  background: #3b82f6;
+}
+
+.chart-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #8d8d8d;
+}
+
+.expense-card {
+  background: #f8fffe;
+  border: 1px solid #e6fffa;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.expense-card::before {
+  content: "✓";
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.expense-title {
+  color: #171d29;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.expense-subtitle {
+  color: #8d8d8d;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.expense-amount {
+  color: #171d29;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.expense-change {
+  color: #8d8d8d;
+  font-size: 12px;
+}
+
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.content-section {
+  margin-top: auto;
+}
+
+.main-title {
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 40px;
+  max-width: 480px;
+}
+
+.pagination {
+  align-self: center;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.pagination-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.pagination-dot.active {
+  background: white;
+}
+
+.brand-name {
+  color: white;
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.decorative-patterns {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  opacity: 0.1;
+  overflow: hidden;
+}
+
+.pattern {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.1) 10px,
+    rgba(255, 255, 255, 0.1) 20px
+  );
+}
