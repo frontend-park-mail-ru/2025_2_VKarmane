@@ -21,7 +21,7 @@ export class MainPage {
 
         const data = {
             FactBal: factBal.getSelf(1522442, 2424424, 42442),
-            cards: card.getSelf(1522442, true, 32323),
+            cards: card.getSelf(1522442, true, 32323,1523, "Развлечения"),
             PlanBal: planBal.getSelf(365432),
             menu: menu.getSelf(),
             Add: add.getSelf(),

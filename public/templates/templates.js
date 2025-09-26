@@ -174,7 +174,7 @@ templates['cards'] = template({"1":function(container,depth0,helpers,partials,da
         return undefined
     };
 
-  return "            <div class=\"Fact-balance-text\" style=\"display: flex\">\r\n                <p class=\"Fact-plus-text\" >+"
+  return "            <div class=\"Card-balance-text\" style=\"display: flex\">\r\n                <p class=\"Fact-plus-text\" >+"
     + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"has_update_for_2_week") || (depth0 != null ? lookupProperty(depth0,"has_update_for_2_week") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"has_update_for_2_week","hash":{},"data":data,"loc":{"start":{"line":11,"column":44},"end":{"line":11,"column":72}}}) : helper)))
     + "₽&nbsp;<p>\r\n                <p class=\"Fact-text\"> за последние 2 недели</p>\r\n            </div>\r\n";
 },"3":function(container,depth0,helpers,partials,data) {
@@ -185,22 +185,26 @@ templates['cards'] = template({"1":function(container,depth0,helpers,partials,da
         return undefined
     };
 
-  return "            <div class=\"Fact-balance-text\" style=\"display: flex\">\r\n                <p class=\"Fact-minus-text\" >"
+  return "            <div class=\"Card-balance-text\" style=\"display: flex\">\r\n                <p class=\"Fact-minus-text\" >"
     + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"has_update_for_2_week") || (depth0 != null ? lookupProperty(depth0,"has_update_for_2_week") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"has_update_for_2_week","hash":{},"data":data,"loc":{"start":{"line":16,"column":44},"end":{"line":16,"column":71}}}) : helper)))
     + "₽&nbsp;<p>\r\n                <p class=\"Fact-text\"> за последние 2 недели</p>\r\n            </div>\r\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), lookupProperty = container.lookupProperty || function(parent, propertyName) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=container.hooks.helperMissing, alias3="function", alias4=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {
         if (Object.prototype.hasOwnProperty.call(parent, propertyName)) {
           return parent[propertyName];
         }
         return undefined
     };
 
-  return "<div class=\"cards\">\r\n    <div class=\"card1\">\r\n        <h3 class=\"Card-One-text\">\r\n            Карта №1\r\n        </h3>\r\n        <div class=\"CheckSum\">\r\n            <h2 class=\"FactSum\">"
-    + container.escapeExpression(((helper = (helper = lookupProperty(helpers,"balance") || (depth0 != null ? lookupProperty(depth0,"balance") : depth0)) != null ? helper : container.hooks.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"balance","hash":{},"data":data,"loc":{"start":{"line":7,"column":32},"end":{"line":7,"column":45}}}) : helper)))
+  return "<div class=\"cards\">\r\n    <div class=\"card1\">\r\n        <h3 class=\"Card-One-text\">\r\n            Карта №1\r\n        </h3>\r\n        <div class=\"CheckSumCard\">\r\n            <h2>"
+    + alias4(((helper = (helper = lookupProperty(helpers,"balance") || (depth0 != null ? lookupProperty(depth0,"balance") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"balance","hash":{},"data":data,"loc":{"start":{"line":7,"column":16},"end":{"line":7,"column":29}}}) : helper)))
     + " ₽</h2>\r\n        </div>\r\n"
     + ((stack1 = lookupProperty(helpers,"if").call(alias1,(depth0 != null ? lookupProperty(depth0,"hasUpdateFactPlan") : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data,"loc":{"start":{"line":9,"column":8},"end":{"line":19,"column":15}}})) != null ? stack1 : "")
-    + "        <div class=\"rashod-card\">\r\n            <p class=\"NaibolshRashod\">наибольший расход за период</p>\r\n        </div>\r\n    </div>\r\n</div>";
+    + "        <div class=\"rashod-card\">\r\n            <p class=\"NaibolshRashod\">наибольший расход за период</p>\r\n            <div style=\"display: flex;\">\r\n                <div style=\"display: grid;\">\r\n                    <h1 class=\"rashod_sum\"> "
+    + alias4(((helper = (helper = lookupProperty(helpers,"naibolsh_rashod") || (depth0 != null ? lookupProperty(depth0,"naibolsh_rashod") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"naibolsh_rashod","hash":{},"data":data,"loc":{"start":{"line":24,"column":44},"end":{"line":24,"column":63}}}) : helper)))
+    + " ₽</h1>\r\n                    <div class=\"actions\"><p class=\"rashod-sum-action\">"
+    + alias4(((helper = (helper = lookupProperty(helpers,"action") || (depth0 != null ? lookupProperty(depth0,"action") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"action","hash":{},"data":data,"loc":{"start":{"line":25,"column":70},"end":{"line":25,"column":82}}}) : helper)))
+    + "</p></div>\r\n                </div>\r\n                <div class=\"rashod-img\"><img class=\"drawing\" src=\"../../static/imgs/draw_for_cards.png\" alt=\"img\"></div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
 },"useData":true});
 templates['head'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"utf-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n    <meta charset=\"utf-8\">\r\n    <title>PLANERO</title>\r\n</head>";
@@ -309,7 +313,7 @@ templates['main'] = template({"compiler":[8,">= 4.3.0"],"main":function(containe
     + "\n                "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"Add") || (depth0 != null ? lookupProperty(depth0,"Add") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"Add","hash":{},"data":data,"loc":{"start":{"line":14,"column":16},"end":{"line":14,"column":27}}}) : helper))) != null ? stack1 : "")
     + "\n            </div>\n            <div class=\"banks\">\n                <h2>\n                    Счета\n                </h2>\n                "
-    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"cards") || (depth0 != null ? lookupProperty(depth0,"cards") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"cards","hash":{},"data":data,"loc":{"start":{"line":20,"column":16},"end":{"line":20,"column":28}}}) : helper))) != null ? stack1 : "")
+    + ((stack1 = ((helper = (helper = lookupProperty(helpers,"cards") || (depth0 != null ? lookupProperty(depth0,"cards") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"cards","hash":{},"data":data,"loc":{"start":{"line":20,"column":16},"end":{"line":20,"column":29}}}) : helper))) != null ? stack1 : "")
     + "\n                "
     + ((stack1 = ((helper = (helper = lookupProperty(helpers,"operations") || (depth0 != null ? lookupProperty(depth0,"operations") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"operations","hash":{},"data":data,"loc":{"start":{"line":21,"column":16},"end":{"line":21,"column":34}}}) : helper))) != null ? stack1 : "")
     + "\n            </div>\n        </div>\n    </div>\n</div>\n";
