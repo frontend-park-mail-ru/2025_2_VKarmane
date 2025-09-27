@@ -20,13 +20,6 @@ export const config = {
 };
 
 function renderUserPage() {
-  // const a = 1;
-  // const b = 2;
-  // // TODO сделать fetch
-  // if (a !== b) {
-  //   goToPage(config.user_page);
-  //   return;
-  // }
     const page = new MainPage();
     page.render(rootElement);
 }
