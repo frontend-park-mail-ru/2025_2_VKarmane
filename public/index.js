@@ -9,11 +9,11 @@ export const config = {
     render: renderUserPage,
   },
   login: {
-    href: "/login",
+    href: "/api/v1/login",
     render: renderLoginPage,
   },
   signup: {
-    href: "/register",
+    href: "/api/v1/register",
     render: renderSignUpPage,
   },
 };
