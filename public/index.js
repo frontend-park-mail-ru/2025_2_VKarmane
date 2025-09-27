@@ -1,5 +1,5 @@
 import { LoginPage } from "./pages/login/Login.js";
-import { SignUpPage } from "./pages/Signup/Signup.js";
+import { SignUpPage } from "./pages/signup/Signup.js";
 
 const rootElement = document.getElementById("root");
 
@@ -9,11 +9,11 @@ export const config = {
     render: renderUserPage,
   },
   login: {
-    href: "/login",
+    href: "/api/v1/login",
     render: renderLoginPage,
   },
   signup: {
-    href: "/signup",
+    href: "/api/v1/register",
     render: renderSignUpPage,
   },
 };
