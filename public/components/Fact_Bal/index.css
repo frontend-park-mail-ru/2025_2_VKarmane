@@ -1,0 +1,30 @@
+.FactSum{
+    font-family: Montserrat Semibold;
+    font-size: 32px;
+    margin-left: 32px;
+    margin-top: 43px;
+}
+
+
+.Fact-text{
+    font-family: Montserrat Semibold;
+    font-size: 13px;
+}
+
+.Fact-balance-text{
+    margin-left: 32px;
+    position: relative;
+    bottom: 46px;
+}
+
+.Fact-minus-text{
+    font-family: Montserrat Semibold;
+    font-size: 13px;
+    color: #9E0C0C;
+}
+
+.Fact-plus-text{
+    font-family: Montserrat Semibold;
+    font-size: 13px;
+    color: #72B552;
+}

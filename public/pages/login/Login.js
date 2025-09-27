@@ -1,4 +1,4 @@
-import { StartButton } from "../../components/startbutton/index.js";
+import { StartButton } from "../../components/startButton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
@@ -7,7 +7,7 @@ import { goToPage, config } from "../../index.js";
 
 export class LoginPage {
   render(container) {
-    const template = Handlebars.templates["Login.hbs"];
+    const template = Handlebars.templates["Login"];
     const startButton = new StartButton();
     const inputField = new InputField();
     const absText = new absenceText();

@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="LeftPart">
+        {{{ menu }}}
+    </div>
+    <div id="main">
+        <h1 class="general">Общее</h1>
+        <div style="max-width: 54%;">
+            <div class="balance">
+                <h2 class="balance-text">
+                    Баланс
+                </h2>
+                {{{ FactBal }}}
+                {{{ PlanBal }}}
+                {{{ Add }}}
+            </div>
+            <div class="banks">
+                <h2>
+                    Счета
+                </h2>
+                <div class="card_handler" style="display: flex;">
+                    {{{ cards }}}
+                        <div class="card_but_hand">
+                            {{{ addCard }}}
+                        </div>
+                </div>
+                {{{ operations }}}
+            </div>
+        </div>
+    </div>
+</div>

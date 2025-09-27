@@ -1,8 +1,8 @@
-import { Status } from "../Status/index.js";
+import { Status } from "../status/index.js";
 
 export class ExpenseCard {
   getSelf(currency, sum, text, gotStatus = "") {
-    const template = Handlebars.templates["ExpenseCard.hbs"];
+    const template = Handlebars.templates["ExpenseCard"];
     let status = "";
     if (gotStatus) {
       console.log(gotStatus);
