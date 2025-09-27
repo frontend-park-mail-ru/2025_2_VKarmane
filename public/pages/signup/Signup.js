@@ -72,7 +72,7 @@ export class SignUpPage {
       return;
     }
 
-    const response = await fetch("/register", {
+    const response = await fetch("/api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -82,6 +82,7 @@ export class SignUpPage {
         email: email,
         password: password,
       }),
+      credentials: "include",
     });
 
     const status = response.status;
@@ -91,7 +92,6 @@ export class SignUpPage {
 
   checkResultStatus(status, result, form) {
     if (status == 200) {
-      document.cookie = `token=${result.token}`;
       goToPage(config.user_page);
     } else if (status == 400) {
       this.setInputsError(
@@ -116,7 +116,11 @@ export class SignUpPage {
 
   setServerError() {
     const form = document.querySelector(".signup-form");
-    this.setInputsError(form, "При регистрации произошла ошибка. Повторите попытку позже", false);
+    this.setInputsError(
+      form,
+      "При регистрации произошла ошибка. Повторите попытку позже",
+      false,
+    );
   }
 
   setupEventListeners(container) {
