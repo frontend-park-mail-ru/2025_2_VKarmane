@@ -1,0 +1,11 @@
+.Add{
+    width: 469px; /* Ширина в пикселях */
+    height: 219px; /* Высота в пикселях */
+    background-color: #FFFFFF;
+    border-radius: 26px;
+    background-image: url("../../static/imgs/vk-add.jpg");
+    background-size: cover;
+    background-position: center;
+    margin-top: 19px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
+}
