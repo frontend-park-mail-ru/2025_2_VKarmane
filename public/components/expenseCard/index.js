@@ -2,10 +2,9 @@ import { Status } from "../Status/index.js";
 
 export class ExpenseCard {
   getSelf(currency, sum, text, gotStatus = "") {
-    const template = Handlebars.templates["ExpenseCard.hbs"];
+    const template = Handlebars.templates["ExpenseCard"];
     let status = "";
     if (gotStatus) {
-      console.log(gotStatus);
       status = new Status().getSelf(gotStatus);
     }
     const formated = sum.toLocaleString("ru-RU");

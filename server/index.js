@@ -15,8 +15,12 @@ app.use(cookie());
 
 app.get("/", (req, res) => {});
 
-app.get("/signup", (req, res) => {
-  res.status(200).json({ status: "ok" });
+app.post("/login", (req, res) => {
+  res.status(403).json({ status: "n", text: "wrong login or password" });
+});
+
+app.post("/signup", (req, res) => {
+  res.status(403).json({ status: "n", text: "occupied email" });
 });
 
 const port = process.env.PORT || 3000;

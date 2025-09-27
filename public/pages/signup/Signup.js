@@ -2,17 +2,22 @@ import { StartButton } from "../../components/startbutton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
+import { config, goToPage } from "../../index.js";
+import { Validator } from "../../utils/validation.js";
 
 export class SignUpPage {
+  constructor() {
+    this.startButton = new StartButton();
+    this.inputField = new InputField();
+    this.absText = new absenceText();
+    this.servItem = new serviceItem();
+  }
+
   render(container) {
-    const page = document.createElement("div");
-    const template = Handlebars.templates["SignUp.hbs"];
-    const startButton = new StartButton();
-    const inputField = new InputField();
-    const absText = new absenceText();
-    const servItem = new serviceItem();
+    const template = Handlebars.templates["SignUp"];
+
     const serviceItems = [
-      servItem.getSelf(
+      this.servItem.getSelf(
         {
           db_name: "spotify",
           name: "Spotify",
@@ -22,7 +27,7 @@ export class SignUpPage {
         "₽",
         169,
       ),
-      servItem.getSelf(
+      this.servItem.getSelf(
         {
           db_name: "beeline",
           name: "Билайн доставка",
@@ -32,7 +37,7 @@ export class SignUpPage {
         "₽",
         133,
       ),
-      servItem.getSelf(
+      this.servItem.getSelf(
         {
           db_name: "tg_oil",
           name: "Телеграм нефть",
@@ -43,23 +48,102 @@ export class SignUpPage {
         893,
       ),
     ];
+
     const data = {
       title: "Регистрация",
-      loginInput: inputField.getSelf("login", "login", "логин"),
-      emailInput: inputField.getSelf("email", "email", "email"),
-      passwordInput: inputField.getSelf("password", "password", "пароль"),
-      absenceText: absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
+      loginInput: this.inputField.getSelf("login", "login", "логин"),
+      emailInput: this.inputField.getSelf("email", "email", "email"),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
-      loginButton: startButton.getSelf("signup", "Зарегистрироваться"),
+      signUpButton: this.startButton.getSelf("signup", "Зарегистрироваться"),
     };
-    container.innerHTML = template(data);
 
-    const form = container.querySelector("#signup");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const login = form.querySelector('input[name="login"]').value;
-      const email = form.querySelector('input[name="email"]').value;
-      const password = form.querySelector('input[name="password"]').value;
+    container.innerHTML = template(data);
+    this.setupEventListeners(container);
+  }
+
+  async handleSignUpRequest(form) {
+    const login = form.querySelector('input[name="login"]').value;
+    const email = form.querySelector('input[name="email"]').value;
+    const password = form.querySelector('input[name="password"]').value;
+
+    if (!this.validateInput(login, email, password, form)) {
+      return;
+    }
+
+    const response = await fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        login: login,
+        email: email,
+        password: password,
+      }),
     });
+
+    const result = await response.json();
+    this.checkResultStatus(result, form);
+  }
+
+  checkResultStatus(result, form) {
+    if (result.status !== "ok") {
+      if (result.text === "occupied email") {
+        this.setInputsError(form, "Адрес уже зарегистрирован");
+      } else if (result.text === "occupied login") {
+        this.setInputsError(form, "Такой логин уже существует");
+      }
+    }
+    goToPage(config.login)
+  }
+
+  setInputsError(form, text_error) {
+    const loginInput = form.querySelector('input[name="login"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const passwordInput = form.querySelector('input[name="password"]');
+    this.inputField.setError(
+      [loginInput, emailInput, passwordInput],
+      text_error,
+    );
+  }
+
+  setupEventListeners(container) {
+    const form = container.querySelector("#signup");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.handleSignUpRequest(form);
+      });
+    }
+
+    const loginLink = container.querySelector(".absence-text a");
+    if (loginLink) {
+      loginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        goToPage(config.login);
+      });
+    }
+  }
+
+  validateInput(login, email, password, form) {
+    const validator = new Validator();
+
+    const setInputErrorAndReturn = (fieldName, fieldValue) => {
+      console.log(fieldName);
+      let error = validator.validate(fieldName, fieldValue);
+      if (error !== undefined) {
+        this.setInputsError(form, error);
+        return false;
+      }
+      return true;
+    };
+
+    return (
+      setInputErrorAndReturn("login", login) &&
+      setInputErrorAndReturn("email", email) &&
+      setInputErrorAndReturn("password", password)
+    );
   }
 }

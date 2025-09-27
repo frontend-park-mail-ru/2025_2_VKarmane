@@ -4,74 +4,96 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
+import { Validator } from "../../utils/validation.js";
 
 export class LoginPage {
+  constructor() {
+    this.startButton = new StartButton();
+    this.inputField = new InputField();
+    this.absText = new absenceText();
+    this.category = new Category();
+    this.expCard = new ExpenseCard();
+  }
+
   render(container) {
-    const template = Handlebars.templates["Login.hbs"];
-    const startButton = new StartButton();
-    const inputField = new InputField();
-    const absText = new absenceText();
-    const category = new Category();
-    const expCard = new ExpenseCard();
+    const template = Handlebars.templates["Login"];
     const expCards = [
-      expCard.getSelf(
+      this.expCard.getSelf(
         "₽",
         50102,
         "Планируемый расход за период",
         "Сбалансировано",
       ),
-      expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
+      this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-      category.getSelf("green", "Банковские"),
-      category.getSelf("red", "Развлечения"),
-      category.getSelf("pink", "Покупки"),
-      category.getSelf("blue", "Подписки"),
+      this.category.getSelf("green", "Банковские"),
+      this.category.getSelf("red", "Развлечения"),
+      this.category.getSelf("pink", "Покупки"),
+      this.category.getSelf("blue", "Подписки"),
     ];
     const data = {
       title: "Войти",
-      loginInput: inputField.getSelf("login", "login", "логин"),
-      passwordInput: inputField.getSelf("password", "password", "пароль"),
-      absenceText: absText.getSelf(
+      loginInput: this.inputField.getSelf("login", "login", "логин"),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      absenceText: this.absText.getSelf(
         "Нет аккаунта?",
         config.signup.href,
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
-      loginButton: startButton.getSelf("login", "Войти"),
+      loginButton: this.startButton.getSelf("login", "Войти"),
       categories: categories,
     };
     container.innerHTML = template(data);
 
+    this.setupEventListeners(container);
+  }
+
+  async handleLoginRequest(form) {
+    const login = form.querySelector('input[name="login"]').value;
+    const password = form.querySelector('input[name="password"]').value;
+
+    if (!this.validateInput(login, password, form)) {
+      return;
+    }
+
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        login: login,
+        password: password,
+      }),
+    });
+
+    const result = await response.json();
+    this.checkResultStatus(result, form);
+  }
+
+  checkResultStatus(result, form) {
+    if (result.status !== "ok") {
+      if (result.text === "wrong login or password") {
+        this.setInputsError(form, "Неверный логин или пароль");
+      }
+      return;
+    }
+    return;
+  }
+
+  setInputsError(form, text_error) {
+    const errorLogin = form.querySelector('input[name="login"]');
+    const errorPassword = form.querySelector('input[name="password"]');
+    this.inputField.setError([errorLogin, errorPassword], text_error);
+  }
+
+  setupEventListeners(container) {
     const form = container.querySelector("#login");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const login = form.querySelector('input[name="login"]').value;
-      const password = form.querySelector('input[name="password"]').value;
-
-      console.log("Login:", login);
-      console.log("Password:", password);
-
-      if (login !== "a" || password !== "b") {
-        const passwordInputGroup = form.querySelector(
-          ".input-group:nth-child(3)",
-        );
-        let errElem = passwordInputGroup.querySelector(".login-error");
-
-        if (!errElem) {
-          errElem = document.createElement("div");
-          errElem.classList.add("login-error");
-          errElem.style.color = "red";
-          errElem.style.fontSize = "0.875rem";
-          passwordInputGroup.appendChild(errElem);
-        }
-        errElem.textContent = "Неверный логин или пароль";
-      } else {
-        const err = document.querySelector(".login-error");
-        if (err) {
-          err.remove();
-        }
-      }
+      this.handleLoginRequest(form);
     });
 
     const signupLink = container.querySelector(".absence-text a");
@@ -79,5 +101,23 @@ export class LoginPage {
       e.preventDefault();
       goToPage(config.signup);
     });
+  }
+
+  validateInput(login, password, form) {
+    const validator = new Validator();
+
+    const setInputErrorAndReturn = (fieldName, fieldValue) => {
+      let error = validator.validate(fieldName, fieldValue);
+      if (error !== undefined) {
+        this.setInputsError(form, error);
+        return false;
+      }
+      return true;
+    };
+
+    return (
+      setInputErrorAndReturn("login", login) &&
+      setInputErrorAndReturn("password", password)
+    );
   }
 }
