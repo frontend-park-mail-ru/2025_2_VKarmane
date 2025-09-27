@@ -1,4 +1,4 @@
-import { StartButton } from "../../components/startbutton/index.js";
+import { StartButton } from "../../components/startButton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
