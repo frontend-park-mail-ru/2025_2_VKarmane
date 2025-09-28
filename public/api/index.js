@@ -1,18 +1,11 @@
-function getToken() {
-    return localStorage.getItem("jwt");
-}
 
 async function fetchWithAuth(url, options = {}) {
-    const token = getToken();
-    if (!token) throw new Error("JWT токен не найден. Авторизуйтесь.");
-
     const headers = {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
         ...options.headers,
     };
 
-    const response = await fetch(url, { ...options, headers });
+    const response = await fetch(url, { ...options, headers, credentials: "include" });
     if (!response.ok) throw new Error(`Ошибка при запросе ${url}: ${response.status}`);
     return await response.json();
 }
