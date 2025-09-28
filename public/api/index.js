@@ -11,17 +11,17 @@ async function fetchWithAuth(url, options = {}) {
 }
 
 export function getBalance() {
-    return fetchWithAuth("/api/v1/balance");
+    return fetchWithAuth("http://217.16.23.67:8080/api/v1/balance");
 }
 
 export function getBalanceById(id) {
-    return fetchWithAuth(`/api/v1/balance/${id}`);
+    return fetchWithAuth(`http://217.16.23.67:8080/api/v1/balance/${id}`);
 }
 
 export function getBudgets() {
-    return fetchWithAuth("/api/v1/budgets");
+    return fetchWithAuth("http://217.16.23.67:8080/api/v1/budgets");
 }
 
 export function getBudgetById(id) {
-    return fetchWithAuth(`/api/v1/budgets/${id}`);
+    return fetchWithAuth(`http://217.16.23.67:8080/api/v1/budgets/${id}`);
 }

@@ -71,7 +71,7 @@ export class SignUpPage {
       return;
     }
 
-    const response = await fetch("/api/v1/auth/register", {
+    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
