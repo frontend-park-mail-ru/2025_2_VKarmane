@@ -7,7 +7,8 @@
 }
 
 .balance-text{
-    font-family: Montserrat Regular;
+    font-family: Montserrat;
+    font-weight: 500;
     color: #555353;
 }
 
@@ -29,7 +30,8 @@
 }
 
 .FactSum{
-    font-family: Montserrat Semibold;
+    font-family: Montserrat;
+    font-weight: 600;
     font-size: 32px;
     margin-left: 32px;
     margin-top: 43px;
@@ -38,7 +40,8 @@
 
 
 .Fact-text{
-    font-family: Montserrat Semibold;
+    font-family: Montserrat;
+    font-weight: 600;
     font-size: 13px;
 }
 
@@ -49,13 +52,15 @@
 }
 
 .Fact-minus-text{
-    font-family: Montserrat Semibold;
+    font-family: Montserrat;
+    font-weight: 600;
     font-size: 13px;
     color: #9E0C0C;
 }
 
 .Fact-plus-text{
-    font-family: Montserrat Semibold;
+    font-family: Montserrat;
+    font-weight: 600;
     font-size: 13px;
     color: #72B552;
 }
@@ -88,7 +93,8 @@
 }
 
 .ProcTextUp{
-    font-family: Montserrat Semibold;
+    font-family: Montserrat;
+    font-weight: 600;
     font-size: 14px;
     color: #24A600;
     text-align: center;
@@ -99,7 +105,8 @@
 }
 
 .ProcTextDown{
-    font-family: Montserrat Semibold;
+    font-family: Montserrat;
+    font-weight: 600;
     font-size: 14px;
     color: #9E0C0C;
     text-align: center;
