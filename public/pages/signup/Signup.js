@@ -15,7 +15,6 @@ export class SignUpPage {
 
   render(container) {
     const template = Handlebars.templates["SignUp"];
-
     const serviceItems = [
       this.servItem.getSelf(
         {

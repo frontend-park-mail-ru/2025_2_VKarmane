@@ -1,0 +1,75 @@
+@import "../../components/Fact_Bal/index.css";
+@import "../../components/Plan_Bal/index.css";
+@import "../../components/Add/index.css";
+@import "../../components/cards/index.css";
+@import "../../components/operations/index.css";
+@import "../../components/menu/index.css";
+
+body {
+    background-color: #EB5B1D;
+}
+
+.banks{
+    font-family: Montserrat Regular;
+    margin-left: 30px;
+    float: right;
+    width: 100px;
+    height: 100px;
+    color: #555353;
+    position: relative;
+    top: -15px;
+}
+
+#main{
+    width: 1233px;
+    height: 988px;
+    background-color: #F6F6F8;
+    margin-right: 14px;
+    border-radius: 48px;
+    padding-right: 20px;
+    padding-left: 29px;
+    padding-bottom: 20px;
+    float: right;
+}
+
+@font-face {
+    font-family: "Montserrat";
+}
+
+.general{
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 40px;
+    margin-left: 30px;
+    padding-top: 4px;
+}
+
+
+.addCard{
+    display: block;
+    background-color: #EB5B1D;
+    border-radius: 8px;
+    width: 274px;
+    height: 43px;
+    font-family: "Montserrat Semibold";
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    line-height: 43px;
+}
+
+.card_handler{
+    gap: 40px;
+}
+
+.card_but_hand{
+    position: relative;
+    bottom: -152px;
+}
+
+
+
+
+
+
+

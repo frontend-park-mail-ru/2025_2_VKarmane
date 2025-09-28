@@ -1,6 +1,9 @@
 import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 
+import { MainPage } from "./pages/main/Main.js";
+
+
 const rootElement = document.getElementById("root");
 
 export const config = {
@@ -19,13 +22,8 @@ export const config = {
 };
 
 function renderUserPage() {
-  const a = 1;
-  const b = 2;
-  // TODO сделать fetch
-  if (a !== b) {
-    goToPage(config.login);
-    return;
-  }
+    const page = new MainPage();
+    page.render(rootElement);
 }
 
 function renderLoginPage() {

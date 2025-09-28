@@ -1,0 +1,109 @@
+
+.balance{
+    margin-left: 30px;
+    float: left;
+    position: relative;
+    top: -15px;
+}
+
+.balance-text{
+    font-family: Montserrat Regular;
+    color: #555353;
+}
+
+.Fact-Balance{
+    width: 469px; /* Ширина в пикселях */
+    height: 369px; /* Высота в пикселях */
+    background-color: #FFFFFF;
+    border-radius: 26px;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
+}
+
+.Fact-Plan-text{
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #949494;
+    margin-left: 32px;
+    padding-top: 37px ;
+
+}
+
+.FactSum{
+    font-family: Montserrat Semibold;
+    font-size: 32px;
+    margin-left: 32px;
+    margin-top: 43px;
+
+}
+
+
+.Fact-text{
+    font-family: Montserrat Semibold;
+    font-size: 13px;
+}
+
+.Fact-balance-text{
+    margin-left: 32px;
+    position: relative;
+    bottom: 46px;
+}
+
+.Fact-minus-text{
+    font-family: Montserrat Semibold;
+    font-size: 13px;
+    color: #9E0C0C;
+}
+
+.Fact-plus-text{
+    font-family: Montserrat Semibold;
+    font-size: 13px;
+    color: #72B552;
+}
+
+.CheckSum{
+    display: flex;
+    position: relative;
+    bottom: 30px;
+    color: black;
+}
+
+.ProcentUp{
+    background-color: #A1FF89;
+    height: 32px;
+    width: 67px;
+    float: right;
+    margin-top: 43px;
+    margin-left: 81px;
+    border-radius: 5px;
+}
+
+.ProcentDown{
+    background-color: #FF7C7C;
+    height: 32px;
+    width: 67px;
+    float: right;
+    margin-top: 43px;
+    margin-left: 81px;
+    border-radius: 5px;
+}
+
+.ProcTextUp{
+    font-family: Montserrat Semibold;
+    font-size: 14px;
+    color: #24A600;
+    text-align: center;
+    position: relative;
+    top: -5px
+
+
+}
+
+.ProcTextDown{
+    font-family: Montserrat Semibold;
+    font-size: 14px;
+    color: #9E0C0C;
+    text-align: center;
+    position: relative;
+    top: -5px
+
+}
