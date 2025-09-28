@@ -28,12 +28,5 @@
 
 - 🌐 [**Деплой**]()
 - 🎨 [**Figma**](https://www.figma.com/design/MRITYWRJ9ZEVQrO8k89Vjy/V%D0%9A%D0%B0%D1%80%D0%BC%D0%B0%D0%BD%D0%B5-%7C-PLANERO?node-id=1-2&t=6VUvYldbeFpV7HQB-1)
-- 💻 [**Frontend репозиторий**](https://github.com/frontend-park-mail-ru/2025_2_VKarmane)
+- 💻 [**Backend репозиторий**](https://github.com/go-park-mail-ru/2025_2_VKarmane)
 
-## Быстрый старт
-
-Подробные инструкции по запуску и разработке смотрите в [DEVELOPMENT.md](./DEVELOPMENT.md).
-
-### API Документация
-
-Полная документация API доступна в файле [API_DOCUMENTATION.md](./API_DOCUMENTATION.md).
