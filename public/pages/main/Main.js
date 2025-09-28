@@ -1,15 +1,21 @@
-import { FactBal } from "../../components/Fact_Bal/index.js";
-import { Card } from "../../components/cards/index.js";
-import { PlanBal } from "../../components/Plan_Bal/index.js";
-import { Menu } from "../../components/menu/index.js";
-import { Add } from "../../components/add/index.js";
-import { Operations } from "../../components/operations/index.js";
-import {AddCard} from "../../components/addCard/index.js";
-import {getBudgets, getBalance} from "../../../api/index.js";
+import { FactBal } from "../../components/Fact_Bal";
+import { Card } from "../../components/cards";
+import { PlanBal } from "../../components/Plan_Bal";
+import { Menu } from "../../components/menu";
+import { Add } from "../../components/add";
+import { Operations } from "../../components/operations";
+import {AddCard} from "../../components/addCard";
+import {getBudgets, getBalance} from "../../api";
+import { config, goToPage } from "../../index.js";
+
 
 export class MainPage {
     async render(container) {
+        if (!container) throw new Error("Container element not found!");
+
         const template = Handlebars.templates["main"];
+
+        // Компоненты
         const factBal = new FactBal();
         const card = new Card();
         const planBal = new PlanBal();
@@ -24,18 +30,18 @@ export class MainPage {
 
             const data = {
                 FactBal: factBal.getSelf(
-                    budgetsData.budgets[0].actual,
-                    2323232,
-                    budgetsData.budgets[0].updated,
+                    budgetsData?.budgets?.[0]?.actual ?? 0,
+                    100,
+                    120,
                 ),
                 cards: card.getSelf(
-                    balanceData.accounts[0].balance,
+                    balanceData?.accounts?.[0]?.balance ?? 0,
                     true,
                     32323,
                     1523,
                     "Развлечения"
                 ),
-                PlanBal: planBal.getSelf(budgetsData.budgets[0].amount),
+                PlanBal: planBal.getSelf(budgetsData?.budegts?.[0]?.amount ?? 0),
                 menu: menu.getSelf(),
                 Add: add.getSelf(),
                 operations: operations.getList([]),
@@ -43,30 +49,29 @@ export class MainPage {
             };
 
             container.innerHTML = template(data);
-            const logout = document.querySelector(".logout");
-            logout.addEventListener("click", async () => {
-                try {
-                    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/logout", {
-                        method: "POST",
-                        credentials: "include"
-                    });
-
-                    const data = await response.json();
-
-                    if (!data.message === "\"Logged out successfully\"") {
-                        window.location.href = "/login";
-                    } else{
-                        console.error("Error happend: ", data.message);
-                    }
-                } catch (err){
-                    console.error("Error happened: ", err);
-                }
-            })
         } catch (err) {
             console.error(err);
-            container.innerHTML = `<p style="color:red">Ошибка загрузки данных</p>`;
+            goToPage(config.login)
         }
+        const logout = document.querySelector(".logout");
+        logout.addEventListener("click", async () => {
+            try {
+                const response = await fetch("http://217.16.23.67:8080/api/v1/auth/logout", {
+                    method: "POST",
+                    credentials: "include"
+                });
 
+                const data = await response.json();
+
+                if (!data.message === "\"Logged out successfully\"") {
+                    window.location.href = "/login";
+                } else{
+                    console.error("Error happend: ", data.message);
+                }
+            } catch (err){
+                console.error("Error happend: ", err);
+            }
+        })
 
     }
 }
