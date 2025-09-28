@@ -6,8 +6,10 @@
   "scripts": {
     "prestart": "npm run compile:templates",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:templates": "handlebars public/templates/components public/templates/pages/ -f dist/templates/templates.js -e hbs -k"
+=======
     "start": "node server/index.js",
-    "compile:templates": "handlebars public/templates/components/ public/templates/pages/ -f public/templates/templates.js -e hbs"
+    "compile:templates": "handlebars public/templates/components public/templates/pages/ -f dist/templates/templates.js -e hbs -k"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,9 @@
     "body-parser": "^2.2.0",
     "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
     "handlebars": "^4.7.8",
+    "hbs": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "path": "^0.12.7"
