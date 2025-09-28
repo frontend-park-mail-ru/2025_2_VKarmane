@@ -1,4 +1,4 @@
-import { Status } from "../status";
+import { Status } from "../status/index.js";
 
 export class ExpenseCard {
   getSelf(currency, sum, text, gotStatus = "") {

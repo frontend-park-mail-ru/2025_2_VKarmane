@@ -1,7 +1,7 @@
-import { StartButton } from "../../components/startButton";
-import { InputField } from "../../components/inputField";
-import { absenceText } from "../../components/absenceText";
-import { serviceItem } from "../../components/serviceItem";
+import { StartButton } from "../../components/startButton/index.js";
+import { InputField } from "../../components/inputField/index.js";
+import { absenceText } from "../../components/absenceText/index.js";
+import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 

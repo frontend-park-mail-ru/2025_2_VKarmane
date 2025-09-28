@@ -1,11 +1,11 @@
-import { FactBal } from "../../components/Fact_Bal";
-import { Card } from "../../components/cards";
-import { PlanBal } from "../../components/Plan_Bal";
-import { Menu } from "../../components/menu";
-import { Add } from "../../components/add";
-import { Operations } from "../../components/operations";
-import {AddCard} from "../../components/addCard";
-import {getBudgets, getBalance} from "../../api";
+import { FactBal } from "../../components/Fact_Bal/index.js";
+import { Card } from "../../components/cards/index.js";
+import { PlanBal } from "../../components/Plan_Bal/index.js";
+import { Menu } from "../../components/menu/index.js";
+import { Add } from "../../components/add/index.js";
+import { Operations } from "../../components/operations/index.js";
+import {AddCard} from "../../components/addCard/index.js";
+import {getBudgets, getBalance} from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 
 

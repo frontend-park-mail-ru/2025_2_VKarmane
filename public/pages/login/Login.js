@@ -1,8 +1,8 @@
-import { StartButton } from "../../components/startButton";
-import { InputField } from "../../components/inputField";
-import { absenceText } from "../../components/absenceText";
-import { Category } from "../../components/category";
-import { ExpenseCard } from "../../components/expenseCard";
+import { StartButton } from "../../components/startButton/index.js";
+import { InputField } from "../../components/inputField/index.js";
+import { absenceText } from "../../components/absenceText/index.js";
+import { Category } from "../../components/category/index.js";
+import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 
