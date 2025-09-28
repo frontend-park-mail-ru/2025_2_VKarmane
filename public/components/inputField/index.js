@@ -3,4 +3,31 @@ export class InputField {
     const template = Handlebars.templates["InputField"];
     return template({ type, name, text });
   }
+
+  setError(inputs, text_error = "") {
+    if (!inputs) {
+      return;
+    }
+
+    const group = inputs[inputs.length - 1].closest(".input-group");
+    let errEls = group.querySelectorAll(".error-text");
+
+    errEls.forEach((element) => {
+      element.remove();
+    });
+
+    if (text_error) {
+      let errElem = document.createElement("div");
+      errElem.classList.add("error-text");
+      errElem.style.color = "red";
+      errElem.style.fontSize = "0.875rem";
+
+      errElem.textContent = text_error;
+      group.appendChild(errElem);
+    }
+
+    inputs.forEach((element) => {
+      element.style.borderColor = "red";
+    });
+  }
 }

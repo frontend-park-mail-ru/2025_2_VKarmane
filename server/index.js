@@ -13,7 +13,15 @@ app.use(body.json());
 app.use(cookie());
 
 
+
 app.use('/dist', express.static('dist'));
+app.post("/login", (req, res) => {
+  res.status(403).json({ status: "n", text: "wrong login or password" });
+});
+
+app.post("/signup", (req, res) => {
+  res.status(403).json({ status: "n", text: "occupied email" });
+});
 
 app.use(express.static(path.join(__dirname, "../public"))); // отдаём JS и CSS
 app.get("/", (req, res) => {
