@@ -1,7 +1,7 @@
-import { StartButton } from "../../components/startButton/index.js";
-import { InputField } from "../../components/inputField/index.js";
-import { absenceText } from "../../components/absenceText/index.js";
-import { serviceItem } from "../../components/serviceItem/index.js";
+import { StartButton } from "../../components/startButton";
+import { InputField } from "../../components/inputField";
+import { absenceText } from "../../components/absenceText";
+import { serviceItem } from "../../components/serviceItem";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 
@@ -71,7 +71,7 @@ export class SignUpPage {
       return;
     }
 
-    const response = await fetch("/signup", {
+    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -81,30 +81,44 @@ export class SignUpPage {
         email: email,
         password: password,
       }),
+      credentials: "include",
     });
 
+    const status = response.status;
     const result = await response.json();
-    this.checkResultStatus(result, form);
+    this.checkResultStatus(status, result, form);
   }
 
-  checkResultStatus(result, form) {
-    if (result.status !== "ok") {
-      if (result.text === "occupied email") {
-        this.setInputsError(form, "Адрес уже зарегистрирован");
-      } else if (result.text === "occupied login") {
-        this.setInputsError(form, "Такой логин уже существует");
-      }
+  checkResultStatus(status, result, form) {
+    if (status == 200) {
+      goToPage(config.user_page);
+    } else if (status == 400) {
+      this.setInputsError(
+        form,
+        "Пользователь с таким логином или почту уже существует",
+      );
+    } else if (status == 500) {
+      this.setServerError();
     }
-    goToPage(config.login)
   }
 
-  setInputsError(form, text_error) {
+  setInputsError(form, text_error, to_color = true) {
     const loginInput = form.querySelector('input[name="login"]');
     const emailInput = form.querySelector('input[name="email"]');
     const passwordInput = form.querySelector('input[name="password"]');
     this.inputField.setError(
       [loginInput, emailInput, passwordInput],
+      to_color,
       text_error,
+    );
+  }
+
+  setServerError() {
+    const form = document.querySelector(".signup-form");
+    this.setInputsError(
+      form,
+      "При регистрации произошла ошибка. Повторите попытку позже",
+      false,
     );
   }
 

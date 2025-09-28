@@ -1,21 +1,27 @@
 
 .operations{
-    width: 658px;
+    display: flex;
+    flex-direction: row;
+    width: 500px;
     height: 420px;
     background-color: #FFFFFF;
     border-radius: 26px;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
-    margin-top: 18px;
+    margin-top: 38px;
+    justify-content: center;
+    align-items: center;
 }
 .oper_not_exists{
-    display: grid;
+    display: flex;
+    flex-direction: column;
     place-items: center;
     align-items: center;
     text-align: center;
     margin-top: 18px;
-    position: relative;
-    top: 25%;
-    gap: 5px;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .oper_not_exists_img{
@@ -27,9 +33,10 @@
     display: block;
     background-color: #EB5B1D;
     border-radius: 8px;
-    width: 274px;
     height: 43px;
-    font-family: "Montserrat Semibold";
+    width: 100%;
+    font-family: "Montserrat";
+        font-weight: 600;
     color: white;
     text-align: center;
     text-decoration: none;

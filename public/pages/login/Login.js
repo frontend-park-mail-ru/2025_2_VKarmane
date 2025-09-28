@@ -1,8 +1,8 @@
-import { StartButton } from "../../components/startButton/index.js";
-import { InputField } from "../../components/inputField/index.js";
-import { absenceText } from "../../components/absenceText/index.js";
-import { Category } from "../../components/category/index.js";
-import { ExpenseCard } from "../../components/expenseCard/index.js";
+import { StartButton } from "../../components/startButton";
+import { InputField } from "../../components/inputField";
+import { absenceText } from "../../components/absenceText";
+import { Category } from "../../components/category";
+import { ExpenseCard } from "../../components/expenseCard";
 import { goToPage, config } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 
@@ -58,7 +58,7 @@ export class LoginPage {
       return;
     }
 
-    const response = await fetch("/login", {
+    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -67,26 +67,37 @@ export class LoginPage {
         login: login,
         password: password,
       }),
+      credentials: "include",
     });
 
+    const status = response.status;
     const result = await response.json();
-    this.checkResultStatus(result, form);
+    this.checkResultStatus(status, result, form);
   }
 
-  checkResultStatus(result, form) {
-    if (result.status !== "ok") {
-      if (result.text === "wrong login or password") {
-        this.setInputsError(form, "Неверный логин или пароль");
-      }
-      return;
+  checkResultStatus(status, result, form) {
+    if (status == 200) {
+      goToPage(config.user_page);
+    } else if (status == 401) {
+      this.setInputsError(form, "Неверный логин или пароль");
+    } else if (status == 500) {
+      this.setServerError();
     }
-    return;
   }
 
-  setInputsError(form, text_error) {
+  setServerError() {
+    const form = document.querySelector(".login-form");
+    this.setInputsError(
+      form,
+      "При авторизации произошла ошибка. Повторите попытку позже",
+      false,
+    );
+  }
+
+  setInputsError(form, text_error, to_color = true) {
     const errorLogin = form.querySelector('input[name="login"]');
     const errorPassword = form.querySelector('input[name="password"]');
-    this.inputField.setError([errorLogin, errorPassword], text_error);
+    this.inputField.setError([errorLogin, errorPassword], to_color, text_error);
   }
 
   setupEventListeners(container) {

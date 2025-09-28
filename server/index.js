@@ -13,23 +13,16 @@ app.use(body.json());
 app.use(cookie());
 
 
+const port = process.env.PORT || 3000;
+
+
 
 app.use('/dist', express.static('dist'));
-app.post("/login", (req, res) => {
-  res.status(403).json({ status: "n", text: "wrong login or password" });
-});
 
-app.post("/signup", (req, res) => {
-  res.status(403).json({ status: "n", text: "occupied email" });
-});
 
 app.use(express.static(path.join(__dirname, "../public"))); // отдаём JS и CSS
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
-app.get("/signup", (req, res) => {
-    res.status(200).json({ status: "ok" });
-});
-
-app.listen(3000, () => console.log("Server running"));
+app.listen(port, () => console.log("Server running"));

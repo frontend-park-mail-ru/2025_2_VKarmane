@@ -6,13 +6,13 @@
 
 .card1{
     width: 264px;
-    height: 369px;
+    height: 100%;
     background-color: #FFFFFF;
     border-radius: 26px;
     box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
 }
 .Card-One-text{
-    font-family: Montserrat;
+    font-family: "Montserrat";
     font-weight: bold;
     color: #949494;
     margin-left: 20px;
@@ -24,7 +24,8 @@
     position: relative;
     bottom: 40px;
     color: black;
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 20px;
     margin-left: 20px;
     margin-top: 43px;
@@ -44,7 +45,7 @@
 
 .NaibolshRashod{
     margin-left: 16px;
-    font-family: Montserrat;
+    font-family: "Montserrat";
     font-weight: bold;
     font-size: 11px;
     position: relative;
@@ -61,7 +62,8 @@
 }
 
 .rashod_sum{
-    font-family: Montserrat Regular;
+    font-family: "Montserrat";
+    font-weight: 500;
     font-size: 15px;
     float: left;
     margin-left:19px;
@@ -84,7 +86,8 @@
 }
 
 .rashod-sum-action{
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 9px;
     color: #BF00AF;
     position: relative;
