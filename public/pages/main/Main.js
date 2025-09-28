@@ -24,9 +24,9 @@ export class MainPage {
 
             const data = {
                 FactBal: factBal.getSelf(
-                    budgetsData[0].actual,
-                    budgetsData[0].updated,
-                    balanceData[0].prevBalance
+                    budgetsData.budgets[0].actual,
+                    2323232,
+                    budgetsData.budgets[0].updated,
                 ),
                 cards: card.getSelf(
                     balanceData.accounts[0].balance,
@@ -35,7 +35,7 @@ export class MainPage {
                     1523,
                     "Развлечения"
                 ),
-                PlanBal: planBal.getSelf(budgetsData[0].amount),
+                PlanBal: planBal.getSelf(budgetsData.budgets[0].amount),
                 menu: menu.getSelf(),
                 Add: add.getSelf(),
                 operations: operations.getList([]),
