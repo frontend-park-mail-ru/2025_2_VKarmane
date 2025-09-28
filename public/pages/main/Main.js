@@ -9,11 +9,7 @@ import {getBudgets, getBalance} from "../../../api/index.js";
 
 export class MainPage {
     async render(container) {
-        if (!container) throw new Error("Container element not found!");
-
         const template = Handlebars.templates["main"];
-
-        // Компоненты
         const factBal = new FactBal();
         const card = new Card();
         const planBal = new PlanBal();
@@ -28,9 +24,9 @@ export class MainPage {
 
             const data = {
                 FactBal: factBal.getSelf(
-                    budgetsData.budgets[0].actual,
-                    4247294,
-                    budgetsData.budgets[0].updated,
+                    budgetsData[0].actual,
+                    budgetsData[0].updated,
+                    balanceData[0].prevBalance
                 ),
                 cards: card.getSelf(
                     balanceData.accounts[0].balance,
@@ -39,7 +35,7 @@ export class MainPage {
                     1523,
                     "Развлечения"
                 ),
-                PlanBal: planBal.getSelf(budgetsData.budgets[0].amount),
+                PlanBal: planBal.getSelf(budgetsData[0].amount),
                 menu: menu.getSelf(),
                 Add: add.getSelf(),
                 operations: operations.getList([]),
@@ -47,10 +43,31 @@ export class MainPage {
             };
 
             container.innerHTML = template(data);
+            const logout = document.querySelector(".logout");
+            logout.addEventListener("click", async () => {
+                try {
+                    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/logout", {
+                        method: "POST",
+                        credentials: "include"
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.message === "\"Logged out successfully\"") {
+                        window.location.href = "/login";
+                    } else{
+                        console.error("Error happend: ", data.message);
+                    }
+                } catch (err){
+                    console.error("Error happened: ", err);
+                }
+            })
         } catch (err) {
             console.error(err);
             container.innerHTML = `<p style="color:red">Ошибка загрузки данных</p>`;
         }
+
+
     }
 }
 
