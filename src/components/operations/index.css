@@ -1,3 +1,4 @@
+
 .operations {
   height: 420px;
   background-color: #ffffff;
@@ -6,6 +7,7 @@
   margin-top: 18px;
   position: relative;
   top: -18px;
+
 }
 
 .oper_not_exists {
