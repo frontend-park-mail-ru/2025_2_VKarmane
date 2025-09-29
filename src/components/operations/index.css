@@ -1,14 +1,15 @@
-.operations{
-    width: 658px;
-    height: 420px;
-    background-color: #FFFFFF;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
-    margin-top: 18px;
-    position: relative;
-    top: -18px;
+.operations {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+  height: 420px;
+  background-color: #ffffff;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+  margin-top: 38px;
+  justify-content: center;
+  align-items: center;
 }
-
 .oper_not_exists {
   display: flex;
   flex-direction: column;
