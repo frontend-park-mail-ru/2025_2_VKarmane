@@ -1,3 +1,4 @@
+
 .operations {
   display: flex;
   flex-direction: row;
@@ -42,10 +43,10 @@
   line-height: 43px;
 }
 
-.operations-list {
-  display: grid;
-  gap: 70px;
-  padding: 20px;
+.operations-list{
+    display: grid;
+    gap: 70px;
+    padding: 20px;
 }
 
 .operation {
@@ -70,13 +71,14 @@
   gap: 2px;
 }
 
-.title_oper {
-  font-weight: bold;
+.title_oper{
+    font-weight: bold;
 }
 
-.price_oper {
-  font-weight: bold;
+.price_oper{
+    font-weight: bold;
 }
+
 
 .operation_img {
   width: 43px;
