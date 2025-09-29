@@ -3,7 +3,7 @@
 @import "pages/main/Main.css";
 @font-face {
   font-family: "Montserrat";
-  src: url("static/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
+  src: url("./public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
     format("truetype");
   font-weight: 100 900;
   font-style: normal;

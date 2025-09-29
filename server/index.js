@@ -16,9 +16,10 @@ const port = process.env.PORT || 3000;
 
 app.use("/dist", express.static("dist"));
 
-app.use(express.static(path.join(__dirname, "../public"))); // отдаём JS и CSS
+// app.use(express.static(path.join(__dirname, "../public"))); // отдаём JS и CSS
+app.use(express.static(path.join(__dirname, "../src"))); // отдаём JS и CSS
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, "../src/index.html"));
 });
 
 app.listen(port, () => console.log("Server running"));
