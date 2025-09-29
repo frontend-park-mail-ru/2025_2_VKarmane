@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const app = express();
 
 app.use(morgan("dev"));
-app.use(express.static(path.resolve(__dirname, "..", "public")));
+// app.use(express.static(path.resolve(__dirname, "../public")));
 app.use(express.static(path.resolve(__dirname, "..", "node_modules")));
 app.use(body.json());
 app.use(cookie());
@@ -15,6 +15,7 @@ app.use(cookie());
 const port = process.env.PORT || 3000;
 
 app.use("/dist", express.static("dist"));
+app.use("/public", express.static("public"))
 
 // app.use(express.static(path.join(__dirname, "../public"))); // отдаём JS и CSS
 app.use(express.static(path.join(__dirname, "../src"))); // отдаём JS и CSS
