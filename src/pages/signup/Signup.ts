@@ -199,10 +199,7 @@ export class SignUpPage {
    * @param {HTMLFormElement} form - Форма регистрации
    * @returns {boolean} Результат валидации
    */
-<<<<<<< HEAD
 
-=======
->>>>>>> 1d600aa (style fixes)
   validateInput(
     login: string,
     email: string,
@@ -235,10 +232,7 @@ export class SignUpPage {
       checkField("password", password, passwordInput!)
     );
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> 1d600aa (style fixes)
   validateSingleField(
     fieldName: string,
     fieldValue: string,
@@ -269,13 +263,11 @@ export class SignUpPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
-<<<<<<< HEAD
+
     if (!loginInput || !emailInput || !passwordInput) throw "";
 
     return [loginInput, emailInput, passwordInput];
-=======
-    return [loginInput!, emailInput!, passwordInput!];
->>>>>>> 1d600aa (style fixes)
+
   }
 
   getRandomSlogan(): string[] {
