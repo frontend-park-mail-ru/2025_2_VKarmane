@@ -12,17 +12,13 @@ app.use(express.static(path.resolve(__dirname, "..", "node_modules")));
 app.use(body.json());
 app.use(cookie());
 
-
 const port = process.env.PORT || 3000;
 
-
-
-app.use('/dist', express.static('dist'));
-
+app.use("/dist", express.static("dist"));
 
 app.use(express.static(path.join(__dirname, "../public"))); // отдаём JS и CSS
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 app.listen(port, () => console.log("Server running"));

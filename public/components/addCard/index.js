@@ -1,5 +1,5 @@
 export class AddCard {
-    getSelf() {
-        return Handlebars.templates["addCard"];
-    }
+  getSelf() {
+    return Handlebars.templates["addCard"];
+  }
 }

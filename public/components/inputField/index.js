@@ -4,10 +4,7 @@ export class InputField {
     return template({ type, name, text });
   }
 
-
   setError(inputs, to_color, text_error = "") {
-
-
     if (!inputs) {
       return;
     }
@@ -34,6 +31,5 @@ export class InputField {
         element.style.borderColor = "red";
       });
     }
-
   }
 }

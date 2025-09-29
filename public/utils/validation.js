@@ -38,7 +38,7 @@ export class Validator {
       password: {
         required: "Пароль обязателен",
         minLength: `Пароль должен быть не менее ${this.rules.password.minLength} символов`,
-        maxLength: `Пароль должен быть не более ${this.rules.password.minLength} символов`,
+        maxLength: `Пароль должен быть не более ${this.rules.password.maxLength} символов`,
         uppercase: "Пароль должен содержать хотя бы одну заглавную букву",
         lowercase: "Пароль должен содержать хотя бы одну строчную букву",
         numbers: "Пароль должен содержать хотя бы одну цифру",

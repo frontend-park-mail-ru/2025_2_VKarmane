@@ -6,15 +6,37 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 
+/**
+ * Класс страницы авторизации
+ * @class
+ */
 export class LoginPage {
+  /**
+   * Создает экземпляр страницы авторизации
+   * @constructor
+   */
   constructor() {
+    /** @type {StartButton} */
     this.startButton = new StartButton();
+
+    /** @type {InputField} */
     this.inputField = new InputField();
+
+    /** @type {absenceText} */
     this.absText = new absenceText();
+
+    /** @type {Category} */
     this.category = new Category();
+
+    /** @type {ExpenseCard} */
     this.expCard = new ExpenseCard();
   }
 
+  /**
+   * Рендерит страницу авторизации в контейнер
+   * @param {HTMLElement} container - Контейнер для рендеринга
+   * @returns {void}
+   */
   render(container) {
     const template = Handlebars.templates["Login"];
     const expCards = [
@@ -50,6 +72,12 @@ export class LoginPage {
     this.setupEventListeners(container);
   }
 
+  /**
+   * Обрабатывает запрос авторизации
+   * @param {HTMLFormElement} form - Форма авторизации
+   * @returns {Promise<void>}
+   * @async
+   */
   async handleLoginRequest(form) {
     const login = form.querySelector('input[name="login"]').value;
     const password = form.querySelector('input[name="password"]').value;
@@ -75,6 +103,13 @@ export class LoginPage {
     this.checkResultStatus(status, result, form);
   }
 
+  /**
+   * Проверяет статус ответа сервера и выполняет соответствующие действия
+   * @param {number} status - HTTP статус код
+   * @param {Object} result - Результат ответа сервера
+   * @param {HTMLFormElement} form - Форма авторизации
+   * @returns {void}
+   */
   checkResultStatus(status, result, form) {
     if (status == 200) {
       goToPage(config.user_page);
@@ -85,6 +120,10 @@ export class LoginPage {
     }
   }
 
+  /**
+   * Устанавливает ошибку сервера
+   * @returns {void}
+   */
   setServerError() {
     const form = document.querySelector(".login-form");
     this.setInputsError(
@@ -94,12 +133,24 @@ export class LoginPage {
     );
   }
 
+  /**
+   * Устанавливает ошибки для полей ввода
+   * @param {HTMLFormElement} form - Форма авторизации
+   * @param {string} text_error - Текст ошибки
+   * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
+   * @returns {void}
+   */
   setInputsError(form, text_error, to_color = true) {
     const errorLogin = form.querySelector('input[name="login"]');
     const errorPassword = form.querySelector('input[name="password"]');
     this.inputField.setError([errorLogin, errorPassword], to_color, text_error);
   }
 
+  /**
+   * Настраивает обработчики событий
+   * @param {HTMLElement} container - Контейнер с элементами
+   * @returns {void}
+   */
   setupEventListeners(container) {
     const form = container.querySelector("#login");
     form.addEventListener("submit", (e) => {
@@ -114,9 +165,22 @@ export class LoginPage {
     });
   }
 
+  /**
+   * Валидирует введенные данные
+   * @param {string} login - Логин пользователя
+   * @param {string} password - Пароль пользователя
+   * @param {HTMLFormElement} form - Форма авторизации
+   * @returns {boolean} Результат валидации
+   */
   validateInput(login, password, form) {
     const validator = new Validator();
 
+    /**
+     * Устанавливает ошибку для поля и возвращает результат валидации
+     * @param {string} fieldName - Название поля
+     * @param {string} fieldValue - Значение поля
+     * @returns {boolean} Результат валидации
+     */
     const setInputErrorAndReturn = (fieldName, fieldValue) => {
       let error = validator.validate(fieldName, fieldValue);
       if (error !== undefined) {

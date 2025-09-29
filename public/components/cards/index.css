@@ -1,100 +1,98 @@
-.Card-balance-text{
-    margin-left: 20px;
-    position: relative;
-    bottom: 46px;
+.Card-balance-text {
+  margin-left: 20px;
+  position: relative;
+  bottom: 46px;
 }
 
-.card1{
-    width: 264px;
-    height: 100%;
-    background-color: #FFFFFF;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0,0,0,0.04);
+.card1 {
+  width: 264px;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
 }
-.Card-One-text{
-    font-family: "Montserrat";
-    font-weight: bold;
-    color: #949494;
-    margin-left: 20px;
-    padding-top: 37px ;
-}
-
-.CheckSumCard{
-    display: flex;
-    position: relative;
-    bottom: 40px;
-    color: black;
-    font-family: "Montserrat";
-    font-weight: 600;
-    font-size: 20px;
-    margin-left: 20px;
-    margin-top: 43px;
+.Card-One-text {
+  font-family: "Montserrat";
+  font-weight: bold;
+  color: #949494;
+  margin-left: 20px;
+  padding-top: 37px;
 }
 
-.rashod-card{
-    background-color: #FFFFFF;
-    border-radius: 26px;
-    border: 1px solid #000000;
-    height: 103px;
-    width: 221px;
-    margin: 0 auto;
-}
-.card1{
-    justify-content: center;
-}
-
-.NaibolshRashod{
-    margin-left: 16px;
-    font-family: "Montserrat";
-    font-weight: bold;
-    font-size: 11px;
-    position: relative;
-    left: -7px;
-    top: -6px;
-    color: #000000;
+.CheckSumCard {
+  display: flex;
+  position: relative;
+  bottom: 40px;
+  color: black;
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 20px;
+  margin-left: 20px;
+  margin-top: 43px;
 }
 
-.drawing{
-    margin-right: 5px;
-    width: 40px;
-    height: 41px;
-
+.rashod-card {
+  background-color: #ffffff;
+  border-radius: 26px;
+  border: 1px solid #000000;
+  height: 103px;
+  width: 221px;
+  margin: 0 auto;
+}
+.card1 {
+  justify-content: center;
 }
 
-.rashod_sum{
-    font-family: "Montserrat";
-    font-weight: 500;
-    font-size: 15px;
-    float: left;
-    margin-left:19px;
-    color: black;
-    position: relative;
-    top:-10px;
+.NaibolshRashod {
+  margin-left: 16px;
+  font-family: "Montserrat";
+  font-weight: bold;
+  font-size: 11px;
+  position: relative;
+  left: -7px;
+  top: -6px;
+  color: #000000;
 }
 
-
-.actions{
-    width: 77px;
-    height: 13px;
-    background-color: #FF80EA;
-    margin-left: 8px;
-    position: relative;
-    top: -6px;
-    text-align: center;
-    color: #FF80EA;
-    border-radius: 50px;
+.drawing {
+  margin-right: 5px;
+  width: 40px;
+  height: 41px;
 }
 
-.rashod-sum-action{
-    font-family: "Montserrat";
-    font-weight: 600;
-    font-size: 9px;
-    color: #BF00AF;
-    position: relative;
-    top: -8px;
+.rashod_sum {
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 15px;
+  float: left;
+  margin-left: 19px;
+  color: black;
+  position: relative;
+  top: -10px;
 }
 
-.rashod-img{
-    position: relative;
-    left: 90px;
+.actions {
+  width: 77px;
+  height: 13px;
+  background-color: #ff80ea;
+  margin-left: 8px;
+  position: relative;
+  top: -6px;
+  text-align: center;
+  color: #ff80ea;
+  border-radius: 50px;
+}
+
+.rashod-sum-action {
+  font-family: "Montserrat";
+  font-weight: 600;
+  font-size: 9px;
+  color: #bf00af;
+  position: relative;
+  top: -8px;
+}
+
+.rashod-img {
+  position: relative;
+  left: 90px;
 }

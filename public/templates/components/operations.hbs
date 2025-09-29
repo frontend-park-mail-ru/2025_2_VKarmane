@@ -1,29 +1,29 @@
 <div class="operations">
-    {{#if operations_exists}}
-        <div class="operations-list">
-            {{#each operationsItems}}
-                <div class="operations-item">
-                    <div class="operation" style="display: flex;">
-                        <img src="{{image_oper}}" alt="{{title_oper}}">
-                        <div class="title_with_category">
-                            <div class="title_oper">{{title_oper}}</div>
-                            <div class="category_oper">{{category_oper}}</div>
-                        </div>
-                        <div class="price_and_time">
-                            <div class="price_oper">{{price_oper}}₽</div>
-                            <div class="time_oper">{{time_oper}}</div>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
+  {{#if operations_exists}}
+    <div class="operations-list">
+      {{#each operationsItems}}
+        <div class="operations-item">
+          <div class="operation" style="display: flex;">
+            <img src="{{image_oper}}" alt="{{title_oper}}" />
+            <div class="title_with_category">
+              <div class="title_oper">{{title_oper}}</div>
+              <div class="category_oper">{{category_oper}}</div>
+            </div>
+            <div class="price_and_time">
+              <div class="price_oper">{{price_oper}}₽</div>
+              <div class="time_oper">{{time_oper}}</div>
+            </div>
+          </div>
         </div>
-    {{else}}
-        <div class="oper_not_exists">
-            <div class="oper_not_exists_img"></div>
-            <h2 style="color: #949494; font-size: 20px">
-                Тут пока ничего нет :(
-            </h2>
-            <a class="add_operation" href="#">+ Добавить операцию</a>
-        </div>
-    {{/if}}
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="oper_not_exists">
+      <div class="oper_not_exists_img"></div>
+      <h2 style="color: #949494; font-size: 20px">
+        Тут пока ничего нет :(
+      </h2>
+      <a class="add_operation" href="#">+ Добавить операцию</a>
+    </div>
+  {{/if}}
 </div>
