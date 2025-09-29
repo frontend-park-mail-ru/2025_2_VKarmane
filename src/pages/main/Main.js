@@ -73,15 +73,12 @@ export class MainPage {
           },
         );
 
-
-        const data = await response.text();
-
-
-        if (!data.message === '"Logged out successfully"') {
+        if (response.ok) {
           window.location.href = "/login";
           goToPage(config.login);
+          return;
         } else {
-          console.error("Error happend: ", data.message);
+          throw Error();
         }
       } catch (err) {
         console.error("Error happend: ", err);
