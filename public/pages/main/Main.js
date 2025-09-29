@@ -56,7 +56,7 @@ export class MainPage {
         const logout = document.querySelector(".logout");
         logout.addEventListener("click", async () => {
             try {
-                const response = await fetch("http://217.16.23.67:8080//api/v1/auth/logout", {
+                const response = await fetch("http://217.16.23.67:8080/api/v1/auth/logout", {
                     method: "POST",
                     credentials: "include"
                 });
