@@ -74,7 +74,6 @@ export class MainPage {
         );
 
         if (response.ok) {
-          window.location.href = "/login";
           goToPage(config.login);
           return;
         } else {
