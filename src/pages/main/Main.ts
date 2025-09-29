@@ -92,12 +92,8 @@ export class MainPage {
       return;
     }
     const logout = document.querySelector(".logout");
-<<<<<<< HEAD
     if (!logout) return;
     logout.addEventListener("click", async () => {
-=======
-    logout!.addEventListener("click", async () => {
->>>>>>> 0f5c50a (rebased)
       const { ok } = await apiFetch(`/auth/logout`, {
         method: "POST",
       });
