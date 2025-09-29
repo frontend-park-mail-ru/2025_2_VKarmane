@@ -1,4 +1,5 @@
 
+
 .operations {
   height: 420px;
   background-color: #ffffff;
@@ -37,15 +38,16 @@
   text-align: center;
   text-decoration: none;
   line-height: 43px;
-}
 
-.operations-list {
-  display: grid;
-  gap: 70px;
-  padding: 20px;
+
+.operations-list{
+    display: grid;
+    gap: 70px;
+    padding: 20px;
 }
 
 .operation {
+<<<<<<< HEAD
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,15 +68,17 @@
   gap: 2px;
 }
 
-.title_oper {
-  font-weight: bold;
+.title_oper{
+    font-weight: bold;
 }
 
-.price_oper {
-  font-weight: bold;
+.price_oper{
+    font-weight: bold;
 }
 
-.operation_img {
-  width: 43px;
-  height: 43px;
+
+
+.operation_img{
+    width: 43px;
+    height: 43px;
 }
