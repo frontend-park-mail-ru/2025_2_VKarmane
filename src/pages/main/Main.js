@@ -73,7 +73,7 @@ export class MainPage {
           },
         );
 
-        const data = await response.json();
+        const data = await response.text();
 
         if (!data.message === '"Logged out successfully"') {
           window.location.href = "/login";
