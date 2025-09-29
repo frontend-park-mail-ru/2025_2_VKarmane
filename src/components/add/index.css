@@ -3,7 +3,7 @@
   height: 219px; /* Высота в пикселях */
   background-color: #ffffff;
   border-radius: 26px;
-  background-image: url("../../static/imgs/vk-add.jpg");
+  background-image: url("../../../public/imgs/vk-add.jpg");
   background-size: cover;
   background-position: center;
   margin-top: 19px;

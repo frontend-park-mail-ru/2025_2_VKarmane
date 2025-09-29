@@ -34,9 +34,9 @@ export default defineConfig([
     },
   },
   {
-    files: ["public/templates/templates.js"],
+    files: ["src/templates/templates.js"],
     rules: {
-      "no-unused-vars": "off"
-    }
-  }
+      "no-unused-vars": "off",
+    },
+  },
 ]);

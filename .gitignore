@@ -1,5 +1,5 @@
 node_modules/
 *.precompiled.js
 .idea
-/public/handlebars
+/src/handlebars
 templates.js
