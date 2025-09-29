@@ -3,7 +3,6 @@ import { SignUpPage } from "./pages/signup/Signup.js";
 
 import { MainPage } from "./pages/main/Main.js";
 
-
 const rootElement = document.getElementById("root");
 
 export const config = {
@@ -22,8 +21,8 @@ export const config = {
 };
 
 function renderUserPage() {
-    const page = new MainPage();
-    page.render(rootElement);
+  const page = new MainPage();
+  page.render(rootElement);
 }
 
 function renderLoginPage() {

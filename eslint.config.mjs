@@ -30,6 +30,13 @@ export default defineConfig([
     extends: ["css/recommended"],
     rules: {
       "css/use-baseline": "off",
+      "css/font-family-fallbacks": "off",
     },
   },
+  {
+    files: ["public/templates/templates.js"],
+    rules: {
+      "no-unused-vars": "off"
+    }
+  }
 ]);

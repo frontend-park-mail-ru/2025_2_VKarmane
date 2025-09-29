@@ -1,69 +1,68 @@
-.logo{
-    width: 85px; /* Ширина в пикселях */
-    height: 85px; /* Высота в пикселях */
-    background-color: #FFFFFF;
-    background-image: url("../../static/imgs/logo.png");
-    border-radius: 15px;
-    background-size: cover;
-    background-position: center;
-    margin-top: 34px;
+.logo {
+  width: 85px; /* Ширина в пикселях */
+  height: 85px; /* Высота в пикселях */
+  background-color: #ffffff;
+  background-image: url("../../static/imgs/logo.png");
+  border-radius: 15px;
+  background-size: cover;
+  background-position: center;
+  margin-top: 34px;
 }
 
-.butMain{
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    background-size: cover;
-    background-position: center;
-    border: none;
-    background-color: transparent;
-    background-image: url("../../static/imgs/main_page.png");
-
+.butMain {
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+  background-image: url("../../static/imgs/main_page.png");
 }
 
-.butMain:hover{
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    background-size: cover;
-    background-position: center;
-    border: none;
-    background-color: transparent;
-    background-image: url("../../static/imgs/main_page_hover.png");
+.butMain:hover {
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+  background-image: url("../../static/imgs/main_page_hover.png");
 }
 
-.LeftPart{
-    float: left;
-    width: 15%;
-    height: auto;
-    display: flex;
-    justify-content: center;
+.LeftPart {
+  float: left;
+  width: 15%;
+  height: auto;
+  display: flex;
+  justify-content: center;
 }
-.mainPage{
-    display: grid;
-    justify-content: center;
-}
-
-.logout{
-    position: relative;
-    top: 703px;
-    height: 57px;
-    width: 57px;
-    background-size: cover;
-    background-image: url("../../static/imgs/logout.png");
-    background-position: center;
-    border: none;
-    background-color: transparent;
+.mainPage {
+  display: grid;
+  justify-content: center;
 }
 
-.logout:hover{
-    position: relative;
-    top: 703px;
-    height: 57px;
-    width: 57px;
-    background-size: cover;
-    background-position: center;
-    background-image: url("../../static/imgs/logout_hover.png");
-    border: none;
-    background-color: transparent;
+.logout {
+  position: relative;
+  top: 703px;
+  height: 57px;
+  width: 57px;
+  background-size: cover;
+  background-image: url("../../static/imgs/logout.png");
+  background-position: center;
+  border: none;
+  background-color: transparent;
+}
+
+.logout:hover {
+  position: relative;
+  top: 703px;
+  height: 57px;
+  width: 57px;
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../static/imgs/logout_hover.png");
+  border: none;
+  background-color: transparent;
 }

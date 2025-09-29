@@ -5,14 +5,34 @@ import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 
+/**
+ * Класс страницы регистрации
+ * @class
+ */
 export class SignUpPage {
+  /**
+   * Создает экземпляр страницы регистрации
+   * @constructor
+   */
   constructor() {
+    /** @type {StartButton} */
     this.startButton = new StartButton();
+
+    /** @type {InputField} */
     this.inputField = new InputField();
+
+    /** @type {absenceText} */
     this.absText = new absenceText();
+
+    /** @type {serviceItem} */
     this.servItem = new serviceItem();
   }
 
+  /**
+   * Рендерит страницу регистрации в контейнер
+   * @param {HTMLElement} container - Контейнер для рендеринга
+   * @returns {void}
+   */
   render(container) {
     const template = Handlebars.templates["SignUp"];
     const serviceItems = [
@@ -62,6 +82,12 @@ export class SignUpPage {
     this.setupEventListeners(container);
   }
 
+  /**
+   * Обрабатывает запрос регистрации
+   * @param {HTMLFormElement} form - Форма регистрации
+   * @returns {Promise<void>}
+   * @async
+   */
   async handleSignUpRequest(form) {
     const login = form.querySelector('input[name="login"]').value;
     const email = form.querySelector('input[name="email"]').value;
@@ -71,28 +97,38 @@ export class SignUpPage {
       return;
     }
 
-    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
+    const response = await fetch(
+      "http://217.16.23.67:8080/api/v1/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          login: login,
+          email: email,
+          password: password,
+        }),
+        credentials: "include",
       },
-      body: JSON.stringify({
-        login: login,
-        email: email,
-        password: password,
-      }),
-      credentials: "include",
-    });
+    );
 
     const status = response.status;
     const result = await response.json();
     this.checkResultStatus(status, result, form);
   }
 
+  /**
+   * Проверяет статус ответа сервера и выполняет соответствующие действия
+   * @param {number} status - HTTP статус код
+   * @param {Object} result - Результат ответа сервера
+   * @param {HTMLFormElement} form - Форма регистрации
+   * @returns {void}
+   */
   checkResultStatus(status, result, form) {
-    if (status == 200) {
+    if (status == 201) {
       goToPage(config.user_page);
-    } else if (status == 400) {
+    } else if (status == 409) {
       this.setInputsError(
         form,
         "Пользователь с таким логином или почту уже существует",
@@ -102,6 +138,13 @@ export class SignUpPage {
     }
   }
 
+  /**
+   * Устанавливает ошибки для полей ввода
+   * @param {HTMLFormElement} form - Форма регистрации
+   * @param {string} text_error - Текст ошибки
+   * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
+   * @returns {void}
+   */
   setInputsError(form, text_error, to_color = true) {
     const loginInput = form.querySelector('input[name="login"]');
     const emailInput = form.querySelector('input[name="email"]');
@@ -113,6 +156,10 @@ export class SignUpPage {
     );
   }
 
+  /**
+   * Устанавливает ошибку сервера
+   * @returns {void}
+   */
   setServerError() {
     const form = document.querySelector(".signup-form");
     this.setInputsError(
@@ -122,6 +169,11 @@ export class SignUpPage {
     );
   }
 
+  /**
+   * Настраивает обработчики событий
+   * @param {HTMLElement} container - Контейнер с элементами
+   * @returns {void}
+   */
   setupEventListeners(container) {
     const form = container.querySelector("#signup");
     if (form) {
@@ -140,9 +192,23 @@ export class SignUpPage {
     }
   }
 
+  /**
+   * Валидирует введенные данные
+   * @param {string} login - Логин пользователя
+   * @param {string} email - Email пользователя
+   * @param {string} password - Пароль пользователя
+   * @param {HTMLFormElement} form - Форма регистрации
+   * @returns {boolean} Результат валидации
+   */
   validateInput(login, email, password, form) {
     const validator = new Validator();
 
+    /**
+     * Устанавливает ошибку для поля и возвращает результат валидации
+     * @param {string} fieldName - Название поля
+     * @param {string} fieldValue - Значение поля
+     * @returns {boolean} Результат валидации
+     */
     const setInputErrorAndReturn = (fieldName, fieldValue) => {
       console.log(fieldName);
       let error = validator.validate(fieldName, fieldValue);
