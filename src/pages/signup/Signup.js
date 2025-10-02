@@ -213,6 +213,7 @@ export class SignUpPage {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
+
     this.inputField.setPasswordInformerShow(passwordInput);
   }
 
