@@ -72,7 +72,9 @@ templates['Category'] = template({"compiler":[8,">= 4.3.0"],"main":function(cont
 
   return "<span\n  class=\"category-tag\"\n  style=\"background: "
     + alias4(((helper = (helper = lookupProperty(helpers,"color") || (depth0 != null ? lookupProperty(depth0,"color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"color","hash":{},"data":data,"loc":{"start":{"line":3,"column":21},"end":{"line":3,"column":30}}}) : helper)))
-    + ";\"\n>"
+    + "; color: "
+    + alias4(((helper = (helper = lookupProperty(helpers,"text_color") || (depth0 != null ? lookupProperty(depth0,"text_color") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"text_color","hash":{},"data":data,"loc":{"start":{"line":3,"column":39},"end":{"line":3,"column":53}}}) : helper)))
+    + "\"\n>"
     + alias4(((helper = (helper = lookupProperty(helpers,"category_name") || (depth0 != null ? lookupProperty(depth0,"category_name") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"category_name","hash":{},"data":data,"loc":{"start":{"line":4,"column":1},"end":{"line":4,"column":18}}}) : helper)))
     + "</span>";
 },"useData":true});

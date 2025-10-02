@@ -1,6 +1,6 @@
 export class Category {
-  getSelf(color, category_name) {
+  getSelf(color, text_color,  category_name) {
     const template = Handlebars.templates["Category"];
-    return template({ color, category_name });
+    return template({ color, text_color, category_name });
   }
 }
