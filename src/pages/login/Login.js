@@ -90,10 +90,12 @@ export class LoginPage {
   async handleLoginRequest(form) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
+
     const { ok, status } = await apiFetch(
       `/auth/login`,
       {
         method: "POST",
+
         body: JSON.stringify({
           login: loginInput.value,
           password: passwordInput.value,
@@ -113,6 +115,7 @@ export class LoginPage {
         this.setServerError();
       }
       return;
+
     }
 
     goToPage(config.user_page);
