@@ -81,21 +81,29 @@ export class LoginPage {
   async handleLoginRequest(form) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
-    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        login: loginInput.value,
-        password: passwordInput.value,
-      }),
-      credentials: "include",
-    });
+    try {
+      const response = await fetch("http://217.16.23.67:8080/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          login: loginInput.value,
+          password: passwordInput.value,
+        }),
+        credentials: "include",
+      });
+      const status = response.status;
+      const result = await response.json();
+      this.checkResultStatus(status, result, form);
+    }
+    catch (error) {
+      console.log(error)
+      this.setServerError()
+      return
+    }
 
-    const status = response.status;
-    const result = await response.json();
-    this.checkResultStatus(status, result, form);
+
   }
 
   /**
