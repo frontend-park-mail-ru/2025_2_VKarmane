@@ -10,6 +10,7 @@ export class InputField {
     this.template = Handlebars.compile(inputFieldTemplate);
   }
   getSelf(type, name, text) {
+
     return this.template({ type, name, text });
   }
 
