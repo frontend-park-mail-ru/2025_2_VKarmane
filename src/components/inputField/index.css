@@ -1,13 +1,10 @@
-<<<<<<< HEAD
+
 @import "../informer/index.css";
 
 .input-group {
   margin-bottom: 1.25rem;
   position: relative;
-=======
-.input-group {
-  margin-bottom: 1.25rem; /* отступ между группами */
->>>>>>> 611c2b2 (styles && dynamic valid)
+
 }
 
 .input-field {
@@ -36,7 +33,7 @@
   margin-top: 0.5rem;
   margin-bottom: 0;
 }
-<<<<<<< HEAD
+
 
 .border-red {
   border-color: red;
@@ -45,5 +42,3 @@
 .border-grey {
   border-color: #e5e7eb;
 }
-=======
->>>>>>> 611c2b2 (styles && dynamic valid)
