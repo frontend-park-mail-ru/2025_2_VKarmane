@@ -5,7 +5,6 @@
 @import "../../components/expenseCard/index.css";
 @import "../../components/serviceItem/index.css";
 
-
 .slogans {
   display: flex;
   flex-direction: column;
