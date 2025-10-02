@@ -29,6 +29,7 @@ export class SignUpPage {
     this.template = Handlebars.compile(signUpTemplate);
   }
 
+
   render(container: HTMLElement): void {
     document.body.classList.add("hide-scroller");
     const serviceItems = [

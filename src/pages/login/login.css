@@ -5,17 +5,17 @@
 @import "../../components/expenseCard/index.css";
 
 .hide-scroller::-webkit-scrollbar {
-<<<<<<< HEAD
   display: block;
 }
 
 .hide-scroller {
-=======
+
     display: block;
 }
 
-.hide-scroller{
->>>>>>> 611c2b2 (styles && dynamic valid)
+
+
+.hide-scroller {
   overflow: hidden;
 }
 div {
@@ -98,7 +98,7 @@ div {
 }
 
 .phone-mockup {
-<<<<<<< HEAD
+
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   padding: 1.5rem;
@@ -106,18 +106,6 @@ div {
   display: flex;
   gap: 3rem;
   justify-self: center;
-=======
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 24px;
-    padding: 1.5rem;
-    margin: 10px;
-    /* height: 530px; */
-    display: flex
-;
-    gap: 3rem;
-    /* justify-content: space-between; */
-    justify-self: center;
->>>>>>> 611c2b2 (styles && dynamic valid)
 }
 
 .mockup-header {
@@ -160,10 +148,10 @@ div {
   height: 120px;
   border-radius: 50%;
   background: conic-gradient(
-    #8BFF91 0deg 90deg,
-    #FF80EA 90deg 180deg,
-    #FFDA8F 180deg 270deg,
-    #94F1FF 270deg 360deg
+    #8bff91 0deg 90deg,
+    #ff80ea 90deg 180deg,
+    #ffda8f 180deg 270deg,
+    #94f1ff 270deg 360deg
   );
   display: flex;
   align-items: center;
@@ -254,7 +242,6 @@ div {
 }
 
 .phone-mockup-container-outer {
-<<<<<<< HEAD
   display: flex;
   justify-content: center;
   align-items: center;
@@ -266,6 +253,7 @@ div {
   border-radius: 24px;
   overflow: hidden;
   position: relative;
+
 }
 
 .phone-mockup-container-inner {
@@ -275,34 +263,9 @@ div {
   padding-left: 5%;
   padding-right: 5%;
   position: relative;
-=======
-    display: flex
-;
-    justify-content: center;
-    align-items: center;
-    width: 450px;
-    height: 360px;
-    margin: auto;
-    padding: 5%;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
-    overflow: hidden;
-    position: relative;
+
 }
 
-.phone-mockup-container-inner {
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 24px;
-    width: 420px;
-    /* height: auto; */
-    /* margin: 5%; */
-    /* height: 300px; */
-    /* padding: 5%; */
-    padding-left: 5%;
-    padding-right: 5%;
-    position: relative;
->>>>>>> 611c2b2 (styles && dynamic valid)
-}
 
 .vectors-bottom_up {
   margin-top: 10vh;

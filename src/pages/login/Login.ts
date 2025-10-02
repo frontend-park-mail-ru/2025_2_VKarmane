@@ -44,17 +44,11 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-<<<<<<< HEAD
+
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
-=======
-      this.category.getSelf("#8BFF91", "#00B20C", "Банковские"),
-      this.category.getSelf("#FF80EA", "#BF00AF", "Развлечения"),
-      this.category.getSelf("#FFDA8F", "#B28600","Покупки"),
-      this.category.getSelf("#94F1FF", "#006B6F", "Подписки"),
->>>>>>> 27fa6ce (chart-circle login style fixes)
     ];
 
     if (!config.signup) return;
