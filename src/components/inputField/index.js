@@ -3,7 +3,7 @@ import { Informer } from "../informer/index.js";
 export class InputField {
   getSelf(type, name, text) {
     const template = Handlebars.templates["InputField"];
-    return template({ type, name, text });
+    return template({ type, name, text})
   }
 
   setError(inputs, to_color, text_error = "") {
@@ -34,6 +34,7 @@ export class InputField {
     }
   }
   setPasswordInformerShow(passwordInput) {
+
     const inputGroup = passwordInput.closest(".input-group");
     const informer = new Informer().getSelf(
       "Пароль должен содержать минимум 6 символов, заглавную букву, цифры, а так же может содержать символы @, #, _, &, %, $",
@@ -49,5 +50,6 @@ export class InputField {
     passwordInput.addEventListener("mouseleave", () => {
       informerWrapper.classList.remove("show");
     });
+
   }
 }
