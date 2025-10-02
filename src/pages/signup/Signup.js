@@ -310,8 +310,8 @@ export class SignUpPage {
 
     return randomSlogan;
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> 10ce8b9 (added favicon && slogans)
+
+
+
 }
