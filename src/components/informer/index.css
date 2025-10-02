@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .informer {
   position: absolute;
   top: 100%;
@@ -9,6 +10,11 @@
   position: absolute; 
   top: 100%;         
 >>>>>>> 571b36c (informer added)
+=======
+.informer {
+  position: absolute;
+  top: 100%;
+>>>>>>> 0003376 (informer for password)
   left: 0;
   width: 250px;
   background: #333;
