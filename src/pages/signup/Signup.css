@@ -5,6 +5,14 @@
 @import "../../components/expenseCard/index.css";
 @import "../../components/serviceItem/index.css";
 
+.hide-scroller::-webkit-scrollbar {
+    display: block;
+}
+
+.hide-scroller{
+  overflow: hidden;
+}
+
 div {
   font-family: "Montserrat", sans-serif;
 }
