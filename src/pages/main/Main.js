@@ -25,7 +25,10 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
+<<<<<<< HEAD
     this.template = Handlebars.compile(mainTemplate);
+=======
+>>>>>>> 611c2b2 (styles && dynamic valid)
   }
   /**
    * Рендерит главную страницу в контейнер
@@ -35,7 +38,15 @@ export class MainPage {
    */
   async render(container) {
     if (!container) throw new Error("Container element not found!");
+<<<<<<< HEAD
     document.body.classList.remove("hide-scroller");
+=======
+
+    const template = Handlebars.templates["main"];
+    document.body.classList.remove("hide-scroller");
+
+    // Компоненты
+>>>>>>> 611c2b2 (styles && dynamic valid)
 
     try {
       const balanceData = await getBalance();
@@ -65,7 +76,10 @@ export class MainPage {
     } catch (err) {
       console.error(err);
       goToPage(config.login);
+<<<<<<< HEAD
       this.unsetBody();
+=======
+>>>>>>> 611c2b2 (styles && dynamic valid)
       return;
     }
     const logout = document.querySelector(".logout");
@@ -80,6 +94,7 @@ export class MainPage {
         return;
       }
     });
+<<<<<<< HEAD
     this.setBody();
   }
 
@@ -90,5 +105,15 @@ export class MainPage {
   unsetBody() {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
+=======
+    this.setBody()
+
+  }
+  setBody() {
+    console.log(11)
+    document.body.classList.remove("hide-scroller")
+    document.body.style.margin = "8px"
+    document.body.style.backgroundColor = "#eb5b1d"
+>>>>>>> 611c2b2 (styles && dynamic valid)
   }
 }

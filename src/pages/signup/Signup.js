@@ -39,6 +39,10 @@ export class SignUpPage {
    * @returns {void}
    */
   render(container) {
+<<<<<<< HEAD
+=======
+    const template = Handlebars.templates["SignUp"];
+>>>>>>> 611c2b2 (styles && dynamic valid)
     document.body.classList.add("hide-scroller");
     const serviceItems = [
       this.servItem.getSelf(
@@ -122,6 +126,7 @@ export class SignUpPage {
       }),
     });
 
+<<<<<<< HEAD
     if (!ok) {
       if (status === 409) {
         this.setInputsError(
@@ -136,6 +141,27 @@ export class SignUpPage {
       return;
     }
     goToPage(config.user_page);
+=======
+    const response = await fetch(
+      "http://217.16.23.67:8080/api/v1/auth/register",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          login: loginInput.value,
+          email: emailInput.value,
+          password: passwordInput.value,
+        }),
+        credentials: "include",
+      },
+    );
+
+    const status = response.status;
+    const result = await response.json();
+    this.checkResultStatus(status, result, form);
+>>>>>>> 611c2b2 (styles && dynamic valid)
   }
 
   /**
@@ -158,6 +184,27 @@ export class SignUpPage {
     }
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Устанавливает ошибки для полей ввода
+   * @param {HTMLFormElement} form - Форма регистрации
+   * @param {string} text_error - Текст ошибки
+   * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
+   * @returns {void}
+   */
+  // setInputsError(form, text_error, to_color = true) {
+  //   const loginInput = form.querySelector('input[name="login"]');
+  //   const emailInput = form.querySelector('input[name="email"]');
+  //   const passwordInput = form.querySelector('input[name="password"]');
+  //   this.inputField.setError(
+  //     [loginInput, emailInput, passwordInput],
+  //     to_color,
+  //     text_error,
+  //   );
+  // }
+
+>>>>>>> 611c2b2 (styles && dynamic valid)
   setInputsError(input, text_error, to_color = true) {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
@@ -212,8 +259,11 @@ export class SignUpPage {
     passwordInput.addEventListener("input", () => {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
+<<<<<<< HEAD
 
     this.inputField.setPasswordInformerShow(passwordInput);
+=======
+>>>>>>> 611c2b2 (styles && dynamic valid)
   }
 
   /**
@@ -255,8 +305,12 @@ export class SignUpPage {
       return false;
     } else {
       this.inputField.setError([inputElem], false, "");
+<<<<<<< HEAD
       inputElem.classList.remove("border-red")
       inputElem.classList.add("border-grey")
+=======
+      inputElem.style.borderColor = "#e5e7eb";
+>>>>>>> 611c2b2 (styles && dynamic valid)
       return true;
     }
   }
@@ -267,6 +321,7 @@ export class SignUpPage {
     const passwordInput = form.querySelector('input[name="password"]');
     return [loginInput, emailInput, passwordInput];
   }
+<<<<<<< HEAD
 
   getRandomSlogan() {
     const slogans = [
@@ -291,4 +346,6 @@ export class SignUpPage {
 
     return randomSlogan;
   }
+=======
+>>>>>>> 611c2b2 (styles && dynamic valid)
 }

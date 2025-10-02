@@ -4,11 +4,14 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
+<<<<<<< HEAD
 
 import { apiFetch } from "../../api/fetchWrapper.js";
 
 import Handlebars from "handlebars";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
+=======
+>>>>>>> 611c2b2 (styles && dynamic valid)
 
 /**
  * Класс страницы авторизации
@@ -44,6 +47,10 @@ export class LoginPage {
    * @returns {void}
    */
   render(container) {
+<<<<<<< HEAD
+=======
+    const template = Handlebars.templates["Login"];
+>>>>>>> 611c2b2 (styles && dynamic valid)
     document.body.classList.add("hide-scroller");
     const expCards = [
       this.expCard.getSelf(
@@ -84,6 +91,7 @@ export class LoginPage {
    * @returns {Promise<void>}
    * @async
    */
+<<<<<<< HEAD
 
   async handleLoginRequest(form) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
@@ -112,6 +120,46 @@ export class LoginPage {
     }
 
     goToPage(config.user_page);
+=======
+  async handleLoginRequest(form) {
+    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
+
+    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        login: loginInput.value,
+        password: passwordInput.value,
+      }),
+      credentials: "include",
+    });
+
+    const status = response.status;
+    const result = await response.json();
+    this.checkResultStatus(status, result, form);
+  }
+
+  /**
+   * Проверяет статус ответа сервера и выполняет соответствующие действия
+   * @param {number} status - HTTP статус код
+   * @param {Object} result - Результат ответа сервера
+   * @param {HTMLFormElement} form - Форма авторизации
+   * @returns {void}
+   */
+  checkResultStatus(status, result, form) {
+    if (status == 200) {
+      goToPage(config.user_page);
+    } else if (status == 401) {
+      this.setInputsError(
+        this.getLoginPasswordInput(form),
+        "Неверный логин или пароль",
+      );
+    } else if (status == 500) {
+      this.setServerError();
+    }
+>>>>>>> 611c2b2 (styles && dynamic valid)
   }
 
   /**
