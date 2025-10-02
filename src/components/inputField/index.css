@@ -1,3 +1,4 @@
+
 @import "../informer/index.css";
 
 .input-group {
@@ -31,6 +32,7 @@
   margin-top: 0.5rem;
   margin-bottom: 0;
 }
+
 
 .border-red {
   border-color: red;

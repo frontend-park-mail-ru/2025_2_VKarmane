@@ -2,13 +2,13 @@ import { StartButton } from "../../components/startButton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
-import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
+import router from "../../index.js";
 
 export class SignUpPage {
   startButton: StartButton;
@@ -117,22 +117,7 @@ export class SignUpPage {
       }
       return;
     }
-    if (!config.user_page) return;
-    goToPage(config.user_page);
-  }
-
-  checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
-    if (status == 201) {
-      if (!config.user_page) return;
-      goToPage(config.user_page);
-    } else if (status == 409) {
-      this.setInputsError(
-        this.getLoginEmailPasswordInput(form),
-        "Пользователь с таким логином или почту уже существует",
-      );
-    } else if (status == 500) {
-      this.setServerError();
-    }
+    router.navigate("/");
   }
 
   setInputsError(
@@ -175,9 +160,8 @@ export class SignUpPage {
     const loginLink = container.querySelector(".absence-text a");
     if (loginLink) {
       loginLink.addEventListener("click", (e) => {
-        if (!config.login) return;
         e.preventDefault();
-        goToPage(config.login);
+        router.navigate("/login");
       });
     }
 

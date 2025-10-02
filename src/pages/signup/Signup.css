@@ -6,6 +6,7 @@
 @import "../../components/expenseCard/index.css";
 @import "../../components/serviceItem/index.css";
 
+<<<<<<< HEAD
 .slogans {
   display: flex;
   flex-direction: column;
@@ -44,6 +45,13 @@
 }
 
 .hide-scroller {
+=======
+.hide-scroller::-webkit-scrollbar {
+    display: block;
+}
+
+.hide-scroller{
+>>>>>>> 611c2b2 (styles && dynamic valid)
   overflow: hidden;
 }
 
