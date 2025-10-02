@@ -4,7 +4,9 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
+
 import { apiFetch } from "../../api/fetchWrapper.js";
+
 
 
 /**
@@ -81,6 +83,7 @@ export class LoginPage {
    * @async
    */
 
+
   async handleLoginRequest(form) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
@@ -110,6 +113,7 @@ export class LoginPage {
     }
 
     goToPage(config.user_page);
+
   }
 
   /**

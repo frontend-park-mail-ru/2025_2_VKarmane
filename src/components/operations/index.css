@@ -1,5 +1,4 @@
 
-
 .operations {
   height: 420px;
   background-color: #ffffff;
@@ -9,6 +8,7 @@
   margin-top: 18px;
   position: relative;
   top: -18px;
+
 
 }
 .oper_not_exists {
@@ -22,13 +22,12 @@
   gap: 5px;
 }
 
-.oper_not_exists_img{
-    background-image: url(../../../public/imgs/not_list.png);
-    height: 73px;
-    width: 74px;
+.oper_not_exists_img {
+  background-image: url(../../../public/imgs/not_list.png);
+  height: 73px;
+  width: 74px;
 }
 .add_operation {
-
   display: block;
   background-color: #eb5b1d;
   border-radius: 8px;
@@ -42,44 +41,42 @@
   line-height: 43px;
 }
 
-.operations-list{
-    display: grid;
-    gap: 70px;
-    padding: 20px;
+.operations-list {
+  display: grid;
+  gap: 70px;
+  padding: 20px;
 }
 
 .operation {
-    display: flex;
-    justify-content: space-between; /* раздвигает левый и правый блоки */
-    align-items: center;            /* вертикальное выравнивание */
-    gap: 10px;
+  display: flex;
+  justify-content: space-between; /* раздвигает левый и правый блоки */
+  align-items: center; /* вертикальное выравнивание */
+  gap: 10px;
 }
 
 .title_with_category {
-    display: flex;
-    flex-direction: column; /* title и category друг под другом */
-    text-align: left;
+  display: flex;
+  flex-direction: column; /* title и category друг под другом */
+  text-align: left;
 }
 
 .price_and_time {
-    display: flex;           /* flex-контейнер */
-    flex-direction: column;  /* вертикальный столбик */
-    margin-left: auto;       /* прижимает блок к правому краю */
-    text-align: right;       /* выравнивание текста справа */
-    gap: 2px;                 /* небольшой отступ между ценой и временем */
+  display: flex; /* flex-контейнер */
+  flex-direction: column; /* вертикальный столбик */
+  margin-left: auto; /* прижимает блок к правому краю */
+  text-align: right; /* выравнивание текста справа */
+  gap: 2px; /* небольшой отступ между ценой и временем */
 }
 
-.title_oper{
-    font-weight: bold;
+.title_oper {
+  font-weight: bold;
 }
 
-.price_oper{
-    font-weight: bold;
+.price_oper {
+  font-weight: bold;
 }
 
-
-
-.operation_img{
-    width: 43px;
-    height: 43px;
+.operation_img {
+  width: 43px;
+  height: 43px;
 }

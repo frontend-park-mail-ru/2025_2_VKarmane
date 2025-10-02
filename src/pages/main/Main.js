@@ -82,7 +82,10 @@ export class MainPage {
 
       }
     });
+    this.setBody()
+
   }
+
   setBody() {
     document.body.classList.remove("hide-scroller");
     document.body.classList.add("body_background");

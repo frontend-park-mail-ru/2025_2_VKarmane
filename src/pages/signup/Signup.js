@@ -159,6 +159,7 @@ export class SignUpPage {
     }
   }
 
+
   setInputsError(input, text_error, to_color = true) {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
@@ -214,7 +215,9 @@ export class SignUpPage {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
+
     this.inputField.setPasswordInformerShow(passwordInput);
+
   }
 
   /**
@@ -267,6 +270,7 @@ export class SignUpPage {
     const passwordInput = form.querySelector('input[name="password"]');
     return [loginInput, emailInput, passwordInput];
   }
+<<<<<<< HEAD
 
   getRandomSlogan() {
     const slogans = [
@@ -291,4 +295,5 @@ export class SignUpPage {
 
     return randomSlogan;
   }
+
 }
