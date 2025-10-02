@@ -69,7 +69,7 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль", true),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       slogans: this.getRandomSlogan(),
@@ -188,7 +188,11 @@ export class SignUpPage {
       );
     });
 
+<<<<<<< HEAD:src/pages/signup/Signup.ts
     this.inputField.setPasswordInformerShow(passwordInput!);
+=======
+    this.inputField.setPasswordInformerShow(passwordInput)
+>>>>>>> 571b36c (informer added):src/pages/signup/Signup.js
   }
 
   /**
