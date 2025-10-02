@@ -142,10 +142,10 @@ div {
   height: 120px;
   border-radius: 50%;
   background: conic-gradient(
-    #8bff91 0deg 90deg,
-    #ff80ea 90deg 180deg,
-    #ffda8f 180deg 270deg,
-    #94f1ff 270deg 360deg
+    #8BFF91 0deg 90deg,
+    #FF80EA 90deg 180deg,
+    #FFDA8F 180deg 270deg,
+    #94F1FF 270deg 360deg
   );
   display: flex;
   align-items: center;
