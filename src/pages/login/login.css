@@ -5,13 +5,12 @@
 @import "../../components/expenseCard/index.css";
 
 .hide-scroller::-webkit-scrollbar {
-
   display: block;
 }
 
 
+.hide-scroller {
 
-.hide-scroller{
   overflow: hidden;
 }
 div {
@@ -94,15 +93,26 @@ div {
 }
 
 .phone-mockup {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6555d8d (formatted)
   background: rgba(255, 255, 255, 0.95);
   border-radius: 24px;
   padding: 1.5rem;
   margin: 10px;
+<<<<<<< HEAD
   display: flex;
   gap: 3rem;
   justify-self: center;
 
+=======
+  /* height: 530px; */
+  display: flex;
+  gap: 3rem;
+  /* justify-content: space-between; */
+  justify-self: center;
+>>>>>>> 6555d8d (formatted)
 }
 
 .mockup-header {
@@ -145,10 +155,10 @@ div {
   height: 120px;
   border-radius: 50%;
   background: conic-gradient(
-    #8BFF91 0deg 90deg,
-    #FF80EA 90deg 180deg,
-    #FFDA8F 180deg 270deg,
-    #94F1FF 270deg 360deg
+    #8bff91 0deg 90deg,
+    #ff80ea 90deg 180deg,
+    #ffda8f 180deg 270deg,
+    #94f1ff 270deg 360deg
   );
   display: flex;
   align-items: center;
@@ -237,7 +247,10 @@ div {
 }
 
 .phone-mockup-container-outer {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6555d8d (formatted)
   display: flex;
   justify-content: center;
   align-items: center;
@@ -255,10 +268,20 @@ div {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 24px;
   width: 420px;
+<<<<<<< HEAD
   padding-left: 5%;
   padding-right: 5%;
   position: relative;
 
+=======
+  /* height: auto; */
+  /* margin: 5%; */
+  /* height: 300px; */
+  /* padding: 5%; */
+  padding-left: 5%;
+  padding-right: 5%;
+  position: relative;
+>>>>>>> 6555d8d (formatted)
 }
 
 .vectors-bottom {

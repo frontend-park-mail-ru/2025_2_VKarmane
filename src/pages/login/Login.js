@@ -59,6 +59,7 @@ export class LoginPage {
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
 
+
     ];
     const data = {
       title: "Войти",

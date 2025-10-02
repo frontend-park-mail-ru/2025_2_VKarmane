@@ -82,8 +82,7 @@ export class MainPage {
 
       }
     });
-    this.setBody()
-
+    this.setBody();
   }
 
   setBody() {
