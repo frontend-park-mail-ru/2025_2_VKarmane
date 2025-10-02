@@ -91,6 +91,7 @@ export class LoginPage {
       }),
     });
 
+
     if (!ok) {
       if (status === 400) {
         this.setInputsError(
@@ -103,6 +104,7 @@ export class LoginPage {
         this.setServerError();
       }
       return;
+
     }
     if (!config.user_page) return;
     goToPage(config.user_page);
