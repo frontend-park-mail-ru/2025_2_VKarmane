@@ -108,7 +108,7 @@ export class LoginPage {
   checkResultStatus(status, result, form) {
     if (status == 200) {
       goToPage(config.user_page);
-    } else if (status == 401) {
+    } else if (status == 400) {
       this.setInputsError(
         this.getLoginPasswordInput(form),
         "Неверный логин или пароль",
