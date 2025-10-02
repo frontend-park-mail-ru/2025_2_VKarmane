@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 
 
 @import "../informer/index.css";
 
 .input-group {
   margin-bottom: 1.25rem;
-=======
-@import "../informer/index.css";
-
-.input-group {
-  margin-bottom: 1.25rem; /* отступ между группами */
->>>>>>> 571b36c (informer added)
   position: relative;
 }
 

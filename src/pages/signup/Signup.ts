@@ -193,15 +193,9 @@ export class SignUpPage {
       );
     });
 
-<<<<<<< HEAD:src/pages/signup/Signup.ts
-<<<<<<< HEAD:src/pages/signup/Signup.ts
-    this.inputField.setPasswordInformerShow(passwordInput!);
-=======
-    this.inputField.setPasswordInformerShow(passwordInput)
->>>>>>> 571b36c (informer added):src/pages/signup/Signup.js
-=======
+
     this.inputField.setPasswordInformerShow(passwordInput);
->>>>>>> 0003376 (informer for password):src/pages/signup/Signup.js
+
   }
 
   /**
@@ -289,4 +283,5 @@ export class SignUpPage {
     if (!randomSlogan) throw "undefined slogan";
     return randomSlogan;
   }
+
 }
