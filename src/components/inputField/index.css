@@ -1,5 +1,8 @@
+@import "../informer/index.css";
+
 .input-group {
   margin-bottom: 1.25rem; /* отступ между группами */
+  position: relative;
 }
 
 .input-field {

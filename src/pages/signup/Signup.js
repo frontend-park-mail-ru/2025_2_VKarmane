@@ -73,7 +73,7 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль", true),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       signUpButton: this.startButton.getSelf("signup", "Зарегистрироваться"),
@@ -217,6 +217,8 @@ export class SignUpPage {
     passwordInput.addEventListener("input", () => {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
+
+    this.inputField.setPasswordInformerShow(passwordInput)
   }
 
   /**
