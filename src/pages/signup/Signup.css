@@ -17,10 +17,6 @@
   margin-top: 4px;
 }
 
-.hide-scroller::-webkit-scrollbar {
-  display: block;
-}
-
 .vectors-bottom_down {
   width: 100%;
   display: flex;
@@ -35,12 +31,9 @@
   align-items: center;
 }
 
-.vector-row-left_down {
-  display: grid;
-}
 
-.vector-row-right_down {
-  display: grid;
+.hide-scroller::-webkit-scrollbar {
+  display: block;
 }
 
 .hide-scroller {

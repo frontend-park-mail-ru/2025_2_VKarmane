@@ -112,11 +112,18 @@ export class MainPage {
   }
 
   setBody() {
+<<<<<<< HEAD:src/pages/main/Main.ts
     document.body.classList.remove("hide-scroller");
     document.body.classList.add("body_background");
   }
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
+=======
+    console.log(11);
+    document.body.classList.remove("hide-scroller");
+    document.body.style.margin = "8px";
+    document.body.style.backgroundColor = "#eb5b1d";
+>>>>>>> 6555d8d (formatted):src/pages/main/Main.js
   }
 }
