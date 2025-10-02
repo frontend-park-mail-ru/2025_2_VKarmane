@@ -6,10 +6,10 @@
 @import "../../components/serviceItem/index.css";
 
 .hide-scroller::-webkit-scrollbar {
-    display: block;
+  display: block;
 }
 
-.hide-scroller{
+.hide-scroller {
   overflow: hidden;
 }
 

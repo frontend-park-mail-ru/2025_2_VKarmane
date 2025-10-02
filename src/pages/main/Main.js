@@ -87,13 +87,12 @@ export class MainPage {
         console.error("Error happend: ", err);
       }
     });
-    this.setBody()
-
+    this.setBody();
   }
   setBody() {
-    console.log(11)
-    document.body.classList.remove("hide-scroller")
-    document.body.style.margin = "8px"
-    document.body.style.backgroundColor = "#eb5b1d"
+    console.log(11);
+    document.body.classList.remove("hide-scroller");
+    document.body.style.margin = "8px";
+    document.body.style.backgroundColor = "#eb5b1d";
   }
 }
