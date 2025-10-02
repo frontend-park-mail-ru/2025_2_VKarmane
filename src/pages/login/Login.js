@@ -53,10 +53,12 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
+
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
+
     ];
     const data = {
       title: "Войти",

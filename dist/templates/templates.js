@@ -70,10 +70,12 @@ templates['Category'] = template({"compiler":[8,">= 4.3.0"],"main":function(cont
         return undefined
     };
 
+
   return "<span class=\"category-tag "
     + alias4(((helper = (helper = lookupProperty(helpers,"category") || (depth0 != null ? lookupProperty(depth0,"category") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"category","hash":{},"data":data,"loc":{"start":{"line":1,"column":26},"end":{"line":1,"column":38}}}) : helper)))
     + "\">"
     + alias4(((helper = (helper = lookupProperty(helpers,"category_name") || (depth0 != null ? lookupProperty(depth0,"category_name") : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"category_name","hash":{},"data":data,"loc":{"start":{"line":1,"column":40},"end":{"line":1,"column":57}}}) : helper)))
+
     + "</span>";
 },"useData":true});
 templates['ExpenseCard'] = template({"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {

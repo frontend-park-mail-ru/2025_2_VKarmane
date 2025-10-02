@@ -270,7 +270,7 @@ export class SignUpPage {
     const passwordInput = form.querySelector('input[name="password"]');
     return [loginInput, emailInput, passwordInput];
   }
-<<<<<<< HEAD
+
 
   getRandomSlogan() {
     const slogans = [
