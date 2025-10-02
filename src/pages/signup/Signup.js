@@ -81,6 +81,7 @@ export class SignUpPage {
       ),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
+      slogans: this.getRandomSlogan(),
       signUpButton: this.startButton.getSelf("signup", "Зарегистрироваться"),
     };
 
@@ -275,5 +276,29 @@ export class SignUpPage {
     const emailInput = form.querySelector('input[name="email"]');
     const passwordInput = form.querySelector('input[name="password"]');
     return [loginInput, emailInput, passwordInput];
+  }
+
+  getRandomSlogan() {
+    const slogans = [
+      [
+        "Свобода — это контроль.",
+        "Контроль — это уверенность.",
+        "Уверенность — это сила.",
+      ],
+      [
+        "Долг — это рабство.",
+        "Сбережения — это свобода.",
+        "Свобода — это сила.",
+      ],
+      [
+        "Богатство — это дисциплина.",
+        "Дисциплина — это порядок.",
+        "Порядок — это будущее.",
+      ],
+    ];
+
+    const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
+
+    return randomSlogan;
   }
 }
