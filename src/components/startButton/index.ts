@@ -1,11 +1,11 @@
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import startButtonTemplate from "../../templates/components/StartButton.hbs?raw"
+import startButtonTemplate from "../../templates/components/StartButton.hbs?raw";
 
 export class StartButton {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(startButtonTemplate)
+    this.template = Handlebars.compile(startButtonTemplate);
   }
   getSelf(form: string, text: string): string {
     return this.template({ form, text });

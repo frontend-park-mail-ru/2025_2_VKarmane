@@ -1,12 +1,11 @@
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import cardsTemplate from "../../templates/components/cards.hbs?raw"
-
+import cardsTemplate from "../../templates/components/cards.hbs?raw";
 
 export class Card {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(cardsTemplate)
+    this.template = Handlebars.compile(cardsTemplate);
   }
   getSelf(
     balance: number,

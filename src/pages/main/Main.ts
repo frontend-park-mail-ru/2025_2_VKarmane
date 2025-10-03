@@ -8,10 +8,9 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 
-
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import mainTemplate from "../../templates/pages/main.hbs?raw"
+import mainTemplate from "../../templates/pages/main.hbs?raw";
 
 /**
  * Класс главной страницы приложения
@@ -34,7 +33,7 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
-    this.template = Handlebars.compile(mainTemplate)
+    this.template = Handlebars.compile(mainTemplate);
   }
   /**
    * Рендерит главную страницу в контейнер
@@ -76,7 +75,7 @@ export class MainPage {
     } catch (err) {
       console.error(err);
       goToPage(config.login!);
-      this.unsetBody()
+      this.unsetBody();
       return;
     }
     const logout = document.querySelector(".logout");
@@ -92,7 +91,7 @@ export class MainPage {
 
         if (response.ok) {
           goToPage(config.login!);
-          this.unsetBody()
+          this.unsetBody();
           return;
         } else {
           throw Error();

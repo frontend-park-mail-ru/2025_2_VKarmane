@@ -1,11 +1,11 @@
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import operationsTemplate from "../../templates/components/operations.hbs?raw"
+import operationsTemplate from "../../templates/components/operations.hbs?raw";
 
 export class Operations {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(operationsTemplate)
+    this.template = Handlebars.compile(operationsTemplate);
   }
   getList(operationsArray: any[]): string {
     return this.template({

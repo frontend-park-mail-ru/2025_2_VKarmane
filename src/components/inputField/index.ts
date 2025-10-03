@@ -2,19 +2,22 @@ import { Informer } from "../informer/index.js";
 
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import inputFieldTemplate from "../../templates/components/InputField.hbs?raw"
-
+import inputFieldTemplate from "../../templates/components/InputField.hbs?raw";
 
 export class InputField {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(inputFieldTemplate)
+    this.template = Handlebars.compile(inputFieldTemplate);
   }
   getSelf(type: string, name: string, text: string): string {
     return this.template({ type, name, text });
   }
 
-  setError(inputs: HTMLInputElement[], to_color: boolean, text_error: string = ""): string | undefined{
+  setError(
+    inputs: HTMLInputElement[],
+    to_color: boolean,
+    text_error: string = "",
+  ): string | undefined {
     if (!inputs) {
       return;
     }

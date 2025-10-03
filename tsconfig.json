@@ -14,9 +14,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "allowJs": true,
-    "moduleResolution": "nodenext",
-    
+    "moduleResolution": "nodenext"
   },
-  "include": ["src/**/*"],   // ← вот это нужно
+  "include": ["src/**/*"],
   "exclude": ["dist"]
 }

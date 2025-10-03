@@ -1,14 +1,19 @@
 import { Status } from "../status/index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import CategoryTemplate from "../../templates/components/ExpenseCard.hbs?raw"
+import CategoryTemplate from "../../templates/components/ExpenseCard.hbs?raw";
 
 export class ExpenseCard {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(CategoryTemplate)
+    this.template = Handlebars.compile(CategoryTemplate);
   }
-  getSelf(currency: string, sum: number, text: string, gotStatus: string = ""): string {
+  getSelf(
+    currency: string,
+    sum: number,
+    text: string,
+    gotStatus: string = "",
+  ): string {
     let status = "";
     if (gotStatus) {
       status = new Status().getSelf(gotStatus);
