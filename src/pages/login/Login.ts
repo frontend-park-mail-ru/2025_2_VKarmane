@@ -5,6 +5,7 @@ import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 
+
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
@@ -19,11 +20,13 @@ export class LoginPage {
   expCard: ExpenseCard;
   template: TemplateFn;
   constructor() {
+
     this.startButton = new StartButton();
 
     this.inputField = new InputField();
 
     this.absText = new absenceText();
+
 
     this.category = new Category();
 
@@ -44,6 +47,7 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
+
 
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
@@ -70,6 +74,7 @@ export class LoginPage {
 
     this.setupEventListeners(container);
   }
+
 
   /**
    * Обрабатывает запрос авторизации
@@ -124,6 +129,7 @@ export class LoginPage {
     );
   }
 
+
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
     text_error: string,
@@ -132,6 +138,7 @@ export class LoginPage {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
   }
+
 
   setupEventListeners(container: HTMLElement): void {
     const form: HTMLFormElement | null = container.querySelector("#login");

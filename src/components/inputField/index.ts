@@ -16,6 +16,7 @@ export class InputField {
   }
 
 
+
   setError(
     inputs: HTMLInputElement[],
     to_color: boolean,

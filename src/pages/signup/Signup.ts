@@ -18,6 +18,7 @@ export class SignUpPage {
   servItem: serviceItem;
   template: TemplateFn;
 
+
   constructor() {
     this.startButton = new StartButton();
 
@@ -26,6 +27,7 @@ export class SignUpPage {
     this.absText = new absenceText();
 
     this.servItem = new serviceItem();
+
 
     this.template = Handlebars.compile(signUpTemplate);
   }
@@ -73,7 +75,6 @@ export class SignUpPage {
         "password",
         "password",
         "пароль",
-        true,
       ),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
