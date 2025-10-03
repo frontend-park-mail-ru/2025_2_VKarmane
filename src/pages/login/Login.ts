@@ -25,6 +25,7 @@ export class LoginPage {
 
     this.absText = new absenceText();
 
+
     this.category = new Category();
 
     this.expCard = new ExpenseCard();
@@ -60,7 +61,7 @@ export class LoginPage {
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-        config.signup.href,
+        config.signup!.href,
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -133,12 +134,13 @@ export class LoginPage {
     this.inputField.setError(arr, to_color, text_error);
   }
 
+
   setupEventListeners(container: HTMLElement): void {
     const form: HTMLFormElement | null = container.querySelector("#login");
     if (!form) return;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.handleLoginRequest(form);
+      this.handleLoginRequest(form!);
     });
 
     const signupLink = container.querySelector(".absence-text a");

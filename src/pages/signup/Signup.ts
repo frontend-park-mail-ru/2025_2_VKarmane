@@ -3,13 +3,9 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { Validator } from "../../utils/validation.js";
+
 import { apiFetch } from "../../api/fetchWrapper.js";
-<<<<<<< HEAD:src/pages/signup/Signup.ts
 import type { TemplateFn } from "../../types/handlebars.js";
-=======
-
-
->>>>>>> 120687c (vite implemented):src/pages/signup/Signup.js
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
@@ -75,7 +71,11 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      passwordInput: this.inputField.getSelf(
+        "password",
+        "password",
+        "пароль",
+      ),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       slogans: this.getRandomSlogan(),
@@ -93,9 +93,9 @@ export class SignUpPage {
 
     if (
       !this.validateInput(
-        loginInput.value,
-        emailInput.value,
-        passwordInput.value,
+        loginInput!.value,
+        emailInput!.value,
+        passwordInput!.value,
         form,
       )
     ) {
@@ -126,6 +126,7 @@ export class SignUpPage {
     }
     router.navigate("/");
   }
+
 
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
@@ -181,15 +182,15 @@ export class SignUpPage {
       this.validateSingleField("login", loginInput.value, loginInput);
     });
 
-    emailInput.addEventListener("input", () => {
-      this.validateSingleField("email", emailInput.value, emailInput);
+    emailInput!.addEventListener("input", () => {
+      this.validateSingleField("email", emailInput!.value, emailInput!);
     });
 
-    passwordInput.addEventListener("input", () => {
-      this.validateSingleField("password", passwordInput.value, passwordInput);
+    passwordInput!.addEventListener("input", () => {
+      this.validateSingleField("password", passwordInput!.value, passwordInput!);
     });
 
-    this.inputField.setPasswordInformerShow(passwordInput);
+    this.inputField.setPasswordInformerShow(passwordInput!);
   }
 
   /**
@@ -200,6 +201,7 @@ export class SignUpPage {
    * @param {HTMLFormElement} form - Форма регистрации
    * @returns {boolean} Результат валидации
    */
+
   validateInput(
     login: string,
     email: string,
@@ -227,11 +229,12 @@ export class SignUpPage {
     if (!loginInput || !emailInput || !passwordInput) return;
 
     return (
-      checkField("login", login, loginInput) &&
-      checkField("email", email, emailInput) &&
-      checkField("password", password, passwordInput)
+      checkField("login", login, loginInput!) &&
+      checkField("email", email, emailInput!) &&
+      checkField("password", password, passwordInput!)
     );
   }
+
   validateSingleField(
     fieldName: string,
     fieldValue: string,

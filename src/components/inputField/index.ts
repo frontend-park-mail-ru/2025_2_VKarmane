@@ -1,18 +1,21 @@
 import { Informer } from "../informer/index.js";
 
-
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import inputFieldTemplate from "../../templates/components/InputField.hbs?raw";
+import inputFieldTemplate from "../../templates/components/InputField.hbs?raw"
+
+
 
 export class InputField {
-  template: TemplateFn;
+  template: TemplateFn
   constructor() {
     this.template = Handlebars.compile(inputFieldTemplate);
   }
+
   getSelf(type: string, name: string, text: string): string {
     return this.template({ type, name, text });
   }
+
 
   setError(
     inputs: HTMLInputElement[],
@@ -38,7 +41,7 @@ export class InputField {
       errElem.style.fontSize = "0.875rem";
 
       errElem.textContent = text_error;
-      group.appendChild(errElem);
+      group!.appendChild(errElem);
     }
 
     if (to_color) {
@@ -56,7 +59,7 @@ export class InputField {
     );
     const informerWrapper = document.createElement("div");
     informerWrapper.innerHTML = informer;
-    inputGroup.appendChild(informerWrapper);
+    inputGroup!.appendChild(informerWrapper);
 
     passwordInput.addEventListener("mouseenter", () => {
       informerWrapper.classList.add("show");
