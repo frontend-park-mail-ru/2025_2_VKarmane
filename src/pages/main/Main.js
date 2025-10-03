@@ -82,6 +82,7 @@ export class MainPage {
 
         if (response.ok) {
           goToPage(config.login);
+          this.unsetBody()
           return;
         } else {
           throw Error();
