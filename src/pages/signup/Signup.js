@@ -6,6 +6,7 @@ import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
+
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 /**
@@ -29,6 +30,7 @@ export class SignUpPage {
 
     /** @type {serviceItem} */
     this.servItem = new serviceItem();
+
 
     this.template = Handlebars.compile(signUpTemplate);
   }

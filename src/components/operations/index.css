@@ -31,10 +31,14 @@
 
 .oper_not_exists_img {
 <<<<<<< HEAD
+<<<<<<< HEAD
   background-image: url(/imgs/not_list.png);
 =======
   background-image: url(../../../public/imgs/not_list.png);
 >>>>>>> 611c2b2 (styles && dynamic valid)
+=======
+  background-image: url(/imgs/not_list.png);
+>>>>>>> 6781c2f (vite implemented)
   height: 73px;
   width: 74px;
 }

@@ -1,4 +1,5 @@
 
+
 import Handlebars from "handlebars";
 import informerTemplate from "../../templates/components/Informer.hbs?raw";
 

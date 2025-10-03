@@ -36,6 +36,7 @@ export class LoginPage {
     /** @type {ExpenseCard} */
     this.expCard = new ExpenseCard();
 
+
     this.template = Handlebars.compile(loginTemplate);
   }
 

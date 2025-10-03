@@ -1,6 +1,9 @@
 node_modules/
 *.compiled.js
+<<<<<<< HEAD
 *.precompiled.js
+=======
+>>>>>>> 6781c2f (vite implemented)
 .idea
 /src/handlebars
 templates.js
