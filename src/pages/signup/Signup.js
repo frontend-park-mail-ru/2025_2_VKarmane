@@ -5,6 +5,9 @@ import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 
+
+import Handlebars from "handlebars";
+import signUpTemplate from "../../templates/pages/SignUp.hbs?raw"
 /**
  * Класс страницы регистрации
  * @class
@@ -26,6 +29,8 @@ export class SignUpPage {
 
     /** @type {serviceItem} */
     this.servItem = new serviceItem();
+
+    this.template = Handlebars.compile(signUpTemplate)
   }
 
   /**
@@ -34,7 +39,6 @@ export class SignUpPage {
    * @returns {void}
    */
   render(container) {
-    const template = Handlebars.templates["SignUp"];
     document.body.classList.add("hide-scroller");
     const serviceItems = [
       this.servItem.getSelf(
@@ -85,7 +89,7 @@ export class SignUpPage {
       signUpButton: this.startButton.getSelf("signup", "Зарегистрироваться"),
     };
 
-    container.innerHTML = template(data);
+    container.innerHTML = this.template(data);
     this.setupEventListeners(container);
   }
 
