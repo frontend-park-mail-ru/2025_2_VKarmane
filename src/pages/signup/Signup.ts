@@ -9,6 +9,7 @@ import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
+import { slogans } from "./slogans.js";
 
 
 export class SignUpPage {
@@ -268,24 +269,6 @@ export class SignUpPage {
   }
 
   getRandomSlogan(): string[] {
-    const slogans = [
-      [
-        "Свобода — это контроль.",
-        "Контроль — это уверенность.",
-        "Уверенность — это сила.",
-      ],
-      [
-        "Долг — это рабство.",
-        "Сбережения — это свобода.",
-        "Свобода — это сила.",
-      ],
-      [
-        "Богатство — это дисциплина.",
-        "Дисциплина — это порядок.",
-        "Порядок — это будущее.",
-      ],
-    ];
-
     const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
 
     return randomSlogan!;
