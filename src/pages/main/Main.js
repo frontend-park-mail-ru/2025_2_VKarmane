@@ -82,7 +82,6 @@ export class MainPage {
         goToPage(config.login);
         this.setBody();
         return;
-
       }
     });
     this.setBody();
