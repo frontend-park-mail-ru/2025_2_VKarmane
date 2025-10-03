@@ -13,6 +13,7 @@ import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
 
+
 /**
  * Класс главной страницы приложения
  * @class
@@ -34,7 +35,11 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
+<<<<<<< HEAD:src/pages/main/Main.ts
     this.template = Handlebars.compile(mainTemplate);
+=======
+    this.template = Handlebars.compile(mainTemplate)
+>>>>>>> 6781c2f (vite implemented):src/pages/main/Main.js
   }
   /**
    * Рендерит главную страницу в контейнер
