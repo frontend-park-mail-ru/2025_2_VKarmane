@@ -66,6 +66,7 @@ export class MainPage {
     } catch (err) {
       console.error(err);
       goToPage(config.login);
+      this.unsetBody()
       return;
     }
     const logout = document.querySelector(".logout");
@@ -90,5 +91,10 @@ export class MainPage {
   setBody() {
     document.body.classList.remove("hide-scroller");
     document.body.classList.add("body_background");
+  }
+  unsetBody() {
+    document.body.classList.add("hide-scroller");
+    document.body.style.margin = "0px";
+    document.body.style.backgroundColor = "";
   }
 }
