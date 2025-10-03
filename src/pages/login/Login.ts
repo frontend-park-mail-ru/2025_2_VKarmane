@@ -29,6 +29,7 @@ export class LoginPage {
 
     this.expCard = new ExpenseCard();
 
+
     this.template = Handlebars.compile(loginTemplate);
   }
 

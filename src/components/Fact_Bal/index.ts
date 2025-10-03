@@ -6,7 +6,8 @@ import { Operations } from "../operations/index.js";
 export class FactBal {
   template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(FactBalanceTemplate);
+    this.template = Handlebars.compile(FactBalanceTemplate)
+
   }
   getSelf(
     FactSum: number | null,

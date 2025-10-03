@@ -4,7 +4,12 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
+<<<<<<< HEAD:src/pages/signup/Signup.ts
 import type { TemplateFn } from "../../types/handlebars.js";
+=======
+
+
+>>>>>>> 120687c (vite implemented):src/pages/signup/Signup.js
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
@@ -25,6 +30,7 @@ export class SignUpPage {
     this.absText = new absenceText();
 
     this.servItem = new serviceItem();
+
 
     this.template = Handlebars.compile(signUpTemplate);
   }
