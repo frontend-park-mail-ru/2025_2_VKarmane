@@ -1,17 +1,21 @@
 import Handlebars from "handlebars";
-import cardsTemplate from "../../templates/components/cards.hbs?raw";
+
+import type { TemplateFn } from "../../types/handlebars.js";
+import cardsTemplate from "../../templates/components/cards.hbs?raw"
+
 
 export class Card {
+  template: TemplateFn
   constructor() {
     this.template = Handlebars.compile(cardsTemplate);
   }
   getSelf(
-    balance,
-    hasUpdateFactPlan,
-    updateCardFortwoWeek,
-    naibolsh_rashod,
-    action,
-  ) {
+    balance: number,
+    hasUpdateFactPlan: boolean,
+    updateCardFortwoWeek: number,
+    naibolsh_rashod: number,
+    action: string,
+  ): string {
     return this.template({
       balance: balance,
       hasUpdateFactPlan: hasUpdateFactPlan,

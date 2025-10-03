@@ -17,6 +17,7 @@ export default defineConfig({
     string({
       include: "**/*.hbs",
     }),
+<<<<<<< HEAD
     babel({
       babelConfig: {
         presets: [["@babel/preset-env", { modules: false }]],
@@ -24,3 +25,15 @@ export default defineConfig({
     }),
   ],
 });
+=======
+   babel({
+  babelConfig: {
+    presets: [
+      ["@babel/preset-env", { modules: false }],
+      "@babel/preset-typescript",
+    ]
+  }
+})
+  ]
+})
+>>>>>>> 72f80fa (ts conversion)

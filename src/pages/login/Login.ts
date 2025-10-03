@@ -5,47 +5,40 @@ import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 
-
 import { apiFetch } from "../../api/fetchWrapper.js";
-
+import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
-/**
- * Класс страницы авторизации
- * @class
- */
+import loginTemplate from "../../templates/pages/Login.hbs?raw"
+
+
+
 export class LoginPage {
-  /**
-   * Создает экземпляр страницы авторизации
-   * @constructor
-   */
+  startButton: StartButton;
+  inputField: InputField;
+  absText: absenceText;
+  category: Category;
+  expCard: ExpenseCard;
+  template: TemplateFn;
   constructor() {
-    /** @type {StartButton} */
+
     this.startButton = new StartButton();
 
-    /** @type {InputField} */
     this.inputField = new InputField();
 
-    /** @type {absenceText} */
     this.absText = new absenceText();
 
-    /** @type {Category} */
+
     this.category = new Category();
 
-    /** @type {ExpenseCard} */
+
     this.expCard = new ExpenseCard();
 
 
     this.template = Handlebars.compile(loginTemplate);
   }
 
-  /**
-   * Рендерит страницу авторизации в контейнер
-   * @param {HTMLElement} container - Контейнер для рендеринга
-   * @returns {void}
-   */
-  render(container) {
+  render(container: HTMLElement): void {
     document.body.classList.add("hide-scroller");
     const expCards = [
       this.expCard.getSelf(
@@ -69,7 +62,7 @@ export class LoginPage {
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-        config.signup.href,
+        config.signup!.href,
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -119,53 +112,42 @@ export class LoginPage {
     goToPage(config.user_page);
   }
 
-  /**
-   * Устанавливает ошибку сервера
-   * @returns {void}
-   */
-  setServerError() {
-    const form = document.querySelector(".login-form");
+ 
+  setServerError(): void {
+    const form: HTMLFormElement | null  = document.querySelector(".login-form");
+    if (!form) return;
+    const reqInput: HTMLInputElement |  undefined = this.getLoginPasswordInput(form).at(-1);
+    if (!reqInput) return;
     this.setInputsError(
-      this.getLoginPasswordInput(form).at(-1),
+      reqInput,
       "При авторизации произошла ошибка. Повторите попытку позже",
       false,
     );
   }
 
-  /**
-   * Устанавливает ошибки для полей ввода
-   * @param {HTMLFormElement} form - Форма авторизации
-   * @param {string} text_error - Текст ошибки
-   * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
-   * @returns {void}
-   */
-  setInputsError(input, text_error, to_color = true) {
+  setInputsError(input: HTMLInputElement | HTMLInputElement[], text_error: string, to_color: boolean = true): void {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
   }
 
-  /**
-   * Настраивает обработчики событий
-   * @param {HTMLElement} container - Контейнер с элементами
-   * @returns {void}
-   */
-  setupEventListeners(container) {
-    const form = container.querySelector("#login");
-    form.addEventListener("submit", (e) => {
+
+  setupEventListeners(container: HTMLElement): void {
+    const form: HTMLFormElement | null = container.querySelector("#login");
+    form!.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.handleLoginRequest(form);
+      this.handleLoginRequest(form!);
     });
 
     const signupLink = container.querySelector(".absence-text a");
-    signupLink.addEventListener("click", (e) => {
+    signupLink!.addEventListener("click", (e) => {
       e.preventDefault();
-      goToPage(config.signup);
+      goToPage(config.signup!);
     });
   }
 
-  getLoginPasswordInput(form) {
-    const loginInput = form.querySelector('input[name="login"]');
-    const passwordInput = form.querySelector('input[name="password"]');
-    return [loginInput, passwordInput];
+  getLoginPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
+    const loginInput: HTMLInputElement | null = form.querySelector('input[name="login"]');
+    const passwordInput: HTMLInputElement | null = form.querySelector('input[name="password"]');
+    return [loginInput!, passwordInput!];
   }
 }
