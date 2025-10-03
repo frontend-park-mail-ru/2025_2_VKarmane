@@ -2,11 +2,11 @@ import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 import { MainPage } from "./pages/main/Main.js";
 
-import './index.css';
+import "./index.css";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
 
-type PageClas = {render: (container ?: HTMLElement) => void};
+type PageClas = { render: (container?: HTMLElement) => void };
 
 interface PageConfig {
   href: string;
@@ -51,6 +51,5 @@ export function goToPage(pageToGo: PageClas): void {
   rootElement.innerHTML = "";
   pageToGo.render();
 }
-
 
 renderUserPage();

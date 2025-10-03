@@ -8,7 +8,7 @@ import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import signUpTemplate from "../../templates/pages/SignUp.hbs?raw"
+import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 
 
 export class SignUpPage {
@@ -17,7 +17,6 @@ export class SignUpPage {
   absText: absenceText;
   servItem: serviceItem;
   template: TemplateFn;
-
 
   constructor() {
     this.startButton = new StartButton();
@@ -28,10 +27,8 @@ export class SignUpPage {
 
     this.servItem = new serviceItem();
 
-
     this.template = Handlebars.compile(signUpTemplate);
   }
-
 
   render(container: HTMLElement): void {
     document.body.classList.add("hide-scroller");
@@ -72,11 +69,7 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf(
-        "password",
-        "password",
-        "пароль",
-      ),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       slogans: this.getRandomSlogan(),
@@ -140,9 +133,11 @@ export class SignUpPage {
   }
 
 
-
-
-  setInputsError(input: HTMLInputElement | HTMLInputElement[], text_error: string, to_color: boolean = true): void {
+  setInputsError(
+    input: HTMLInputElement | HTMLInputElement[],
+    text_error: string,
+    to_color: boolean = true,
+  ): void {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
   }
@@ -191,7 +186,11 @@ export class SignUpPage {
     });
 
     passwordInput!.addEventListener("input", () => {
-      this.validateSingleField("password", passwordInput!.value, passwordInput!);
+      this.validateSingleField(
+        "password",
+        passwordInput!.value,
+        passwordInput!,
+      );
     });
 
     this.inputField.setPasswordInformerShow(passwordInput!);
@@ -205,10 +204,19 @@ export class SignUpPage {
    * @param {HTMLFormElement} form - Форма регистрации
    * @returns {boolean} Результат валидации
    */
-  validateInput(login: string, email: string, password: string, form: HTMLFormElement) {
+  validateInput(
+    login: string,
+    email: string,
+    password: string,
+    form: HTMLFormElement,
+  ) {
     const validator = new Validator();
 
-    const checkField = (fieldName: string, fieldValue: string, inputElem: HTMLInputElement) => {
+    const checkField = (
+      fieldName: string,
+      fieldValue: string,
+      inputElem: HTMLInputElement,
+    ) => {
       let error = validator.validate(fieldName, fieldValue);
       if (error !== undefined) {
         this.setInputsError(inputElem, error);
@@ -226,7 +234,11 @@ export class SignUpPage {
       checkField("password", password, passwordInput!)
     );
   }
-  validateSingleField(fieldName: string, fieldValue: string, inputElem: HTMLInputElement) {
+  validateSingleField(
+    fieldName: string,
+    fieldValue: string,
+    inputElem: HTMLInputElement,
+  ) {
     const validator = new Validator();
 
     let error = validator.validate(fieldName, fieldValue);
@@ -243,9 +255,15 @@ export class SignUpPage {
   }
 
   getLoginEmailPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
-    const loginInput: HTMLInputElement | null = form.querySelector('input[name="login"]');
-    const emailInput: HTMLInputElement | null = form.querySelector('input[name="email"]');
-    const passwordInput: HTMLInputElement | null = form.querySelector('input[name="password"]');
+    const loginInput: HTMLInputElement | null = form.querySelector(
+      'input[name="login"]',
+    );
+    const emailInput: HTMLInputElement | null = form.querySelector(
+      'input[name="email"]',
+    );
+    const passwordInput: HTMLInputElement | null = form.querySelector(
+      'input[name="password"]',
+    );
     return [loginInput!, emailInput!, passwordInput!];
   }
 

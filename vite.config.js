@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5840590 (style fixes)
 import { defineConfig } from "vite";
 import string from "vite-plugin-string";
 import babel from "vite-plugin-babel";
@@ -18,13 +21,23 @@ export default defineConfig({
       include: "**/*.hbs",
     }),
 <<<<<<< HEAD
+<<<<<<< HEAD
     babel({
       babelConfig: {
         presets: [["@babel/preset-env", { modules: false }]],
+=======
+    babel({
+      babelConfig: {
+        presets: [
+          ["@babel/preset-env", { modules: false }],
+          "@babel/preset-typescript",
+        ],
+>>>>>>> 5840590 (style fixes)
       },
     }),
   ],
 });
+<<<<<<< HEAD
 =======
    babel({
   babelConfig: {
@@ -37,3 +50,5 @@ export default defineConfig({
   ]
 })
 >>>>>>> 72f80fa (ts conversion)
+=======
+>>>>>>> 5840590 (style fixes)
