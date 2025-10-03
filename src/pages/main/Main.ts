@@ -98,11 +98,23 @@ export class MainPage {
         method: "POST",
       });
 
+<<<<<<< HEAD
       if (ok) {
         if (!config.login) return;
         goToPage(config.login);
         this.setBody();
         return;
+=======
+        if (response.ok) {
+          goToPage(config.login);
+          this.unsetBody()
+          return;
+        } else {
+          throw Error();
+        }
+      } catch (err) {
+        console.error("Error happend: ", err);
+>>>>>>> e33c7a6 (unset Body)
       }
     });
     this.setBody();
