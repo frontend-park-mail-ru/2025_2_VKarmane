@@ -35,11 +35,7 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
-<<<<<<< HEAD:src/pages/main/Main.ts
     this.template = Handlebars.compile(mainTemplate);
-=======
-    this.template = Handlebars.compile(mainTemplate)
->>>>>>> 6781c2f (vite implemented):src/pages/main/Main.js
   }
   /**
    * Рендерит главную страницу в контейнер
@@ -92,8 +88,8 @@ export class MainPage {
       container.innerHTML = this.template(data);
     } catch (err) {
       console.error(err);
-      goToPage(config.login!);
-      this.unsetBody();
+      goToPage(config.login);
+      this.unsetBody()
       return;
     }
     const logout = document.querySelector(".logout");
