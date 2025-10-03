@@ -2,12 +2,11 @@ import { Informer } from "../informer/index.js";
 
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import inputFieldTemplate from "../../templates/components/InputField.hbs?raw"
-
+import inputFieldTemplate from "../../templates/components/InputField.hbs?raw";
 
 
 export class InputField {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
     this.template = Handlebars.compile(inputFieldTemplate);
   }

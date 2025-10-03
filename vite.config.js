@@ -18,16 +18,29 @@ export default defineConfig({
       include: "**/*.hbs",
     }),
 <<<<<<< HEAD
+<<<<<<< HEAD
     babel({
       babelConfig: {
+<<<<<<< HEAD
+=======
+        presets: [["@babel/preset-env", { modules: false }]],
+=======
+    babel({
+      babelConfig: {
+>>>>>>> 1d600aa (style fixes)
         presets: [
           ["@babel/preset-env", { modules: false }],
           "@babel/preset-typescript",
         ],
+<<<<<<< HEAD
+=======
+>>>>>>> 5840590 (style fixes)
+>>>>>>> 1d600aa (style fixes)
       },
     }),
   ],
 });
+<<<<<<< HEAD
 =======
    babel({
   babelConfig: {
@@ -40,3 +53,5 @@ export default defineConfig({
   ]
 })
 >>>>>>> 72f80fa (ts conversion)
+=======
+>>>>>>> 5840590 (style fixes)

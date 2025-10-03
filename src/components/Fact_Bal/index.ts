@@ -1,13 +1,11 @@
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import FactBalanceTemplate from "../../templates/components/FactBalance.hbs?raw"
-
+import FactBalanceTemplate from "../../templates/components/FactBalance.hbs?raw";
 
 export class FactBal {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
-    this.template = Handlebars.compile(FactBalanceTemplate)
-
+    this.template = Handlebars.compile(FactBalanceTemplate);
   }
   getSelf(
     FactSum: number | null,

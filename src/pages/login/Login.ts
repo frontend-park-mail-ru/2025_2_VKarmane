@@ -25,11 +25,9 @@ export class LoginPage {
 
     this.absText = new absenceText();
 
-
     this.category = new Category();
 
     this.expCard = new ExpenseCard();
-
 
     this.template = Handlebars.compile(loginTemplate);
   }
@@ -133,7 +131,6 @@ export class LoginPage {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
   }
-
 
   setupEventListeners(container: HTMLElement): void {
     const form: HTMLFormElement | null = container.querySelector("#login");

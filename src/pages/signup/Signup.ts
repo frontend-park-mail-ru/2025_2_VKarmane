@@ -27,10 +27,8 @@ export class SignUpPage {
 
     this.servItem = new serviceItem();
 
-
     this.template = Handlebars.compile(signUpTemplate);
   }
-
 
   render(container: HTMLElement): void {
     document.body.classList.add("hide-scroller");
@@ -71,11 +69,7 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf(
-        "password",
-        "password",
-        "пароль",
-      ),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       slogans: this.getRandomSlogan(),
@@ -187,7 +181,11 @@ export class SignUpPage {
     });
 
     passwordInput!.addEventListener("input", () => {
-      this.validateSingleField("password", passwordInput!.value, passwordInput!);
+      this.validateSingleField(
+        "password",
+        passwordInput!.value,
+        passwordInput!,
+      );
     });
 
     this.inputField.setPasswordInformerShow(passwordInput!);
@@ -201,7 +199,10 @@ export class SignUpPage {
    * @param {HTMLFormElement} form - Форма регистрации
    * @returns {boolean} Результат валидации
    */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1d600aa (style fixes)
   validateInput(
     login: string,
     email: string,
@@ -234,7 +235,10 @@ export class SignUpPage {
       checkField("password", password, passwordInput!)
     );
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1d600aa (style fixes)
   validateSingleField(
     fieldName: string,
     fieldValue: string,
@@ -265,9 +269,13 @@ export class SignUpPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
+<<<<<<< HEAD
     if (!loginInput || !emailInput || !passwordInput) throw "";
 
     return [loginInput, emailInput, passwordInput];
+=======
+    return [loginInput!, emailInput!, passwordInput!];
+>>>>>>> 1d600aa (style fixes)
   }
 
   getRandomSlogan(): string[] {

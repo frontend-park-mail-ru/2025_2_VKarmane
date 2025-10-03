@@ -87,7 +87,7 @@ export class MainPage {
       container.innerHTML = this.template(data);
     } catch (err) {
       console.error(err);
-      goToPage(config.login);
+      goToPage(config.login!);
       this.unsetBody();
       return;
     }
