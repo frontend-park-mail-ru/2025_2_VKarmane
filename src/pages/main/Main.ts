@@ -8,6 +8,8 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 
+
+import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw"
 
@@ -16,6 +18,14 @@ import mainTemplate from "../../templates/pages/main.hbs?raw"
  * @class
  */
 export class MainPage {
+  factBal: FactBal;
+  card: Card;
+  planBal: PlanBal;
+  menu: Menu;
+  add: Add;
+  operations: Operations;
+  addCard: AddCard;
+  template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
     this.card = new Card();
@@ -32,7 +42,7 @@ export class MainPage {
    * @returns {Promise<void>}
    * @async
    */
-  async render(container) {
+  async render(container: HTMLElement): Promise<void> {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
@@ -65,12 +75,12 @@ export class MainPage {
       container.innerHTML = this.template(data);
     } catch (err) {
       console.error(err);
-      goToPage(config.login);
+      goToPage(config.login!);
       this.unsetBody()
       return;
     }
     const logout = document.querySelector(".logout");
-    logout.addEventListener("click", async () => {
+    logout!.addEventListener("click", async () => {
       try {
         const response = await fetch(
           "http://217.16.23.67:8080/api/v1/auth/logout",
@@ -81,7 +91,7 @@ export class MainPage {
         );
 
         if (response.ok) {
-          goToPage(config.login);
+          goToPage(config.login!);
           this.unsetBody()
           return;
         } else {
@@ -93,13 +103,13 @@ export class MainPage {
     });
     this.setBody();
   }
-  setBody() {
+  setBody(): void {
     console.log(11);
     document.body.classList.remove("hide-scroller");
     document.body.style.margin = "8px";
     document.body.style.backgroundColor = "#eb5b1d";
   }
-  unsetBody() {
+  unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.style.margin = "0px";
     document.body.style.backgroundColor = "";
