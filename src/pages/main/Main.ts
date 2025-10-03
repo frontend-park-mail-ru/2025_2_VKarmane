@@ -9,7 +9,6 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
-
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -90,7 +89,7 @@ export class MainPage {
     } catch (err) {
       console.error(err);
       goToPage(config.login!);
-      this.unsetBody()
+      this.unsetBody();
       return;
     }
     const logout = document.querySelector(".logout");

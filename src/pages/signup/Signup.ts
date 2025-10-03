@@ -18,7 +18,6 @@ export class SignUpPage {
   servItem: serviceItem;
   template: TemplateFn;
 
-
   constructor() {
     this.startButton = new StartButton();
 
@@ -71,11 +70,7 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf(
-        "password",
-        "password",
-        "пароль",
-      ),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       slogans: this.getRandomSlogan(),

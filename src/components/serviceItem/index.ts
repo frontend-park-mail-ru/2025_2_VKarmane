@@ -1,10 +1,10 @@
 
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-import serviceItemTemplate from "../../templates/components/serviceItem.hbs?raw"
+import serviceItemTemplate from "../../templates/components/serviceItem.hbs?raw";
 
 export class serviceItem {
-  template: TemplateFn
+  template: TemplateFn;
   constructor() {
     this.template = Handlebars.compile(serviceItemTemplate);
   }

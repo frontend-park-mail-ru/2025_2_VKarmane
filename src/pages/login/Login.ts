@@ -20,13 +20,11 @@ export class LoginPage {
   expCard: ExpenseCard;
   template: TemplateFn;
   constructor() {
-
     this.startButton = new StartButton();
 
     this.inputField = new InputField();
 
     this.absText = new absenceText();
-
 
     this.category = new Category();
 
@@ -75,15 +73,7 @@ export class LoginPage {
     this.setupEventListeners(container);
   }
 
-
-  /**
-   * Обрабатывает запрос авторизации
-   * @param {HTMLFormElement} form - Форма авторизации
-   * @returns {Promise<void>}
-   * @async
-   */
-
-  async handleLoginRequest(form: HTMLFormElement) {
+  async handleLoginRequest(form: HTMLFormElement): Promise<void> {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
     if (!loginInput || !passwordInput) return;
 
@@ -138,7 +128,6 @@ export class LoginPage {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
   }
-
 
   setupEventListeners(container: HTMLElement): void {
     const form: HTMLFormElement | null = container.querySelector("#login");
