@@ -8,11 +8,24 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 
+import Handlebars from "handlebars";
+import mainTemplate from "../../templates/pages/main.hbs?raw"
+
 /**
  * Класс главной страницы приложения
  * @class
  */
 export class MainPage {
+  constructor() {
+    this.factBal = new FactBal();
+    this.card = new Card();
+    this.planBal = new PlanBal();
+    this.menu = new Menu();
+    this.add = new Add();
+    this.operations = new Operations();
+    this.addCard = new AddCard();
+    this.template = Handlebars.compile(mainTemplate)
+  }
   /**
    * Рендерит главную страницу в контейнер
    * @param {HTMLElement} container - Контейнер для рендеринга
@@ -21,46 +34,40 @@ export class MainPage {
    */
   async render(container) {
     if (!container) throw new Error("Container element not found!");
-
-    const template = Handlebars.templates["main"];
+    document.body.classList.remove("hide-scroller");
 
     // Компоненты
-    const factBal = new FactBal();
-    const card = new Card();
-    const planBal = new PlanBal();
-    const menu = new Menu();
-    const add = new Add();
-    const operations = new Operations();
-    const addCard = new AddCard();
 
     try {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
       const data = {
-        FactBal: factBal.getSelf(
+        FactBal: this.factBal.getSelf(
           budgetsData?.budgets?.[0]?.actual ?? 0,
           100,
           120,
         ),
-        cards: card.getSelf(
+        cards: this.card.getSelf(
           balanceData?.accounts?.[0]?.balance ?? 0,
           true,
           32323,
           1523,
           "Развлечения",
         ),
-        PlanBal: planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
-        menu: menu.getSelf(),
-        Add: add.getSelf(),
-        operations: operations.getList([]),
-        addCard: addCard.getSelf(),
+        PlanBal: this.planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
+        menu: this.menu.getSelf(),
+        Add: this.add.getSelf(),
+        operations: this.operations.getList([]),
+        addCard: this.addCard.getSelf(),
       };
 
-      container.innerHTML = template(data);
+      container.innerHTML = this.template(data);
     } catch (err) {
       console.error(err);
       goToPage(config.login);
+      this.unsetBody()
+      return;
     }
     const logout = document.querySelector(".logout");
     logout.addEventListener("click", async () => {
@@ -75,6 +82,7 @@ export class MainPage {
 
         if (response.ok) {
           goToPage(config.login);
+          this.unsetBody()
           return;
         } else {
           throw Error();
@@ -83,5 +91,17 @@ export class MainPage {
         console.error("Error happend: ", err);
       }
     });
+    this.setBody();
+  }
+  setBody() {
+    console.log(11);
+    document.body.classList.remove("hide-scroller");
+    document.body.style.margin = "8px";
+    document.body.style.backgroundColor = "#eb5b1d";
+  }
+  unsetBody() {
+    document.body.classList.add("hide-scroller");
+    document.body.style.margin = "0px";
+    document.body.style.backgroundColor = "";
   }
 }

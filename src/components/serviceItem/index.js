@@ -1,7 +1,12 @@
+import Handlebars from "handlebars";
+import serviceItemTemplate from "../../templates/components/serviceItem.hbs?raw"
+
 export class serviceItem {
+  constructor() {
+    this.template = Handlebars.compile(serviceItemTemplate)
+  }
   getSelf(service, date_text, currency, sum) {
-    const template = Handlebars.templates["serviceItem"];
-    return template({
+    return this.template({
       db_name: service.db_name,
       logo: service.logo,
       name: service.name,

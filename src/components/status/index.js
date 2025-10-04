@@ -1,11 +1,18 @@
+import Handlebars from "handlebars";
+import statusTemplate from "../../templates/components/Status.hbs?raw"
+
+
 export class Status {
   #statusColors = {
     Сбалансировано: "green",
     Превышено: "red",
   };
 
+  constructor() {
+    this.template = Handlebars.compile(statusTemplate)
+  }
+
   getSelf(status) {
-    const template = Handlebars.templates["Status"];
-    return template({ color: this.#statusColors[status], status });
+    return this.template({ color: this.#statusColors[status], status });
   }
 }
