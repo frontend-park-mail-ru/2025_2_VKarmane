@@ -80,31 +80,36 @@ export class LoginPage {
    * @async
    */
 
-async handleLoginRequest(form) {
-  const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
+  async handleLoginRequest(form) {
+    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
-  const { ok, status, } = await apiFetch("http://217.16.23.67:8080/api/v1/auth/login", {
-    method: "POST",
-    body: JSON.stringify({
-      login: loginInput.value,
-      password: passwordInput.value,
-    }),
-  });
+    const { ok, status } = await apiFetch(
+      "http://217.16.23.67:8080/api/v1/auth/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          login: loginInput.value,
+          password: passwordInput.value,
+        }),
+      },
+    );
 
-  if (!ok) {
-    if (status === 400) {
-      this.setInputsError([loginInput, passwordInput], "Неверный логин или пароль");
-    } else if (status === 500) {
-      this.setServerError();
-    } else {
-      this.setServerError(); 
+    if (!ok) {
+      if (status === 400) {
+        this.setInputsError(
+          [loginInput, passwordInput],
+          "Неверный логин или пароль",
+        );
+      } else if (status === 500) {
+        this.setServerError();
+      } else {
+        this.setServerError();
+      }
+      return;
     }
-    return;
+
+    goToPage(config.user_page);
   }
-
-  goToPage(config.user_page);
-}
-
 
   /**
    * Устанавливает ошибку сервера

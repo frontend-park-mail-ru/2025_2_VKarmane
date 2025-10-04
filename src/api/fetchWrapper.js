@@ -1,12 +1,11 @@
-
 export async function apiFetch(url, options = {}) {
   const defaultOptions = {
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
-    credentials: "include", 
+    credentials: "include",
   };
-  
+
   const finalOptions = {
     ...defaultOptions,
     ...options,

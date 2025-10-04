@@ -110,28 +110,32 @@ export class SignUpPage {
     ) {
       return;
     }
-    const { ok, status, } = await apiFetch("http://217.16.23.67:8080/api/v1/auth/register", {
-    method: "POST",
-    body: JSON.stringify({
+    const { ok, status } = await apiFetch(
+      "http://217.16.23.67:8080/api/v1/auth/register",
+      {
+        method: "POST",
+        body: JSON.stringify({
           login: loginInput.value,
           email: emailInput.value,
           password: passwordInput.value,
-    }),
-  });
+        }),
+      },
+    );
 
-  if (!ok) {
-    if (status === 409) {
-      this.setInputsError([loginInput, emailInput, passwordInput], "Пользователь с таким логином или почтой уже существует");
-    } else if (status === 500) {
-      this.setServerError();
-    } else {
-      this.setServerError(); 
+    if (!ok) {
+      if (status === 409) {
+        this.setInputsError(
+          [loginInput, emailInput, passwordInput],
+          "Пользователь с таким логином или почтой уже существует",
+        );
+      } else if (status === 500) {
+        this.setServerError();
+      } else {
+        this.setServerError();
+      }
+      return;
     }
-    return;
-  }
-  goToPage(config.user_page);
-
-
+    goToPage(config.user_page);
   }
 
   /**
@@ -153,7 +157,6 @@ export class SignUpPage {
       this.setServerError();
     }
   }
-
 
   setInputsError(input, text_error, to_color = true) {
     const arr = Array.isArray(input) ? input : [input];

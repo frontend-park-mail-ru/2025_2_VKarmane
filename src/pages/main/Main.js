@@ -35,7 +35,6 @@ export class MainPage {
     const template = Handlebars.templates["main"];
     document.body.classList.remove("hide-scroller");
 
-
     try {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
@@ -68,21 +67,22 @@ export class MainPage {
     }
     const logout = document.querySelector(".logout");
     logout.addEventListener("click", async () => {
-      const {ok} = await apiFetch("http://217.16.23.67:8080/api/v1/auth/logout", {
-      method: "POST",
-      });
+      const { ok } = await apiFetch(
+        "http://217.16.23.67:8080/api/v1/auth/logout",
+        {
+          method: "POST",
+        },
+      );
 
       if (ok) {
         goToPage(config.login);
         this.setBody();
         return;
       }
-      
     });
-    
   }
   setBody() {
     document.body.classList.remove("hide-scroller");
-    document.body.classList.add("body_background")
+    document.body.classList.add("body_background");
   }
 }
