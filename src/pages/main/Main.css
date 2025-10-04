@@ -5,16 +5,11 @@
 @import "../../components/operations/index.css";
 @import "../../components/menu/index.css";
 
-body {
-  background-color: #eb5b1d;
-}
-
 .banks {
   font-family: "Montserrat";
   font-weight: 500;
   margin-left: 30px;
   float: right;
-  width: 100px;
   height: 100px;
   color: #555353;
   position: relative;

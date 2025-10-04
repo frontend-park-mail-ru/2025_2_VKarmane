@@ -3,5 +3,24 @@
   border-radius: 12px;
   font-size: 0.7rem;
   font-weight: 500;
-  color: white;
+}
+
+.subscribes {
+  background: #94f1ff;
+  color: #006b6f;
+}
+
+.purchases {
+  background: #ffda8f;
+  color: #b28600;
+}
+
+.entertainments {
+  background: #ff80ea;
+  color: #bf00af;
+}
+
+.banking {
+  background: #8bff91;
+  color: #00b20c;
 }
