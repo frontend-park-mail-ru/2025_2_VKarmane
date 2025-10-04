@@ -10,7 +10,6 @@ export class InputField {
     if (!inputs) {
       return;
     }
-
     const group = inputs[inputs.length - 1].closest(".input-group");
     let errEls = group.querySelectorAll(".error-text");
 

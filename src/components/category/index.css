@@ -4,3 +4,23 @@
   font-size: 0.7rem;
   font-weight: 500;
 }
+
+.subscribes {
+  background: #94F1FF;
+  color: #006B6F;
+}
+
+.purchases {
+  background: #FFDA8F;
+  color: #B28600;
+}
+
+.entertainments {
+  background: #FF80EA;
+  color: #BF00AF;
+}
+
+.banking {
+  background: #8BFF91;
+  color: #00B20C;
+}

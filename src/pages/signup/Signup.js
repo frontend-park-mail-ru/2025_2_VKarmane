@@ -4,6 +4,7 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
 
 /**
  * Класс страницы регистрации
@@ -109,26 +110,28 @@ export class SignUpPage {
     ) {
       return;
     }
-
-    const response = await fetch(
-      "http://217.16.23.67:8080/api/v1/auth/register",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
+    const { ok, status, } = await apiFetch("http://217.16.23.67:8080/api/v1/auth/register", {
+    method: "POST",
+    body: JSON.stringify({
           login: loginInput.value,
           email: emailInput.value,
           password: passwordInput.value,
-        }),
-        credentials: "include",
-      },
-    );
+    }),
+  });
 
-    const status = response.status;
-    const result = await response.json();
-    this.checkResultStatus(status, result, form);
+  if (!ok) {
+    if (status === 409) {
+      this.setInputsError([loginInput, emailInput, passwordInput], "Пользователь с таким логином или почтой уже существует");
+    } else if (status === 500) {
+      this.setServerError();
+    } else {
+      this.setServerError(); 
+    }
+    return;
+  }
+  goToPage(config.user_page);
+
+
   }
 
   /**
@@ -151,23 +154,6 @@ export class SignUpPage {
     }
   }
 
-  /**
-   * Устанавливает ошибки для полей ввода
-   * @param {HTMLFormElement} form - Форма регистрации
-   * @param {string} text_error - Текст ошибки
-   * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
-   * @returns {void}
-   */
-  // setInputsError(form, text_error, to_color = true) {
-  //   const loginInput = form.querySelector('input[name="login"]');
-  //   const emailInput = form.querySelector('input[name="email"]');
-  //   const passwordInput = form.querySelector('input[name="password"]');
-  //   this.inputField.setError(
-  //     [loginInput, emailInput, passwordInput],
-  //     to_color,
-  //     text_error,
-  //   );
-  // }
 
   setInputsError(input, text_error, to_color = true) {
     const arr = Array.isArray(input) ? input : [input];
@@ -181,7 +167,7 @@ export class SignUpPage {
   setServerError() {
     const form = document.querySelector(".signup-form");
     this.setInputsError(
-      form,
+      this.getLoginEmailPasswordInput(form).at(-1),
       "При регистрации произошла ошибка. Повторите попытку позже",
       false,
     );

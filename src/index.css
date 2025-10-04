@@ -13,3 +13,8 @@ body {
   margin: 0px;
   padding: 0px;
 }
+
+.body_background {
+  margin: 8px;
+  background-color: #eb5b1d;
+}

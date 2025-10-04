@@ -4,6 +4,7 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
 
 /**
  * Класс страницы авторизации
@@ -49,10 +50,10 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-      this.category.getSelf("#8BFF91", "#00B20C", "Банковские"),
-      this.category.getSelf("#FF80EA", "#BF00AF", "Развлечения"),
-      this.category.getSelf("#FFDA8F", "#B28600", "Покупки"),
-      this.category.getSelf("#94F1FF", "#006B6F", "Подписки"),
+      this.category.getSelf("banking", "Банковские"),
+      this.category.getSelf("entertainments", "Развлечения"),
+      this.category.getSelf("purchases", "Покупки"),
+      this.category.getSelf("subscribes", "Подписки"),
     ];
     const data = {
       title: "Войти",
@@ -78,53 +79,32 @@ export class LoginPage {
    * @returns {Promise<void>}
    * @async
    */
-  async handleLoginRequest(form) {
-    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
-    try {
-      const response = await fetch("http://217.16.23.67:8080/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          login: loginInput.value,
-          password: passwordInput.value,
-        }),
-        credentials: "include",
-      });
-      const status = response.status;
-      const result = await response.json();
-      this.checkResultStatus(status, result, form);
-    }
-    catch (error) {
-      console.log(error)
-      this.setServerError()
-      return
-    }
+async handleLoginRequest(form) {
+  const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
+  const { ok, status, } = await apiFetch("http://217.16.23.67:8080/api/v1/auth/login", {
+    method: "POST",
+    body: JSON.stringify({
+      login: loginInput.value,
+      password: passwordInput.value,
+    }),
+  });
 
-  }
-
-  /**
-   * Проверяет статус ответа сервера и выполняет соответствующие действия
-   * @param {number} status - HTTP статус код
-   * @param {Object} result - Результат ответа сервера
-   * @param {HTMLFormElement} form - Форма авторизации
-   * @returns {void}
-   */
-  checkResultStatus(status, result, form) {
-    if (status == 200) {
-      goToPage(config.user_page);
-    } else if (status == 400) {
-      this.setInputsError(
-        this.getLoginPasswordInput(form),
-        "Неверный логин или пароль",
-      );
-    } else if (status == 500) {
+  if (!ok) {
+    if (status === 400) {
+      this.setInputsError([loginInput, passwordInput], "Неверный логин или пароль");
+    } else if (status === 500) {
       this.setServerError();
+    } else {
+      this.setServerError(); 
     }
+    return;
   }
+
+  goToPage(config.user_page);
+}
+
 
   /**
    * Устанавливает ошибку сервера

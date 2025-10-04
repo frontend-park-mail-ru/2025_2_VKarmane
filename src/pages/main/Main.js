@@ -7,6 +7,7 @@ import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
 
 /**
  * Класс главной страницы приложения
@@ -34,7 +35,6 @@ export class MainPage {
     const template = Handlebars.templates["main"];
     document.body.classList.remove("hide-scroller");
 
-    // Компоненты
 
     try {
       const balanceData = await getBalance();
@@ -68,31 +68,21 @@ export class MainPage {
     }
     const logout = document.querySelector(".logout");
     logout.addEventListener("click", async () => {
-      try {
-        const response = await fetch(
-          "http://217.16.23.67:8080/api/v1/auth/logout",
-          {
-            method: "POST",
-            credentials: "include",
-          },
-        );
+      const {ok} = await apiFetch("http://217.16.23.67:8080/api/v1/auth/logout", {
+      method: "POST",
+      });
 
-        if (response.ok) {
-          goToPage(config.login);
-          return;
-        } else {
-          throw Error();
-        }
-      } catch (err) {
-        console.error("Error happend: ", err);
+      if (ok) {
+        goToPage(config.login);
+        this.setBody();
+        return;
       }
+      
     });
-    this.setBody();
+    
   }
   setBody() {
-    console.log(11);
     document.body.classList.remove("hide-scroller");
-    document.body.style.margin = "8px";
-    document.body.style.backgroundColor = "#eb5b1d";
+    document.body.classList.add("body_background")
   }
 }
