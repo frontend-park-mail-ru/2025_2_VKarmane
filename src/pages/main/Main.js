@@ -89,7 +89,6 @@ export class MainPage {
   }
   unsetBody() {
     document.body.classList.add("hide-scroller");
-    document.body.style.margin = "0px";
-    document.body.style.backgroundColor = "";
+    document.body.classList.remove("body_background");
   }
 }

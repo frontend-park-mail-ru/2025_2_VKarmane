@@ -255,7 +255,8 @@ export class SignUpPage {
       return false;
     } else {
       this.inputField.setError([inputElem], false, "");
-      inputElem.style.borderColor = "#e5e7eb";
+      inputElem.classList.remove("border-red")
+      inputElem.classList.add("border-grey")
       return true;
     }
   }

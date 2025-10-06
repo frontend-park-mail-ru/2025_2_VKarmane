@@ -34,7 +34,8 @@ export class InputField {
 
     if (to_color) {
       inputs.forEach((element) => {
-        element.style.borderColor = "red";
+        element.classList.remove("border-grey")
+        element.classList.add("border-red")
       });
     }
   }
