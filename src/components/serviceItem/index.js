@@ -1,9 +1,9 @@
 import Handlebars from "handlebars";
-import serviceItemTemplate from "../../templates/components/serviceItem.hbs?raw"
+import serviceItemTemplate from "../../templates/components/serviceItem.hbs?raw";
 
 export class serviceItem {
   constructor() {
-    this.template = Handlebars.compile(serviceItemTemplate)
+    this.template = Handlebars.compile(serviceItemTemplate);
   }
   getSelf(service, date_text, currency, sum) {
     return this.template({

@@ -1,6 +1,5 @@
 import Handlebars from "handlebars";
-import statusTemplate from "../../templates/components/Status.hbs?raw"
-
+import statusTemplate from "../../templates/components/Status.hbs?raw";
 
 export class Status {
   #statusColors = {
@@ -9,7 +8,7 @@ export class Status {
   };
 
   constructor() {
-    this.template = Handlebars.compile(statusTemplate)
+    this.template = Handlebars.compile(statusTemplate);
   }
 
   getSelf(status) {

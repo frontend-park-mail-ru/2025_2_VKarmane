@@ -7,10 +7,8 @@ import { goToPage, config } from "../../index.js";
 
 import { apiFetch } from "../../api/fetchWrapper.js";
 
-
 import Handlebars from "handlebars";
-import loginTemplate from "../../templates/pages/Login.hbs?raw"
-
+import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 /**
  * Класс страницы авторизации
@@ -37,7 +35,7 @@ export class LoginPage {
     /** @type {ExpenseCard} */
     this.expCard = new ExpenseCard();
 
-    this.template = Handlebars.compile(loginTemplate)
+    this.template = Handlebars.compile(loginTemplate);
   }
 
   /**
@@ -57,13 +55,10 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
-
-
     ];
     const data = {
       title: "Войти",
@@ -90,22 +85,17 @@ export class LoginPage {
    * @async
    */
 
-
   async handleLoginRequest(form) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
+    const { ok, status } = await apiFetch(`/auth/login`, {
+      method: "POST",
 
-    const { ok, status } = await apiFetch(
-      `/auth/login`,
-      {
-        method: "POST",
-
-        body: JSON.stringify({
-          login: loginInput.value,
-          password: passwordInput.value,
-        }),
-      },
-    );
+      body: JSON.stringify({
+        login: loginInput.value,
+        password: passwordInput.value,
+      }),
+    });
 
     if (!ok) {
       if (status === 400) {
@@ -119,11 +109,9 @@ export class LoginPage {
         this.setServerError();
       }
       return;
-
     }
 
     goToPage(config.user_page);
-
   }
 
   /**

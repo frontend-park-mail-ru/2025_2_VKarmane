@@ -1,9 +1,9 @@
 import Handlebars from "handlebars";
-import operationsTemplate from "../../templates/components/operations.hbs?raw"
+import operationsTemplate from "../../templates/components/operations.hbs?raw";
 
 export class Operations {
   constructor() {
-    this.template = Handlebars.compile(operationsTemplate)
+    this.template = Handlebars.compile(operationsTemplate);
   }
   getList(operationsArray) {
     return this.template({

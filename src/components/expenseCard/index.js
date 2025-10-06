@@ -1,11 +1,11 @@
 import { Status } from "../status/index.js";
 
 import Handlebars from "handlebars";
-import CategoryTemplate from "../../templates/components/ExpenseCard.hbs?raw"
+import CategoryTemplate from "../../templates/components/ExpenseCard.hbs?raw";
 
 export class ExpenseCard {
   constructor() {
-    this.template = Handlebars.compile(CategoryTemplate)
+    this.template = Handlebars.compile(CategoryTemplate);
   }
   getSelf(currency, sum, text, gotStatus = "") {
     let status = "";

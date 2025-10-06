@@ -1,6 +1,6 @@
 import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
-import './index.css';
+import "./index.css";
 import { MainPage } from "./pages/main/Main.js";
 
 const rootElement = document.getElementById("root");
@@ -39,6 +39,5 @@ export function goToPage(pageToGo) {
   rootElement.innerHTML = "";
   pageToGo.render();
 }
-
 
 renderUserPage();

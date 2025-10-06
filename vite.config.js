@@ -1,30 +1,25 @@
-import { defineConfig } from 'vite'
-import  string  from 'vite-plugin-string'
-import babel from 'vite-plugin-babel';
-
+import { defineConfig } from "vite";
+import string from "vite-plugin-string";
+import babel from "vite-plugin-babel";
 
 export default defineConfig({
-
-  root: 'src', 
+  root: "src",
   build: {
-    outDir: '../dist', 
-    emptyOutDir: true  
+    outDir: "../dist",
+    emptyOutDir: true,
   },
   server: {
-    port: 3000,        
-    open: true         
+    port: 3000,
+    open: true,
   },
   plugins: [
     string({
-      include: '**/*.hbs' 
-
+      include: "**/*.hbs",
     }),
-   babel({
-  babelConfig: {
-    presets: [
-      ["@babel/preset-env", { modules: false }],
-    ]
-  }
-})
-  ]
-})
+    babel({
+      babelConfig: {
+        presets: [["@babel/preset-env", { modules: false }]],
+      },
+    }),
+  ],
+});

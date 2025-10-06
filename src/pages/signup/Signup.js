@@ -6,11 +6,8 @@ import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
-
-
-
 import Handlebars from "handlebars";
-import signUpTemplate from "../../templates/pages/SignUp.hbs?raw"
+import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 /**
  * Класс страницы регистрации
  * @class
@@ -33,7 +30,7 @@ export class SignUpPage {
     /** @type {serviceItem} */
     this.servItem = new serviceItem();
 
-    this.template = Handlebars.compile(signUpTemplate)
+    this.template = Handlebars.compile(signUpTemplate);
   }
 
   /**
@@ -116,17 +113,14 @@ export class SignUpPage {
     ) {
       return;
     }
-    const { ok, status } = await apiFetch(
-      `/auth/register`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          login: loginInput.value,
-          email: emailInput.value,
-          password: passwordInput.value,
-        }),
-      },
-    );
+    const { ok, status } = await apiFetch(`/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({
+        login: loginInput.value,
+        email: emailInput.value,
+        password: passwordInput.value,
+      }),
+    });
 
     if (!ok) {
       if (status === 409) {
@@ -163,7 +157,6 @@ export class SignUpPage {
       this.setServerError();
     }
   }
-
 
   setInputsError(input, text_error, to_color = true) {
     const arr = Array.isArray(input) ? input : [input];

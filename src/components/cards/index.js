@@ -1,10 +1,9 @@
 import Handlebars from "handlebars";
-import cardsTemplate from "../../templates/components/cards.hbs?raw"
-
+import cardsTemplate from "../../templates/components/cards.hbs?raw";
 
 export class Card {
   constructor() {
-    this.template = Handlebars.compile(cardsTemplate)
+    this.template = Handlebars.compile(cardsTemplate);
   }
   getSelf(
     balance,

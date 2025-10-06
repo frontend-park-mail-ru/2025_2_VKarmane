@@ -1,10 +1,9 @@
 import Handlebars from "handlebars";
-import FactBalanceTemplate from "../../templates/components/FactBalance.hbs?raw"
-
+import FactBalanceTemplate from "../../templates/components/FactBalance.hbs?raw";
 
 export class FactBal {
   constructor() {
-    this.template = Handlebars.compile(FactBalanceTemplate)
+    this.template = Handlebars.compile(FactBalanceTemplate);
   }
   getSelf(FactSum, PrevFactSum, updateFactFortwoWeek) {
     let informationsAboutSign = updateFactFortwoWeek > 0;
