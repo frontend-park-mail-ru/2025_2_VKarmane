@@ -4,18 +4,18 @@ import babel from 'vite-plugin-babel';
 
 
 export default defineConfig({
-  root: 'src', // папка, где лежит index.html
+  root: 'src', 
   build: {
-    outDir: '../dist', // куда складывать готовый билд
-    emptyOutDir: true  // очищать dist перед билдом
+    outDir: '../dist', 
+    emptyOutDir: true  
   },
   server: {
-    port: 3000,        // порт dev-сервера
-    open: true         // автооткрытие браузера
+    port: 3000,        
+    open: true         
   },
   plugins: [
     string({
-      include: '**/*.hbs' // говорим Vite, что все .hbs импортируем как строки
+      include: '**/*.hbs' 
     }),
    babel({
   babelConfig: {

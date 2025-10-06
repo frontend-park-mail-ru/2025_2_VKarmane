@@ -39,8 +39,8 @@ export class MainPage {
     document.body.classList.remove("hide-scroller");
 
     try {
-      const balanceData = await getBalance();
-      const budgetsData = await getBudgets();
+      // const balanceData = await getBalance();
+      // const budgetsData = await getBudgets();
 
       const data = {
         FactBal: this.factBal.getSelf(
