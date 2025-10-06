@@ -5,6 +5,25 @@
 @import "../../components/expenseCard/index.css";
 @import "../../components/serviceItem/index.css";
 
+.slogans {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-family: "Montserrat";
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.hide-scroller::-webkit-scrollbar {
+  display: block;
+}
+
+.hide-scroller {
+  overflow: hidden;
+}
+
 div {
   font-family: "Montserrat", sans-serif;
 }
@@ -316,10 +335,10 @@ div {
 
 .description {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1.5;
-  margin-bottom: 40px;
   max-width: 480px;
+  margin: 0;
 }
 
 .pagination {

@@ -1,10 +1,12 @@
+import { API_URL } from "./consts.js";
+
 async function fetchWithAuth(url, options = {}) {
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
   };
 
-  const response = await fetch(url, {
+  const response = await fetch(API_URL + url, {
     ...options,
     headers,
     credentials: "include",
@@ -15,17 +17,17 @@ async function fetchWithAuth(url, options = {}) {
 }
 
 export function getBalance() {
-  return fetchWithAuth("http://217.16.23.67:8080/api/v1/balance");
+  return fetchWithAuth(`/balance`);
 }
 
 export function getBalanceById(id) {
-  return fetchWithAuth(`http://217.16.23.67:8080/api/v1/balance/${id}`);
+  return fetchWithAuth(`/balance/${id}`);
 }
 
 export function getBudgets() {
-  return fetchWithAuth("http://217.16.23.67:8080/api/v1/budgets");
+  return fetchWithAuth(`/budgets`);
 }
 
 export function getBudgetById(id) {
-  return fetchWithAuth(`http://217.16.23.67:8080/api/v1/budgets/${id}`);
+  return fetchWithAuth(`/budgets/${id}`);
 }

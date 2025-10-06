@@ -4,6 +4,8 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
+
 
 /**
  * Класс страницы регистрации
@@ -35,6 +37,7 @@ export class SignUpPage {
    */
   render(container) {
     const template = Handlebars.templates["SignUp"];
+    document.body.classList.add("hide-scroller");
     const serviceItems = [
       this.servItem.getSelf(
         {
@@ -72,9 +75,15 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      passwordInput: this.inputField.getSelf(
+        "password",
+        "password",
+        "пароль",
+        true,
+      ),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
+      slogans: this.getRandomSlogan(),
       signUpButton: this.startButton.getSelf("signup", "Зарегистрироваться"),
     };
 
@@ -89,33 +98,45 @@ export class SignUpPage {
    * @async
    */
   async handleSignUpRequest(form) {
-    const login = form.querySelector('input[name="login"]').value;
-    const email = form.querySelector('input[name="email"]').value;
-    const password = form.querySelector('input[name="password"]').value;
+    const [loginInput, emailInput, passwordInput] =
+      this.getLoginEmailPasswordInput(form);
 
-    if (!this.validateInput(login, email, password, form)) {
+    if (
+      !this.validateInput(
+        loginInput.value,
+        emailInput.value,
+        passwordInput.value,
+        form,
+      )
+    ) {
       return;
     }
-
-    const response = await fetch(
-      "http://217.16.23.67:8080/api/v1/auth/register",
+    const { ok, status } = await apiFetch(
+      `/auth/register`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
         body: JSON.stringify({
-          login: login,
-          email: email,
-          password: password,
+          login: loginInput.value,
+          email: emailInput.value,
+          password: passwordInput.value,
         }),
-        credentials: "include",
       },
     );
 
-    const status = response.status;
-    const result = await response.json();
-    this.checkResultStatus(status, result, form);
+    if (!ok) {
+      if (status === 409) {
+        this.setInputsError(
+          [loginInput, emailInput, passwordInput],
+          "Пользователь с таким логином или почтой уже существует",
+        );
+      } else if (status === 500) {
+        this.setServerError();
+      } else {
+        this.setServerError();
+      }
+      return;
+    }
+    goToPage(config.user_page);
   }
 
   /**
@@ -138,22 +159,9 @@ export class SignUpPage {
     }
   }
 
-  /**
-   * Устанавливает ошибки для полей ввода
-   * @param {HTMLFormElement} form - Форма регистрации
-   * @param {string} text_error - Текст ошибки
-   * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
-   * @returns {void}
-   */
-  setInputsError(form, text_error, to_color = true) {
-    const loginInput = form.querySelector('input[name="login"]');
-    const emailInput = form.querySelector('input[name="email"]');
-    const passwordInput = form.querySelector('input[name="password"]');
-    this.inputField.setError(
-      [loginInput, emailInput, passwordInput],
-      to_color,
-      text_error,
-    );
+  setInputsError(input, text_error, to_color = true) {
+    const arr = Array.isArray(input) ? input : [input];
+    this.inputField.setError(arr, to_color, text_error);
   }
 
   /**
@@ -163,7 +171,7 @@ export class SignUpPage {
   setServerError() {
     const form = document.querySelector(".signup-form");
     this.setInputsError(
-      form,
+      this.getLoginEmailPasswordInput(form).at(-1),
       "При регистрации произошла ошибка. Повторите попытку позже",
       false,
     );
@@ -190,6 +198,23 @@ export class SignUpPage {
         goToPage(config.login);
       });
     }
+
+    const [loginInput, emailInput, passwordInput] =
+      this.getLoginEmailPasswordInput(form);
+
+    loginInput.addEventListener("input", () => {
+      this.validateSingleField("login", loginInput.value, loginInput);
+    });
+
+    emailInput.addEventListener("input", () => {
+      this.validateSingleField("email", emailInput.value, emailInput);
+    });
+
+    passwordInput.addEventListener("input", () => {
+      this.validateSingleField("password", passwordInput.value, passwordInput);
+    });
+
+    this.inputField.setPasswordInformerShow(passwordInput);
   }
 
   /**
@@ -203,26 +228,67 @@ export class SignUpPage {
   validateInput(login, email, password, form) {
     const validator = new Validator();
 
-    /**
-     * Устанавливает ошибку для поля и возвращает результат валидации
-     * @param {string} fieldName - Название поля
-     * @param {string} fieldValue - Значение поля
-     * @returns {boolean} Результат валидации
-     */
-    const setInputErrorAndReturn = (fieldName, fieldValue) => {
-      console.log(fieldName);
+    const checkField = (fieldName, fieldValue, inputElem) => {
       let error = validator.validate(fieldName, fieldValue);
       if (error !== undefined) {
-        this.setInputsError(form, error);
+        this.setInputsError(inputElem, error);
         return false;
       }
       return true;
     };
 
+    const [loginInput, emailInput, passwordInput] =
+      this.getLoginEmailPasswordInput(form);
+
     return (
-      setInputErrorAndReturn("login", login) &&
-      setInputErrorAndReturn("email", email) &&
-      setInputErrorAndReturn("password", password)
+      checkField("login", login, loginInput) &&
+      checkField("email", email, emailInput) &&
+      checkField("password", password, passwordInput)
     );
+  }
+  validateSingleField(fieldName, fieldValue, inputElem) {
+    const validator = new Validator();
+
+    let error = validator.validate(fieldName, fieldValue);
+
+    if (error !== undefined) {
+      this.inputField.setError([inputElem], true, error);
+      return false;
+    } else {
+      this.inputField.setError([inputElem], false, "");
+      inputElem.style.borderColor = "#e5e7eb";
+      return true;
+    }
+  }
+
+  getLoginEmailPasswordInput(form) {
+    const loginInput = form.querySelector('input[name="login"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const passwordInput = form.querySelector('input[name="password"]');
+    return [loginInput, emailInput, passwordInput];
+  }
+
+  getRandomSlogan() {
+    const slogans = [
+      [
+        "Свобода — это контроль.",
+        "Контроль — это уверенность.",
+        "Уверенность — это сила.",
+      ],
+      [
+        "Долг — это рабство.",
+        "Сбережения — это свобода.",
+        "Свобода — это сила.",
+      ],
+      [
+        "Богатство — это дисциплина.",
+        "Дисциплина — это порядок.",
+        "Порядок — это будущее.",
+      ],
+    ];
+
+    const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
+
+    return randomSlogan;
   }
 }

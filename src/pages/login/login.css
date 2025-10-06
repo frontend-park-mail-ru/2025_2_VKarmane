@@ -4,6 +4,13 @@
 @import "../../components/category/index.css";
 @import "../../components/expenseCard/index.css";
 
+.hide-scroller::-webkit-scrollbar {
+  display: block;
+}
+
+.hide-scroller {
+  overflow: hidden;
+}
 div {
   font-family: "Montserrat", sans-serif;
 }
@@ -88,10 +95,8 @@ div {
   border-radius: 24px;
   padding: 1.5rem;
   margin: 10px;
-  /* height: 530px; */
   display: flex;
   gap: 3rem;
-  /* justify-content: space-between; */
   justify-self: center;
 }
 
@@ -233,17 +238,19 @@ div {
   width: 450px;
   height: 360px;
   margin: auto;
+  padding: 5%;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 24px;
   overflow: hidden;
   position: relative;
 }
+
 .phone-mockup-container-inner {
   background: rgba(255, 255, 255, 0.5);
-  width: 420px;
-  height: auto;
   border-radius: 24px;
-  overflow: hidden;
+  width: 420px;
+  padding-left: 5%;
+  padding-right: 5%;
   position: relative;
 }
 

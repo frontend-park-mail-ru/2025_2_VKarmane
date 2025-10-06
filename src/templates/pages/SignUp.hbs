@@ -58,11 +58,11 @@
 
     <div class="content-section">
       <div class="bottom-text">Планируй, Управляй и Приумножай</div>
-      <p class="description">
-        Наш сервис поможет тебе правильно распределить твои финансы, чтобы ты
-        мог копить не на что-то, а на что-то ради чего-то: на мечту, свободу и
-        уверенность в завтрашнем дне.
-      </p>
+      <div class="slogans">
+        {{#each slogans}}
+          <p class="description"> {{{this}}}</p>
+        {{/each}}
+      </div>
       <div class="pagination">
         <div class="pagination-dot"></div>
         <div class="pagination-dot active"></div>

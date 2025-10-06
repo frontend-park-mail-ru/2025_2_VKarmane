@@ -4,7 +4,8 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
-import { Validator } from "../../utils/validation.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
+
 
 /**
  * Класс страницы авторизации
@@ -39,6 +40,7 @@ export class LoginPage {
    */
   render(container) {
     const template = Handlebars.templates["Login"];
+    document.body.classList.add("hide-scroller");
     const expCards = [
       this.expCard.getSelf(
         "₽",
@@ -49,10 +51,10 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-      this.category.getSelf("green", "Банковские"),
-      this.category.getSelf("red", "Развлечения"),
-      this.category.getSelf("pink", "Покупки"),
-      this.category.getSelf("blue", "Подписки"),
+      this.category.getSelf("banking", "Банковские"),
+      this.category.getSelf("entertainments", "Развлечения"),
+      this.category.getSelf("purchases", "Покупки"),
+      this.category.getSelf("subscribes", "Подписки"),
     ];
     const data = {
       title: "Войти",
@@ -78,46 +80,36 @@ export class LoginPage {
    * @returns {Promise<void>}
    * @async
    */
-  async handleLoginRequest(form) {
-    const login = form.querySelector('input[name="login"]').value;
-    const password = form.querySelector('input[name="password"]').value;
 
-    if (!this.validateInput(login, password, form)) {
+  async handleLoginRequest(form) {
+    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
+
+    const { ok, status } = await apiFetch(
+      `/auth/login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          login: loginInput.value,
+          password: passwordInput.value,
+        }),
+      },
+    );
+
+    if (!ok) {
+      if (status === 400) {
+        this.setInputsError(
+          [loginInput, passwordInput],
+          "Неверный логин или пароль",
+        );
+      } else if (status === 500) {
+        this.setServerError();
+      } else {
+        this.setServerError();
+      }
       return;
     }
 
-    const response = await fetch("http://217.16.23.67:8080/api/v1/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        login: login,
-        password: password,
-      }),
-      credentials: "include",
-    });
-
-    const status = response.status;
-    const result = await response.json();
-    this.checkResultStatus(status, result, form);
-  }
-
-  /**
-   * Проверяет статус ответа сервера и выполняет соответствующие действия
-   * @param {number} status - HTTP статус код
-   * @param {Object} result - Результат ответа сервера
-   * @param {HTMLFormElement} form - Форма авторизации
-   * @returns {void}
-   */
-  checkResultStatus(status, result, form) {
-    if (status == 200) {
-      goToPage(config.user_page);
-    } else if (status == 401) {
-      this.setInputsError(form, "Неверный логин или пароль");
-    } else if (status == 500) {
-      this.setServerError();
-    }
+    goToPage(config.user_page);
   }
 
   /**
@@ -127,7 +119,7 @@ export class LoginPage {
   setServerError() {
     const form = document.querySelector(".login-form");
     this.setInputsError(
-      form,
+      this.getLoginPasswordInput(form).at(-1),
       "При авторизации произошла ошибка. Повторите попытку позже",
       false,
     );
@@ -140,10 +132,9 @@ export class LoginPage {
    * @param {boolean} [to_color=true] - Нужно ли изменять цвет полей
    * @returns {void}
    */
-  setInputsError(form, text_error, to_color = true) {
-    const errorLogin = form.querySelector('input[name="login"]');
-    const errorPassword = form.querySelector('input[name="password"]');
-    this.inputField.setError([errorLogin, errorPassword], to_color, text_error);
+  setInputsError(input, text_error, to_color = true) {
+    const arr = Array.isArray(input) ? input : [input];
+    this.inputField.setError(arr, to_color, text_error);
   }
 
   /**
@@ -165,34 +156,9 @@ export class LoginPage {
     });
   }
 
-  /**
-   * Валидирует введенные данные
-   * @param {string} login - Логин пользователя
-   * @param {string} password - Пароль пользователя
-   * @param {HTMLFormElement} form - Форма авторизации
-   * @returns {boolean} Результат валидации
-   */
-  validateInput(login, password, form) {
-    const validator = new Validator();
-
-    /**
-     * Устанавливает ошибку для поля и возвращает результат валидации
-     * @param {string} fieldName - Название поля
-     * @param {string} fieldValue - Значение поля
-     * @returns {boolean} Результат валидации
-     */
-    const setInputErrorAndReturn = (fieldName, fieldValue) => {
-      let error = validator.validate(fieldName, fieldValue);
-      if (error !== undefined) {
-        this.setInputsError(form, error);
-        return false;
-      }
-      return true;
-    };
-
-    return (
-      setInputErrorAndReturn("login", login) &&
-      setInputErrorAndReturn("password", password)
-    );
+  getLoginPasswordInput(form) {
+    const loginInput = form.querySelector('input[name="login"]');
+    const passwordInput = form.querySelector('input[name="password"]');
+    return [loginInput, passwordInput];
   }
 }

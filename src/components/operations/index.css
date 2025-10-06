@@ -1,25 +1,21 @@
 .operations {
-  display: flex;
-  flex-direction: row;
-  width: 500px;
   height: 420px;
   background-color: #ffffff;
   border-radius: 26px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-  margin-top: 38px;
-  justify-content: center;
-  align-items: center;
+  margin-top: 18px;
+  position: relative;
+  top: -18px;
 }
 .oper_not_exists {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   place-items: center;
   align-items: center;
   text-align: center;
   margin-top: 18px;
-  max-width: 100%;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  top: 25%;
+  gap: 5px;
 }
 
 .oper_not_exists_img {
@@ -31,8 +27,8 @@
   display: block;
   background-color: #eb5b1d;
   border-radius: 8px;
+  width: 274px;
   height: 43px;
-  width: 100%;
   font-family: "Montserrat";
   font-weight: 600;
   color: white;

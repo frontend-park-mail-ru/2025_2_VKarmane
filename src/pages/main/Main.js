@@ -7,12 +7,23 @@ import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
+
 
 /**
  * Класс главной страницы приложения
  * @class
  */
 export class MainPage {
+  constructor() {
+    this.factBal = new FactBal();
+    this.card = new Card();
+    this.planBal = new PlanBal();
+    this.menu = new Menu();
+    this.add = new Add();
+    this.operations = new Operations();
+    this.addCard = new AddCard();
+  }
   /**
    * Рендерит главную страницу в контейнер
    * @param {HTMLElement} container - Контейнер для рендеринга
@@ -23,65 +34,57 @@ export class MainPage {
     if (!container) throw new Error("Container element not found!");
 
     const template = Handlebars.templates["main"];
-
-    // Компоненты
-    const factBal = new FactBal();
-    const card = new Card();
-    const planBal = new PlanBal();
-    const menu = new Menu();
-    const add = new Add();
-    const operations = new Operations();
-    const addCard = new AddCard();
+    document.body.classList.remove("hide-scroller");
 
     try {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
       const data = {
-        FactBal: factBal.getSelf(
+        FactBal: this.factBal.getSelf(
           budgetsData?.budgets?.[0]?.actual ?? 0,
           100,
           120,
         ),
-        cards: card.getSelf(
+        cards: this.card.getSelf(
           balanceData?.accounts?.[0]?.balance ?? 0,
           true,
           32323,
           1523,
           "Развлечения",
         ),
-        PlanBal: planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
-        menu: menu.getSelf(),
-        Add: add.getSelf(),
-        operations: operations.getList([]),
-        addCard: addCard.getSelf(),
+        PlanBal: this.planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
+        menu: this.menu.getSelf(),
+        Add: this.add.getSelf(),
+        operations: this.operations.getList([]),
+        addCard: this.addCard.getSelf(),
       };
 
       container.innerHTML = template(data);
     } catch (err) {
       console.error(err);
       goToPage(config.login);
+      return;
     }
     const logout = document.querySelector(".logout");
     logout.addEventListener("click", async () => {
-      try {
-        const response = await fetch(
-          "http://217.16.23.67:8080/api/v1/auth/logout",
-          {
-            method: "POST",
-            credentials: "include",
-          },
-        );
+      const { ok } = await apiFetch(
+        `/auth/logout`,
+        {
+          method: "POST",
+        },
+      );
 
-        if (response.ok) {
-          goToPage(config.login);
-          return;
-        } else {
-          throw Error();
-        }
-      } catch (err) {
-        console.error("Error happend: ", err);
+      if (ok) {
+        goToPage(config.login);
+        this.setBody();
+        return;
+
       }
     });
+  }
+  setBody() {
+    document.body.classList.remove("hide-scroller");
+    document.body.classList.add("body_background");
   }
 }
