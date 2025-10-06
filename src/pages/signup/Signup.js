@@ -8,6 +8,7 @@ import { apiFetch } from "../../api/fetchWrapper.js";
 
 
 
+
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw"
 /**
@@ -219,12 +220,7 @@ export class SignUpPage {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
-
-
-
     this.inputField.setPasswordInformerShow(passwordInput);
-
-
   }
 
   /**
@@ -278,9 +274,6 @@ export class SignUpPage {
     return [loginInput, emailInput, passwordInput];
   }
 
-
-
-
   getRandomSlogan() {
     const slogans = [
       [
@@ -304,8 +297,4 @@ export class SignUpPage {
 
     return randomSlogan;
   }
-
-
-
-
 }

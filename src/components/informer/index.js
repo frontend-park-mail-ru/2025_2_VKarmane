@@ -3,7 +3,6 @@ import informerTemplate from "../../templates/components/Informer.hbs?raw"
 
 
 export class Informer {
-
   constructor() {
     this.template = Handlebars.compile(informerTemplate)
   }
@@ -11,3 +10,4 @@ export class Informer {
     return this.template({ text });
   }
 }
+

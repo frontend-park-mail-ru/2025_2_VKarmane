@@ -4,6 +4,7 @@ import babel from 'vite-plugin-babel';
 
 
 export default defineConfig({
+
   root: 'src', 
   build: {
     outDir: '../dist', 
@@ -16,6 +17,7 @@ export default defineConfig({
   plugins: [
     string({
       include: '**/*.hbs' 
+
     }),
    babel({
   babelConfig: {

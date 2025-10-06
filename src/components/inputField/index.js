@@ -40,8 +40,6 @@ export class InputField {
     }
   }
   setPasswordInformerShow(passwordInput) {
-
-
     const inputGroup = passwordInput.closest(".input-group");
     const informer = new Informer().getSelf(
       "Пароль должен содержать минимум 6 символов, заглавную букву, цифры, а так же может содержать символы @, #, _, &, %, $",
@@ -57,8 +55,5 @@ export class InputField {
     passwordInput.addEventListener("mouseleave", () => {
       informerWrapper.classList.remove("show");
     });
-
-
-
   }
 }

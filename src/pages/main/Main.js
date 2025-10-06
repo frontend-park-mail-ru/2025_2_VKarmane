@@ -13,6 +13,7 @@ import { apiFetch } from "../../api/fetchWrapper.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw"
 
+
 /**
  * Класс главной страницы приложения
  * @class
@@ -38,9 +39,10 @@ export class MainPage {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
+
     try {
-      // const balanceData = await getBalance();
-      // const budgetsData = await getBudgets();
+      const balanceData = await getBalance();
+      const budgetsData = await getBudgets();
 
       const data = {
         FactBal: this.factBal.getSelf(
@@ -90,6 +92,7 @@ export class MainPage {
   setBody() {
     document.body.classList.remove("hide-scroller");
     document.body.classList.add("body_background");
+
   }
   unsetBody() {
     document.body.classList.add("hide-scroller");
