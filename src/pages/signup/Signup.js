@@ -5,7 +5,7 @@ import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-import { API_URL } from "../../api/consts.js";
+
 
 /**
  * Класс страницы регистрации
@@ -112,7 +112,7 @@ export class SignUpPage {
       return;
     }
     const { ok, status } = await apiFetch(
-      `${API_URL}/auth/register`,
+      `/auth/register`,
       {
         method: "POST",
         body: JSON.stringify({

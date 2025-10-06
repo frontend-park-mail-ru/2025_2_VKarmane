@@ -1,3 +1,4 @@
+import { API_URL } from "./consts.js";
 export async function apiFetch(url, options = {}) {
   const defaultOptions = {
     headers: {
@@ -16,7 +17,7 @@ export async function apiFetch(url, options = {}) {
   };
 
   try {
-    const response = await fetch(url, finalOptions);
+    const response = await fetch(API_URL + url, finalOptions);
     const contentType = response.headers.get("Content-Type");
     let data = null;
 

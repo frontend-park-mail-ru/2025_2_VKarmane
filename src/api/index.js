@@ -6,7 +6,7 @@ async function fetchWithAuth(url, options = {}) {
     ...options.headers,
   };
 
-  const response = await fetch(url, {
+  const response = await fetch(API_URL + url, {
     ...options,
     headers,
     credentials: "include",
@@ -17,17 +17,17 @@ async function fetchWithAuth(url, options = {}) {
 }
 
 export function getBalance() {
-  return fetchWithAuth(`${API_URL}/balance`);
+  return fetchWithAuth(`/balance`);
 }
 
 export function getBalanceById(id) {
-  return fetchWithAuth(`${API_URL}/balance/${id}`);
+  return fetchWithAuth(`/balance/${id}`);
 }
 
 export function getBudgets() {
-  return fetchWithAuth(`${API_URL}/budgets`);
+  return fetchWithAuth(`/budgets`);
 }
 
 export function getBudgetById(id) {
-  return fetchWithAuth(`${API_URL}/budgets/${id}`);
+  return fetchWithAuth(`/budgets/${id}`);
 }

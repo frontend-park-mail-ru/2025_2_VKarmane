@@ -8,7 +8,7 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-import { API_URL } from "../../api/consts.js";
+
 
 /**
  * Класс главной страницы приложения
@@ -69,7 +69,7 @@ export class MainPage {
     const logout = document.querySelector(".logout");
     logout.addEventListener("click", async () => {
       const { ok } = await apiFetch(
-        `${API_URL}/auth/logout`,
+        `/auth/logout`,
         {
           method: "POST",
         },
