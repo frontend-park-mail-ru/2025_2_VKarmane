@@ -1,4 +1,5 @@
-import { API_URL } from "./consts.js";
+// import { API_URL } from "./consts.js";
+const API_URL = import.meta.env.API_URL;
 export async function apiFetch(url, options = {}) {
   const defaultOptions = {
     headers: {
