@@ -5,6 +5,7 @@ import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
+import { API_URL } from "../../api/consts.js";
 
 /**
  * Класс страницы авторизации
@@ -84,7 +85,7 @@ export class LoginPage {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
     const { ok, status } = await apiFetch(
-      "http://217.16.23.67:8080/api/v1/auth/login",
+      `${API_URL}/auth/login`,
       {
         method: "POST",
         body: JSON.stringify({

@@ -1,3 +1,5 @@
+import { API_URL } from "./consts.js";
+
 async function fetchWithAuth(url, options = {}) {
   const headers = {
     "Content-Type": "application/json",
@@ -15,17 +17,17 @@ async function fetchWithAuth(url, options = {}) {
 }
 
 export function getBalance() {
-  return fetchWithAuth("http://217.16.23.67:8080/api/v1/balance");
+  return fetchWithAuth(`${API_URL}/balance`);
 }
 
 export function getBalanceById(id) {
-  return fetchWithAuth(`http://217.16.23.67:8080/api/v1/balance/${id}`);
+  return fetchWithAuth(`${API_URL}/balance/${id}`);
 }
 
 export function getBudgets() {
-  return fetchWithAuth("http://217.16.23.67:8080/api/v1/budgets");
+  return fetchWithAuth(`${API_URL}/budgets`);
 }
 
 export function getBudgetById(id) {
-  return fetchWithAuth(`http://217.16.23.67:8080/api/v1/budgets/${id}`);
+  return fetchWithAuth(`${API_URL}/budgets/${id}`);
 }
