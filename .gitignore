@@ -1,5 +1,7 @@
 node_modules/
+*.compiled.js
 *.precompiled.js
 .idea
 /src/handlebars
 templates.js
+dist/

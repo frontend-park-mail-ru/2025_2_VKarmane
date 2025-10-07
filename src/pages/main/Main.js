@@ -9,6 +9,8 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
+import Handlebars from "handlebars";
+import mainTemplate from "../../templates/pages/main.hbs?raw";
 
 /**
  * Класс главной страницы приложения
@@ -23,6 +25,7 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
+    this.template = Handlebars.compile(mainTemplate);
   }
   /**
    * Рендерит главную страницу в контейнер
@@ -32,8 +35,6 @@ export class MainPage {
    */
   async render(container) {
     if (!container) throw new Error("Container element not found!");
-
-    const template = Handlebars.templates["main"];
     document.body.classList.remove("hide-scroller");
 
     try {
@@ -60,31 +61,34 @@ export class MainPage {
         addCard: this.addCard.getSelf(),
       };
 
-      container.innerHTML = template(data);
+      container.innerHTML = this.template(data);
     } catch (err) {
       console.error(err);
       goToPage(config.login);
+      this.unsetBody();
       return;
     }
     const logout = document.querySelector(".logout");
     logout.addEventListener("click", async () => {
-      const { ok } = await apiFetch(
-        `/auth/logout`,
-        {
-          method: "POST",
-        },
-      );
+      const { ok } = await apiFetch(`/auth/logout`, {
+        method: "POST",
+      });
 
       if (ok) {
         goToPage(config.login);
         this.setBody();
         return;
-
       }
     });
+    this.setBody();
   }
+
   setBody() {
     document.body.classList.remove("hide-scroller");
     document.body.classList.add("body_background");
+  }
+  unsetBody() {
+    document.body.classList.add("hide-scroller");
+    document.body.classList.remove("body_background");
   }
 }

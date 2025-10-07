@@ -4,8 +4,11 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
+
 import { apiFetch } from "../../api/fetchWrapper.js";
 
+import Handlebars from "handlebars";
+import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 /**
  * Класс страницы авторизации
@@ -31,6 +34,8 @@ export class LoginPage {
 
     /** @type {ExpenseCard} */
     this.expCard = new ExpenseCard();
+
+    this.template = Handlebars.compile(loginTemplate);
   }
 
   /**
@@ -39,7 +44,6 @@ export class LoginPage {
    * @returns {void}
    */
   render(container) {
-    const template = Handlebars.templates["Login"];
     document.body.classList.add("hide-scroller");
     const expCards = [
       this.expCard.getSelf(
@@ -69,7 +73,7 @@ export class LoginPage {
       loginButton: this.startButton.getSelf("login", "Войти"),
       categories: categories,
     };
-    container.innerHTML = template(data);
+    container.innerHTML = this.template(data);
 
     this.setupEventListeners(container);
   }
@@ -84,16 +88,14 @@ export class LoginPage {
   async handleLoginRequest(form) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
-    const { ok, status } = await apiFetch(
-      `/auth/login`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          login: loginInput.value,
-          password: passwordInput.value,
-        }),
-      },
-    );
+    const { ok, status } = await apiFetch(`/auth/login`, {
+      method: "POST",
+
+      body: JSON.stringify({
+        login: loginInput.value,
+        password: passwordInput.value,
+      }),
+    });
 
     if (!ok) {
       if (status === 400) {

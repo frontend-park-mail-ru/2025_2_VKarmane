@@ -1,4 +1,4 @@
-import { API_URL } from "./consts.js";
+const API_URL = import.meta.env.VITE_API_URL;
 
 async function fetchWithAuth(url, options = {}) {
   const headers = {

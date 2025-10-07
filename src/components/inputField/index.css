@@ -1,7 +1,7 @@
 @import "../informer/index.css";
 
 .input-group {
-  margin-bottom: 1.25rem; /* отступ между группами */
+  margin-bottom: 1.25rem;
   position: relative;
 }
 
@@ -30,4 +30,12 @@
 .error-text {
   margin-top: 0.5rem;
   margin-bottom: 0;
+}
+
+.border-red {
+  border-color: red;
+}
+
+.border-grey {
+  border-color: #e5e7eb;
 }

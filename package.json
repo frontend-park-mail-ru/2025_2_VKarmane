@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm run compile:templates",
+    "dev": "vite",
+    "prestart": "npm run build",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
     "compile:templates": "handlebars src/templates/components src/templates/pages/ -f dist/templates/templates.js -e hbs -k",
@@ -18,7 +21,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/frontend-park-mail-ru/2025_2_VKarmane/issues"
   },
@@ -35,6 +38,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
     "@eslint/css": "^0.11.1",
     "@eslint/js": "^9.36.0",
     "babel-eslint": "^10.1.0",
@@ -42,6 +46,9 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
-    "prettier": "3.6.2"
+    "prettier": "3.6.2",
+    "vite": "^7.1.9",
+    "vite-plugin-babel": "^1.3.2",
+    "vite-plugin-string": "^1.2.3"
   }
 }
