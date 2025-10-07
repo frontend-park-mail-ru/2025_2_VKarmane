@@ -75,15 +75,15 @@ export class LoginPage {
    * @async
    */
 
-  async handleLoginRequest(form) {
+  async handleLoginRequest(form: HTMLFormElement) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
     const { ok, status } = await apiFetch(`/auth/login`, {
       method: "POST",
 
       body: JSON.stringify({
-        login: loginInput.value,
-        password: passwordInput.value,
+        login: loginInput!.value,
+        password: passwordInput!.value,
       }),
     });
 
@@ -91,7 +91,7 @@ export class LoginPage {
     if (!ok) {
       if (status === 400) {
         this.setInputsError(
-          [loginInput, passwordInput],
+          [loginInput!, passwordInput!],
           "Неверный логин или пароль",
         );
       } else if (status === 500) {
@@ -103,7 +103,7 @@ export class LoginPage {
 
     }
 
-    goToPage(config.user_page);
+    goToPage(config.user_page!);
   }
 
   setServerError(): void {

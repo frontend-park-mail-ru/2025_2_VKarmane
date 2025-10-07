@@ -98,16 +98,16 @@ export class SignUpPage {
     const { ok, status } = await apiFetch(`/auth/register`, {
       method: "POST",
       body: JSON.stringify({
-        login: loginInput.value,
-        email: emailInput.value,
-        password: passwordInput.value,
+        login: loginInput!.value,
+        email: emailInput!.value,
+        password: passwordInput!.value,
       }),
     });
 
     if (!ok) {
       if (status === 409) {
         this.setInputsError(
-          [loginInput, emailInput, passwordInput],
+          [loginInput!, emailInput!, passwordInput!],
           "Пользователь с таким логином или почтой уже существует",
         );
       } else if (status === 500) {
@@ -117,7 +117,7 @@ export class SignUpPage {
       }
       return;
     }
-    goToPage(config.user_page);
+    goToPage(config.user_page!);
   }
 
   checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
