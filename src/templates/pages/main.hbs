@@ -22,6 +22,7 @@
       </div>
       <div class="right-section">
         <div class="banks">
+<<<<<<< HEAD
           <h2 class="balance-text">Счета</h2>
 
           <div class="cards-scroll-container">
@@ -32,6 +33,17 @@
 
             </div>
           </div>
+=======
+          <h2 class="balance-text">
+            Счета
+          </h2>
+          {{#if exist_card}}
+           {{> carousel cards=cards exist_card=true}}
+          {{else}}  
+           {{> carousel cards=cards exist_card=false}}
+           {{/if}}
+
+>>>>>>> 921f1c0 (carousel done:)
 
           {{{operations}}}
         </div>

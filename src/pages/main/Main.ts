@@ -6,6 +6,7 @@ import { Add } from "../../components/add/index.js";
 import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
+import { Carousel } from "../../components/carousel/index.js";
 import { config, goToPage } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
@@ -86,6 +87,8 @@ export class MainPage {
       };
 
       container.innerHTML = this.template(data);
+
+      this.setCarousel();
     } catch (err) {
       console.error(err);
       goToPage(config.login!);
@@ -118,5 +121,9 @@ export class MainPage {
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
+  }
+
+  setCarousel() {
+    document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
   }
 }
