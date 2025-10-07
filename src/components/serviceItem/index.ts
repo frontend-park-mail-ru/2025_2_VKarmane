@@ -1,4 +1,5 @@
-import Handlebars from "handlebars"
+
+import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
 import serviceItemTemplate from "../../templates/components/serviceItem.hbs?raw";
 

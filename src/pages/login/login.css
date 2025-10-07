@@ -9,6 +9,7 @@
 }
 
 .hide-scroller {
+<<<<<<< HEAD
 
     display: block;
 }
@@ -16,6 +17,8 @@
 
 
 .hide-scroller {
+=======
+>>>>>>> bb71007ffd5065f46b81c83ad8d05a845acd168f
   overflow: hidden;
 }
 div {
@@ -258,6 +261,13 @@ div {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 24px;
   width: 420px;
+<<<<<<< HEAD
+=======
+  /* height: auto; */
+  /* margin: 5%; */
+  /* height: 300px; */
+  /* padding: 5%; */
+>>>>>>> bb71007ffd5065f46b81c83ad8d05a845acd168f
   padding-left: 5%;
   padding-right: 5%;
   position: relative;

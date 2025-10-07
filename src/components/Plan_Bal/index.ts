@@ -1,5 +1,4 @@
 import Handlebars from "handlebars";
-
 import type { TemplateFn } from "../../types/handlebars.js";
 import planBalTemplate from "../../templates/components/PlanBalance.hbs?raw";
 

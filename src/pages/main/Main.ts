@@ -102,6 +102,5 @@ export class MainPage {
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
-
   }
 }

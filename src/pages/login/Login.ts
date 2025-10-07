@@ -45,10 +45,12 @@ export class LoginPage {
     ];
     const categories = [
 
+
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
+
     ];
     const data = {
       title: "Войти",
@@ -67,6 +69,7 @@ export class LoginPage {
 
     this.setupEventListeners(container);
   }
+
 
   /**
    * Обрабатывает запрос авторизации

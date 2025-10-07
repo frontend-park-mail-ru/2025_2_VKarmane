@@ -4,13 +4,11 @@ import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
-
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
-
 
 export class SignUpPage {
   startButton: StartButton;
@@ -95,6 +93,7 @@ export class SignUpPage {
     ) {
       return;
     }
+
     const { ok, status } = await apiFetch(`/auth/register`, {
       method: "POST",
       body: JSON.stringify({
@@ -147,6 +146,7 @@ export class SignUpPage {
     const form: HTMLFormElement | null = document.querySelector(".signup-form");
     this.setInputsError(
       this.getLoginEmailPasswordInput(form!).at(-1)!,
+
       "При регистрации произошла ошибка. Повторите попытку позже",
       false,
     );

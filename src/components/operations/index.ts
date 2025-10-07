@@ -2,8 +2,6 @@ import Handlebars from "handlebars";
 
 import type { TemplateFn } from "../../types/handlebars.js";
 import operationsTemplate from "../../templates/components/operations.hbs?raw";
-
-
 export class Operations {
   template: TemplateFn;
   constructor() {
