@@ -1,28 +1,38 @@
 <div class="Fact-Balance">
-  <h3 class="Fact-Plan-text">
-    Фактический
-  </h3>
-  <div class="CheckSum">
-    <h2 class="FactSum">{{FactSum}} ₽</h2>
+  {{#if (not is_empty)}}
+    <h3 class="Fact-Plan-text">
+      Фактический
+    </h3>
+    <div class="CheckSum">
+      <h2 class="FactSum">{{FactSum}} ₽</h2>
+      {{#if hasUpdateFactPlan}}
+        <div class="ProcentUp">
+          <p class="ProcTextUp"> ↑{{GetBalance}}%</p>
+        </div>
+      {{else}}
+        <div class="ProcentDown" style="align-items: center;">
+          <p class="ProcTextDown">↓{{GetBalance}}%</p>
+        </div>
+      {{/if}}
+    </div>
     {{#if hasUpdateFactPlan}}
-      <div class="ProcentUp">
-        <p class="ProcTextUp"> ↑{{GetBalance}}%</p>
+      <div class="Fact-balance-text" style="display: flex">
+        <p class="Fact-plus-text">+{{updateFactFortwoWeek}}₽&nbsp;</p>
+        <p class="Fact-text"> за последние 2 недели</p>
       </div>
     {{else}}
-      <div class="ProcentDown" style="align-items: center;">
-        <p class="ProcTextDown">↓{{GetBalance}}%</p>
+      <div class="Fact-balance-text" style="display: flex">
+        <p class="Fact-minus-text">{{updateFactFortwoWeek}}₽&nbsp;</p>
+        <p class="Fact-text"> за последние 2 недели</p>
       </div>
     {{/if}}
-  </div>
-  {{#if hasUpdateFactPlan}}
-    <div class="Fact-balance-text" style="display: flex">
-      <p class="Fact-plus-text">+{{updateFactFortwoWeek}}₽&nbsp;</p>
-      <p class="Fact-text"> за последние 2 недели</p>
-    </div>
   {{else}}
-    <div class="Fact-balance-text" style="display: flex">
-      <p class="Fact-minus-text">{{updateFactFortwoWeek}}₽&nbsp;</p>
-      <p class="Fact-text"> за последние 2 недели</p>
+    <div class="balance_not_exists">
+      <div class="balance_not_exists_img"></div>
+      <h2 style="color: #949494; font-size: 20px">
+        Тут пока ничего нет :(
+      </h2>
+      <a class="add_operation" href="#">+ Добавить баланс</a>
     </div>
   {{/if}}
 </div>
