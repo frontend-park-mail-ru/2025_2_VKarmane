@@ -7,9 +7,15 @@ export class PlanBal {
   constructor() {
     this.template = Handlebars.compile(planBalTemplate);
   }
-  getSelf(PlanSum: number): string {
+  getSelf(PlanSum: number | null): string {
+    if (PlanSum === null) {
+      return this.template({
+        is_empty: true,
+      });
+    }
     return this.template({
       PlanSum: PlanSum,
+      is_empty: false,
     });
   }
 }

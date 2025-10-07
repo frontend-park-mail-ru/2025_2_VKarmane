@@ -25,12 +25,13 @@
           <h2 class="balance-text">
             Счета
           </h2>
-          <div class="card_handler" style="display: flex;">
-            {{{cards}}}
-            <div class="card_but_hand">
-              {{{addCard}}}
-            </div>
-          </div>
+          {{#if exist_card}}
+           {{> carousel cards=cards exist_card=true}}
+          {{else}}  
+           {{> carousel cards=cards exist_card=false}}
+           {{/if}}
+
+
           {{{operations}}}
         </div>
       </div>

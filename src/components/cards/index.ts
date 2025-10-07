@@ -8,18 +8,24 @@ export class Card {
     this.template = Handlebars.compile(cardsTemplate);
   }
   getSelf(
-    balance: number,
+    balance: number | null,
     hasUpdateFactPlan: boolean,
     updateCardFortwoWeek: number,
     naibolsh_rashod: number,
     action: string,
   ): string {
+    if (balance === null) {
+      console.log(1);
+      return this.template({ is_empty: true });
+    }
+    console.log(2);
     return this.template({
       balance: balance,
       hasUpdateFactPlan: hasUpdateFactPlan,
       has_update_for_2_week: updateCardFortwoWeek,
       naibolsh_rashod: naibolsh_rashod,
       action: action,
+      is_empty: false,
     });
   }
 }
