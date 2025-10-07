@@ -56,6 +56,7 @@ export class MainPage {
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
               this.card.getSelf(
+<<<<<<< HEAD
                 account.balance,
                 true,
                 32323,
@@ -79,6 +80,31 @@ export class MainPage {
             ? budgetsData.budgets[0].actual
             : null,
         ),
+=======
+                account.balance, 
+                true,
+                32323, 
+                1523, 
+                "Развлечения", 
+              ),
+            )
+          : [
+              this.card.getSelf(
+                null, 
+                true, 
+                0,
+                0,
+                "Нет счетов",
+              ),
+            ];
+
+      const data = {
+        FactBal: this.factBal.getSelf(12, 100, 120),
+        // balanceData.accounts.length !== 0 ? balanceData.accounts[0].balance : null
+        cards: cards,
+        // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
+        PlanBal: this.planBal.getSelf(12),
+>>>>>>> 5abdc62 (carousel done:)
         menu: this.menu.getSelf(),
         Add: this.add.getSelf(),
         operations: this.operations.getList([]),
@@ -121,6 +147,10 @@ export class MainPage {
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
+  }
+
+  setCarousel() {
+    document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
   }
 
   setCarousel() {

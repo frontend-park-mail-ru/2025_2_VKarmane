@@ -1,6 +1,5 @@
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
-
 import FactBalanceTemplate from "../../templates/components/FactBalance.hbs?raw";
 import OperationsTemplate from "../../templates/components/operations.hbs?raw";
 import { Operations } from "../operations/index.js";
