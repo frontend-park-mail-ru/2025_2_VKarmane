@@ -10,6 +10,5 @@ export class Category {
 
   getSelf(category: string, category_name: string) {
     return this.template({ category, category_name });
-
   }
 }

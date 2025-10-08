@@ -99,7 +99,6 @@ export class MainPage {
         method: "POST",
       });
 
-
       if (ok) {
 
         if (!config.login) return;

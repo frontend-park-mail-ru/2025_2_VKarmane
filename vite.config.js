@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import string from "vite-plugin-string";
 import babel from "vite-plugin-babel";

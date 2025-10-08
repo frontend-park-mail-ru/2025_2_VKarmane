@@ -121,7 +121,6 @@ export class SignUpPage {
     router.navigate("/");
   }
 
-
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
     text_error: string,

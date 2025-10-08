@@ -45,8 +45,6 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-
-
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
       this.category.getSelf("purchases", "Покупки"),
@@ -86,7 +84,6 @@ export class LoginPage {
       }),
     });
 
-
     if (!ok) {
       if (status === 400) {
         this.setInputsError(
@@ -99,7 +96,6 @@ export class LoginPage {
         this.setServerError();
       }
       return;
-
     }
 
     if (!config.user_page) return;
