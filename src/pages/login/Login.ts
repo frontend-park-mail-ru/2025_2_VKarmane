@@ -7,7 +7,7 @@ import { apiFetch } from "../../api/fetchWrapper.js";
 
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import router from "../../index.js";
+import  router from "../../index.js"
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
