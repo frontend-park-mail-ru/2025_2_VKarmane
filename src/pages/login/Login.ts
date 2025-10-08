@@ -8,7 +8,7 @@ import { goToPage, config } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-
+import  router from "../../index.js"
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -103,8 +103,7 @@ export class LoginPage {
       }
       return;
     }
-    if (!config.user_page) return;
-    goToPage(config.user_page);
+
   }
 
   setServerError(): void {
@@ -141,8 +140,13 @@ export class LoginPage {
     if (!signupLink) return;
     signupLink.addEventListener("click", (e) => {
       e.preventDefault();
+<<<<<<< HEAD
       if (!config.signup) return;
       goToPage(config.signup);
+=======
+      router.navigate("/signup")
+      // goToPage(config.signup!);
+>>>>>>> cf46569 (router)
     });
   }
 

@@ -9,6 +9,7 @@ import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
+import router from "../../index.js"
 
 export class SignUpPage {
   startButton: StartButton;
@@ -123,8 +124,8 @@ export class SignUpPage {
 
   checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
     if (status == 201) {
-      if (!config.user_page) return;
-      goToPage(config.user_page);
+      // goToPage(config.user_page!);
+      router.navigate("/")
     } else if (status == 409) {
       this.setInputsError(
         this.getLoginEmailPasswordInput(form),
