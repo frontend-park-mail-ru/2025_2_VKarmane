@@ -67,6 +67,10 @@
   background-color: transparent;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> deea218 (router)
 .meny__button {
   margin-top: 72px;
   height: 48px;
@@ -78,6 +82,10 @@
 }
 
 .transactions {
+<<<<<<< HEAD
+=======
+
+>>>>>>> deea218 (router)
   background-image: url("/imgs/transactions_page.png");
 }
 
@@ -85,10 +93,20 @@
   background-image: url("/imgs/transactions_hover.png");
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> deea218 (router)
 .profile {
   background-image: url("/imgs/profile.png");
 }
 
 .profile:hover {
+<<<<<<< HEAD
   background-image: url("/imgs/profile_hover.png");
 }
+=======
+
+  background-image: url("/imgs/profile_hover.png");
+}
+>>>>>>> deea218 (router)
