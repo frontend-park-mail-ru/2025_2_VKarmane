@@ -7,8 +7,9 @@ import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { Carousel } from "../../components/carousel/index.js";
+import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { config, goToPage } from "../../index.js";
-
+import  router from "../../index.js"
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -25,6 +26,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
+  profileBlock :ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -34,6 +36,7 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
+    this.profileBlock = new ProfileBlock();
     this.template = Handlebars.compile(mainTemplate);
   }
   /**
@@ -49,29 +52,35 @@ export class MainPage {
     // Компоненты
 
     try {
-      const balanceData = await getBalance();
-      const budgetsData = await getBudgets();
+      // const balanceData = await getBalance();
+      // const budgetsData = await getBudgets();
 
-      const cards =
-        balanceData.accounts.length !== 0
-          ? balanceData.accounts.map((account: Record<string, any>) =>
-              this.card.getSelf(
-                account.balance, 
-                true,
-                32323, 
-                1523, 
-                "Развлечения", 
-              ),
-            )
-          : [
-              this.card.getSelf(
-                null, 
+      const cards = [              this.card.getSelf(
+                12, 
                 true, 
                 0,
                 0,
                 "Нет счетов",
-              ),
-            ];
+              )]
+        // balanceData.accounts.length !== 0
+        //   ? balanceData.accounts.map((account: Record<string, any>) =>
+        //       this.card.getSelf(
+        //         account.balance, 
+        //         true,
+        //         32323, 
+        //         1523, 
+        //         "Развлечения", 
+        //       ),
+        //     )
+        //   : [
+        //       this.card.getSelf(
+        //         null, 
+        //         true, 
+        //         0,
+        //         0,
+        //         "Нет счетов",
+        //       ),
+        //     ];
 
       const data = {
         FactBal: this.factBal.getSelf(12, 100, 120),
@@ -84,6 +93,7 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
+        profile_block: this.profileBlock.getSelf("aboba", 1111)
       };
 
       container.innerHTML = this.template(data);
@@ -91,7 +101,8 @@ export class MainPage {
       this.setCarousel();
     } catch (err) {
       console.error(err);
-      goToPage(config.login!);
+      // goToPage(config.login!);
+      router.navigate("/login")
       this.unsetBody();
       return;
     }
@@ -107,7 +118,8 @@ export class MainPage {
         );
 
         if (response.ok) {
-          goToPage(config.login!);
+          // goToPage(config.login!);
+          router.navigate("/login")
           this.unsetBody();
           return;
         } else {
