@@ -6,7 +6,7 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import router from "../../index.js";
+import  router from "../../index.js"
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -56,11 +56,7 @@ export class LoginPage {
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-<<<<<<< HEAD
-        config.signup.href,
-=======
         "/register",
->>>>>>> b98ebb1 (style fixes)
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -142,17 +138,7 @@ export class LoginPage {
     if (!signupLink) return;
     signupLink.addEventListener("click", (e) => {
       e.preventDefault();
-<<<<<<< HEAD
-<<<<<<< HEAD
-      if (!config.signup) return;
-      goToPage(config.signup);
-=======
-      router.navigate("/signup")
-      // goToPage(config.signup!);
->>>>>>> cf46569 (router)
-=======
       router.navigate("/signup");
->>>>>>> b98ebb1 (style fixes)
     });
   }
 

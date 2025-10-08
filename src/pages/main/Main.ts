@@ -104,6 +104,7 @@ export class MainPage {
         method: "POST",
       });
 
+
       if (ok) {
         router.navigate("/login")
         this.unsetBody();
