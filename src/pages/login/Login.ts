@@ -8,7 +8,7 @@ import { goToPage, config } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-
+import  router from "../../index.js"
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -99,8 +99,26 @@ export class LoginPage {
       }
       return;
     }
+  }
 
-    goToPage(config.user_page!);
+  checkResultStatus(
+    status: number,
+    result: Object,
+    form: HTMLFormElement,
+  ): void {
+    if (status == 200) {
+      router.navigate("/")
+      // goToPage(config.user_page!);
+
+    } else if (status == 400) {
+      this.setInputsError(
+        this.getLoginPasswordInput(form),
+        "Неверный логин или пароль",
+      );
+    } else if (status == 500) {
+      this.setServerError();
+    }
+
   }
 
   setServerError(): void {
@@ -135,7 +153,8 @@ export class LoginPage {
     const signupLink = container.querySelector(".absence-text a");
     signupLink!.addEventListener("click", (e) => {
       e.preventDefault();
-      goToPage(config.signup!);
+      router.navigate("/signup")
+      // goToPage(config.signup!);
     });
   }
 

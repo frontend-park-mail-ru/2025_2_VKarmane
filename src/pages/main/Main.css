@@ -5,6 +5,7 @@
 @import "../../components/operations/index.css";
 @import "../../components/menu/index.css";
 @import "../../components/carousel/index.css";
+@import "../../components/profileBlock/index.css";
 
 .banks {
   font-family: "Montserrat";
@@ -79,48 +80,11 @@
   bottom: -152px;
 }
 
-/* .carousel {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-}
-
-.carousel-track-container {
-  overflow: hidden;
-  width: 100%;
-}
-
-.carousel-track {
+.main__header {
   display: flex;
-  transition: transform 0.4s ease;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+
 }
 
-.carousel-track > * {
-  flex: 0 0 100%;
-  box-sizing: border-box;
-}
-
-.carousel-btn {
-  position: absolute;
-
-  transform: translateY(-50%);
-  background: #eb5b1d;
-  border: none;
-  color: white;
-  font-size: 24px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 3;
-}
-
-.next {
-  top: 35%;
-  left: 85%;
-}
-
-.prev {
-  top: 50%;
-  left: 85%;
-} */
