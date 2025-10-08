@@ -35,9 +35,20 @@ function renderSignUpPage(): void {
 
 function startApp() {
   registerHandlebarsHelpers();
+<<<<<<< HEAD
   router.loadRoute();
+=======
+  // renderUserPage();
+  router.loadRoute()
+  
+>>>>>>> deea218 (router)
 }
 
 startApp();
 
+<<<<<<< HEAD
 export default router;
+=======
+export default router
+
+>>>>>>> deea218 (router)

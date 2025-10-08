@@ -27,7 +27,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
-  profileBlock: ProfileBlock;
+  profileBlock :ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -65,7 +65,6 @@ export class MainPage {
               ),
             )
           : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
-
       const data = {
         FactBal: this.factBal.getSelf(
           budgetsData.budgets.length !== 0
@@ -85,7 +84,8 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf("aboba", 1111),
+        profile_block: this.profileBlock.getSelf("aboba", 1111)
+
       };
 
       container.innerHTML = this.template(data);
