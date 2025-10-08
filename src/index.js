@@ -40,5 +40,4 @@ export function goToPage(pageToGo) {
   pageToGo.render();
 }
 
-
 renderUserPage();

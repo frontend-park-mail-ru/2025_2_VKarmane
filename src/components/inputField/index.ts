@@ -4,7 +4,6 @@ import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
 import inputFieldTemplate from "../../templates/components/InputField.hbs?raw";
 
-
 export class InputField {
   template: TemplateFn;
   constructor() {
@@ -41,8 +40,8 @@ export class InputField {
 
     if (to_color) {
       inputs.forEach((element) => {
-        element.classList.remove("border-grey")
-        element.classList.add("border-red")
+        element.classList.remove("border-grey");
+        element.classList.add("border-red");
       });
     }
   }

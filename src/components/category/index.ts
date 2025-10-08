@@ -8,9 +8,7 @@ export class Category {
     this.template = Handlebars.compile(CategoryTemplate);
   }
 
-
   getSelf(category: string, category_name: string) {
     return this.template({ category, category_name });
-
   }
 }

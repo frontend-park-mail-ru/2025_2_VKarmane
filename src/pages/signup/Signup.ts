@@ -132,7 +132,6 @@ export class SignUpPage {
     }
   }
 
-
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
     text_error: string,
@@ -249,8 +248,8 @@ export class SignUpPage {
       return false;
     } else {
       this.inputField.setError([inputElem], false, "");
-      inputElem.classList.remove("border-red")
-      inputElem.classList.add("border-grey")
+      inputElem.classList.remove("border-red");
+      inputElem.classList.add("border-grey");
       return true;
     }
   }

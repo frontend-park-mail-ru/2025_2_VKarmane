@@ -46,7 +46,6 @@ export class MainPage {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
-
     try {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
@@ -83,7 +82,6 @@ export class MainPage {
       const { ok } = await apiFetch(`/auth/logout`, {
         method: "POST",
       });
-
 
       if (ok) {
         goToPage(config.login!);

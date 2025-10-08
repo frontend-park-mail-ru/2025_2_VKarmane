@@ -44,13 +44,10 @@ export class LoginPage {
       this.expCard.getSelf("₽", 152104, "Расходы за прошлый период"),
     ];
     const categories = [
-
-
       this.category.getSelf("banking", "Банковские"),
       this.category.getSelf("entertainments", "Развлечения"),
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
-
     ];
     const data = {
       title: "Войти",
@@ -69,7 +66,6 @@ export class LoginPage {
 
     this.setupEventListeners(container);
   }
-
 
   /**
    * Обрабатывает запрос авторизации
@@ -90,7 +86,6 @@ export class LoginPage {
       }),
     });
 
-
     if (!ok) {
       if (status === 400) {
         this.setInputsError(
@@ -103,7 +98,6 @@ export class LoginPage {
         this.setServerError();
       }
       return;
-
     }
 
     goToPage(config.user_page!);
