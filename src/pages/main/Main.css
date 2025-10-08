@@ -5,6 +5,7 @@
 @import "../../components/operations/index.css";
 @import "../../components/menu/index.css";
 @import "../../components/scroller/index.css";
+@import "../../components/profileBlock/index.css";
 
 .banks {
   font-family: "Montserrat";
@@ -78,3 +79,12 @@
   position: relative;
   bottom: -152px;
 }
+
+.main__header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+
+}
+

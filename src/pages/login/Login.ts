@@ -3,13 +3,10 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
-import { goToPage, config } from "../../index.js";
-
-
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-
+import router from "../../index.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -50,16 +47,13 @@ export class LoginPage {
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
     ];
-
-    if (!config.signup) return;
-
     const data = {
       title: "Войти",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-        config.signup!.href,
+        "/register",
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -97,10 +91,9 @@ export class LoginPage {
       }
       return;
     }
-
-    if (!config.user_page) return;
-    goToPage(config.user_page);
+    router.navigate("/");
   }
+
 
   setServerError(): void {
     const form: HTMLFormElement | null = document.querySelector(".login-form");
@@ -137,8 +130,7 @@ export class LoginPage {
     if (!signupLink) return;
     signupLink.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!config.signup) return;
-      goToPage(config.signup);
+      router.navigate("/signup");
     });
   }
 

@@ -2,8 +2,16 @@ import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 import { MainPage } from "./pages/main/Main.js";
 import { registerHandlebarsHelpers } from "./utils/helpers.js";
+import { Router } from "./router/index.js";
 
 import "./index.css";
+
+const router = new Router({
+  "/": renderUserPage,
+  "/login": renderLoginPage,
+  "/signup": renderSignUpPage,
+  "*": renderUserPage, 
+});
 
 const rootElement: HTMLElement | null = document.getElementById("root");
 
