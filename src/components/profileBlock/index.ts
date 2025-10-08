@@ -9,8 +9,8 @@ export class ProfileBlock {
   }
   getSelf(userName: string, userId: number): string {
     return this.template({
-      user_name: userName,
-      user_id: userId,
+        user_name: userName,
+        user_id: userId
     });
   }
 }

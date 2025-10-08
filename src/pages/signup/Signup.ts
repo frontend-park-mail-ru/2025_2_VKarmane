@@ -122,7 +122,6 @@ export class SignUpPage {
 
   checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
     if (status == 201) {
-      // goToPage(config.user_page!);
       router.navigate("/");
     } else if (status == 409) {
       this.setInputsError(
