@@ -8,7 +8,6 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-
 import router from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
@@ -27,7 +26,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
-  profileBlock :ProfileBlock;
+  profileBlock: ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -85,7 +84,6 @@ export class MainPage {
         addCard: this.addCard.getSelf(),
         exist_card: true,
         profile_block: this.profileBlock.getSelf("aboba", 1111)
-
       };
 
       container.innerHTML = this.template(data);

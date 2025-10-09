@@ -1,14 +1,14 @@
 export class Router {
-    routes: Record<string, () => void>;
-    constructor(routes: Record<string, () => void>) {
-        this.routes = routes;
-        window.addEventListener("popstate", () => this.loadRoute());
-    }
+  routes: Record<string, () => void>;
+  constructor(routes: Record<string, () => void>) {
+    this.routes = routes;
+    window.addEventListener("popstate", () => this.loadRoute());
+  }
 
-    navigate(path: string) {
-        history.pushState({}, "", path);
-        this.loadRoute();
-    }
+  navigate(path: string) {
+    history.pushState({}, "", path);
+    this.loadRoute();
+  }
 
 
   loadRoute() {
