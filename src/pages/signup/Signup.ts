@@ -2,14 +2,13 @@ import { StartButton } from "../../components/startButton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
-import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
-import router from "../../index.js"
+import router from "../../index.js";
 
 export class SignUpPage {
   startButton: StartButton;
@@ -125,7 +124,7 @@ export class SignUpPage {
   checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
     if (status == 201) {
       // goToPage(config.user_page!);
-      router.navigate("/")
+      router.navigate("/");
     } else if (status == 409) {
       this.setInputsError(
         this.getLoginEmailPasswordInput(form),
@@ -178,7 +177,7 @@ export class SignUpPage {
       loginLink.addEventListener("click", (e) => {
         if (!config.login) return;
         e.preventDefault();
-        goToPage(config.login);
+        router.navigate("/login");
       });
     }
 

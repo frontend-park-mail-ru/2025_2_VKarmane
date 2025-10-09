@@ -7,11 +7,14 @@ import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
+<<<<<<< HEAD
 
 import { config, goToPage } from "../../index.js";
+=======
+>>>>>>> b98ebb1 (style fixes)
 import { apiFetch } from "../../api/fetchWrapper.js";
 
-import  router from "../../index.js"
+import router from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -28,7 +31,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
-  profileBlock :ProfileBlock;
+  profileBlock: ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -88,15 +91,14 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf("aboba", 1111)
+        profile_block: this.profileBlock.getSelf("aboba", 1111),
       };
 
       container.innerHTML = this.template(data);
 
     } catch (err) {
       console.error(err);
-      // goToPage(config.login!);
-      router.navigate("/login")
+      router.navigate("/login");
       this.unsetBody();
       return;
     }
@@ -125,4 +127,12 @@ export class MainPage {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
   }
+<<<<<<< HEAD
+=======
+
+  setCarousel() {
+    document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
+  }
+
+>>>>>>> b98ebb1 (style fixes)
 }
