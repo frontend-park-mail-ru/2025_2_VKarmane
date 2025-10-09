@@ -1,6 +1,7 @@
 import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 import { MainPage } from "./pages/main/Main.js";
+import { ProfilePage } from "./pages/profile/Profile.js";
 import { registerHandlebarsHelpers } from "./utils/helpers.js";
 import { Router } from "./router/index.js";
 
@@ -10,7 +11,8 @@ const router = new Router({
   "/": renderUserPage,
   "/login": renderLoginPage,
   "/signup": renderSignUpPage,
-  "*": renderUserPage,
+  "/profile": renderProfilePage,
+  "*": renderUserPage, 
 });
 
 const rootElement: HTMLElement | null = document.getElementById("root");
@@ -24,6 +26,12 @@ function renderUserPage(): void {
 function renderLoginPage(): void {
   if (!rootElement) return;
   const page: LoginPage = new LoginPage();
+  page.render(rootElement);
+}
+
+function renderProfilePage(): void {
+  if (!rootElement) return;
+  const page: ProfilePage = new ProfilePage();
   page.render(rootElement);
 }
 

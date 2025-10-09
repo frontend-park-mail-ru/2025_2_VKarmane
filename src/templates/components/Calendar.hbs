@@ -1,0 +1,31 @@
+<div class="calendar-section">
+    <div class="calendar-widget">
+        <div class="calendar-header">
+            {{!-- <div class="calendar-title">Запланированные расходы</div> --}}
+            <div class="calendar-month">{{month}}</div>
+        </div>
+        
+        <div class="calendar-grid">
+            <!-- Заголовки дней недели -->
+            <div class="calendar-day-header">пн</div>
+            <div class="calendar-day-header">вт</div>
+            <div class="calendar-day-header">ср</div>
+            <div class="calendar-day-header">чт</div>
+            <div class="calendar-day-header">пт</div>
+            <div class="calendar-day-header">сб</div>
+            <div class="calendar-day-header">вс</div>
+            
+            <!-- Пустые ячейки для выравнивания -->
+            {{#each emptyDays}}
+                <div class="calendar-day empty"></div>
+            {{/each}}
+            
+            <!-- Дни месяца -->
+            {{#each days}}
+                <div class="calendar-day {{#if this.highlighted}}highlighted{{/if}}">
+                    {{this.day}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
