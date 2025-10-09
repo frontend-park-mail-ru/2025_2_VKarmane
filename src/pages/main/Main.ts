@@ -83,7 +83,7 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf("aboba", 1111)
+        profile_block: this.profileBlock.getSelf("aboba", 1111),
       };
 
       container.innerHTML = this.template(data);
@@ -117,5 +117,10 @@ export class MainPage {
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
+    document.body.style.margin = "0px";
+    document.body.style.backgroundColor = "";
   }
-}
+
+
+  }
+
