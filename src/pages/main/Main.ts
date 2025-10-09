@@ -7,7 +7,10 @@ import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
+<<<<<<< HEAD
 import { apiFetch } from "../../api/fetchWrapper.js";
+=======
+>>>>>>> 636d589 (style fixes)
 import router from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
@@ -54,6 +57,7 @@ export class MainPage {
 
 
 
+
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
@@ -86,7 +90,7 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf("aboba", 1111)
+        profile_block: this.profileBlock.getSelf("aboba", 1111),
       };
 
       container.innerHTML = this.template(data);
@@ -105,10 +109,12 @@ export class MainPage {
       });
 
 
+
       if (ok) {
         router.navigate("/login")
         this.unsetBody();
         return;
+
       }
     });
 
@@ -121,6 +127,15 @@ export class MainPage {
   }
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
+<<<<<<< HEAD
     document.body.classList.remove("body_background");
+=======
+    document.body.style.margin = "0px";
+    document.body.style.backgroundColor = "";
+  }
+
+  setCarousel() {
+    document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
+>>>>>>> 636d589 (style fixes)
   }
 }

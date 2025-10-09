@@ -4,12 +4,6 @@
 @import "../../components/cards/index.css";
 @import "../../components/operations/index.css";
 @import "../../components/menu/index.css";
-<<<<<<< HEAD
-=======
-@import "../../components/carousel/index.css";
-@import "../../components/profileBlock/index.css";
->>>>>>> deea218 (router)
-
 @import "../../components/scroller/index.css";
 @import "../../components/profileBlock/index.css";
 .banks {
@@ -85,19 +79,10 @@
   bottom: -152px;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> deea218 (router)
 .main__header {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-<<<<<<< HEAD
-}
-=======
-
 }
 
->>>>>>> deea218 (router)

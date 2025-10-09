@@ -3,6 +3,7 @@
   border-radius: 24px;
   object-fit: cover;
   height: 70%;
+}
 
 .user_profile_block_info {
   display: flex;

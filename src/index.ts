@@ -40,5 +40,4 @@ function startApp() {
 
 startApp();
 
-export default router
-
+export default router;
