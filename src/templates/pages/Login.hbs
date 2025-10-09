@@ -1,25 +1,19 @@
 <div class="container">
   <div class="login-section">
     <form id="login">
-
       <div class="login-form">
         <h1 class="login-title">{{title}}</h1>
 
-        {{{loginInput}}}
-
-        {{{passwordInput}}}
+        {{{loginInput}}} {{{passwordInput}}}
 
         <div class="forgot-password">
           <a href="#">Забыли пароль?</a>
         </div>
-        <div>
-          {{{loginButton}}}
-        </div>
+        <div>{{{loginButton}}}</div>
 
         {{{absenceText}}}
       </div>
     </form>
-
   </div>
 
   <div class="preview-section">
@@ -31,7 +25,6 @@
             <div class="statistics-section">
               <div class="mockup-header">
                 <div class="mockup-title">Расходы за июль</div>
-
               </div>
               <div class="expense-chart">
                 <div class="chart-circle">
@@ -39,24 +32,19 @@
                 </div>
               </div>
               <div class="category-tags">
-                {{#each categories}}
-                  {{{this}}}
-                {{/each}}
+                {{#each categories}} {{{this}}} {{/each}}
               </div>
-
             </div>
             <div
-              style="display: flex; flex-direction: column;"
+              style="display: flex; flex-direction: column"
               class="card-section"
             >
-              <div style="display: flex; justify-content: flex-end;">
+              <div style="display: flex; justify-content: flex-end">
                 <a href="#" class="show-more">показать больше</a>
               </div>
 
               <div class="expense-cards">
-                {{#each expenseCards}}
-                  {{{this}}}
-                {{/each}}
+                {{#each expenseCards}} {{{this}}} {{/each}}
               </div>
             </div>
           </div>
@@ -74,6 +62,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

@@ -3,12 +3,11 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
-import { goToPage, config } from "../../index.js";
-
 import { apiFetch } from "../../api/fetchWrapper.js";
+
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import  router from "../../index.js"
+import router from "../../index.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -55,7 +54,7 @@ export class LoginPage {
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-        config.signup!.href,
+        "/register",
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -107,9 +106,7 @@ export class LoginPage {
     form: HTMLFormElement,
   ): void {
     if (status == 200) {
-      router.navigate("/")
-      // goToPage(config.user_page!);
-
+      router.navigate("/");
     } else if (status == 400) {
       this.setInputsError(
         this.getLoginPasswordInput(form),
@@ -153,8 +150,7 @@ export class LoginPage {
     const signupLink = container.querySelector(".absence-text a");
     signupLink!.addEventListener("click", (e) => {
       e.preventDefault();
-      router.navigate("/signup")
-      // goToPage(config.signup!);
+      router.navigate("/signup");
     });
   }
 

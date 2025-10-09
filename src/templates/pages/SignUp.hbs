@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="preview-section">
     <div class="decorative-leaves">
       <div class="leaf"></div>
@@ -43,24 +42,29 @@
           <span>13 сентября</span>
         </div>
         <div
-          style="position: absolute; top: 20px; right: 20px; background: #333; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;"
+          style="
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+          "
         >
           ₽10,573
         </div>
       </div>
 
-      <div class="services-list">
-        {{#each items}}
-          {{{this}}}
-        {{/each}}
-      </div>
+      <div class="services-list">{{#each items}} {{{this}}} {{/each}}</div>
     </div>
 
     <div class="content-section">
       <div class="bottom-text">Планируй, Управляй и Приумножай</div>
       <div class="slogans">
         {{#each slogans}}
-          <p class="description"> {{{this}}}</p>
+        <p class="description">{{{this}}}</p>
         {{/each}}
       </div>
       <div class="pagination">
@@ -72,29 +76,23 @@
     </div>
 
     <div class="decorative-patterns">
-      <div class="pattern" style="bottom: 0;"></div>
-      <div class="pattern" style="bottom: 20px; transform: scaleX(-1);"></div>
-      <div class="pattern" style="bottom: 40px;"></div>
+      <div class="pattern" style="bottom: 0"></div>
+      <div class="pattern" style="bottom: 20px; transform: scaleX(-1)"></div>
+      <div class="pattern" style="bottom: 40px"></div>
     </div>
   </div>
 
   <div class="signup-section">
     <form id="signup">
-
       <div class="signup-form">
         <h1 class="signup-title">{{title}}</h1>
 
-        {{{loginInput}}}
-        {{{emailInput}}}
-        {{{passwordInput}}}
+        {{{loginInput}}} {{{emailInput}}} {{{passwordInput}}}
 
-        <div>
-          {{{signUpButton}}}
-        </div>
+        <div>{{{signUpButton}}}</div>
 
         {{{absenceText}}}
       </div>
     </form>
-
   </div>
 </div>
