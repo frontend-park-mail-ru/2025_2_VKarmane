@@ -9,7 +9,6 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { Carousel } from "../../components/carousel/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-
 import router from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
@@ -27,7 +26,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
-  profileBlock :ProfileBlock;
+  profileBlock: ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -54,32 +53,21 @@ export class MainPage {
       // const balanceData = await getBalance();
       // const budgetsData = await getBudgets();
 
-      const cards = [              this.card.getSelf(
-                12, 
-                true, 
-                0,
-                0,
-                "Нет счетов",
-              )]
-        // balanceData.accounts.length !== 0
-        //   ? balanceData.accounts.map((account: Record<string, any>) =>
-        //       this.card.getSelf(
-        //         account.balance, 
-        //         true,
-        //         32323, 
-        //         1523, 
-        //         "Развлечения", 
-        //       ),
-        //     )
-        //   : [
-        //       this.card.getSelf(
-        //         null, 
-        //         true, 
-        //         0,
-        //         0,
-        //         "Нет счетов",
-        //       ),
-        //     ];
+      const cards = [
+        this.card.getSelf(12, true, 0, 0, "тыква"),
+        this.card.getSelf(13, true, 0, 0, "тыква"),
+      ];
+      // balanceData.accounts.length !== 0
+      //   ? balanceData.accounts.map((account: Record<string, any>) =>
+      //       this.card.getSelf(
+      //         account.balance,
+      //         true,
+      //         32323,
+      //         1523,
+      //         "Развлечения",
+      //       ),
+      //     )
+      //   : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
 
       const data = {
         FactBal: this.factBal.getSelf(12, 100, 120),
@@ -93,7 +81,6 @@ export class MainPage {
         addCard: this.addCard.getSelf(),
         exist_card: true,
         profile_block: this.profileBlock.getSelf("aboba", 1111)
-
       };
 
       container.innerHTML = this.template(data);
