@@ -1,6 +1,7 @@
 @import "pages/login/login.css";
 @import "pages/signup/Signup.css";
 @import "pages/main/Main.css";
+@import "pages/profile/Profile.css";
 @font-face {
   font-family: "Montserrat";
   src: url("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")

@@ -86,6 +86,7 @@ export class MainPage {
       container.innerHTML = this.template(data);
 
       this.setCarousel();
+      this.setupEventListeners();
     } catch (err) {
       console.error(err);
       router.navigate("/login");
@@ -121,4 +122,7 @@ export class MainPage {
     document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
   }
 
+  setupEventListeners() {
+    this.menu.setEvents()
+  }
 }
