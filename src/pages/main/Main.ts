@@ -99,6 +99,7 @@ export class MainPage {
       container.innerHTML = this.template(data);
 
       this.setCarousel();
+      this.setupEventListeners();
     } catch (err) {
       console.error(err);
       // goToPage(config.login!);
@@ -145,5 +146,9 @@ export class MainPage {
 
   setCarousel() {
     document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
+  }
+
+  setupEventListeners() {
+    this.menu.setEvents()
   }
 }
