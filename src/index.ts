@@ -12,7 +12,7 @@ const router = new Router({
   "/login": renderLoginPage,
   "/signup": renderSignUpPage,
   "/profile": renderProfilePage,
-  "*": renderUserPage, 
+  "*": renderUserPage,
 });
 
 const rootElement: HTMLElement | null = document.getElementById("root");

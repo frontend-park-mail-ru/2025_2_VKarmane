@@ -5,11 +5,10 @@ import profileTemplate from "../../templates/pages/Profile.hbs?raw";
 import { Menu } from "../../components/menu/index.js";
 import { Calendar } from "../../components/calendar/index.js";
 
-
 export class ProfilePage {
-    menu: Menu;
-    calendar: Calendar;
-    template: TemplateFn;
+  menu: Menu;
+  calendar: Calendar;
+  template: TemplateFn;
 
   constructor() {
     this.menu = new Menu();

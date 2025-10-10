@@ -12,74 +12,70 @@
 }
 
 .content {
-    display: grid;
-    grid-template-rows: 20px auto auto;
-    grid-template-columns: auto 350px;
-    row-gap: 20px;
-    margin: 20px auto;
-    box-sizing: border-box;
-    column-gap: 60px;
-
+  display: grid;
+  grid-template-rows: 20px auto auto;
+  grid-template-columns: auto 350px;
+  row-gap: 20px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  column-gap: 60px;
 }
 
 .profile__profile {
-    display: flex;
-    border-radius: 24px;
-    background-color: white;
-    grid-template-columns: auto 1fr;
-    max-height: 320px;
-    padding: 20px;
-    /* align-items: center; */
-    gap: 20px;
+  display: flex;
+  border-radius: 24px;
+  background-color: white;
+  grid-template-columns: auto 1fr;
+  max-height: 320px;
+  padding: 20px;
+  /* align-items: center; */
+  gap: 20px;
 }
 .profile__data {
-
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.profile__data_row{
-    display: flex;
-    gap: 10px;
+.profile__data_row {
+  display: flex;
+  gap: 10px;
 }
 
 .profile__data_row__field {
-    color: #949494;
+  color: #949494;
 }
 
-.profile__data_row__data.known{
-    color: black;
-    font-weight: bold;
-    font-family: "Montserrat";
+.profile__data_row__data.known {
+  color: black;
+  font-weight: bold;
+  font-family: "Montserrat";
 }
-.profile__data_row__data.unknown{
-     color: #949494;
-    font-family: "Montserrat";
+.profile__data_row__data.unknown {
+  color: #949494;
+  font-family: "Montserrat";
 }
-
 
 .profile__data_no_info {
-    color: #949494;
+  color: #949494;
 }
 
-.profile__data_header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.profile__data_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.profile__planned_purchases{
-    grid-column: 2;
+.profile__planned_purchases {
+  grid-column: 2;
 }
 
-.profile__planned_purchases{
-    font-family: "Montserrat";
-    color: #949494;
-    font-size: 1.25rem;
+.profile__planned_purchases {
+  font-family: "Montserrat";
+  color: #949494;
+  font-size: 1.25rem;
 }
-
 
 ._not_exists {
   display: grid;
@@ -98,8 +94,8 @@
   width: 74px;
 }
 
-.white_back{
-    border-radius: 24px;
-    background-color: white;
-    height: 450px;
+.white_back {
+  border-radius: 24px;
+  background-color: white;
+  height: 450px;
 }

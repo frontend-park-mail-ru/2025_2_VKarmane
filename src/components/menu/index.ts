@@ -16,6 +16,5 @@ export class Menu {
     profileButton?.addEventListener("click", () => {
       router.navigate("/profile");
     });
-    
   }
 }
