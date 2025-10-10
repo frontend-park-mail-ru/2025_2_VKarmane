@@ -52,35 +52,29 @@ export class MainPage {
     // Компоненты
 
     try {
-      // const balanceData = await getBalance();
-      // const budgetsData = await getBudgets();
+      const balanceData = await getBalance();
+      const budgetsData = await getBudgets();
 
-      const cards = [              this.card.getSelf(
-                12, 
+      const cards =              
+        balanceData.accounts.length !== 0
+          ? balanceData.accounts.map((account: Record<string, any>) =>
+              this.card.getSelf(
+                account.balance, 
+                true,
+                32323, 
+                1523, 
+                "Развлечения", 
+              ),
+            )
+          : [
+              this.card.getSelf(
+                null, 
                 true, 
                 0,
                 0,
                 "Нет счетов",
-              )]
-        // balanceData.accounts.length !== 0
-        //   ? balanceData.accounts.map((account: Record<string, any>) =>
-        //       this.card.getSelf(
-        //         account.balance, 
-        //         true,
-        //         32323, 
-        //         1523, 
-        //         "Развлечения", 
-        //       ),
-        //     )
-        //   : [
-        //       this.card.getSelf(
-        //         null, 
-        //         true, 
-        //         0,
-        //         0,
-        //         "Нет счетов",
-        //       ),
-        //     ];
+              ),
+            ];
 
       const data = {
         FactBal: this.factBal.getSelf(12, 100, 120),
@@ -102,7 +96,6 @@ export class MainPage {
       this.setupEventListeners();
     } catch (err) {
       console.error(err);
-      // goToPage(config.login!);
       router.navigate("/login")
       this.unsetBody();
       return;
@@ -119,7 +112,6 @@ export class MainPage {
         );
 
         if (response.ok) {
-          // goToPage(config.login!);
           router.navigate("/login")
           this.unsetBody();
           return;
