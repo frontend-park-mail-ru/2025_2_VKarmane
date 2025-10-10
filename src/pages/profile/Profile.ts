@@ -1,5 +1,3 @@
-
-import { Validator } from "../../utils/validation.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import profileTemplate from "../../templates/pages/Profile.hbs?raw";

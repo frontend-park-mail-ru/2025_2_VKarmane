@@ -50,24 +50,29 @@ export class MainPage {
     document.body.classList.remove("hide-scroller");
 
     try {
-      // const balanceData = await getBalance();
-      // const budgetsData = await getBudgets();
+      const balanceData = await getBalance();
+      const budgetsData = await getBudgets();
 
-      const cards = [
-        this.card.getSelf(12, true, 0, 0, "тыква"),
-        this.card.getSelf(13, true, 0, 0, "тыква"),
-      ];
-      // balanceData.accounts.length !== 0
-      //   ? balanceData.accounts.map((account: Record<string, any>) =>
-      //       this.card.getSelf(
-      //         account.balance,
-      //         true,
-      //         32323,
-      //         1523,
-      //         "Развлечения",
-      //       ),
-      //     )
-      //   : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
+      const cards =              
+        balanceData.accounts.length !== 0
+          ? balanceData.accounts.map((account: Record<string, any>) =>
+              this.card.getSelf(
+                account.balance, 
+                true,
+                32323, 
+                1523, 
+                "Развлечения", 
+              ),
+            )
+          : [
+              this.card.getSelf(
+                null, 
+                true, 
+                0,
+                0,
+                "Нет счетов",
+              ),
+            ];
 
       const data = {
         FactBal: this.factBal.getSelf(12, 100, 120),
