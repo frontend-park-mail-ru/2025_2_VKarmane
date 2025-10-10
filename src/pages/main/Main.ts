@@ -53,15 +53,15 @@ export class MainPage {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
-      const cards =
+      const cards =              
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
               this.card.getSelf(
-                account.balance,
+                account.balance, 
                 true,
-                32323,
-                1523,
-                "Развлечения",
+                32323, 
+                1523, 
+                "Развлечения", 
               ),
             )
           : [
