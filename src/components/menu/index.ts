@@ -12,9 +12,9 @@ export class Menu {
     return this.template({});
   }
   setEvents(): void {
-    const profileButton = document.getElementById("profile")
+    const profileButton = document.getElementById("profile");
     profileButton?.addEventListener("click", () => {
-      router.navigate("/profile")
-    })
+      router.navigate("/profile");
+    });
   }
 }
