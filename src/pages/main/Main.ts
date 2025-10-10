@@ -53,6 +53,26 @@ export class MainPage {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
+      const cards =              
+        balanceData.accounts.length !== 0
+          ? balanceData.accounts.map((account: Record<string, any>) =>
+              this.card.getSelf(
+                account.balance, 
+                true,
+                32323, 
+                1523, 
+                "Развлечения", 
+              ),
+            )
+          : [
+              this.card.getSelf(
+                null, 
+                true, 
+                0,
+                0,
+                "Нет счетов",
+              ),
+            ];
       const data = {
         FactBal: this.factBal.getSelf(
           budgetsData?.budgets?.[0]?.actual ?? 0,
