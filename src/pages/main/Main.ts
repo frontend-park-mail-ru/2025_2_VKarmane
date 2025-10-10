@@ -78,13 +78,15 @@ export class MainPage {
       return;
     }
     const logout = document.querySelector(".logout");
-    logout!.addEventListener("click", async () => {
+    if (!logout) return;
+    logout.addEventListener("click", async () => {
       const { ok } = await apiFetch(`/auth/logout`, {
         method: "POST",
       });
 
       if (ok) {
-        goToPage(config.login!);
+        if (!config.login) return
+        goToPage(config.login);
         this.setBody();
         return;
       }

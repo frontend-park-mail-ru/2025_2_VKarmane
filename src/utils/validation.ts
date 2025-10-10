@@ -1,3 +1,5 @@
+import { measureMemory } from "vm";
+
 type ruleType = Record<string, Record<string, any>>;
 
 export class Validator {
@@ -56,14 +58,16 @@ export class Validator {
     const rules = this.rules[fieldName];
     const messages = this.messages[fieldName];
 
+    if (!rules || !messages) return;
+
     if (!value && value !== "") {
-      return messages!.required;
+      return messages.required;
     }
 
     value = value.toString().trim();
 
     if (!value) {
-      return messages!.required;
+      return messages.required;
     }
 
     if (!rules || !messages) return;
