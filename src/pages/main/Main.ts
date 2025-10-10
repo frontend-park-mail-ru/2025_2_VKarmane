@@ -9,7 +9,7 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { Carousel } from "../../components/carousel/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { config, goToPage } from "../../index.js";
-import  router from "../../index.js"
+import router from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -26,7 +26,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
-  profileBlock :ProfileBlock;
+  profileBlock: ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -55,26 +55,18 @@ export class MainPage {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
-      const cards =              
+      const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
               this.card.getSelf(
-                account.balance, 
+                account.balance,
                 true,
-                32323, 
-                1523, 
-                "Развлечения", 
+                32323,
+                1523,
+                "Развлечения",
               ),
             )
-          : [
-              this.card.getSelf(
-                null, 
-                true, 
-                0,
-                0,
-                "Нет счетов",
-              ),
-            ];
+          : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
 
       const data = {
         FactBal: this.factBal.getSelf(12, 100, 120),
@@ -87,7 +79,7 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf("aboba", 1111)
+        profile_block: this.profileBlock.getSelf("aboba", 1111),
       };
 
       container.innerHTML = this.template(data);
@@ -96,7 +88,7 @@ export class MainPage {
       this.setupEventListeners();
     } catch (err) {
       console.error(err);
-      router.navigate("/login")
+      router.navigate("/login");
       this.unsetBody();
       return;
     }
@@ -112,7 +104,7 @@ export class MainPage {
         );
 
         if (response.ok) {
-          router.navigate("/login")
+          router.navigate("/login");
           this.unsetBody();
           return;
         } else {
@@ -137,10 +129,10 @@ export class MainPage {
   }
 
   setCarousel() {
-    document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
+    document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
   }
 
   setupEventListeners() {
-    this.menu.setEvents()
+    this.menu.setEvents();
   }
 }

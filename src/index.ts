@@ -12,7 +12,7 @@ const router = new Router({
   "/login": renderLoginPage,
   "/signup": renderSignUpPage,
   "/profile": renderProfilePage,
-  "*": renderUserPage, 
+  "*": renderUserPage,
 });
 
 const rootElement: HTMLElement | null = document.getElementById("root");
@@ -69,15 +69,12 @@ export function goToPage(pageToGo: PageClas): void {
   pageToGo.render();
 }
 
-
 function startApp() {
   registerHandlebarsHelpers();
   // renderUserPage();
-  router.loadRoute()
-  
+  router.loadRoute();
 }
 
 startApp();
 
-export default router
-
+export default router;

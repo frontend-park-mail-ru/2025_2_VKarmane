@@ -67,7 +67,6 @@
   background-color: transparent;
 }
 
-
 .meny__button {
   margin-top: 72px;
   height: 48px;
@@ -79,7 +78,6 @@
 }
 
 .transactions {
-
   background-image: url("/imgs/transactions_page.png");
 }
 
@@ -87,12 +85,10 @@
   background-image: url("/imgs/transactions_hover.png");
 }
 
-
 .profile {
   background-image: url("/imgs/profile.png");
 }
 
 .profile:hover {
-
   background-image: url("/imgs/profile_hover.png");
 }

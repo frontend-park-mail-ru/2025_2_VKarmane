@@ -6,7 +6,7 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { goToPage, config } from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import  router from "../../index.js"
+import router from "../../index.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -99,9 +99,8 @@ export class LoginPage {
     form: HTMLFormElement,
   ): void {
     if (status == 200) {
-      router.navigate("/")
+      router.navigate("/");
       // goToPage(config.user_page!);
-
     } else if (status == 400) {
       this.setInputsError(
         this.getLoginPasswordInput(form),
@@ -144,7 +143,7 @@ export class LoginPage {
     const signupLink = container.querySelector(".absence-text a");
     signupLink!.addEventListener("click", (e) => {
       e.preventDefault();
-      router.navigate("/signup")
+      router.navigate("/signup");
       // goToPage(config.signup!);
     });
   }
