@@ -19,6 +19,10 @@ export class ProfilePage {
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
       calendar: this.calendar.getSelf(),
+      name: "",
+      date: "22.02.2222",
+      login: "shrek",
+      mail: "qwerty@ya.ru"
     });
   }
 }
