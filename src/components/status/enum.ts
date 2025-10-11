@@ -1,4 +1,4 @@
-export enum EnumStatus {
+export enum EnumBalanceStatus {
     Balanced = "balanced",
     Unbalanced = "unbalanced"
 }
