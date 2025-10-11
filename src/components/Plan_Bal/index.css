@@ -33,3 +33,20 @@
   color: #9e0c0c;
   text-align: center;
 }
+
+.balance_not_exists {
+  display: grid;
+  place-items: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 18px;
+  position: relative;
+  top: 25%;
+  gap: 5px;
+}
+
+.balance_not_exists_img {
+  background-image: url(/imgs/not_list.png);
+  height: 73px;
+  width: 74px;
+}

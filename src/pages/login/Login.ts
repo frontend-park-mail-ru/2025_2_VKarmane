@@ -49,7 +49,9 @@ export class LoginPage {
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
     ];
+
     if (!config.signup) return;
+
     const data = {
       title: "Войти",
       loginInput: this.inputField.getSelf("login", "login", "логин"),

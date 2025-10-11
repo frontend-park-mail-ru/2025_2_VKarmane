@@ -184,7 +184,6 @@ export class SignUpPage {
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
 
-    
     if (!loginInput || !emailInput || !passwordInput) return;
 
     loginInput.addEventListener("input", () => {
@@ -237,12 +236,14 @@ export class SignUpPage {
 
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
+
     if (!loginInput || !emailInput || !passwordInput) return;
 
     return (
       checkField("login", login, loginInput) &&
       checkField("email", email, emailInput) &&
       checkField("password", password, passwordInput)
+
     );
   }
   validateSingleField(
@@ -282,6 +283,7 @@ export class SignUpPage {
 
   getRandomSlogan(): string[] {
     const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
+
     if (!randomSlogan) throw "undefined slogan";
     return randomSlogan;
   }

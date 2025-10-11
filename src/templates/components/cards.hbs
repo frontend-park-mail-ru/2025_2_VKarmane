@@ -1,35 +1,45 @@
 <div class="cards">
-  <div class="card1">
-    <h3 class="Card-One-text">
-      Карта №1
-    </h3>
-    <div class="CheckSumCard">
-      <h2>{{balance}} ₽</h2>
-    </div>
-    {{#if hasUpdateFactPlan}}
-      <div class="Card-balance-text" style="display: flex">
-        <p class="Fact-plus-text">+{{has_update_for_2_week}}₽&nbsp;</p>
-        <p class="Fact-text"> за последние 2 недели</p>
+  {{#if (not is_empty)}}
+    <div class="card1">
+      <h3 class="Card-One-text">
+        Карта №1
+      </h3>
+      <div class="CheckSumCard">
+        <h2>{{balance}} ₽</h2>
       </div>
-    {{else}}
-      <div class="Card-balance-text" style="display: flex">
-        <p class="Fact-minus-text">{{has_update_for_2_week}}₽&nbsp;</p>
-        <p class="Fact-text"> за последние 2 недели</p>
-      </div>
-    {{/if}}
-    <div class="rashod-card">
-      <p class="NaibolshRashod">наибольший расход за период</p>
-      <div style="display: flex;">
-        <div style="display: grid;">
-          <h1 class="rashod_sum"> {{naibolsh_rashod}} ₽</h1>
-          <div class="actions"><p class="rashod-sum-action">{{action}}</p></div>
+      {{#if hasUpdateFactPlan}}
+        <div class="Card-balance-text" style="display: flex">
+          <p class="Fact-plus-text">+{{has_update_for_2_week}}₽&nbsp;</p>
+          <p class="Fact-text"> за последние 2 недели</p>
         </div>
-        <div class="rashod-img"><img
-            class="drawing"
-            src="/imgs/draw_for_cards.png"
-            alt="img"
-          /></div>
+      {{else}}
+        <div class="Card-balance-text" style="display: flex">
+          <p class="Fact-minus-text">{{has_update_for_2_week}}₽&nbsp;</p>
+          <p class="Fact-text"> за последние 2 недели</p>
+        </div>
+      {{/if}}
+      <div class="rashod-card">
+        <p class="NaibolshRashod">наибольший расход за период</p>
+        <div style="display: flex;">
+          <div style="display: grid;">
+            <h1 class="rashod_sum"> {{naibolsh_rashod}} ₽</h1>
+            <div class="actions"><p
+                class="rashod-sum-action"
+              >{{action}}</p></div>
+          </div>
+          <div class="rashod-img"><img
+              class="drawing"
+              src="/imgs/draw_for_cards.png"
+              alt="img"
+            /></div>
+        </div>
       </div>
     </div>
-  </div>
+  {{else}}
+    <div class="card1">
+      <div class="cards_not_exist">
+        <a class="add_cards" href="#">+ Добавить счет</a>
+      </div>
+    </div>
+  {{/if}}
 </div>
