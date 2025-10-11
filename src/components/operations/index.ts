@@ -7,7 +7,7 @@ export class Operations {
   constructor() {
     this.template = Handlebars.compile(operationsTemplate);
   }
-  getList(operationsArray: any[]): string {
+  getList(operationsArray: unknown[]): string {
     return this.template({
       operations_exists: operationsArray.length > 0,
       operationsItems: operationsArray,
