@@ -123,7 +123,4 @@ export class MainPage {
     document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
   }
 
-  setCarousel() {
-    document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
-  }
 }

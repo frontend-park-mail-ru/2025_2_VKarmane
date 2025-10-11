@@ -119,7 +119,7 @@ export class SignUpPage {
     goToPage(config.user_page!);
   }
 
-  checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
+  checkResultStatus(status: number, result: Record<string, CallableFunction>, form: HTMLFormElement) {
     if (status == 201) {
       goToPage(config.user_page!);
     } else if (status == 409) {
