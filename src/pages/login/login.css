@@ -72,7 +72,7 @@ div {
   flex: 1;
   justify-content: center;
   justify-items: center;
-  background: linear-gradient(135deg, #e16040 0%, #eb5b1d 100%);
+  background: #EB5B1D;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -200,6 +200,8 @@ div {
   font-weight: 700;
   text-align: center;
   z-index: 2;
+    position: relative;
+    top: -25px;
 }
 
 .decorative-dots {
@@ -254,18 +256,60 @@ div {
   position: relative;
 }
 
-.vectors-bottom {
-  margin-top: 20px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.vectors-bottom_up {
+    margin-top: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.vector-row {
-  align-items: center;
-  align-content: center;
-  gap: 10px;
-  display: flex;
-  justify-content: space-between;
+
+.vector-row-left_up,
+.vector-row-right_up {
+    gap: 20px;
+    align-items: center;
+}
+
+
+.vector-row-left_up {
+    display: grid;
+}
+
+.vector-row-right_up {
+    display: grid;
+}
+
+
+
+.vectors-bottom {
+    margin-top: 5px;
+    margin-bottom: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vector-row-left,
+.vector-row-right {
+    gap: 50px;
+    align-items: center;
+}
+
+
+.vector-row-left {
+    display: grid;
+}
+
+.vector-row-right {
+    display: grid;
+}
+
+
+.logo_planero {
+    position: relative;
+    top: 1.5em;
+    justify-content: center;
+    align-items: center;
 }

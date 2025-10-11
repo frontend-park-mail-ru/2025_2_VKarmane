@@ -21,9 +21,11 @@ export class InputField {
     if (!inputs) {
       return;
     }
-
-    const group = inputs[inputs.length - 1]!.closest(".input-group");
-    let errEls = group!.querySelectorAll(".error-text");
+    const lastEl = inputs[inputs.length - 1];
+    if (!lastEl) return;
+    const group = lastEl.closest(".input-group");
+    if (!group) return;
+    let errEls = group.querySelectorAll(".error-text");
     errEls.forEach((element) => {
       element.remove();
     });
@@ -35,7 +37,7 @@ export class InputField {
       errElem.style.fontSize = "0.875rem";
 
       errElem.textContent = text_error;
-      group!.appendChild(errElem);
+      group.appendChild(errElem);
     }
 
     if (to_color) {
@@ -47,12 +49,13 @@ export class InputField {
   }
   setPasswordInformerShow(passwordInput: HTMLInputElement): void {
     const inputGroup = passwordInput.closest(".input-group");
+    if (!inputGroup) return;
     const informer = new Informer().getSelf(
       "Пароль должен содержать минимум 6 символов, заглавную букву, цифры, а так же может содержать символы @, #, _, &, %, $",
     );
     const informerWrapper = document.createElement("div");
     informerWrapper.innerHTML = informer;
-    inputGroup!.appendChild(informerWrapper);
+    inputGroup.appendChild(informerWrapper);
 
     passwordInput.addEventListener("mouseenter", () => {
       informerWrapper.classList.add("show");

@@ -51,6 +51,7 @@ export class MainPage {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
+
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
@@ -78,10 +79,7 @@ export class MainPage {
         cards: cards,
         // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
         PlanBal: this.planBal.getSelf(12),
-        menu: this.menu.getSelf(),
-        Add: this.add.getSelf(),
-        operations: this.operations.getList([]),
-        addCard: this.addCard.getSelf(),
+
         exist_card: true,
       };
 
@@ -95,13 +93,15 @@ export class MainPage {
       return;
     }
     const logout = document.querySelector(".logout");
-    logout!.addEventListener("click", async () => {
+    if (!logout) return;
+    logout.addEventListener("click", async () => {
       const { ok } = await apiFetch(`/auth/logout`, {
         method: "POST",
       });
 
       if (ok) {
-        goToPage(config.login!);
+        if (!config.login) return
+        goToPage(config.login);
         this.setBody();
         return;
       }
