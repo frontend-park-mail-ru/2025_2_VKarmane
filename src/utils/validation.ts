@@ -1,4 +1,10 @@
+import { measureMemory } from "vm";
+
+type ruleType = Record<string, Record<string, any>>;
+
 export class Validator {
+  rules: ruleType;
+  messages: Record<string, Record<string, string>>;
   constructor() {
     this.rules = {
       login: {
@@ -24,8 +30,8 @@ export class Validator {
     this.messages = {
       login: {
         required: "Логин обязателен",
-        minLength: `Логин должен быть не менее ${this.rules.login.minLength} символов`,
-        maxLength: `Логин должен быть не более ${this.rules.login.maxLength} символов`,
+        minLength: `Логин должен быть не менее ${this.rules.login!.minLength} символов`,
+        maxLength: `Логин должен быть не более ${this.rules.login!.maxLength} символов`,
         pattern:
           "Логин может содержать только латинские буквы, цифры, дефис и подчеркивание",
         spaces: "Логин не должен содержать пробелы",
@@ -37,8 +43,8 @@ export class Validator {
       },
       password: {
         required: "Пароль обязателен",
-        minLength: `Пароль должен быть не менее ${this.rules.password.minLength} символов`,
-        maxLength: `Пароль должен быть не более ${this.rules.password.maxLength} символов`,
+        minLength: `Пароль должен быть не менее ${this.rules.password!.minLength} символов`,
+        maxLength: `Пароль должен быть не более ${this.rules.password!.maxLength} символов`,
         uppercase: "Пароль должен содержать хотя бы одну заглавную букву",
         lowercase: "Пароль должен содержать хотя бы одну строчную букву",
         numbers: "Пароль должен содержать хотя бы одну цифру",
@@ -48,9 +54,11 @@ export class Validator {
     };
   }
 
-  validate(fieldName, value) {
+  validate(fieldName: string, value: string) {
     const rules = this.rules[fieldName];
     const messages = this.messages[fieldName];
+
+    if (!rules || !messages) return;
 
     if (!value && value !== "") {
       return messages.required;
@@ -62,6 +70,7 @@ export class Validator {
       return messages.required;
     }
 
+    if (!rules || !messages) return;
     if (rules.minLength && value.length < rules.minLength) {
       return messages.minLength;
     }

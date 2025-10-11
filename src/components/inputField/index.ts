@@ -1,23 +1,31 @@
 import { Informer } from "../informer/index.js";
 
 import Handlebars from "handlebars";
+import type { TemplateFn } from "../../types/handlebars.js";
 import inputFieldTemplate from "../../templates/components/InputField.hbs?raw";
 
 export class InputField {
+  template: TemplateFn;
   constructor() {
     this.template = Handlebars.compile(inputFieldTemplate);
   }
-  getSelf(type, name, text) {
+  getSelf(type: string, name: string, text: string): string {
     return this.template({ type, name, text });
   }
 
-  setError(inputs, to_color, text_error = "") {
+  setError(
+    inputs: HTMLInputElement[],
+    to_color: boolean,
+    text_error: string = "",
+  ): string | undefined {
     if (!inputs) {
       return;
     }
-    const group = inputs[inputs.length - 1].closest(".input-group");
+    const lastEl = inputs[inputs.length - 1];
+    if (!lastEl) return;
+    const group = lastEl.closest(".input-group");
+    if (!group) return;
     let errEls = group.querySelectorAll(".error-text");
-
     errEls.forEach((element) => {
       element.remove();
     });
@@ -34,13 +42,14 @@ export class InputField {
 
     if (to_color) {
       inputs.forEach((element) => {
-        element.classList.remove("border-grey")
-        element.classList.add("border-red")
+        element.classList.remove("border-grey");
+        element.classList.add("border-red");
       });
     }
   }
-  setPasswordInformerShow(passwordInput) {
+  setPasswordInformerShow(passwordInput: HTMLInputElement): void {
     const inputGroup = passwordInput.closest(".input-group");
+    if (!inputGroup) return;
     const informer = new Informer().getSelf(
       "Пароль должен содержать минимум 6 символов, заглавную букву, цифры, а так же может содержать символы @, #, _, &, %, $",
     );

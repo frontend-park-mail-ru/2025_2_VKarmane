@@ -9,6 +9,7 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { config, goToPage } from "../../index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
+import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
 
@@ -17,6 +18,14 @@ import mainTemplate from "../../templates/pages/main.hbs?raw";
  * @class
  */
 export class MainPage {
+  factBal: FactBal;
+  card: Card;
+  planBal: PlanBal;
+  menu: Menu;
+  add: Add;
+  operations: Operations;
+  addCard: AddCard;
+  template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
     this.card = new Card();
@@ -33,7 +42,7 @@ export class MainPage {
    * @returns {Promise<void>}
    * @async
    */
-  async render(container) {
+  async render(container: HTMLElement): Promise<void> {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
@@ -64,22 +73,25 @@ export class MainPage {
       container.innerHTML = this.template(data);
     } catch (err) {
       console.error(err);
-      goToPage(config.login);
+      goToPage(config.login!);
       this.unsetBody();
       return;
     }
     const logout = document.querySelector(".logout");
+    if (!logout) return;
     logout.addEventListener("click", async () => {
       const { ok } = await apiFetch(`/auth/logout`, {
         method: "POST",
       });
 
       if (ok) {
+        if (!config.login) return
         goToPage(config.login);
         this.setBody();
         return;
       }
     });
+
     this.setBody();
   }
 
@@ -87,7 +99,7 @@ export class MainPage {
     document.body.classList.remove("hide-scroller");
     document.body.classList.add("body_background");
   }
-  unsetBody() {
+  unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
   }
