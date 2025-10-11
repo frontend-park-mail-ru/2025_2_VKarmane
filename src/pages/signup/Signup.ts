@@ -116,7 +116,7 @@ export class SignUpPage {
       }
       return;
     }
-    goToPage(config.user_page!);
+    router.navigate("/")
   }
 
   checkResultStatus(status: number, result: Record<string, CallableFunction>, form: HTMLFormElement) {
