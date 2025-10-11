@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
+console.log(API_URL)
 export async function apiFetch(url, options = {}) {
   const defaultOptions = {
     headers: {
@@ -17,6 +18,7 @@ export async function apiFetch(url, options = {}) {
   };
 
   try {
+    console.log(API_URL + url)
     const response = await fetch(API_URL + url, finalOptions);
     const contentType = response.headers.get("Content-Type");
     let data = null;

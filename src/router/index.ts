@@ -16,3 +16,10 @@ export class Router {
     if (route) route();
   }
 }
+
+export const router = new Router({
+  "/": () => {},
+  "/login": () => {},
+  "/signup": () => {},
+  "*": () => {},
+});

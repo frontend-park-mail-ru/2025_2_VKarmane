@@ -9,8 +9,8 @@ export class InputField {
   constructor() {
     this.template = Handlebars.compile(inputFieldTemplate);
   }
-  getSelf(type: string, name: string, text: string): string {
-    return this.template({ type, name, text });
+  getSelf(type: string, name: string, text: string, value: string): string {
+    return this.template({ type, name, text, value });
   }
 
   setError(

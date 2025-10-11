@@ -10,7 +10,7 @@ import { Carousel } from "../../components/carousel/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 
 import { apiFetch } from "../../api/fetchWrapper.js";
-import router from "../../index.js";
+import {router} from "../../router/index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -51,8 +51,8 @@ export class MainPage {
     document.body.classList.remove("hide-scroller");
 
     try {
-      // const balanceData = await getBalance();
-      // const budgetsData = await getBudgets();
+      const balanceData = await getBalance();
+      const budgetsData = await getBudgets();
 
       const cards = [
         this.card.getSelf(12, true, 0, 0, "тыква"),

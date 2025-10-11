@@ -53,6 +53,7 @@ export class Validator {
   }
 
   validate(fieldName: string, value: string) {
+    console.log(12)
     const rules = this.rules[fieldName];
     const messages = this.messages[fieldName];
 
@@ -63,6 +64,7 @@ export class Validator {
     value = value.toString().trim();
 
     if (!value) {
+      console.log(13)
       return messages!.required;
     }
 

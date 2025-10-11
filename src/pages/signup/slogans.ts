@@ -1,4 +1,4 @@
-export const slogans = [
+const slogans = [
   [
     "Свобода — это контроль.",
     "Контроль — это уверенность.",
@@ -42,7 +42,7 @@ export const slogans = [
     "Достижения — это счастье.",
   ],
   [
-    "Порядок в финансах — это порядок в жизни.",
+    "Порядок в финансах — порядок в жизни.",
     "Порядок в жизни — это гармония.",
     "Гармония — это богатство.",
   ],
@@ -74,3 +74,10 @@ export const slogans = [
     "Достаток — это возможности.",
   ],
 ];
+
+export function getRandomSlogan(): string[] {
+    const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
+    if(!randomSlogan) throw "no slogans";
+
+    return randomSlogan;
+  }
