@@ -3,8 +3,8 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
-import { apiFetch } from "../../api/fetchWrapper.js";
 
+import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import router from "../../index.js";
