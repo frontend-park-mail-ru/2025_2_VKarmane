@@ -117,8 +117,7 @@ export class SignUpPage {
       }
       return;
     }
-    if (!config.user_page) return;
-    goToPage(config.user_page);
+    router.navigate("/")
   }
 
   checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
