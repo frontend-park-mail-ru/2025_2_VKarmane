@@ -55,29 +55,31 @@ export class MainPage {
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
               this.card.getSelf(
-                account.balance, 
+                account.balance,
                 true,
-                32323, 
-                1523, 
-                "Развлечения", 
+                32323,
+                1523,
+                "Развлечения",
               ),
             )
-          : [
-              this.card.getSelf(
-                null, 
-                true, 
-                0,
-                0,
-                "Нет счетов",
-              ),
-            ];
+          : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
 
       const data = {
-        FactBal: this.factBal.getSelf(12, 100, 120),
-        // balanceData.accounts.length !== 0 ? balanceData.accounts[0].balance : null
+        FactBal: this.factBal.getSelf(
+          budgetsData.budgets.length !== 0
+            ? budgetsData.budgets[0].amount
+            : null,
+          100,
+          120,
+        ),
+        // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
         cards: cards,
         // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
-        PlanBal: this.planBal.getSelf(12),
+        PlanBal: this.planBal.getSelf(
+          budgetsData.budgets.length !== 0
+            ? budgetsData.budgets[0].actual
+            : null,
+        ),
         menu: this.menu.getSelf(),
         Add: this.add.getSelf(),
         operations: this.operations.getList([]),
@@ -120,10 +122,6 @@ export class MainPage {
   }
 
   setCarousel() {
-    document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
-  }
-
-  setCarousel() {
-    document.querySelectorAll(".carousel").forEach(el => new Carousel(el));
+    document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
   }
 }
