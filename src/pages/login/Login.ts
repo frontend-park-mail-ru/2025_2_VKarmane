@@ -49,13 +49,16 @@ export class LoginPage {
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
     ];
+
+    if (!config.signup) return;
+
     const data = {
       title: "Войти",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-        config.signup!.href,
+        config.signup.href,
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -76,20 +79,21 @@ export class LoginPage {
 
   async handleLoginRequest(form: HTMLFormElement) {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
+    if (!loginInput || !passwordInput) return;
 
     const { ok, status } = await apiFetch(`/auth/login`, {
       method: "POST",
 
       body: JSON.stringify({
-        login: loginInput!.value,
-        password: passwordInput!.value,
+        login: loginInput.value,
+        password: passwordInput.value,
       }),
     });
 
     if (!ok) {
       if (status === 400) {
         this.setInputsError(
-          [loginInput!, passwordInput!],
+          [loginInput, passwordInput],
           "Неверный логин или пароль",
         );
       } else if (status === 500) {
@@ -99,8 +103,8 @@ export class LoginPage {
       }
       return;
     }
-
-    goToPage(config.user_page!);
+    if (!config.user_page) return;
+    goToPage(config.user_page);
   }
 
   setServerError(): void {
@@ -127,15 +131,18 @@ export class LoginPage {
 
   setupEventListeners(container: HTMLElement): void {
     const form: HTMLFormElement | null = container.querySelector("#login");
-    form!.addEventListener("submit", (e) => {
+    if (!form) return;
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.handleLoginRequest(form!);
+      this.handleLoginRequest(form);
     });
 
     const signupLink = container.querySelector(".absence-text a");
-    signupLink!.addEventListener("click", (e) => {
+    if (!signupLink) return;
+    signupLink.addEventListener("click", (e) => {
       e.preventDefault();
-      goToPage(config.signup!);
+      if (!config.signup) return;
+      goToPage(config.signup);
     });
   }
 
@@ -146,6 +153,7 @@ export class LoginPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
-    return [loginInput!, passwordInput!];
+    if (!loginInput || !passwordInput) throw "no inputs";
+    return [loginInput, passwordInput];
   }
 }

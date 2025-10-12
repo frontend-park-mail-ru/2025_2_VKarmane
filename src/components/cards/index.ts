@@ -18,7 +18,6 @@ export class Card {
       console.log(1);
       return this.template({ is_empty: true });
     }
-    console.log(2);
     return this.template({
       balance: balance,
       hasUpdateFactPlan: hasUpdateFactPlan,

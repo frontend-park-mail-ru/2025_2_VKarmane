@@ -1,4 +1,5 @@
 @import "../../components/startButton/index.css";
+@import "../../components/startButton/index.css";
 @import "../../components/inputField/index.css";
 @import "../../components/absenceText/index.css";
 @import "../../components/category/index.css";
@@ -13,11 +14,36 @@
   font-family: "Montserrat";
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 4px;
 }
 
 .hide-scroller::-webkit-scrollbar {
   display: block;
+}
+
+
+.vectors-bottom_down {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10vh;
+}
+
+
+.vector-row-left_down,
+.vector-row-right_down {
+    gap: 20px;
+    align-items: center;
+}
+
+
+.vector-row-left_down {
+    display: grid;
+}
+
+.vector-row-right_down {
+    display: grid;
 }
 
 .hide-scroller {
@@ -73,7 +99,7 @@ div {
   flex: 1;
   justify-content: center;
   justify-items: center;
-  background: linear-gradient(135deg, #e16040 0%, #eb5b1d 100%);
+  background: #EB5B1D;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -322,7 +348,7 @@ div {
 }
 
 .content-section {
-  margin-top: auto;
+  margin-top: 7vh;
 }
 
 .main-title {
@@ -335,7 +361,7 @@ div {
 
 .description {
   color: rgba(255, 255, 255, 0.9);
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.5;
   max-width: 480px;
   margin: 0;
