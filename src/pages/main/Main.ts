@@ -50,31 +50,23 @@ export class MainPage {
     document.body.classList.remove("hide-scroller");
 
     try {
-      // const balanceData = await getBalance();
-      // const budgetsData = await getBudgets();
-
-      const cards = [
-        this.card.getSelf(12, true, 0, 0, "тыква"),
-        this.card.getSelf(13, true, 0, 0, "тыква"),
-      ];
-      // balanceData.accounts.length !== 0
-      //   ? balanceData.accounts.map((account: Record<string, any>) =>
-      //       this.card.getSelf(
-      //         account.balance,
-      //         true,
-      //         32323,
-      //         1523,
-      //         "Развлечения",
-      //       ),
-      //     )
-      //   : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
+      const balanceData = await getBalance();
+      const budgetsData = await getBudgets();
 
       const data = {
-        FactBal: this.factBal.getSelf(12, 100, 120),
-        // balanceData.accounts.length !== 0 ? balanceData.accounts[0].balance : null
-        cards: cards,
-        // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
-        PlanBal: this.planBal.getSelf(12),
+        FactBal: this.factBal.getSelf(
+          budgetsData?.budgets?.[0]?.actual ?? 0,
+          100,
+          120,
+        ),
+        cards: this.card.getSelf(
+          balanceData?.accounts?.[0]?.balance ?? 0,
+          true,
+          32323,
+          1523,
+          "Развлечения",
+        ),
+        PlanBal: this.planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
         menu: this.menu.getSelf(),
         Add: this.add.getSelf(),
         operations: this.operations.getList([]),
@@ -93,12 +85,14 @@ export class MainPage {
       return;
     }
     const logout = document.querySelector(".logout");
-    logout!.addEventListener("click", async () => {
+    if (!logout) return;
+    logout.addEventListener("click", async () => {
       const { ok } = await apiFetch(`/auth/logout`, {
         method: "POST",
       });
 
       if (ok) {
+
         router.navigate("/login")
         this.unsetBody();
         return;
