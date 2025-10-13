@@ -98,26 +98,10 @@ export class LoginPage {
       }
       return;
     }
+    router.navigate("/");
 
   }
 
-  checkResultStatus(
-    status: number,
-    result: Object,
-    form: HTMLFormElement,
-  ): void {
-    if (status == 200) {
-      router.navigate("/");
-    } else if (status == 400) {
-      this.setInputsError(
-        this.getLoginPasswordInput(form),
-        "Неверный логин или пароль",
-      );
-    } else if (status == 500) {
-      this.setServerError();
-    }
-
-  }
 
   setServerError(): void {
     const form: HTMLFormElement | null = document.querySelector(".login-form");
