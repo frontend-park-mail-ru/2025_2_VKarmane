@@ -4,6 +4,7 @@ import Handlebars from "handlebars";
 import profileTemplate from "../../templates/pages/Profile.hbs?raw";
 import { Menu } from "../../components/menu/index.js";
 import { Calendar } from "../../components/calendar/index.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
 
 export class ProfilePage {
   menu: Menu;
@@ -16,14 +17,21 @@ export class ProfilePage {
     this.template = Handlebars.compile(profileTemplate);
   }
 
-  render(container: HTMLElement): void {
+  async render(container: HTMLElement) {
+    const { ok, data } = await apiFetch(`/profile`, {
+      method: "GET",
+    });
+    if (!ok) {
+      console.log("error");
+      return;
+    }
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
       calendar: this.calendar.getSelf(),
-      name: "",
-      date: "22.02.2222",
-      login: "shrek",
-      mail: "qwerty@ya.ru"
+      name: data.FirstName + " " + data.LastName,
+      date:  (new Date(data.CreatedAt).toLocaleDateString("ru-RU")),
+      login: data.Login,
+      mail: data.Email
     });
   }
 }
