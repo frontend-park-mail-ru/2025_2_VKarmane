@@ -49,8 +49,8 @@ export class MainPage {
     document.body.classList.remove("hide-scroller");
 
     try {
-      // const balanceData = await getBalance();
-      // const budgetsData = await getBudgets();
+      const balanceData = await getBalance();
+      const budgetsData = await getBudgets();
 
 
 
@@ -130,7 +130,4 @@ export class MainPage {
     document.body.style.backgroundColor = "";
   }
 
-  setCarousel() {
-    document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
-  }
 }

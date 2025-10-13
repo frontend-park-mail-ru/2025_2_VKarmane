@@ -121,18 +121,6 @@ export class SignUpPage {
   }
 
 
-    if (status == 201) {
-      router.navigate("/");
-    } else if (status == 409) {
-      this.setInputsError(
-        this.getLoginEmailPasswordInput(form),
-        "Пользователь с таким логином или почту уже существует",
-      );
-    } else if (status == 500) {
-      this.setServerError();
-    }
-  }
-
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
     text_error: string,
