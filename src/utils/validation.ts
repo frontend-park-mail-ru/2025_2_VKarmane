@@ -1,4 +1,3 @@
-
 type ruleType = Record<string, Record<string, any>>;
 
 export class Validator {

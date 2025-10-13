@@ -15,7 +15,6 @@ export class Card {
     action: string,
   ): string {
     if (balance === null) {
-
       return this.template({ is_empty: true });
     }
     return this.template({

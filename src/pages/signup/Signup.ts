@@ -195,11 +195,7 @@ export class SignUpPage {
     });
 
     passwordInput.addEventListener("input", () => {
-      this.validateSingleField(
-        "password",
-        passwordInput.value,
-        passwordInput,
-      );
+      this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
     this.inputField.setPasswordInformerShow(passwordInput);
@@ -243,7 +239,6 @@ export class SignUpPage {
       checkField("login", login, loginInput) &&
       checkField("email", email, emailInput) &&
       checkField("password", password, passwordInput)
-
     );
   }
   validateSingleField(
