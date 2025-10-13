@@ -101,6 +101,7 @@ export class LoginPage {
       }
       return;
     }
+    router.navigate("/");
 
   }
 
