@@ -8,7 +8,7 @@ import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
-import router from "../../index.js";
+import {router} from "../../index.js";
 
 export class SignUpPage {
   startButton: StartButton;

@@ -2,7 +2,7 @@ import Handlebars from "handlebars";
 
 import type { TemplateFn } from "../../types/handlebars.js";
 import menuTemplate from "../../templates/components/menu.hbs?raw";
-import router from "../../index.js";
+import {router} from "../../index.js";
 export class Menu {
   template: TemplateFn;
   constructor() {
