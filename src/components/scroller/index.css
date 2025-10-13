@@ -1,0 +1,22 @@
+.cards-scroll-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px; 
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.cards-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px;
+  scrollbar-width: none;
+  box-sizing: border-box;
+}
+
+.cards-scroll::-webkit-scrollbar {
+  display: none;
+}
+

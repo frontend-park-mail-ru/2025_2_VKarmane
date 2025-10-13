@@ -73,9 +73,7 @@ export class MainPage {
           100,
           120,
         ),
-        // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
         cards: cards,
-        // budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null
         PlanBal: this.planBal.getSelf(
           budgetsData.budgets.length !== 0
             ? budgetsData.budgets[0].actual
