@@ -7,10 +7,7 @@ import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
-<<<<<<< HEAD
 import { apiFetch } from "../../api/fetchWrapper.js";
-=======
->>>>>>> 636d589 (style fixes)
 import router from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
@@ -54,6 +51,7 @@ export class MainPage {
     try {
       // const balanceData = await getBalance();
       // const budgetsData = await getBudgets();
+
 
 
 
@@ -127,15 +125,12 @@ export class MainPage {
   }
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
-<<<<<<< HEAD
     document.body.classList.remove("body_background");
-=======
     document.body.style.margin = "0px";
     document.body.style.backgroundColor = "";
   }
 
   setCarousel() {
     document.querySelectorAll(".carousel").forEach((el) => new Carousel(el));
->>>>>>> 636d589 (style fixes)
   }
 }

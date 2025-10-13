@@ -120,7 +120,7 @@ export class SignUpPage {
     router.navigate("/")
   }
 
-  checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
+
     if (status == 201) {
       router.navigate("/");
     } else if (status == 409) {
@@ -173,7 +173,6 @@ export class SignUpPage {
     const loginLink = container.querySelector(".absence-text a");
     if (loginLink) {
       loginLink.addEventListener("click", (e) => {
-        if (!config.login) return;
         e.preventDefault();
         router.navigate("/login");
       });
@@ -181,6 +180,7 @@ export class SignUpPage {
 
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
+
 
     if (!loginInput || !emailInput || !passwordInput) return;
 
@@ -241,7 +241,6 @@ export class SignUpPage {
       checkField("login", login, loginInput) &&
       checkField("email", email, emailInput) &&
       checkField("password", password, passwordInput)
-
     );
   }
   validateSingleField(
