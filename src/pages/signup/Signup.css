@@ -21,29 +21,26 @@
   display: block;
 }
 
-
 .vectors-bottom_down {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10vh;
 }
-
 
 .vector-row-left_down,
 .vector-row-right_down {
-    gap: 20px;
-    align-items: center;
+  gap: 20px;
+  align-items: center;
 }
 
-
 .vector-row-left_down {
-    display: grid;
+  display: grid;
 }
 
 .vector-row-right_down {
-    display: grid;
+  display: grid;
 }
 
 .hide-scroller {
@@ -99,7 +96,7 @@ div {
   flex: 1;
   justify-content: center;
   justify-items: center;
-  background: #EB5B1D;
+  background: #eb5b1d;
   position: relative;
   overflow: hidden;
   display: flex;

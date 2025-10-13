@@ -50,7 +50,6 @@ export class MainPage {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
-
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
@@ -86,7 +85,6 @@ export class MainPage {
       };
 
       container.innerHTML = this.template(data);
-
     } catch (err) {
       console.error(err);
       goToPage(config.login!);
@@ -101,7 +99,7 @@ export class MainPage {
       });
 
       if (ok) {
-        if (!config.login) return
+        if (!config.login) return;
         goToPage(config.login);
         this.setBody();
         return;
