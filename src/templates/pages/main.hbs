@@ -16,20 +16,15 @@
         </div>
       </div>
       <div class="right-section">
-<div class="banks">
-  <h2 class="balance-text">Счета</h2>
+        <div class="banks">
+          <h2 class="balance-text">Счета</h2>
 
-  <div class="cards-scroll-container">
-    <div class="cards-scroll">
-      {{#each cards}}
-        {{{this}}}
-      {{/each}}
-    </div>
-  </div>
+          <div class="cards-scroll-container">
+            <div class="cards-scroll">{{#each cards}} {{{this}}} {{/each}}</div>
+          </div>
 
-  {{{operations}}}
-</div>
-
+          {{{operations}}}
+        </div>
       </div>
     </div>
   </div>

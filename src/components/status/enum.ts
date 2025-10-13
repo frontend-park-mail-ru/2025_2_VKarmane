@@ -1,4 +1,4 @@
 export enum EnumBalanceStatus {
-    Balanced = "balanced",
-    Unbalanced = "unbalanced"
+  Balanced = "balanced",
+  Unbalanced = "unbalanced",
 }

@@ -117,9 +117,8 @@ export class SignUpPage {
       }
       return;
     }
-    router.navigate("/")
+    router.navigate("/");
   }
-
 
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
@@ -169,7 +168,6 @@ export class SignUpPage {
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
 
-
     if (!loginInput || !emailInput || !passwordInput) return;
 
     loginInput.addEventListener("input", () => {
@@ -181,11 +179,7 @@ export class SignUpPage {
     });
 
     passwordInput.addEventListener("input", () => {
-      this.validateSingleField(
-        "password",
-        passwordInput.value,
-        passwordInput,
-      );
+      this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
     this.inputField.setPasswordInformerShow(passwordInput);

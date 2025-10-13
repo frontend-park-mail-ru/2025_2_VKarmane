@@ -99,9 +99,7 @@ export class LoginPage {
       return;
     }
     router.navigate("/");
-
   }
-
 
   setServerError(): void {
     const form: HTMLFormElement | null = document.querySelector(".login-form");

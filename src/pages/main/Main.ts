@@ -52,10 +52,6 @@ export class MainPage {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
 
-
-
-
-
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
@@ -92,7 +88,6 @@ export class MainPage {
       };
 
       container.innerHTML = this.template(data);
-
     } catch (err) {
       console.error(err);
       router.navigate("/login");
@@ -106,13 +101,10 @@ export class MainPage {
         method: "POST",
       });
 
-
-
       if (ok) {
-        router.navigate("/login")
+        router.navigate("/login");
         this.unsetBody();
         return;
-
       }
     });
 
@@ -129,5 +121,4 @@ export class MainPage {
     document.body.style.margin = "0px";
     document.body.style.backgroundColor = "";
   }
-
 }
