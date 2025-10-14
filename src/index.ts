@@ -6,7 +6,7 @@ import { Router } from "./router/index.js";
 
 import "./index.css";
 
-const router = new Router({
+export const router = new Router({
   "/": renderUserPage,
   "/login": renderLoginPage,
   "/signup": renderSignUpPage,
