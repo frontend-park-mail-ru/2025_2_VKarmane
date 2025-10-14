@@ -8,11 +8,10 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-import router from "../../index.js";
+import {router} from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
-
 
 /**
  * Класс главной страницы приложения
@@ -87,7 +86,6 @@ export class MainPage {
       };
 
       container.innerHTML = this.template(data);
-
     } catch (err) {
       console.error(err);
       router.navigate("/login");
@@ -102,7 +100,7 @@ export class MainPage {
       });
 
       if (ok) {
-        router.navigate("/login")
+        router.navigate("/login");
         this.unsetBody();
         return;
       }
@@ -120,7 +118,4 @@ export class MainPage {
     document.body.style.margin = "0px";
     document.body.style.backgroundColor = "";
   }
-
-
-  }
-
+}
