@@ -78,7 +78,6 @@
 }
 
 .transactions {
-
   background-image: url("/imgs/transactions_page.png");
 }
 
@@ -91,6 +90,5 @@
 }
 
 .profile:hover {
-
   background-image: url("/imgs/profile_hover.png");
 }

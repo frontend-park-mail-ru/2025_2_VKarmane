@@ -181,12 +181,9 @@ export class SignUpPage {
       this.validateSingleField("email", emailInput!.value, emailInput!);
     });
 
-    passwordInput!.addEventListener("input", () => {
-      this.validateSingleField(
-        "password",
-        passwordInput!.value,
-        passwordInput!,
-      );
+
+    passwordInput.addEventListener("input", () => {
+      this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
 

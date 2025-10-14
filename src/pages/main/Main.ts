@@ -52,6 +52,7 @@ export class MainPage {
     try {
       const balanceData = await getBalance();
       const budgetsData = await getBudgets();
+
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
@@ -64,6 +65,7 @@ export class MainPage {
               ),
             )
           : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
+
       const data = {
         FactBal: this.factBal.getSelf(
           budgetsData.budgets.length !== 0
@@ -102,7 +104,7 @@ export class MainPage {
       });
 
       if (ok) {
-        router.navigate("/login")
+        router.navigate("/login");
         this.unsetBody();
         return;
       }

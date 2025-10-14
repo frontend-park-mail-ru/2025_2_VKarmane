@@ -6,7 +6,6 @@
       <h1 class="general">Общее</h1>
       {{{profile_block}}}
     </div>
-
     <div class="section">
       <div class="left-section">
         <div style="max-width: 54%">
@@ -21,12 +20,7 @@
           <h2 class="balance-text">Счета</h2>
 
           <div class="cards-scroll-container">
-            <div class="cards-scroll">
-              {{#each cards}}
-                {{{this}}}
-              {{/each}}
-
-            </div>
+            <div class="cards-scroll">{{#each cards}} {{{this}}} {{/each}}</div>
           </div>
 
           {{{operations}}}
