@@ -1,7 +1,4 @@
 .operations {
-  display: flex;
-  flex-direction: row;
-  width: 500px;
   height: 420px;
   background-color: #ffffff;
   border-radius: 26px;
