@@ -1,5 +1,3 @@
-import { measureMemory } from "vm";
-
 type ruleType = Record<string, Record<string, any>>;
 
 export class Validator {

@@ -22,17 +22,19 @@
       </div>
       <div class="right-section">
         <div class="banks">
-          <h2 class="balance-text">
-            Счета
-          </h2>
-          <div class="card_handler" style="display: flex;">
-            {{{cards}}}
-            <div class="card_but_hand">
-              {{{addCard}}}
+          <h2 class="balance-text">Счета</h2>
+
+          <div class="cards-scroll-container">
+            <div class="cards-scroll">
+              {{#each cards}}
+                {{{this}}}
+              {{/each}}
             </div>
           </div>
+
           {{{operations}}}
         </div>
+
       </div>
     </div>
   </div>
