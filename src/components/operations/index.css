@@ -1,9 +1,8 @@
 .operations {
-  height: 420px;
+  height: 48vh;
   background-color: #ffffff;
   border-radius: 26px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-
   margin-top: 18px;
   position: relative;
   top: -18px;
@@ -36,6 +35,12 @@
   text-align: center;
   text-decoration: none;
   line-height: 43px;
+    border: none;
+    cursor: pointer;
+}
+
+.add_operation:hover {
+    background-color: #E16040;
 }
 
 .operations-list {
