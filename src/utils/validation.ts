@@ -59,7 +59,7 @@ export class Validator {
     if (!rules || !messages) return;
 
     if (!value && value !== "") {
-      return messages!.required;
+      return messages.required;
     }
 
     value = value.toString().trim();
