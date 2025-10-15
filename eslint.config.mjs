@@ -21,7 +21,7 @@ export default defineConfig([
 
   // --- Node.js ---
   {
-    files: ["server/**/*.{js,mjs,cjs}", "index.js"],
+    files: ["server/**/*.{js,mjs,cjs}", "index.ts"],
     languageOptions: {
       globals: {
         ...globals.node,
