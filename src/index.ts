@@ -2,6 +2,7 @@ import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 import { MainPage } from "./pages/main/Main.js";
 import { registerHandlebarsHelpers } from "./utils/helpers.js";
+import { setWorkers } from "./utils/helpers.js";
 
 import "./index.css";
 
@@ -53,8 +54,10 @@ export function goToPage(pageToGo: PageClas): void {
   pageToGo.render();
 }
 
+
 function startApp() {
   registerHandlebarsHelpers();
+  setWorkers();
   renderUserPage();
 }
 
