@@ -96,3 +96,29 @@
   position: relative;
   left: 90px;
 }
+
+.cards_not_exist {
+  display: grid;
+  place-items: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 18px;
+  position: relative;
+  top: 25%;
+  gap: 5px;
+}
+
+.add_cards {
+  display: block;
+  background-color: #eb5b1d;
+  border-radius: 8px;
+  width: 80%;
+  margin-top: 25%;
+  height: 43px;
+  font-family: "Montserrat";
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  line-height: 43px;
+}

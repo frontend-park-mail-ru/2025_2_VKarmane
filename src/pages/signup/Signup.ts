@@ -5,40 +5,31 @@ import { serviceItem } from "../../components/serviceItem/index.js";
 import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-
+import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
-/**
- * Класс страницы регистрации
- * @class
- */
+import { slogans } from "./slogans.js";
+
 export class SignUpPage {
-  /**
-   * Создает экземпляр страницы регистрации
-   * @constructor
-   */
+  startButton: StartButton;
+  inputField: InputField;
+  absText: absenceText;
+  servItem: serviceItem;
+  template: TemplateFn;
+
   constructor() {
-    /** @type {StartButton} */
     this.startButton = new StartButton();
 
-    /** @type {InputField} */
     this.inputField = new InputField();
 
-    /** @type {absenceText} */
     this.absText = new absenceText();
 
-    /** @type {serviceItem} */
     this.servItem = new serviceItem();
 
     this.template = Handlebars.compile(signUpTemplate);
   }
 
-  /**
-   * Рендерит страницу регистрации в контейнер
-   * @param {HTMLElement} container - Контейнер для рендеринга
-   * @returns {void}
-   */
-  render(container) {
+  render(container: HTMLElement): void {
     document.body.classList.add("hide-scroller");
     const serviceItems = [
       this.servItem.getSelf(
@@ -77,12 +68,7 @@ export class SignUpPage {
       title: "Регистрация",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf(
-        "password",
-        "password",
-        "пароль",
-        true,
-      ),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
       slogans: this.getRandomSlogan(),
@@ -93,15 +79,10 @@ export class SignUpPage {
     this.setupEventListeners(container);
   }
 
-  /**
-   * Обрабатывает запрос регистрации
-   * @param {HTMLFormElement} form - Форма регистрации
-   * @returns {Promise<void>}
-   * @async
-   */
-  async handleSignUpRequest(form) {
+  async handleSignUpRequest(form: HTMLFormElement): Promise<void> {
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
+    if (!loginInput || !emailInput || !passwordInput) return;
 
     if (
       !this.validateInput(
@@ -113,6 +94,7 @@ export class SignUpPage {
     ) {
       return;
     }
+
     const { ok, status } = await apiFetch(`/auth/register`, {
       method: "POST",
       body: JSON.stringify({
@@ -135,22 +117,17 @@ export class SignUpPage {
       }
       return;
     }
+    if (!config.user_page) return;
     goToPage(config.user_page);
   }
 
-  /**
-   * Проверяет статус ответа сервера и выполняет соответствующие действия
-   * @param {number} status - HTTP статус код
-   * @param {Object} result - Результат ответа сервера
-   * @param {HTMLFormElement} form - Форма регистрации
-   * @returns {void}
-   */
-  checkResultStatus(status, result, form) {
+  checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
     if (status == 201) {
+      if (!config.user_page) return;
       goToPage(config.user_page);
     } else if (status == 409) {
       this.setInputsError(
-        form,
+        this.getLoginEmailPasswordInput(form),
         "Пользователь с таким логином или почту уже существует",
       );
     } else if (status == 500) {
@@ -158,19 +135,23 @@ export class SignUpPage {
     }
   }
 
-  setInputsError(input, text_error, to_color = true) {
+  setInputsError(
+    input: HTMLInputElement | HTMLInputElement[],
+    text_error: string,
+    to_color: boolean = true,
+  ): void {
     const arr = Array.isArray(input) ? input : [input];
     this.inputField.setError(arr, to_color, text_error);
   }
 
-  /**
-   * Устанавливает ошибку сервера
-   * @returns {void}
-   */
-  setServerError() {
-    const form = document.querySelector(".signup-form");
+  setServerError(): void {
+    const form: HTMLFormElement | null = document.querySelector(".signup-form");
+    if (!form) return;
+    const inputs = this.getLoginEmailPasswordInput(form).at(-1);
+    if (!inputs) return;
     this.setInputsError(
-      this.getLoginEmailPasswordInput(form).at(-1),
+      inputs,
+
       "При регистрации произошла ошибка. Повторите попытку позже",
       false,
     );
@@ -181,8 +162,9 @@ export class SignUpPage {
    * @param {HTMLElement} container - Контейнер с элементами
    * @returns {void}
    */
-  setupEventListeners(container) {
-    const form = container.querySelector("#signup");
+  setupEventListeners(container: HTMLElement): void {
+    const form: HTMLFormElement | null = container.querySelector("#signup");
+    if (!form) return;
     if (form) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -193,6 +175,7 @@ export class SignUpPage {
     const loginLink = container.querySelector(".absence-text a");
     if (loginLink) {
       loginLink.addEventListener("click", (e) => {
+        if (!config.login) return;
         e.preventDefault();
         goToPage(config.login);
       });
@@ -200,6 +183,8 @@ export class SignUpPage {
 
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
+
+    if (!loginInput || !emailInput || !passwordInput) return;
 
     loginInput.addEventListener("input", () => {
       this.validateSingleField("login", loginInput.value, loginInput);
@@ -224,10 +209,19 @@ export class SignUpPage {
    * @param {HTMLFormElement} form - Форма регистрации
    * @returns {boolean} Результат валидации
    */
-  validateInput(login, email, password, form) {
+  validateInput(
+    login: string,
+    email: string,
+    password: string,
+    form: HTMLFormElement,
+  ) {
     const validator = new Validator();
 
-    const checkField = (fieldName, fieldValue, inputElem) => {
+    const checkField = (
+      fieldName: string,
+      fieldValue: string,
+      inputElem: HTMLInputElement,
+    ) => {
       let error = validator.validate(fieldName, fieldValue);
       if (error !== undefined) {
         this.setInputsError(inputElem, error);
@@ -239,13 +233,19 @@ export class SignUpPage {
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
 
+    if (!loginInput || !emailInput || !passwordInput) return;
+
     return (
       checkField("login", login, loginInput) &&
       checkField("email", email, emailInput) &&
       checkField("password", password, passwordInput)
     );
   }
-  validateSingleField(fieldName, fieldValue, inputElem) {
+  validateSingleField(
+    fieldName: string,
+    fieldValue: string,
+    inputElem: HTMLInputElement,
+  ) {
     const validator = new Validator();
 
     let error = validator.validate(fieldName, fieldValue);
@@ -255,40 +255,31 @@ export class SignUpPage {
       return false;
     } else {
       this.inputField.setError([inputElem], false, "");
-      inputElem.classList.remove("border-red")
-      inputElem.classList.add("border-grey")
+      inputElem.classList.remove("border-red");
+      inputElem.classList.add("border-grey");
       return true;
     }
   }
 
-  getLoginEmailPasswordInput(form) {
-    const loginInput = form.querySelector('input[name="login"]');
-    const emailInput = form.querySelector('input[name="email"]');
-    const passwordInput = form.querySelector('input[name="password"]');
+  getLoginEmailPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
+    const loginInput: HTMLInputElement | null = form.querySelector(
+      'input[name="login"]',
+    );
+    const emailInput: HTMLInputElement | null = form.querySelector(
+      'input[name="email"]',
+    );
+    const passwordInput: HTMLInputElement | null = form.querySelector(
+      'input[name="password"]',
+    );
+    if (!loginInput || !emailInput || !passwordInput) throw "";
+
     return [loginInput, emailInput, passwordInput];
   }
 
-  getRandomSlogan() {
-    const slogans = [
-      [
-        "Свобода — это контроль.",
-        "Контроль — это уверенность.",
-        "Уверенность — это сила.",
-      ],
-      [
-        "Долг — это рабство.",
-        "Сбережения — это свобода.",
-        "Свобода — это сила.",
-      ],
-      [
-        "Богатство — это дисциплина.",
-        "Дисциплина — это порядок.",
-        "Порядок — это будущее.",
-      ],
-    ];
-
+  getRandomSlogan(): string[] {
     const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
 
+    if (!randomSlogan) throw "undefined slogan";
     return randomSlogan;
   }
 }
