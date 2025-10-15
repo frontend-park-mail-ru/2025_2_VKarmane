@@ -54,7 +54,6 @@ export function goToPage(pageToGo: PageClas): void {
   pageToGo.render();
 }
 
-
 function startApp() {
   registerHandlebarsHelpers();
   setWorkers();

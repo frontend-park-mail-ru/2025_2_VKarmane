@@ -29,13 +29,12 @@ if (fs.existsSync(cacheVersionFile)) {
 }
 fs.writeFileSync(cacheVersionFile, cacheVer.toString());
 
-const urlsFromManifest = Object.values(manifestData).flatMap(entry => {
+const urlsFromManifest = Object.values(manifestData).flatMap((entry) => {
   const urls = [];
   if (entry.file) urls.push("/" + entry.file);
-  if (entry.css) urls.push(...entry.css.map(f => "/" + f));
+  if (entry.css) urls.push(...entry.css.map((f) => "/" + f));
   return urls;
 });
-
 
 const publicDirs = ["public/fonts", "public/imgs"];
 let urlsFromPublic = [];
@@ -47,7 +46,9 @@ for (const dir of publicDirs) {
 
 const baseFiles = ["/", "/index.html"];
 
-const urlsToCache = Array.from(new Set([...baseFiles, ...urlsFromManifest, ...urlsFromPublic]));
+const urlsToCache = Array.from(
+  new Set([...baseFiles, ...urlsFromManifest, ...urlsFromPublic]),
+);
 
 const swCode = `
 const cacheName = "v${cacheVer}";
@@ -102,4 +103,3 @@ self.addEventListener("fetch", (e) => {
 `;
 
 fs.writeFileSync(swPath, swCode);
-
