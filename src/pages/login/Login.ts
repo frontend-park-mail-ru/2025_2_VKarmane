@@ -3,12 +3,10 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
-import { goToPage, config } from "../../index.js";
-
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-
+import {router} from "../../index.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -49,16 +47,13 @@ export class LoginPage {
       this.category.getSelf("purchases", "Покупки"),
       this.category.getSelf("subscribes", "Подписки"),
     ];
-
-    if (!config.signup) return;
-
     const data = {
       title: "Войти",
       loginInput: this.inputField.getSelf("login", "login", "логин"),
       passwordInput: this.inputField.getSelf("password", "password", "пароль"),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
-        config.signup.href,
+        "/register",
         "Зарегистрируйтесь!",
       ),
       expenseCards: expCards,
@@ -70,14 +65,7 @@ export class LoginPage {
     this.setupEventListeners(container);
   }
 
-  /**
-   * Обрабатывает запрос авторизации
-   * @param {HTMLFormElement} form - Форма авторизации
-   * @returns {Promise<void>}
-   * @async
-   */
-
-  async handleLoginRequest(form: HTMLFormElement) {
+  async handleLoginRequest(form: HTMLFormElement): Promise<void> {
     const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
     if (!loginInput || !passwordInput) return;
 
@@ -85,15 +73,15 @@ export class LoginPage {
       method: "POST",
 
       body: JSON.stringify({
-        login: loginInput.value,
-        password: passwordInput.value,
+        login: loginInput!.value,
+        password: passwordInput!.value,
       }),
     });
 
     if (!ok) {
       if (status === 400) {
         this.setInputsError(
-          [loginInput, passwordInput],
+          [loginInput!, passwordInput!],
           "Неверный логин или пароль",
         );
       } else if (status === 500) {
@@ -103,9 +91,9 @@ export class LoginPage {
       }
       return;
     }
-    if (!config.user_page) return;
-    goToPage(config.user_page);
+    router.navigate("/");
   }
+
 
   setServerError(): void {
     const form: HTMLFormElement | null = document.querySelector(".login-form");
@@ -119,6 +107,7 @@ export class LoginPage {
       false,
     );
   }
+
 
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
@@ -134,15 +123,14 @@ export class LoginPage {
     if (!form) return;
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.handleLoginRequest(form);
+      this.handleLoginRequest(form!);
     });
 
     const signupLink = container.querySelector(".absence-text a");
     if (!signupLink) return;
     signupLink.addEventListener("click", (e) => {
       e.preventDefault();
-      if (!config.signup) return;
-      goToPage(config.signup);
+      router.navigate("/signup");
     });
   }
 

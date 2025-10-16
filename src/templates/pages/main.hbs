@@ -1,22 +1,17 @@
 <div class="container">
-  <div class="LeftPart">
-    {{{menu}}}
-  </div>
+  <div class="LeftPart">{{{menu}}}</div>
 
   <div id="main">
-    <h1 class="general">Общее</h1>
+    <div class="main__header">
+      <h1 class="general">Общее</h1>
+      {{{profile_block}}}
+    </div>
     <div class="section">
-
       <div class="left-section">
-
-        <div style="max-width: 54%;">
+        <div style="max-width: 54%">
           <div class="balance">
-            <h2 class="balance-text">
-              Баланс
-            </h2>
-            {{{FactBal}}}
-            {{{PlanBal}}}
-            {{{Add}}}
+            <h2 class="balance-text">Баланс</h2>
+            {{{FactBal}}} {{{PlanBal}}} {{{Add}}}
           </div>
         </div>
       </div>
@@ -25,11 +20,7 @@
           <h2 class="balance-text">Счета</h2>
 
           <div class="cards-scroll-container">
-            <div class="cards-scroll">
-              {{#each cards}}
-                {{{this}}}
-              {{/each}}
-            </div>
+            <div class="cards-scroll">{{#each cards}} {{{this}}} {{/each}}</div>
           </div>
 
           {{{operations}}}

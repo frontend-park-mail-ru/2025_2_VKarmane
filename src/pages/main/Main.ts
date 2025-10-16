@@ -6,12 +6,13 @@ import { Add } from "../../components/add/index.js";
 import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
-import { config, goToPage } from "../../index.js";
+import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-
+import {router} from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
+
 
 /**
  * Класс главной страницы приложения
@@ -25,6 +26,7 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
+  profileBlock: ProfileBlock;
   template: TemplateFn;
   constructor() {
     this.factBal = new FactBal();
@@ -34,6 +36,7 @@ export class MainPage {
     this.add = new Add();
     this.operations = new Operations();
     this.addCard = new AddCard();
+    this.profileBlock = new ProfileBlock();
     this.template = Handlebars.compile(mainTemplate);
   }
   /**
@@ -82,12 +85,14 @@ export class MainPage {
         operations: this.operations.getList([]),
         addCard: this.addCard.getSelf(),
         exist_card: true,
+        profile_block: this.profileBlock.getSelf("aboba", 1111),
       };
 
       container.innerHTML = this.template(data);
+
     } catch (err) {
       console.error(err);
-      goToPage(config.login!);
+      router.navigate("/login");
       this.unsetBody();
       return;
     }
@@ -99,13 +104,11 @@ export class MainPage {
       });
 
       if (ok) {
-        if (!config.login) return;
-        goToPage(config.login);
-        this.setBody();
+        router.navigate("/login");
+        this.unsetBody();
         return;
       }
     });
-
     this.setBody();
   }
 
@@ -116,5 +119,10 @@ export class MainPage {
   unsetBody(): void {
     document.body.classList.add("hide-scroller");
     document.body.classList.remove("body_background");
+    document.body.style.margin = "0px";
+    document.body.style.backgroundColor = "";
   }
-}
+
+
+  }
+

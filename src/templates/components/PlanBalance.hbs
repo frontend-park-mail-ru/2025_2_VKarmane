@@ -1,24 +1,20 @@
 <div class="Plan-Balance">
   {{#if (not is_empty)}}
-    <h3 class="Fact-Plan-text">
-      Планируемый
-    </h3>
-    <div class="CheckSum">
-      <h2 class="PlanSum">{{PlanSum}} ₽</h2>
-    </div>
-    <div class="Plan-Balance-text" style="display: flex">
-      <a style="display: flex; text-decoration: none; color: black" href="#">
-        <p class="Fact-text"> посмотреть &nbsp</p>
-        <p class="Plan-text">расходы &nbsp</p>
-        <p class="Fact-text"> за 2 недели→ &nbsp</p>
-      </a>
-    </div>
+  <h3 class="Fact-Plan-text">Планируемый</h3>
+  <div class="CheckSum">
+    <h2 class="PlanSum">{{PlanSum}} ₽</h2>
+  </div>
+  <div class="Plan-Balance-text" style="display: flex">
+    <a style="display: flex; text-decoration: none; color: black" href="#">
+      <p class="Fact-text">посмотреть &nbsp</p>
+      <p class="Plan-text">расходы &nbsp</p>
+      <p class="Fact-text">за 2 недели→ &nbsp</p>
+    </a>
+  </div>
   {{else}}
-    <div class="balance_not_exists">
-      <div class="balance_not_exists_img"></div>
-      <h2 style="color: #949494; font-size: 20px">
-        Тут пока ничего нет :(
-      </h2>
-    </div>
+  <div class="balance_not_exists">
+    <div class="balance_not_exists_img"></div>
+    <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
+  </div>
   {{/if}}
 </div>
