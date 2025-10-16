@@ -13,6 +13,7 @@ export class Status {
     this.template = Handlebars.compile(statusTemplate);
   }
 
+
   getSelf(status: EnumBalanceStatus): string {
     return this.template({
       color: this.#statusBalanceColors[status],

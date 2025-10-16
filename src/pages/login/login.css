@@ -256,6 +256,7 @@ div {
   position: relative;
 }
 
+
 .vectors-bottom_up {
   margin-top: 10vh;
   width: 100%;
@@ -263,6 +264,7 @@ div {
   justify-content: space-between;
   align-items: center;
 }
+
 
 .vector-row-left_up,
 .vector-row-right_up {

@@ -45,7 +45,7 @@
 
 .logout {
   position: relative;
-  top: 703px;
+  top: 500px;
   height: 57px;
   width: 57px;
   background-size: cover;
@@ -57,7 +57,7 @@
 
 .logout:hover {
   position: relative;
-  top: 703px;
+  top: 500px;
   height: 57px;
   width: 57px;
   background-size: cover;
@@ -65,4 +65,30 @@
   background-image: url("/imgs/logout_hover.png");
   border: none;
   background-color: transparent;
+}
+
+.meny__button {
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+}
+
+.transactions {
+  background-image: url("/imgs/transactions_page.png");
+}
+
+.transactions:hover {
+  background-image: url("/imgs/transactions_hover.png");
+}
+
+.profile {
+  background-image: url("/imgs/profile.png");
+}
+
+.profile:hover {
+  background-image: url("/imgs/profile_hover.png");
 }
