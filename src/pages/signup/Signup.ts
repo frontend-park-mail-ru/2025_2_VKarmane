@@ -2,13 +2,14 @@ import { StartButton } from "../../components/startButton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
-import { config, goToPage } from "../../index.js";
 import { Validator } from "../../utils/validation.js";
+
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
+import {router} from "../../index.js";
 
 export class SignUpPage {
   startButton: StartButton;
@@ -25,6 +26,7 @@ export class SignUpPage {
     this.absText = new absenceText();
 
     this.servItem = new serviceItem();
+
 
     this.template = Handlebars.compile(signUpTemplate);
   }
@@ -86,9 +88,9 @@ export class SignUpPage {
 
     if (
       !this.validateInput(
-        loginInput.value,
-        emailInput.value,
-        passwordInput.value,
+        loginInput!.value,
+        emailInput!.value,
+        passwordInput!.value,
         form,
       )
     ) {
@@ -98,16 +100,16 @@ export class SignUpPage {
     const { ok, status } = await apiFetch(`/auth/register`, {
       method: "POST",
       body: JSON.stringify({
-        login: loginInput.value,
-        email: emailInput.value,
-        password: passwordInput.value,
+        login: loginInput!.value,
+        email: emailInput!.value,
+        password: passwordInput!.value,
       }),
     });
 
     if (!ok) {
       if (status === 409) {
         this.setInputsError(
-          [loginInput, emailInput, passwordInput],
+          [loginInput!, emailInput!, passwordInput!],
           "Пользователь с таким логином или почтой уже существует",
         );
       } else if (status === 500) {
@@ -117,22 +119,8 @@ export class SignUpPage {
       }
       return;
     }
-    if (!config.user_page) return;
-    goToPage(config.user_page);
-  }
 
-  checkResultStatus(status: number, result: Object, form: HTMLFormElement) {
-    if (status == 201) {
-      if (!config.user_page) return;
-      goToPage(config.user_page);
-    } else if (status == 409) {
-      this.setInputsError(
-        this.getLoginEmailPasswordInput(form),
-        "Пользователь с таким логином или почту уже существует",
-      );
-    } else if (status == 500) {
-      this.setServerError();
-    }
+    router.navigate("/");
   }
 
   setInputsError(
@@ -175,9 +163,8 @@ export class SignUpPage {
     const loginLink = container.querySelector(".absence-text a");
     if (loginLink) {
       loginLink.addEventListener("click", (e) => {
-        if (!config.login) return;
         e.preventDefault();
-        goToPage(config.login);
+        router.navigate("/login");
       });
     }
 
@@ -190,15 +177,18 @@ export class SignUpPage {
       this.validateSingleField("login", loginInput.value, loginInput);
     });
 
-    emailInput.addEventListener("input", () => {
-      this.validateSingleField("email", emailInput.value, emailInput);
+    emailInput!.addEventListener("input", () => {
+      this.validateSingleField("email", emailInput!.value, emailInput!);
     });
+
 
     passwordInput.addEventListener("input", () => {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
+
     this.inputField.setPasswordInformerShow(passwordInput);
+
   }
 
   /**
@@ -209,6 +199,7 @@ export class SignUpPage {
    * @param {HTMLFormElement} form - Форма регистрации
    * @returns {boolean} Результат валидации
    */
+
   validateInput(
     login: string,
     email: string,
@@ -236,11 +227,12 @@ export class SignUpPage {
     if (!loginInput || !emailInput || !passwordInput) return;
 
     return (
-      checkField("login", login, loginInput) &&
-      checkField("email", email, emailInput) &&
-      checkField("password", password, passwordInput)
+      checkField("login", login, loginInput!) &&
+      checkField("email", email, emailInput!) &&
+      checkField("password", password, passwordInput!)
     );
   }
+
   validateSingleField(
     fieldName: string,
     fieldValue: string,
@@ -271,9 +263,11 @@ export class SignUpPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
+
     if (!loginInput || !emailInput || !passwordInput) throw "";
 
     return [loginInput, emailInput, passwordInput];
+
   }
 
   getRandomSlogan(): string[] {
@@ -282,4 +276,5 @@ export class SignUpPage {
     if (!randomSlogan) throw "undefined slogan";
     return randomSlogan;
   }
+
 }

@@ -1,6 +1,6 @@
 .logo {
-  width: 85px; /* Ширина в пикселях */
-  height: 85px; /* Высота в пикселях */
+  width: 85px;
+  height: 85px;
   background-color: #ffffff;
   background-image: url("/imgs/logo.png");
   border-radius: 15px;
@@ -11,15 +11,8 @@
 }
 
 .butMain {
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    border: none;
-    background-color: transparent;
     border-radius: 8px;
-    background-image: url("/imgs/main_page.png"); /* черная дверь */
-    background-size: cover;
-    background-position: center;
+    background-image: url("/imgs/main_page.png");
     transition: all 0.2s ease; /* плавная анимация */
     cursor: pointer;
 }
@@ -47,17 +40,18 @@
 }
 
 .logout {
-    margin-top: 50vh;
-    height: 48px;
-    width: 49px;
+    height: 57px;
+    width: 57px;
     border: none;
     background-color: transparent;
     border-radius: 8px;
-    background-image: url("/imgs/logout.png"); /* черная дверь */
+    background-image: url("/imgs/logout.png");
     background-size: cover;
     background-position: center;
-    transition: all 0.2s ease; /* плавная анимация */
+    transition: all 0.2s ease;
     cursor: pointer;
+    position: relative;
+    top: 500px;
 }
 
 .logout:hover {
@@ -68,22 +62,45 @@
 }
 
 .butTransaction{
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    border: none;
-    background-color: transparent;
     border-radius: 8px;
-    background-image: url("/imgs/TransactionsMenuBase.svg"); /* черная дверь */
-    background-size: cover;
-    background-position: center;
+    background-image: url("/imgs/TransactionsMenuBase.svg");
     transition: all 0.2s ease; /* плавная анимация */
     cursor: pointer;
 }
 
 .butTransaction:hover {
-    background-image: url("/imgs/TransactionsButtonHover.svg"); /* белая дверь */
-    background-color: black; /* черный фон */
+    background-image: url("/imgs/TransactionsButtonHover.svg");
+    background-color: black; 
     border-radius: 8px;
-    transform: scale(0.95);  /* небольшое уменьшение для "эффекта нажатия" */
+    transform: scale(0.95); 
+}
+
+.logout:hover {
+  position: relative;
+  top: 500px;
+  height: 57px;
+  width: 57px;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/imgs/logout_hover.png");
+  border: none;
+  background-color: transparent;
+}
+
+.meny__button {
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  background-size: cover;
+  background-position: center;
+  border: none;
+  background-color: transparent;
+}
+
+.profile {
+  background-image: url("/imgs/profile.png");
+}
+
+.profile:hover {
+  background-image: url("/imgs/profile_hover.png");
 }

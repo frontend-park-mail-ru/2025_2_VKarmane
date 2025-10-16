@@ -1,42 +1,32 @@
 <div class="container">
-    <div class="sections">
-        <div class="LeftPart">
-            {{{menu}}}
-        </div>
+  <div class="LeftPart">{{{menu}}}</div>
 
-        <div id="main">
-            <h1 class="general">Общее</h1>
-            <div class="section">
-
-                <div class="left-section">
-
-                    <div style="max-width: 54%;">
-                        <div class="balance">
-                            <h2 class="balance-text">
-                                Баланс
-                            </h2>
-                            {{{FactBal}}}
-                            {{{PlanBal}}}
-                            {{{Add}}}
-                        </div>
-                    </div>
-                </div>
-                <div class="right-section">
-                    <div class="banks">
-                        <h2 class="balance-text">
-                            Счета
-                        </h2>
-                        <div class="card_handler" style="display: flex;">
-                            {{{cards}}}
-                            <div class="card_but_hand">
-                                {{{addCard}}}
-                            </div>
-                        </div>
-                        {{{operations}}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{{ AddOperations }}}
+  <div id="main">
+    <div class="main__header">
+      <h1 class="general">Общее</h1>
+      {{{profile_block}}}
     </div>
+    <div class="section">
+      <div class="left-section">
+        <div style="max-width: 54%">
+          <div class="balance">
+            <h2 class="balance-text">Баланс</h2>
+            {{{FactBal}}} {{{PlanBal}}} {{{Add}}}
+          </div>
+        </div>
+      </div>
+      <div class="right-section">
+        <div class="banks">
+          <h2 class="balance-text">Счета</h2>
+
+          <div class="cards-scroll-container">
+            <div class="cards-scroll">{{#each cards}} {{{this}}} {{/each}}</div>
+          </div>
+
+          {{{operations}}}
+        </div>
+          {{{ AddOperations }}}
+      </div>
+    </div>
+  </div>
 </div>
