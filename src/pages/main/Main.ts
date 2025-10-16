@@ -1,15 +1,15 @@
 import { FactBal } from "../../components/Fact_Bal/index.js";
 import { Card } from "../../components/cards/index.js";
 import { PlanBal } from "../../components/Plan_Bal/index.js";
-import { Menu } from "../../components/menu";
+import { Menu } from "../../components/menu/index.js";
 import { Add } from "../../components/add/index.js";
-import { Operations } from "../../components/operations";
+import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
-import { config, goToPage } from "../../index.js";
+import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-import { AddOperation } from "../../components/addTransactions";
-
+import { AddOperation } from "../../components/addTransactions/index.js";
+import {router} from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -22,6 +22,10 @@ interface BudgetsData {
     budgets?: { actual: number; amount: number }[];
 }
 
+/**
+ * Класс главной страницы приложения
+ * @class
+ */
 export class MainPage {
     factBal: FactBal;
     card: Card;
@@ -30,6 +34,7 @@ export class MainPage {
     add: Add;
     operations: Operations;
     addCard: AddCard;
+    profileBlock: ProfileBlock;
     addOperation: AddOperation;
     template: TemplateFn;
 
@@ -40,88 +45,104 @@ export class MainPage {
         this.menu = new Menu();
         this.add = new Add();
         this.operations = new Operations(this.openPopup);
-        this.addCard = new AddCard();
         this.addOperation = new AddOperation(this.closePopup, this.handleOperationTypeChange);
+        this.addCard = new AddCard();
+        this.profileBlock = new ProfileBlock();
         this.template = Handlebars.compile(mainTemplate);
     }
 
+    /**
+     * Рендерит главную страницу в контейнер
+     * @param {HTMLElement} container - Контейнер для рендеринга
+     * @returns {Promise<void>}
+     * @async
+     */
     async render(container: HTMLElement): Promise<void> {
         if (!container) throw new Error("Container element not found!");
         document.body.classList.remove("hide-scroller");
-
         try {
             const balanceData: BalanceData = await getBalance();
             const budgetsData: BudgetsData = await getBudgets();
 
-      const data = {
-        FactBal: this.factBal.getSelf(
-          budgetsData?.budgets?.[0]?.actual ?? 0,
-          100,
-          120,
-        ),
-        cards: this.card.getSelf(
-          balanceData?.accounts?.[0]?.balance ?? 0,
-          true,
-          32323,
-          1523,
-          "Развлечения",
-        ),
-        PlanBal: this.planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
-        menu: this.menu.getSelf(),
-        Add: this.add.getSelf(),
-        operations: this.operations.getList([]),
-        addCard: this.addCard.getSelf(),
-      };
+            const data = {
+                FactBal: this.factBal.getSelf(
+                    budgetsData?.budgets?.[0]?.actual ?? 0,
+                    100,
+                    120,
+                ),
+                cards: this.card.getSelf(
+                    balanceData?.accounts?.[0]?.balance ?? 0,
+                    true,
+                    32323,
+                    1523,
+                    "Развлечения",
+                ),
+                PlanBal: this.planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
+                menu: this.menu.getSelf(),
+                Add: this.add.getSelf(),
+                operations: this.operations.getList([]),
+                addCard: this.addCard.getSelf(),
+                exist_card: true,
+                profile_block: this.profileBlock.getSelf("aboba", 1111),
+            };
 
             container.innerHTML = this.template(data);
-
             this.addEventListeners();
         } catch (err) {
             console.error(err);
-            if (config.login) goToPage(config.login);
+            router.navigate("/login");
             this.unsetBody();
             return;
         }
-
-        const logout = document.querySelector<HTMLElement>(".logout");
-        if (logout) {
-            logout.addEventListener("click", async () => {
-                const { ok } = await apiFetch(`/auth/logout`, {
-                    method: "POST",
-                });
-                if (ok && config.login) {
-                    goToPage(config.login);
-                    this.setBody();
-                }
+        const logout = document.querySelector(".logout");
+        if (!logout) return;
+        logout.addEventListener("click", async () => {
+            const {ok} = await apiFetch(`/auth/logout`, {
+                method: "POST",
             });
-        }
 
+            if (ok) {
+                router.navigate("/login");
+                this.unsetBody();
+                return;
+            }
+        });
         this.setBody();
     }
 
-    setBody(): void {
-        document.body.classList.remove("hide-scroller");
-        document.body.classList.add("body_background");
-    }
+        setBody():
+        void {
+            document.body.classList.remove("hide-scroller");
+            document.body.classList.add("body_background");
+        }
+        unsetBody():
+        void {
+            document.body.classList.add("hide-scroller");
+            document.body.classList.remove("body_background");
+            document.body.style.margin = "0px";
+            document.body.style.backgroundColor = "";
+        }
 
-    unsetBody(): void {
-        document.body.classList.add("hide-scroller");
-        document.body.classList.remove("body_background");
-    }
+        openPopup():
+        void {
+            const popup = document.getElementById("popup");
+            if(popup) popup.style.display = "flex";
+        }
 
-    openPopup(): void {
-        const popup = document.getElementById("popup");
-        if (popup) popup.style.display = "flex";
-    }
+        closePopup():
+        void {
+            const popup = document.getElementById("popup");
+            if(popup) popup.style.display = "none";
+        }
 
-    closePopup(): void {
-        const popup = document.getElementById("popup");
-        if (popup) popup.style.display = "none";
-    }
-
-    handleOperationTypeChange(): void {
-        const select = document.getElementById("operationType") as HTMLSelectElement;
-        if (!select) return;
+        handleOperationTypeChange()
+    :
+        void {
+            const select = document.getElementById("operationType") as HTMLSelectElement;
+            if(!
+        select
+    )
+        return;
 
         const selectedType = select.value;
         const incomeField = document.querySelector<HTMLElement>(".income-field");
@@ -134,26 +155,28 @@ export class MainPage {
         else if (selectedType === "expense" && expenseField) expenseField.classList.remove("hidden");
     }
 
-    addEventListeners(): void {
-        const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
-        const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
+        addEventListeners():
+        void {
+            const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
+            const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
 
-        if (openBtn) openBtn.addEventListener("click", () => this.openPopup());
-        if (closeBtn) closeBtn.addEventListener("click", () => this.closePopup());
+            if(openBtn) openBtn.addEventListener("click", () => this.openPopup());
+            if(closeBtn) closeBtn.addEventListener("click", () => this.closePopup());
 
-        document.body.addEventListener("change", (e: Event) => {
-            const target = e.target as HTMLInputElement;
-            if (target && target.type === "file" && target.id === "categoryIcon") {
-                const popupForm = target.closest<HTMLElement>(".popup-form");
-                const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
-                if (!fileNameBox) return;
+            document.body.addEventListener("change", (e: Event) => {
+                const target = e.target as HTMLInputElement;
+                if (target && target.type === "file" && target.id === "categoryIcon") {
+                    const popupForm = target.closest<HTMLElement>(".popup-form");
+                    const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
+                    if (!fileNameBox) return;
 
-                if (target.files && target.files.length > 0) {
-                    fileNameBox.textContent = target.files[0].name;
-                } else {
-                    fileNameBox.textContent = "Файл не выбран";
+                    if (target.files && target.files.length > 0) {
+                        fileNameBox.textContent = target.files[0].name;
+                    } else {
+                        fileNameBox.textContent = "Файл не выбран";
+                    }
                 }
-            }
-        });
+            });
+        }
     }
-}
+

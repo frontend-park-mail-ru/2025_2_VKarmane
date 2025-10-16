@@ -1,0 +1,27 @@
+
+.user_profile_block_avatar {
+  border-radius: 24px;
+  object-fit: cover;
+  height: 70%;
+}
+
+.user_profile_block_info {
+  display: flex;
+  flex-direction: column;
+  grid-area: 5px;
+}
+
+.user_profile_block__id {
+  color: grey;
+}
+
+.user_profile__block {
+  align-items: center;
+  border-radius: 24px;
+  background-color: white;
+  height: 80px;
+  width: 200px;
+  display: flex;
+  gap: 10px;
+  padding-left: 20px;
+}
