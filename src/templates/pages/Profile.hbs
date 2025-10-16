@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="LeftPart">{{{menu}}}</div>
+
+  <div id="main">
+    <h1 class="general">Профиль</h1>
+    <div class="content">
+      <span class="profile__planned_purchases">Запланированные расходы</span>
+      <div class="profile__profile">
+        <img
+          src="/imgs/empty_avatar.png"
+          style="object-fit: fill; max-height: 200px"
+        />
+        <div class="profile__data">
+          <div class="profile__data_header">
+            {{#if name}}
+            <h2 class="profile__data_name">{{name}}</h2>
+            {{else}}
+            <h2 class="profile__data_no_info">Неизвестно</h2>
+            {{/if}}
+            <img src="/imgs/edit_profile.png" />
+          </div>
+
+          <div class="profile__data_row">
+            <span class="profile__data_row__field"> Дата регистрации:</span>
+            <span class="profile__data_row__data known">{{date}}</span>
+          </div>
+          <div class="profile__data_row">
+            <span class="profile__data_row__field"> Логин:</span>
+            <span class="profile__data_row__data known">{{login}}</span>
+          </div>
+          <div class="profile__data_row">
+            <span class="profile__data_row__field"> E-mail:</span>
+            <span class="profile__data_row__data known">{{mail}}</span>
+          </div>
+        </div>
+      </div>
+      {{{calendar}}}
+      <div class="white_back">
+        <div class="_not_exists">
+          <div class="_not_exists_img"></div>
+          <h2 style="color: #949494; font-size: 20px">
+            Тут пока ничего нет :(
+          </h2>
+        </div>
+      </div>
+
+      <div class="white_back">
+        <div class="_not_exists">
+          <div class="_not_exists_img"></div>
+          <h2 style="color: #949494; font-size: 20px">
+            Тут пока ничего нет :(
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

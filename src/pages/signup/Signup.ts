@@ -9,7 +9,7 @@ import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
 import { slogans } from "./slogans.js";
-import {router} from "../../index.js";
+import { router } from "../../index.js";
 
 export class SignUpPage {
   startButton: StartButton;
@@ -26,7 +26,6 @@ export class SignUpPage {
     this.absText = new absenceText();
 
     this.servItem = new serviceItem();
-
 
     this.template = Handlebars.compile(signUpTemplate);
   }
@@ -181,14 +180,11 @@ export class SignUpPage {
       this.validateSingleField("email", emailInput!.value, emailInput!);
     });
 
-
     passwordInput.addEventListener("input", () => {
       this.validateSingleField("password", passwordInput.value, passwordInput);
     });
 
-
     this.inputField.setPasswordInformerShow(passwordInput);
-
   }
 
   /**
@@ -267,7 +263,6 @@ export class SignUpPage {
     if (!loginInput || !emailInput || !passwordInput) throw "";
 
     return [loginInput, emailInput, passwordInput];
-
   }
 
   getRandomSlogan(): string[] {
@@ -276,5 +271,4 @@ export class SignUpPage {
     if (!randomSlogan) throw "undefined slogan";
     return randomSlogan;
   }
-
 }

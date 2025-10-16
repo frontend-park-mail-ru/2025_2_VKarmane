@@ -10,7 +10,6 @@ export class Router {
     this.loadRoute();
   }
 
-
   loadRoute() {
     const path = window.location.pathname;
     const route = this.routes[path] || this.routes["*"];
