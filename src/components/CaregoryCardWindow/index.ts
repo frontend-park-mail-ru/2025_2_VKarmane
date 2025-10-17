@@ -5,7 +5,7 @@ import CategoriesListTemplate from "../../templates/components/categoriesList.hb
 interface Category {
     id: string | number;
     name: string;
-    [key: string]: any; // Для любых дополнительных полей
+    [key: string]: unknown; // Для любых дополнительных полей
 }
 
 export class CategoriesList {

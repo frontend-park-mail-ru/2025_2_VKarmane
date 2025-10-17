@@ -6,7 +6,7 @@ export interface OperationItem {
     date?: string;
     amount?: number;
     description?: string;
-    [key: string]: any;
+    [key: string]: unknown;
 }
 
 export class TransactionsList {
