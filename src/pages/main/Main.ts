@@ -13,6 +13,7 @@ import {router} from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
+import { setBody, unsetBody } from "../../utils/bodySetters.js";
 
 interface BalanceData {
     accounts?: { balance: number }[];
@@ -37,7 +38,6 @@ export class MainPage {
     profileBlock: ProfileBlock;
     addOperation: AddOperation;
     template: TemplateFn;
-
     constructor() {
         this.factBal = new FactBal();
         this.card = new Card();
@@ -86,63 +86,36 @@ export class MainPage {
                 profile_block: this.profileBlock.getSelf("aboba", 1111),
             };
 
-            container.innerHTML = this.template(data);
-            this.addEventListeners();
-        } catch (err) {
-            console.error(err);
-            router.navigate("/login");
-            this.unsetBody();
-            return;
-        }
-        const logout = document.querySelector(".logout");
-        if (!logout) return;
-        logout.addEventListener("click", async () => {
-            const {ok} = await apiFetch(`/auth/logout`, {
-                method: "POST",
-            });
-
-            if (ok) {
-                router.navigate("/login");
-                this.unsetBody();
-                return;
-            }
-        });
-        this.setBody();
+      container.innerHTML = this.template(data);
+      this.setupEventListeners();
+    } catch (err) {
+      console.error(err);
+      router.navigate("/login");
+      unsetBody();
+      return;
+    }
+    setBody();
+  }
+    openPopup():
+        void {
+        const popup = document.getElementById("popup");
+        if(popup) popup.style.display = "flex";
     }
 
-        setBody():
+    closePopup():
         void {
-            document.body.classList.remove("hide-scroller");
-            document.body.classList.add("body_background");
-        }
-        unsetBody():
-        void {
-            document.body.classList.add("hide-scroller");
-            document.body.classList.remove("body_background");
-            document.body.style.margin = "0px";
-            document.body.style.backgroundColor = "";
-        }
+        const popup = document.getElementById("popup");
+        if(popup) popup.style.display = "none";
+    }
 
-        openPopup():
+    handleOperationTypeChange()
+        :
         void {
-            const popup = document.getElementById("popup");
-            if(popup) popup.style.display = "flex";
-        }
-
-        closePopup():
-        void {
-            const popup = document.getElementById("popup");
-            if(popup) popup.style.display = "none";
-        }
-
-        handleOperationTypeChange()
-    :
-        void {
-            const select = document.getElementById("operationType") as HTMLSelectElement;
-            if(!
-        select
-    )
-        return;
+        const select = document.getElementById("operationType") as HTMLSelectElement;
+        if(!
+            select
+        )
+            return;
 
         const selectedType = select.value;
         const incomeField = document.querySelector<HTMLElement>(".income-field");
@@ -155,29 +128,31 @@ export class MainPage {
         else if (selectedType === "expense" && expenseField) expenseField.classList.remove("hidden");
     }
 
-        addEventListeners():
+    addEventListeners():
         void {
-            const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
-            const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
+        const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
+        const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
 
-            if(openBtn) openBtn.addEventListener("click", () => this.openPopup());
-            if(closeBtn) closeBtn.addEventListener("click", () => this.closePopup());
+        if(openBtn) openBtn.addEventListener("click", () => this.openPopup());
+        if(closeBtn) closeBtn.addEventListener("click", () => this.closePopup());
 
-            document.body.addEventListener("change", (e: Event) => {
-                const target = e.target as HTMLInputElement;
-                if (target && target.type === "file" && target.id === "categoryIcon") {
-                    const popupForm = target.closest<HTMLElement>(".popup-form");
-                    const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
-                    if (!fileNameBox) return;
+        document.body.addEventListener("change", (e: Event) => {
+            const target = e.target as HTMLInputElement;
+            if (target && target.type === "file" && target.id === "categoryIcon") {
+                const popupForm = target.closest<HTMLElement>(".popup-form");
+                const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
+                if (!fileNameBox) return;
 
-                    if (target.files && target.files.length > 0) {
-                        fileNameBox.textContent = target.files[0].name;
-                    } else {
-                        fileNameBox.textContent = "Файл не выбран";
-                    }
+                if (target.files && target.files.length > 0) {
+                    fileNameBox.textContent = target.files[0].name;
+                } else {
+                    fileNameBox.textContent = "Файл не выбран";
                 }
-            });
-        }
+            }
+        });
     }
 
-
+  setupEventListeners() {
+    this.menu.setEvents();
+  }
+}

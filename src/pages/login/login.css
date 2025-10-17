@@ -4,13 +4,6 @@
 @import "../../components/category/index.css";
 @import "../../components/expenseCard/index.css";
 
-.hide-scroller::-webkit-scrollbar {
-  display: block;
-}
-
-.hide-scroller {
-  overflow: hidden;
-}
 div {
   font-family: "Montserrat", sans-serif;
 }
@@ -256,7 +249,6 @@ div {
   position: relative;
 }
 
-
 .vectors-bottom_up {
     margin-top: 10vh;
     width: 100%;
@@ -264,7 +256,6 @@ div {
     justify-content: space-between;
     align-items: center;
 }
-
 
 .vector-row-left_up,
 .vector-row-right_up {
