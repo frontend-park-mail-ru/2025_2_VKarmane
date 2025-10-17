@@ -1,0 +1,72 @@
+{
+  "name": "2025_2_vkarmane",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "prestart": "npm run build",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "compile:templates": "handlebars src/templates/components src/templates/pages/ -f dist/templates/templates.js -e hbs -k",
+    "format": "npx prettier --write .",
+    "lint": "npx eslint src/ server/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2025_2_VKarmane.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2025_2_VKarmane/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2025_2_VKarmane#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "handlebars": "^4.7.8",
+    "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-typescript": "^7.27.1",
+    "@eslint/css": "^0.11.1",
+    "@eslint/js": "^9.36.0",
+    "@types/handlebars": "^4.0.40",
+    "@types/node": "^24.6.2",
+    "@typescript-eslint/eslint-plugin": "^8.45.0",
+    "@typescript-eslint/parser": "^8.45.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.4.0",
+    "prettier": "3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.9",
+    "vite-plugin-babel": "^1.3.2",
+    "vite-plugin-checker": "^0.11.0",
+    "vite-plugin-string": "^1.2.3"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": "*.hbs",
+        "options": {
+          "parser": "html"
+        }
+      }
+    ]
+  }
+}
