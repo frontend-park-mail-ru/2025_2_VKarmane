@@ -1,6 +1,7 @@
 import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 import { MainPage } from "./pages/main/Main.js";
+import { ProfilePage } from "./pages/profile/Profile.js";
 import { registerHandlebarsHelpers } from "./utils/helpers.js";
 import { setWorkers } from "./utils/helpers.js";
 import { Router } from "./router/index.js";
@@ -12,6 +13,7 @@ export const router = new Router({
   "/": renderUserPage,
   "/login": renderLoginPage,
   "/signup": renderSignUpPage,
+  "/profile": renderProfilePage,
   "*": renderUserPage,
 });
 
@@ -20,6 +22,12 @@ const rootElement: HTMLElement | null = document.getElementById("root");
 function renderUserPage(): void {
   if (!rootElement) return;
   const page: MainPage = new MainPage();
+  page.render(rootElement);
+}
+
+function renderProfilePage(): void {
+  if (!rootElement) return;
+  const page: ProfilePage = new ProfilePage();
   page.render(rootElement);
 }
 
@@ -40,6 +48,5 @@ function startApp() {
   setWorkers();
   router.loadRoute();
 }
-
 
 startApp();

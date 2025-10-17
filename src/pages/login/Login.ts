@@ -6,7 +6,7 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import {router} from "../../index.js";
+import { router } from "../../index.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 
 export class LoginPage {
@@ -94,7 +94,6 @@ export class LoginPage {
     router.navigate("/");
   }
 
-
   setServerError(): void {
     const form: HTMLFormElement | null = document.querySelector(".login-form");
     if (!form) return;
@@ -107,7 +106,6 @@ export class LoginPage {
       false,
     );
   }
-
 
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],

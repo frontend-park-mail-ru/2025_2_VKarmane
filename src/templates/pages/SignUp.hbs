@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="preview-section">
     <div class="decorative-leaves">
       <div class="leaf"></div>
@@ -12,7 +11,7 @@
       <div class="bottom-text">Планируй, Управляй и Приумножай</div>
       <div class="slogans">
         {{#each slogans}}
-          <p class="description"> {{{this}}}</p>
+        <p class="description">{{{this}}}</p>
         {{/each}}
       </div>
     </div>
@@ -29,29 +28,23 @@
     </div>
 
     <div class="decorative-patterns">
-      <div class="pattern" style="bottom: 0;"></div>
-      <div class="pattern" style="bottom: 20px; transform: scaleX(-1);"></div>
-      <div class="pattern" style="bottom: 40px;"></div>
+      <div class="pattern" style="bottom: 0"></div>
+      <div class="pattern" style="bottom: 20px; transform: scaleX(-1)"></div>
+      <div class="pattern" style="bottom: 40px"></div>
     </div>
   </div>
 
   <div class="signup-section">
     <form id="signup">
-
       <div class="signup-form">
         <h1 class="signup-title">{{title}}</h1>
 
-        {{{loginInput}}}
-        {{{emailInput}}}
-        {{{passwordInput}}}
+        {{{loginInput}}} {{{emailInput}}} {{{passwordInput}}}
 
-        <div>
-          {{{signUpButton}}}
-        </div>
+        <div>{{{signUpButton}}}</div>
 
         {{{absenceText}}}
       </div>
     </form>
-
   </div>
 </div>

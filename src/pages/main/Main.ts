@@ -8,11 +8,11 @@ import { AddCard } from "../../components/addCard/index.js";
 import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-import {router} from "../../index.js";
+import { router } from "../../index.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
-
+import { setBody, unsetBody } from "../../utils/bodySetters.js";
 
 /**
  * Класс главной страницы приложения
@@ -89,40 +89,17 @@ export class MainPage {
       };
 
       container.innerHTML = this.template(data);
-
+      this.setupEventListeners();
     } catch (err) {
       console.error(err);
       router.navigate("/login");
-      this.unsetBody();
+      unsetBody();
       return;
     }
-    const logout = document.querySelector(".logout");
-    if (!logout) return;
-    logout.addEventListener("click", async () => {
-      const { ok } = await apiFetch(`/auth/logout`, {
-        method: "POST",
-      });
-
-      if (ok) {
-        router.navigate("/login");
-        this.unsetBody();
-        return;
-      }
-    });
-    this.setBody();
+    setBody();
   }
 
-  setBody() {
-    document.body.classList.remove("hide-scroller");
-    document.body.classList.add("body_background");
+  setupEventListeners() {
+    this.menu.setEvents();
   }
-  unsetBody(): void {
-    document.body.classList.add("hide-scroller");
-    document.body.classList.remove("body_background");
-    document.body.style.margin = "0px";
-    document.body.style.backgroundColor = "";
-  }
-
-
-  }
-
+}

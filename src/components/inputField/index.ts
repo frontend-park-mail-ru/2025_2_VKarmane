@@ -14,7 +14,6 @@ export class InputField {
     return this.template({ type, name, text });
   }
 
-
   setError(
     inputs: HTMLInputElement[],
     to_color: boolean,
