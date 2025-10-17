@@ -2,11 +2,16 @@ import fs from "fs";
 import path from "path";
 
 const distDir = path.resolve("dist");
-const manifestPath = path.join(distDir, ".vite/manifest.json");
+const assetsDir = path.join(distDir, "assets");
 const swPath = path.join(distDir, "sw.js");
 const cacheVersionFile = path.join(distDir, ".cache-version");
 
-const manifestData = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
+let cacheVer = 1;
+if (fs.existsSync(cacheVersionFile)) {
+  cacheVer = parseInt(fs.readFileSync(cacheVersionFile, "utf-8")) + 1;
+}
+fs.writeFileSync(cacheVersionFile, cacheVer.toString());
+
 
 function walkDir(dir, baseUrl = "") {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -16,38 +21,32 @@ function walkDir(dir, baseUrl = "") {
     const webPath = path.join(baseUrl, entry.name).replace(/\\/g, "/");
     if (entry.isDirectory()) {
       files = files.concat(walkDir(fullPath, webPath));
-    } else {
+    } else if (!/\.(json)$/.test(entry.name)) { 
       files.push("/" + webPath);
     }
   }
   return files;
 }
 
-let cacheVer = 1;
-if (fs.existsSync(cacheVersionFile)) {
-  cacheVer = parseInt(fs.readFileSync(cacheVersionFile, "utf-8")) + 1;
+let urlsFromAssets = [];
+if (fs.existsSync(assetsDir)) {
+  urlsFromAssets = walkDir(assetsDir, "assets");
 }
-fs.writeFileSync(cacheVersionFile, cacheVer.toString());
-
-const urlsFromManifest = Object.values(manifestData).flatMap((entry) => {
-  const urls = [];
-  if (entry.file) urls.push("/" + entry.file);
-  if (entry.css) urls.push(...entry.css.map((f) => "/" + f));
-  return urls;
-});
 
 const publicDirs = ["public/fonts", "public/imgs"];
 let urlsFromPublic = [];
 for (const dir of publicDirs) {
   if (fs.existsSync(dir)) {
-    urlsFromPublic = urlsFromPublic.concat(walkDir(dir, path.basename(dir)));
+    urlsFromPublic = urlsFromPublic.concat(
+      walkDir(dir, path.basename(dir)).map((p) => p.replace(/^\/public/, ""))
+    );
   }
 }
 
 const baseFiles = ["/", "/index.html"];
 
 const urlsToCache = Array.from(
-  new Set([...baseFiles, ...urlsFromManifest, ...urlsFromPublic]),
+  new Set([...baseFiles, ...urlsFromAssets, ...urlsFromPublic]),
 );
 
 const swCode = `
@@ -73,7 +72,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
 
-  // сначала в сеть для / и /index.html
+  // сначала сеть для /
   if (url.pathname === "/" || url.pathname === "/index.html") {
     e.respondWith(
       fetch(e.request)
