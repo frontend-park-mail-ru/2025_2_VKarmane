@@ -74,3 +74,10 @@ export const slogans = [
     "Достаток — это возможности.",
   ],
 ];
+
+export function getRandomSlogan(): string[] {
+    const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
+    if(!randomSlogan) throw "no slogans";
+
+    return randomSlogan;
+  }
