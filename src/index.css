@@ -1,6 +1,7 @@
 @import "pages/login/login.css";
 @import "pages/signup/Signup.css";
 @import "pages/main/Main.css";
+@import "pages/profile/Profile.css";
 @font-face {
   font-family: "Montserrat";
   src: url("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
@@ -17,4 +18,12 @@ body {
 .body_background {
   margin: 8px;
   background-color: #eb5b1d;
+}
+
+.hide-scroller::-webkit-scrollbar {
+  display: block;
+}
+
+.hide-scroller {
+  overflow: hidden;
 }

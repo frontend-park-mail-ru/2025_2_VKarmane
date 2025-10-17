@@ -113,6 +113,8 @@ export class LoginPage {
     }
     }
 
+    router.navigate("/");
+  }
 
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],

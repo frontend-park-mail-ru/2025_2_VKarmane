@@ -13,6 +13,7 @@ import type { SignUpState } from "./store.js";
 import { SignUpBackendTextError } from "./store.js";
 import { Validator } from "../../utils/validation.js";
 
+
 export class SignUpPage {
   template: TemplateFn;
   inputField: InputField;
@@ -119,6 +120,7 @@ export class SignUpPage {
       );
     });
 
+
     const loginLink = container.querySelector(".absence-text a");
     if (loginLink) {
       loginLink.addEventListener("click", (e) => {
@@ -167,6 +169,7 @@ export class SignUpPage {
     signUpStore.clearState();
     router.navigate("/");
   }
+
   }
 
   getLoginEmailPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
@@ -243,6 +246,7 @@ export class SignUpPage {
       return true;
     }
   }
+
 
   setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
