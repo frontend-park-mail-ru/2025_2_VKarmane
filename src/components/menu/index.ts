@@ -1,25 +1,37 @@
 import Handlebars from "handlebars";
-import menuTemplate from "../../templates/components/menu.hbs?raw";
-import { config, goToPage } from "../../index.js";
 
-// Определяем тип для окна с кастомными свойствами
-declare global {
-    interface Window {
-        gotoPage?: typeof goToPage;
-        config?: typeof config;
-    }
-}
+import type { TemplateFn } from "../../types/handlebars.js";
+import menuTemplate from "../../templates/components/menu.hbs?raw";
+import { router } from "../../index.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
+import { unsetBody } from "../../utils/bodySetters.js";
 
 export class Menu {
-    private template: Handlebars.TemplateDelegate;
+  template: TemplateFn;
+  constructor() {
+    this.template = Handlebars.compile(menuTemplate);
+  }
+  getSelf(): string {
+    return this.template({});
+  }
+  setEvents(): void {
+    const profileButton = document.getElementById("profile");
+    profileButton?.addEventListener("click", () => {
+      router.navigate("/profile");
+    });
 
-    constructor() {
-        this.template = Handlebars.compile(menuTemplate);
-        window.gotoPage = goToPage.bind(this);
-        window.config = config;
-    }
+    const logout = document.querySelector(".logout");
+    if (!logout) return;
+    logout.addEventListener("click", async () => {
+      const { ok } = await apiFetch(`/auth/logout`, {
+        method: "POST",
+      });
 
-    getSelf(): Handlebars.TemplateDelegate {
-        return this.template;
-    }
+      if (ok) {
+        router.navigate("/login");
+        unsetBody();
+        return;
+      }
+    });
+  }
 }
