@@ -12,8 +12,8 @@
 }
 
 .Fact-Balance {
-  width: 469px; /* Ширина в пикселях */
-  height: 369px; /* Высота в пикселях */
+  width: 57vh; /* Ширина в пикселях */
+  height: 42vh; /* Высота в пикселях */
   background-color: #ffffff;
   border-radius: 26px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
