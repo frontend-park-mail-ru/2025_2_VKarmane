@@ -1,6 +1,6 @@
 .Add {
-  width: 469px; /* Ширина в пикселях */
-  height: 219px; /* Высота в пикселях */
+  width: 57vh; /* Ширина в пикселях */
+  height: 25vh; /* Высота в пикселях */
   background-color: #ffffff;
   border-radius: 26px;
   background-image: url("/imgs/vk-add.jpg");
