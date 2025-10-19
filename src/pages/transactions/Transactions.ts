@@ -1,10 +1,10 @@
 import Handlebars from "handlebars";
 import TransactionsTemplate from "../../templates/pages/transactions.hbs?raw";
-import { Menu } from "../../components/menu";
-import { AddOperation } from "../../components/addTransactions";
-import { AddCategory } from "../../components/addCategory";
+import { Menu } from "../../components/menu/index.js";
+import { AddOperation } from "../../components/addTransactions/index.js";
+import { AddCategory } from "../../components/addCategory/index.js";
 import { TransactionsList } from "../../components/OperationCardWindow/index.js";
-import { CategoriesList } from "../../components/CaregoryCardWindow";
+import { CategoriesList } from "../../components/CaregoryCardWindow/index.js";
 
 interface Transaction {
     OrganizationTitle: string;

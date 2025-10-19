@@ -3,13 +3,12 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
 import { Validator } from "../../utils/validation.js";
-
 import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
+import {router} from "../../router.js";
 import { slogans } from "./slogans.js";
-import { router } from "../../index.js";
 
 export class SignUpPage {
   startButton: StartButton;
@@ -272,3 +271,4 @@ export class SignUpPage {
     return randomSlogan;
   }
 }
+

@@ -5,18 +5,7 @@
 @import "../../components/operations/index.css";
 @import "../../components/menu/index.css";
 @import "../../components/scroller/index.css";
-<<<<<<< HEAD
-
-body{
-    overflow-x: hidden;
-}
-
-.sections{
-    display: flex;
-}
-=======
 @import "../../components/profileBlock/index.css";
->>>>>>> origin/main
 .banks {
   font-family: "Montserrat";
   font-weight: 500;
