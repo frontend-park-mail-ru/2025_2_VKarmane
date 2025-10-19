@@ -30,12 +30,12 @@ declare global {
 
 
 export class TransactionsPage {
-    private template: Handlebars.TemplateDelegate;
-    private menu: Menu;
-    private addOperations: AddOperation;
-    private addCategory: AddCategory;
-    private transactions: TransactionsList;
-    private categories: CategoriesList;
+    template: Handlebars.TemplateDelegate;
+    menu: Menu;
+    addOperations: AddOperation;
+    addCategory: AddCategory;
+    transactions: TransactionsList;
+    categories: CategoriesList;
 
     constructor() {
         this.template = Handlebars.compile(TransactionsTemplate);

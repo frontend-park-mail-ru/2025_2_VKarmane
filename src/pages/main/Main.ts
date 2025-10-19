@@ -9,7 +9,7 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { AddOperation } from "../../components/addTransactions/index.js";
-import {router} from "../../router.js";
+ import {router} from "../../router.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
