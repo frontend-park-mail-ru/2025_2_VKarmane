@@ -77,7 +77,7 @@ export const slogans = [
 
 export function getRandomSlogan(): string[] {
     const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
-    if(!randomSlogan) throw "no slogans";
+    if(!randomSlogan) throw new Error("no slogans");
 
     return randomSlogan;
   }

@@ -132,7 +132,7 @@ export class LoginPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
-    if (!loginInput || !passwordInput) throw "no inputs";
+    if (!loginInput || !passwordInput) throw new Error("no inputs");
     return [loginInput, passwordInput];
   }
 
@@ -140,7 +140,7 @@ export class LoginPage {
       const form = document.querySelector("#login") as HTMLFormElement;
       if (!form) return;
       const [loginInput, passwordInput] = this.getLoginPasswordInput(form)
-      if (!loginInput || !passwordInput) throw "no inputs"; 
+      if (!loginInput || !passwordInput) throw new Error("no inputs");
       const state = loginStore.getState();
       loginInput.value = state.login;
       passwordInput.value = state.password;

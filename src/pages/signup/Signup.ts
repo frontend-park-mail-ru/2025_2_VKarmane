@@ -182,7 +182,7 @@ export class SignUpPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
-    if (!loginInput || !emailInput || !passwordInput) throw Error;
+    if (!loginInput || !emailInput || !passwordInput) throw Error("no inputs");
 
     return [loginInput, emailInput, passwordInput];
   }
@@ -190,7 +190,7 @@ export class SignUpPage {
     const form = document.querySelector("#signup") as HTMLFormElement;
     if (!form) return;
     const [loginInput, emailInput,  passwordInput] = this.getLoginEmailPasswordInput(form)
-    if (!loginInput || !passwordInput || !emailInput) throw "no inputs"; 
+    if (!loginInput || !passwordInput || !emailInput) throw Error("no inputs");
     const state = signUpStore.getState();
     loginInput.value = state.login;
     emailInput.value = state.email;
@@ -219,7 +219,7 @@ export class SignUpPage {
 
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
-    if (!loginInput || !passwordInput || !emailInput) throw "no inputs"; 
+    if (!loginInput || !passwordInput || !emailInput) throw new Error("no inputs"); 
     return (
       checkField("login", login, loginInput) &&
       checkField("email", email, emailInput) &&
