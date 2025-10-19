@@ -83,3 +83,8 @@
   width: 43px;
   height: 43px;
 }
+
+.oper_not_exists_text{
+    color: #949494;
+    font-size: 20px
+}
