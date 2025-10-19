@@ -1,37 +1,43 @@
+
+import { signUpStore } from "./store.js";
+import { SignUpActions } from "./actions.js";
+import Handlebars from "handlebars";
+import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
+import { router } from "../../index.js";
+import type { TemplateFn } from "../../types/handlebars.js";
 import { StartButton } from "../../components/startButton/index.js";
 import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { serviceItem } from "../../components/serviceItem/index.js";
+import type { SignUpState } from "./store.js";
+import { SignUpBackendTextError } from "./store.js";
 import { Validator } from "../../utils/validation.js";
 
-import { apiFetch } from "../../api/fetchWrapper.js";
-import type { TemplateFn } from "../../types/handlebars.js";
-import Handlebars from "handlebars";
-import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
-import { slogans } from "./slogans.js";
-import { router } from "../../index.js";
 
 export class SignUpPage {
-  startButton: StartButton;
+  template: TemplateFn;
   inputField: InputField;
+  startButton: StartButton;
   absText: absenceText;
   servItem: serviceItem;
-  template: TemplateFn;
+  
+
+
 
   constructor() {
-    this.startButton = new StartButton();
+    this.template = Handlebars.compile(signUpTemplate);
 
     this.inputField = new InputField();
-
+    this.startButton = new StartButton();
     this.absText = new absenceText();
-
     this.servItem = new serviceItem();
 
-    this.template = Handlebars.compile(signUpTemplate);
+    signUpStore.on("change", () => this.render(document.querySelector("#root")!));
+    signUpStore.on("update", () => this.updateInputs());
   }
 
-  render(container: HTMLElement): void {
-    document.body.classList.add("hide-scroller");
+  render(container: HTMLElement) {
+    const state = signUpStore.getState();
     const serviceItems = [
       this.servItem.getSelf(
         {
@@ -64,138 +70,132 @@ export class SignUpPage {
         893,
       ),
     ];
-
     const data = {
       title: "Регистрация",
-      loginInput: this.inputField.getSelf("login", "login", "логин"),
-      emailInput: this.inputField.getSelf("email", "email", "email"),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      loginInput: this.inputField.getSelf("login", "login", "логин", state.login),
+      emailInput: this.inputField.getSelf("email", "email", "email", state.email),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль", state.password),
       absenceText: this.absText.getSelf("Есть аккаунт?", "/login", "Войти!"),
       items: serviceItems,
-      slogans: this.getRandomSlogan(),
+      slogans: state.slogans,
       signUpButton: this.startButton.getSelf("signup", "Зарегистрироваться"),
     };
 
     container.innerHTML = this.template(data);
-    this.setupEventListeners(container);
+    this.setupEvents(container, state)
   }
 
-  async handleSignUpRequest(form: HTMLFormElement): Promise<void> {
+  setupEvents(container: HTMLElement, state: SignUpState) {
+    console.log("render")
+    const form = container.querySelector("#signup") as HTMLFormElement;
+    if (!form) return;
     const [loginInput, emailInput, passwordInput] =
-      this.getLoginEmailPasswordInput(form);
+          this.getLoginEmailPasswordInput(form);
+
     if (!loginInput || !emailInput || !passwordInput) return;
 
-    if (
-      !this.validateInput(
-        loginInput!.value,
-        emailInput!.value,
-        passwordInput!.value,
-        form,
-      )
-    ) {
-      return;
-    }
-
-    const { ok, status } = await apiFetch(`/auth/register`, {
-      method: "POST",
-      body: JSON.stringify({
-        login: loginInput!.value,
-        email: emailInput!.value,
-        password: passwordInput!.value,
-      }),
+    form.addEventListener("input", (e) => {
+      const input = e.target as HTMLInputElement;
+      SignUpActions.updateField(input.name, input.value);
     });
 
-    if (!ok) {
-      if (status === 409) {
-        this.setInputsError(
-          [loginInput!, emailInput!, passwordInput!],
-          "Пользователь с таким логином или почтой уже существует",
-        );
-      } else if (status === 500) {
-        this.setServerError();
-      } else {
-        this.setServerError();
-      }
-      return;
-    }
-
-    router.navigate("/");
-  }
-
-  setInputsError(
-    input: HTMLInputElement | HTMLInputElement[],
-    text_error: string,
-    to_color: boolean = true,
-  ): void {
-    const arr = Array.isArray(input) ? input : [input];
-    this.inputField.setError(arr, to_color, text_error);
-  }
-
-  setServerError(): void {
-    const form: HTMLFormElement | null = document.querySelector(".signup-form");
-    if (!form) return;
-    const inputs = this.getLoginEmailPasswordInput(form).at(-1);
-    if (!inputs) return;
-    this.setInputsError(
-      inputs,
-
-      "При регистрации произошла ошибка. Повторите попытку позже",
-      false,
-    );
-  }
-
-  /**
-   * Настраивает обработчики событий
-   * @param {HTMLElement} container - Контейнер с элементами
-   * @returns {void}
-   */
-  setupEventListeners(container: HTMLElement): void {
-    const form: HTMLFormElement | null = container.querySelector("#signup");
-    if (!form) return;
-    if (form) {
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        this.handleSignUpRequest(form);
-      });
-    }
-
-    const loginLink = container.querySelector(".absence-text a");
-    if (loginLink) {
-      loginLink.addEventListener("click", (e) => {
-        e.preventDefault();
-        router.navigate("/login");
-      });
-    }
-
-    const [loginInput, emailInput, passwordInput] =
-      this.getLoginEmailPasswordInput(form);
-
-    if (!loginInput || !emailInput || !passwordInput) return;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      SignUpActions.submit();
+    });
 
     loginInput.addEventListener("input", () => {
       this.validateSingleField("login", loginInput.value, loginInput);
     });
 
-    emailInput!.addEventListener("input", () => {
-      this.validateSingleField("email", emailInput!.value, emailInput!);
+    emailInput.addEventListener("input", () => {
+      this.validateSingleField("email", emailInput.value, emailInput);
     });
 
     passwordInput.addEventListener("input", () => {
-      this.validateSingleField("password", passwordInput.value, passwordInput);
+      this.validateSingleField(
+        "password",
+        passwordInput.value,
+        passwordInput,
+      );
     });
 
+
+    const loginLink = container.querySelector(".absence-text a");
+    if (loginLink) {
+      loginLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        router.navigate("/login")
+      });
+    }
+
     this.inputField.setPasswordInformerShow(passwordInput);
+
+    if (state.errorBackend.text) {
+      console.log(state.errorBackend.text)
+      switch (state.errorBackend.text) {
+        case SignUpBackendTextError.CREDENTIALS_ERROR:
+          this.inputField.setError([loginInput, emailInput, passwordInput], true, state.errorBackend.text); 
+          break;
+        case SignUpBackendTextError.SERVER_ERROR:
+          this.inputField.setError([passwordInput], false, state.errorBackend.text);
+          break;
+        }
+      }
+      console.log(state.errorsFrontend)
+      if (state.errorsFrontend.length > 0) {
+        const [loginInput, emailInput, passwordInput] =
+          this.getLoginEmailPasswordInput(form);
+
+        if (!loginInput || !emailInput || !passwordInput) return; 
+          state.errorsFrontend.forEach((err) => {
+  
+          switch (err.input) {
+            case "login":
+              this.inputField.setError([loginInput], true, err.text);
+              break;
+            case "email":
+              this.inputField.setError([emailInput], true, err.text);
+              break;
+            case "password":
+              this.inputField.setError([passwordInput], true, err.text);
+              break;
+          }
+          })
+
+        }
+
+    if (state.success) {
+    signUpStore.clearState();
+    router.navigate("/");
   }
 
-  /**
-   * Валидирует введенные данные
-   * @param {string} login - Логин пользователя
-   * @param {string} email - Email пользователя
-   * @param {string} password - Пароль пользователя
-   * @param {HTMLFormElement} form - Форма регистрации
-   * @returns {boolean} Результат валидации
-   */
+  }
 
+  getLoginEmailPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
+    const loginInput: HTMLInputElement | null = form.querySelector(
+      'input[name="login"]',
+    );
+    const emailInput: HTMLInputElement | null = form.querySelector(
+      'input[name="email"]',
+    );
+    const passwordInput: HTMLInputElement | null = form.querySelector(
+      'input[name="password"]',
+    );
+    if (!loginInput || !emailInput || !passwordInput) throw Error("no inputs");
+
+    return [loginInput, emailInput, passwordInput];
+  }
+  updateInputs() {
+    const form = document.querySelector("#signup") as HTMLFormElement;
+    if (!form) return;
+    const [loginInput, emailInput,  passwordInput] = this.getLoginEmailPasswordInput(form)
+    if (!loginInput || !passwordInput || !emailInput) throw Error("no inputs");
+    const state = signUpStore.getState();
+    loginInput.value = state.login;
+    emailInput.value = state.email;
+    passwordInput.value = state.password;
+  }
   validateInput(
     login: string,
     email: string,
@@ -219,13 +219,11 @@ export class SignUpPage {
 
     const [loginInput, emailInput, passwordInput] =
       this.getLoginEmailPasswordInput(form);
-
-    if (!loginInput || !emailInput || !passwordInput) return;
-
+    if (!loginInput || !passwordInput || !emailInput) throw new Error("no inputs"); 
     return (
-      checkField("login", login, loginInput!) &&
-      checkField("email", email, emailInput!) &&
-      checkField("password", password, passwordInput!)
+      checkField("login", login, loginInput) &&
+      checkField("email", email, emailInput) &&
+      checkField("password", password, passwordInput)
     );
   }
 
@@ -249,26 +247,14 @@ export class SignUpPage {
     }
   }
 
-  getLoginEmailPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
-    const loginInput: HTMLInputElement | null = form.querySelector(
-      'input[name="login"]',
-    );
-    const emailInput: HTMLInputElement | null = form.querySelector(
-      'input[name="email"]',
-    );
-    const passwordInput: HTMLInputElement | null = form.querySelector(
-      'input[name="password"]',
-    );
 
-    if (!loginInput || !emailInput || !passwordInput) throw "";
-
-    return [loginInput, emailInput, passwordInput];
+  setInputsError(
+    input: HTMLInputElement | HTMLInputElement[],
+    text_error: string,
+    to_color: boolean = true,
+  ): void {
+    const arr = Array.isArray(input) ? input : [input];
+    this.inputField.setError(arr, to_color, text_error);
   }
 
-  getRandomSlogan(): string[] {
-    const randomSlogan = slogans[Math.floor(Math.random() * slogans.length)];
-
-    if (!randomSlogan) throw "undefined slogan";
-    return randomSlogan;
-  }
 }
