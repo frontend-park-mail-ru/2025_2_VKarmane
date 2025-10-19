@@ -3,11 +3,13 @@ import { InputField } from "../../components/inputField/index.js";
 import { absenceText } from "../../components/absenceText/index.js";
 import { Category } from "../../components/category/index.js";
 import { ExpenseCard } from "../../components/expenseCard/index.js";
-import { apiFetch } from "../../api/fetchWrapper.js";
+import { LoginBackendTextError, loginStore } from "./store.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import {router} from "../../router.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
+import { LoginActions } from "./actions.js";
+import type { LoginState } from "./store.js";
 
 export class LoginPage {
   startButton: StartButton;
@@ -28,9 +30,13 @@ export class LoginPage {
     this.expCard = new ExpenseCard();
 
     this.template = Handlebars.compile(loginTemplate);
+
+    loginStore.on("change", () => this.render(document.querySelector("#root")!));
+    loginStore.on("update", () => this.updateInputs());
   }
 
   render(container: HTMLElement): void {
+    const state = loginStore.getState();
     document.body.classList.add("hide-scroller");
     const expCards = [
       this.expCard.getSelf(
@@ -49,8 +55,8 @@ export class LoginPage {
     ];
     const data = {
       title: "Войти",
-      loginInput: this.inputField.getSelf("login", "login", "логин"),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль"),
+      loginInput: this.inputField.getSelf("login", "login", "логин", state.login),
+      passwordInput: this.inputField.getSelf("password", "password", "пароль", state.password),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
         "/register",
@@ -62,49 +68,52 @@ export class LoginPage {
     };
     container.innerHTML = this.template(data);
 
-    this.setupEventListeners(container);
+    this.setupEvents(container, state);
   }
 
-  async handleLoginRequest(form: HTMLFormElement): Promise<void> {
-    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
-    if (!loginInput || !passwordInput) return;
+  setupEvents(container: HTMLElement, state: LoginState) {
+      const form = container.querySelector("#login") as HTMLFormElement;
+      if (!form) return;
+      const [loginInput, passwordInput] =
+            this.getLoginPasswordInput(form);
+  
+      if (!loginInput || !passwordInput) return;
+  
+      form.addEventListener("input", (e) => {
+        const input = e.target as HTMLInputElement;
+        LoginActions.updateField(input.name, input.value);
+      });
+  
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        LoginActions.submit();
+      });
 
-    const { ok, status } = await apiFetch(`/auth/login`, {
-      method: "POST",
-
-      body: JSON.stringify({
-        login: loginInput!.value,
-        password: passwordInput!.value,
-      }),
+      const signupLink = container.querySelector(".absence-text a");
+      signupLink!.addEventListener("click", (e) => {
+      e.preventDefault();
+      router.navigate("/signup");
     });
-
-    if (!ok) {
-      if (status === 400) {
-        this.setInputsError(
-          [loginInput!, passwordInput!],
-          "Неверный логин или пароль",
-        );
-      } else if (status === 500) {
-        this.setServerError();
-      } else {
-        this.setServerError();
-      }
-      return;
+  
+      if (state.errorBackend.text) {
+        console.log(state.errorBackend.text)
+        switch (state.errorBackend.text) {
+          case LoginBackendTextError.CREDENTIALS_ERROR:
+            this.inputField.setError([loginInput, passwordInput], true, state.errorBackend.text); 
+            break;
+          case LoginBackendTextError.SERVER_ERROR:
+            this.inputField.setError([passwordInput], false, state.errorBackend.text);
+            break;
+          }
+        }
+  
+      if (state.success) {
+      loginStore.clearState();
+      router.navigate("/");
     }
-    router.navigate("/");
-  }
+    }
 
-  setServerError(): void {
-    const form: HTMLFormElement | null = document.querySelector(".login-form");
-    if (!form) return;
-    const reqInput: HTMLInputElement | undefined =
-      this.getLoginPasswordInput(form).at(-1);
-    if (!reqInput) return;
-    this.setInputsError(
-      reqInput,
-      "При авторизации произошла ошибка. Повторите попытку позже",
-      false,
-    );
+    router.navigate("/");
   }
 
   setInputsError(
@@ -116,22 +125,6 @@ export class LoginPage {
     this.inputField.setError(arr, to_color, text_error);
   }
 
-  setupEventListeners(container: HTMLElement): void {
-    const form: HTMLFormElement | null = container.querySelector("#login");
-    if (!form) return;
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.handleLoginRequest(form!);
-    });
-
-    const signupLink = container.querySelector(".absence-text a");
-    if (!signupLink) return;
-    signupLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      router.navigate("/signup");
-    });
-  }
-
   getLoginPasswordInput(form: HTMLFormElement): HTMLInputElement[] {
     const loginInput: HTMLInputElement | null = form.querySelector(
       'input[name="login"]',
@@ -139,7 +132,17 @@ export class LoginPage {
     const passwordInput: HTMLInputElement | null = form.querySelector(
       'input[name="password"]',
     );
-    if (!loginInput || !passwordInput) throw "no inputs";
+    if (!loginInput || !passwordInput) throw new Error("no inputs");
     return [loginInput, passwordInput];
   }
+
+    updateInputs() {
+      const form = document.querySelector("#login") as HTMLFormElement;
+      if (!form) return;
+      const [loginInput, passwordInput] = this.getLoginPasswordInput(form)
+      if (!loginInput || !passwordInput) throw new Error("no inputs");
+      const state = loginStore.getState();
+      loginInput.value = state.login;
+      passwordInput.value = state.password;
+    }
 }
