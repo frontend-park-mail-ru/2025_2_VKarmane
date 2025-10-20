@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-const ENV = process.env.NODE_ENV || "dev";
+const ENV = process.env.ENV || "dev";
 const startServer = () => {
   if (ENV === "prod") {
     const key = process.env.KEY_PATH;
