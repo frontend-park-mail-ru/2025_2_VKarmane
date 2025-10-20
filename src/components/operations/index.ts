@@ -4,7 +4,7 @@ import operationsTemplate from "../../templates/components/operations.hbs?raw";
 
 export class Operations {
   template: TemplateFn;
-  constructor(private openPopupCallback: () => void) {
+  constructor(openPopupCallback: () => void) {
     this.template = Handlebars.compile(operationsTemplate);
       window.openPopups = openPopupCallback.bind(this);
   }

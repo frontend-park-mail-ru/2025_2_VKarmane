@@ -5,6 +5,7 @@ import { AddOperation } from "../../components/addTransactions/index.js";
 import { AddCategory } from "../../components/addCategory/index.js";
 import { TransactionsList } from "../../components/OperationCardWindow/index.js";
 import { CategoriesList } from "../../components/CaregoryCardWindow/index.js";
+import {ProfileBlock} from "../../components/profileBlock/index.js";
 
 interface Transaction {
     OrganizationTitle: string;
@@ -36,6 +37,7 @@ export class TransactionsPage {
     private addCategory: AddCategory;
     private transactions: TransactionsList;
     private categories: CategoriesList;
+    private profileBlock: ProfileBlock;
 
     constructor() {
         this.template = Handlebars.compile(TransactionsTemplate);
@@ -49,6 +51,8 @@ export class TransactionsPage {
         window.closeCategoryPopup = this.closeCategoryPopup.bind(this);
         this.transactions = new TransactionsList();
         this.categories = new CategoriesList();
+        this.profileBlock = new ProfileBlock();
+
     }
 
     async render(container: HTMLElement | null) : Promise<void> {
@@ -89,10 +93,18 @@ export class TransactionsPage {
             addCategories: this.addCategory.getSelf(),
             transactions: this.transactions.getList(dataTransactions),
             categories: this.categories.getList(dataCategories),
+            profile_block: this.profileBlock.getSelf("aboba", 1111),
         };
 
         container.innerHTML = this.template(data);
         this.addEventListeners();
+        this.setupEventListeners();
+
+
+    }
+    setupEventListeners() {
+        this.menu.setEvents();
+        this.profileBlock.setEvents();
     }
 
     openPopup(): void {

@@ -111,7 +111,6 @@ export class LoginPage {
       loginStore.clearState();
       router.navigate("/");
     }
-    }
 
     router.navigate("/");
   }

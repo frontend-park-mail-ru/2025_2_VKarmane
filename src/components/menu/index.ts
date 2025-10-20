@@ -1,5 +1,4 @@
 import Handlebars from "handlebars";
-
 import type { TemplateFn } from "../../types/handlebars.js";
 import menuTemplate from "../../templates/components/menu.hbs?raw";
 import {router} from "../../router.js";
@@ -25,6 +24,7 @@ export class Menu {
         router.navigate("/transactions");
     })
 
+
     const logout = document.querySelector(".logout");
     if (!logout) return;
     logout.addEventListener("click", async () => {
@@ -39,7 +39,7 @@ export class Menu {
       }
     });
 
-    const mainButton = document.getElementById("main");
+    const mainButton = document.getElementById("mainButtn");
     if (!mainButton) return;
     mainButton.addEventListener("click", () => {
       router.navigate("/");
