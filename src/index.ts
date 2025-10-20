@@ -6,7 +6,6 @@ import { registerHandlebarsHelpers } from "./utils/helpers.js";
 import { setWorkers } from "./utils/helpers.js";
 import { Router } from "./router/index.js";
 
-
 import "./index.css";
 
 export const router = new Router({

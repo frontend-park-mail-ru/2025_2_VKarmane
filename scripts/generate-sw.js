@@ -12,7 +12,6 @@ if (fs.existsSync(cacheVersionFile)) {
 }
 fs.writeFileSync(cacheVersionFile, cacheVer.toString());
 
-
 function walkDir(dir, baseUrl = "") {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   let files = [];
@@ -21,7 +20,7 @@ function walkDir(dir, baseUrl = "") {
     const webPath = path.join(baseUrl, entry.name).replace(/\\/g, "/");
     if (entry.isDirectory()) {
       files = files.concat(walkDir(fullPath, webPath));
-    } else if (!/\.(json)$/.test(entry.name)) { 
+    } else if (!/\.(json)$/.test(entry.name)) {
       files.push("/" + webPath);
     }
   }
@@ -38,7 +37,7 @@ let urlsFromPublic = [];
 for (const dir of publicDirs) {
   if (fs.existsSync(dir)) {
     urlsFromPublic = urlsFromPublic.concat(
-      walkDir(dir, path.basename(dir)).map((p) => p.replace(/^\/public/, ""))
+      walkDir(dir, path.basename(dir)).map((p) => p.replace(/^\/public/, "")),
     );
   }
 }
@@ -56,7 +55,6 @@ const urlsToCache = ${JSON.stringify(urlsToCache, null, 2)};
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(urlsToCache)));
 });
-
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -71,34 +69,46 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
-
-  // сначала сеть для /
+  if (url.pathname.startsWith("/api")) {
+  e.respondWith(fetch(e.request));
+  return;
+  }
+// Сначала сеть для /
   if (url.pathname === "/" || url.pathname === "/index.html") {
     e.respondWith(
       fetch(e.request)
         .then((response) => {
-          const clone = response.clone();
-          caches.open(cacheName).then((cache) => cache.put(e.request, clone));
-          return response;
+          if (response && response.ok) {
+            const clone = response.clone();
+            caches.open(cacheName).then((cache) => cache.put(e.request, clone));
+            return response;
+          }
+          return caches.match(e.request);
         })
         .catch(() => caches.match(e.request))
     );
     return;
-  }
+}
 
-  // сначала кеш для остальных
-  e.respondWith(
-    caches.match(e.request).then((resp) => {
-      if (resp) return resp;
-      return fetch(e.request).then((response) => {
-        if (!response || !response.ok) return response;
-        const clone = response.clone();
-        caches.open(cacheName).then((cache) => cache.put(e.request, clone));
+// Сначала кеш для остальных
+e.respondWith(
+  caches.match(e.request).then((resp) => {
+    if (resp) return resp;
+    return fetch(e.request)
+      .then((response) => {
+        if (response && response.ok) {
+          const clone = response.clone();
+          caches.open(cacheName).then((cache) => cache.put(e.request, clone));
+        }
         return response;
+      })
+      .catch(() => {
+        return caches.match("/index.html");
       });
-    })
-  );
+  })
+);
 });
+
 `;
 
 fs.writeFileSync(swPath, swCode);
