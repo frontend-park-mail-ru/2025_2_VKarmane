@@ -1,21 +1,21 @@
 import { dispatcher } from "../../core/dispatcher/dispatcher.js";
 
-enum LoginActionsType {
-    UpdateField = "LOGIN_FIELD_UPDATE",
-    Submit = "LOGIN_SUBMIT"
+enum SignUpActionsType {
+    UpdateField = "SIGNUP_FIELD_UPDATE",
+    Submit = "SIGNUP_SUBMIT"
 }
 
-export const LoginActions = {
+export const SignUpActions = {
     updateField(name: string, value: string) {
         dispatcher.dispatch({
-            type: LoginActionsType.UpdateField,
+            type: SignUpActionsType.UpdateField,
             payload: {[name]: value}
         });
     },
 
     submit() {
         dispatcher.dispatch({
-            type: LoginActionsType.Submit,
+            type: SignUpActionsType.Submit,
             payload: {}
         });
     },

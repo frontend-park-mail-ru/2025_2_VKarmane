@@ -33,5 +33,11 @@ export class Menu {
         return;
       }
     });
+
+    const mainButton = document.getElementById("main");
+    if (!mainButton) return;
+    mainButton.addEventListener("click", () => {
+      router.navigate("/");
+    });
   }
 }

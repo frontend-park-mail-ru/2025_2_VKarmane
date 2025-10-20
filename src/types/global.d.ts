@@ -7,7 +7,18 @@ declare module "*.hbs?raw" {
   export default content;
 }
 
+
 declare module "*.json" {
   const value: any;
   export default value;
 }
+
+declare module "window" {
+    interface Window {
+        openPopups: () => void;
+    }
+
+    const window: Window;
+    export default window;
+}
+
