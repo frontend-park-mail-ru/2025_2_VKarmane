@@ -1,7 +1,6 @@
 import Handlebars from "handlebars";
 import AddOperTemplate from "../../templates/components/addOperForm.hbs?raw";
 
-// Определяем тип для окна с кастомными свойствами
 declare global {
     interface Window {
         handleOperationTypeChange?: () => void;
@@ -9,7 +8,7 @@ declare global {
 }
 
 export class AddOperation {
-    private template: Handlebars.TemplateDelegate;
+    template: Handlebars.TemplateDelegate;
 
     constructor(
         ClosePopupCallback: () => void,

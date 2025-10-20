@@ -6,7 +6,7 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { LoginBackendTextError, loginStore } from "./store.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import { router } from "../../index.js";
+import {router} from "../../router.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 import { LoginActions } from "./actions.js";
 import type { LoginState } from "./store.js";
@@ -110,7 +110,6 @@ export class LoginPage {
       if (state.success) {
       loginStore.clearState();
       router.navigate("/");
-    }
     }
 
     router.navigate("/");

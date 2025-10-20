@@ -9,7 +9,7 @@ import { getBudgets, getBalance } from "../../api/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { AddOperation } from "../../components/addTransactions/index.js";
-import {router} from "../../index.js";
+import {router} from "../../router.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
@@ -36,7 +36,7 @@ export class MainPage {
     operations: Operations;
     addCard: AddCard;
     profileBlock: ProfileBlock;
-    addOperation: AddOperation;
+    addOperations: AddOperation;
     template: TemplateFn;
     constructor() {
         this.factBal = new FactBal();
@@ -45,12 +45,11 @@ export class MainPage {
         this.menu = new Menu();
         this.add = new Add();
         this.operations = new Operations(this.openPopup);
-        this.addOperation = new AddOperation(this.closePopup, this.handleOperationTypeChange);
+        this.addOperations = new AddOperation(this.closePopup, this.handleOperationTypeChange);
         this.addCard = new AddCard();
         this.profileBlock = new ProfileBlock();
         this.template = Handlebars.compile(mainTemplate);
     }
-
     /**
      * Рендерит главную страницу в контейнер
      * @param {HTMLElement} container - Контейнер для рендеринга
@@ -60,6 +59,7 @@ export class MainPage {
     async render(container: HTMLElement): Promise<void> {
         if (!container) throw new Error("Container element not found!");
         document.body.classList.remove("hide-scroller");
+
         try {
             const balanceData: BalanceData = await getBalance();
             const budgetsData: BudgetsData = await getBudgets();
@@ -84,18 +84,26 @@ export class MainPage {
                 addCard: this.addCard.getSelf(),
                 exist_card: true,
                 profile_block: this.profileBlock.getSelf("aboba", 1111),
+                addOperations: this.addOperations.getSelf(),
             };
 
-      container.innerHTML = this.template(data);
-      this.setupEventListeners();
-    } catch (err) {
-      console.error(err);
-      router.navigate("/login");
-      unsetBody();
-      return;
+            container.innerHTML = this.template(data);
+            this.setupEventListeners();
+        } catch (err) {
+            console.error(err);
+            router.navigate("/login");
+            unsetBody();
+            return;
+        }
+        setBody();
     }
-    setBody();
-  }
+
+
+    setupEventListeners() {
+        this.menu.setEvents();
+        this.profileBlock.setEvents();
+        this.addEventListeners();
+    }
     openPopup():
         void {
         const popup = document.getElementById("popup");
@@ -108,9 +116,7 @@ export class MainPage {
         if(popup) popup.style.display = "none";
     }
 
-    handleOperationTypeChange()
-        :
-        void {
+    handleOperationTypeChange(): void {
         const select = document.getElementById("operationType") as HTMLSelectElement;
         if(!
             select
@@ -152,7 +158,4 @@ export class MainPage {
         });
     }
 
-  setupEventListeners() {
-    this.menu.setEvents();
-  }
 }
