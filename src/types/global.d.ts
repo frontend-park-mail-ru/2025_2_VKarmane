@@ -14,11 +14,14 @@ declare module "*.json" {
 }
 
 declare module "window" {
+declare global {
     interface Window {
         openPopups: () => void;
     }
+}
 
     const window: Window;
     export default window;
 }
 
+export {};

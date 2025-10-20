@@ -1,2 +1,2 @@
 import type Handlebars from "handlebars";
-export type TemplateFn = Handlebars.TemplateDelegate<any>;
+export type TemplateFn = Handlebars.TemplateDelegate<unknown>;

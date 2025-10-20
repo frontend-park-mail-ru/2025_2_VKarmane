@@ -36,5 +36,10 @@ export class ProfilePage {
       login: data.Login,
       mail: data.Email,
     });
+      this.setupEventListeners();
+
   }
+    setupEventListeners() {
+        this.menu.setEvents();
+    }
 }
