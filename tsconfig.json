@@ -14,7 +14,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "allowJs": true,
-    "moduleResolution": "nodenext"
+    "moduleResolution": "nodenext",
+    "lib": ["ESNext", "WebWorker", "DOM"]
   },
   "include": ["src/**/*"],
   "exclude": ["dist"]
