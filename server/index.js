@@ -21,8 +21,8 @@ const PORT = process.env.PORT || 3000;
 const ENV = process.env.ENV || "dev";
 const startServer = () => {
   if (ENV === "prod") {
-    const key = process.env.KEY_PATH;
-    const cert = process.env.FULLCHAIN_PATH;
+     const key = fs.readFileSync(process.env.KEY_PATH);
+  const cert = fs.readFileSync(process.env.FULLCHAIN_PATH);
     https.createServer({ key, cert }, app).listen(PORT, () => {
       console.log(`Server running on https://localhost:${PORT}`);
     });
