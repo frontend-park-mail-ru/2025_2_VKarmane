@@ -4,6 +4,7 @@ import profileTemplate from "../../templates/pages/Profile.hbs?raw";
 import { Menu } from "../../components/menu/index.js";
 import { Calendar } from "../../components/calendar/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
+import { setBody } from "../../utils/bodySetters.js";
 
 export class ProfilePage {
   menu: Menu;
@@ -14,6 +15,7 @@ export class ProfilePage {
     this.menu = new Menu();
     this.calendar = new Calendar();
     this.template = Handlebars.compile(profileTemplate);
+    setBody();
   }
 
   async render(container: HTMLElement) {
@@ -36,10 +38,9 @@ export class ProfilePage {
       login: data.Login,
       mail: data.Email,
     });
-      this.setupEventListeners();
-
+    this.setupEventListeners();
   }
-    setupEventListeners() {
-        this.menu.setEvents();
-    }
+  setupEventListeners() {
+    this.menu.setEvents();
+  }
 }
