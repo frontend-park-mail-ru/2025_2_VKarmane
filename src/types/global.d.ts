@@ -7,21 +7,18 @@ declare module "*.hbs?raw" {
   export default content;
 }
 
-
 declare module "*.json" {
   const value: any;
   export default value;
 }
 
 declare module "window" {
-declare global {
+  declare global {
     interface Window {
-        openPopups: () => void;
+      openPopups: () => void;
     }
-}
+  }
 
-    const window: Window;
-    export default window;
+  const window: Window;
+  export default window;
 }
-
-export {};

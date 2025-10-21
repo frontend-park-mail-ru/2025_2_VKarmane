@@ -1,234 +1,227 @@
-
 @import "../../components/addTransactions/index.css";
 @import "../../components/addCategory/index.css";
-.Transact-categories{
-    margin-top: 11vh;
-    margin-left: 2vh;
-    display: flex;
-    gap: 4vh;
+.Transact-categories {
+  margin-top: 11vh;
+  margin-left: 2vh;
+  display: flex;
+  gap: 4vh;
 }
 
 .Transactions {
-    width: 87vh;
-    height: 90vh;
-    background-color: #ffffff;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-    display: flex;                /* ← вместо grid */
-    flex-direction: column;       /* выстраиваем элементы вертикально */
-    justify-content: flex-start;  /* не растягиваем */
-    align-items: flex-start;
-    padding: 2vh;
-    overflow-y: auto;             /* вместо overflow-block */
+  width: 87vh;
+  height: 90vh;
+  background-color: #ffffff;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+  display: flex; /* ← вместо grid */
+  flex-direction: column; /* выстраиваем элементы вертикально */
+  justify-content: flex-start; /* не растягиваем */
+  align-items: flex-start;
+  padding: 2vh;
+  overflow-y: auto; /* вместо overflow-block */
 }
 
-
-.transaction-list{
-    position: relative;
-    top: -2vh;
+.transaction-list {
+  position: relative;
+  top: -2vh;
 }
 
-.transaction-card{
-    width: 81vh;
-    display: flex;
-    height: 17vh;
-    background-color: #ffffff;
-    margin-top: 2vh;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-    align-items: center;
-    position: relative;
+.transaction-card {
+  width: 81vh;
+  display: flex;
+  height: 17vh;
+  background-color: #ffffff;
+  margin-top: 2vh;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  align-items: center;
+  position: relative;
 }
 
-.Categories{
-    display: grid;
-    gap: 4vh;
+.Categories {
+  display: grid;
+  gap: 4vh;
 }
 
-.metric-list{
-    width: 60vh;
-    height: 33vh;
-    background-color: #ffffff;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-    background-image: url('/imgs/tut_poka_nichego_net.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-
+.metric-list {
+  width: 60vh;
+  height: 33vh;
+  background-color: #ffffff;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+  background-image: url("/imgs/tut_poka_nichego_net.svg");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-
-.Transact-Category-text{
-    font-size: 1.5rem;
-    color: #949494;
-    font-weight: bold;
+.Transact-Category-text {
+  font-size: 1.5rem;
+  color: #949494;
+  font-weight: bold;
 }
 
-.cat-list{
-    display: grid;
-    gap: 1vh;
+.cat-list {
+  display: grid;
+  gap: 1vh;
 }
 
-
-
-
-.category-list{
-    width: 60vh;
-    height: 54vh;
-    background-color: #ffffff;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-    justify-content: center;
-    display: grid;
-    overflow-block: scroll;
-    gap: 1vh;
+.category-list {
+  width: 60vh;
+  height: 54vh;
+  background-color: #ffffff;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+  justify-content: center;
+  display: grid;
+  overflow-block: scroll;
+  gap: 1vh;
 }
 
-.cat-list{
-    position: relative;
-    top: -1vh;
+.cat-list {
+  position: relative;
+  top: -1vh;
 }
 
-.category-card{
-    display: flex;
-    height: 18vh;
-    width: 56vh;
-    background-color: #ffffff;
-    margin-bottom: 1vh;
-    border-radius: 26px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-    position: relative;
-    align-items: center;
+.category-card {
+  display: flex;
+  height: 18vh;
+  width: 56vh;
+  background-color: #ffffff;
+  margin-bottom: 1vh;
+  border-radius: 26px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  align-items: center;
 }
 
-.transaction-card-img{
-    margin-left: 4vh;
+.transaction-card-img {
+  margin-left: 4vh;
 }
 
-.transaction-card-info{
-    display: flex;
-    align-items: center;
+.transaction-card-info {
+  display: flex;
+  align-items: center;
 }
 
-.transaction-card-img{
-    position: relative;
-    right: 2.5vh;
+.transaction-card-img {
+  position: relative;
+  right: 2.5vh;
 }
 
-.transaction-card-info-text{
-    margin-left: 5vh;
-    display: grid;
-    gap: 3vh;
+.transaction-card-info-text {
+  margin-left: 5vh;
+  display: grid;
+  gap: 3vh;
 }
 
-.transaction-card-info-text p{
-    margin: 0;
-    padding: 0;
+.transaction-card-info-text p {
+  margin: 0;
+  padding: 0;
 }
 
-.transaction-card-info-title{
-    font-size: 1.3rem;
-    font-weight: bold;
+.transaction-card-info-title {
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
-.transaction-card-info-category{
-    font-family: Montserrat SemiBold;
-    font-size: 0.9rem;
-    color: #949494;
+.transaction-card-info-category {
+  font-family: Montserrat SemiBold;
+  font-size: 0.9rem;
+  color: #949494;
 }
 
-.transaction-card-info-price{
-    font-weight: bold;
-    font-size: 1.5rem;
+.transaction-card-info-price {
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
-.transaction-card-info-time{
-    font-size: 0.9rem;
+.transaction-card-info-time {
+  font-size: 0.9rem;
 }
 
 .kebab-menu {
-    position: absolute;
-    top: 1.6vh;
-    right: 2vh;
+  position: absolute;
+  top: 1.6vh;
+  right: 2vh;
 }
 
-.kebab-btn{
-    font-size: 2.7rem;
-    font-weight: bold;
-    background: none;
-    border: none;
-    cursor: pointer;
+.kebab-btn {
+  font-size: 2.7rem;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
-.kebab-btn:hover{
-    color: #949494;
-}
-
-.category-card-info{
-    display: flex;
-    align-items: center;
+.kebab-btn:hover {
+  color: #949494;
 }
 
-.category-card-img{
-    margin-left: 4vh;
+.category-card-info {
+  display: flex;
+  align-items: center;
 }
 
-.category-card-info-text{
-    margin-left: 5vh;
-    display: grid;
-    gap: 3vh;
+.category-card-img {
+  margin-left: 4vh;
 }
 
-.category-card-info-text p{
-    margin: 0;
-    padding: 0;
+.category-card-info-text {
+  margin-left: 5vh;
+  display: grid;
+  gap: 3vh;
 }
 
-.category-card-info-title{
-    font-size: 1.3rem;
-    font-weight: bold;
+.category-card-info-text p {
+  margin: 0;
+  padding: 0;
 }
 
-.category-card-info-status{
-    font-size: 0.7rem;
+.category-card-info-title {
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
-.category-card-info-time .category-card-info-number{
-    font-size: 0.8rem;
+.category-card-info-status {
+  font-size: 0.7rem;
+}
+
+.category-card-info-time .category-card-info-number {
+  font-size: 0.8rem;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
-.Transaction-header{
-    display: flex;
-    gap: 2.5vh;
-    align-items: center;
+.Transaction-header {
+  display: flex;
+  gap: 2.5vh;
+  align-items: center;
 }
 
-.Transaction-header button{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #f2613f;
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.2s ease;
+.Transaction-header button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f2613f;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
 }
 
-.Transaction-header button:hover{
-    background-color: #d44f32;
-    transform: scale(1.08);
+.Transaction-header button:hover {
+  background-color: #d44f32;
+  transform: scale(1.08);
 }
 
-.Transaction-header button:active{
-    transform: scale(0.95);
-    background-color: #b73f26;
+.Transaction-header button:active {
+  transform: scale(0.95);
+  background-color: #b73f26;
 }

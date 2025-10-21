@@ -1,111 +1,109 @@
 .logo {
-    width: 85px; /* Ширина в пикселях */
-    height: 85px; /* Высота в пикселях */
-    background-color: #ffffff;
-    background-image: url("/imgs/logo.png");
-    border-radius: 15px;
-    background-size: cover;
-    background-position: center;
-    margin-top: 34px;
-    justify-content: center;
+  width: 85px; /* Ширина в пикселях */
+  height: 85px; /* Высота в пикселях */
+  background-color: #ffffff;
+  background-image: url("/imgs/logo.png");
+  border-radius: 15px;
+  background-size: cover;
+  background-position: center;
+  margin-top: 34px;
+  justify-content: center;
 }
 
 .butMain {
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    border: none;
-    background-color: transparent;
-    border-radius: 8px;
-    background-image: url("/imgs/main_page.png"); /* черная дверь */
-    background-size: cover;
-    background-position: center;
-    transition: all 0.2s ease; /* плавная анимация */
-    cursor: pointer;
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+  background-image: url("/imgs/main_page.png"); /* черная дверь */
+  background-size: cover;
+  background-position: center;
+  transition: all 0.2s ease; /* плавная анимация */
+  cursor: pointer;
 }
 
 .butMain:hover {
-    background-image: url("/imgs/main_page_hover.png"); /* белая дверь */
-    background-color: black; /* черный фон */
-    border-radius: 8px;
-    transform: scale(0.95);  /* небольшое уменьшение для "эффекта нажатия" */
+  background-image: url("/imgs/main_page_hover.png"); /* белая дверь */
+  background-color: black; /* черный фон */
+  border-radius: 8px;
+  transform: scale(0.95); /* небольшое уменьшение для "эффекта нажатия" */
 }
 .LeftPart {
-    width: 7%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    margin-right: 1vh;
-    position: fixed;
-    left: 1vh;
-    top: 0;
-
+  width: 7%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-right: 1vh;
+  position: fixed;
+  left: 1vh;
+  top: 0;
 }
 .mainPage {
-    display: grid;
-    justify-content: center;
+  display: grid;
+  justify-content: center;
 }
 
 .logout {
-    margin-top: 30vh;
-    height: 48px;
-    width: 49px;
-    border: none;
-    background-color: transparent;
-    border-radius: 8px;
-    background-image: url("/imgs/logout.png"); /* черная дверь */
-    background-size: cover;
-    background-position: center;
-    transition: all 0.2s ease; /* плавная анимация */
-    cursor: pointer;
+  margin-top: 30vh;
+  height: 48px;
+  width: 49px;
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+  background-image: url("/imgs/logout.png"); /* черная дверь */
+  background-size: cover;
+  background-position: center;
+  transition: all 0.2s ease; /* плавная анимация */
+  cursor: pointer;
 }
 
 .logout:hover {
-    background-image: url("/imgs/logout_hover.png");
-    background-color: black;
-    border-radius: 8px;
-    transform: scale(0.95);
+  background-image: url("/imgs/logout_hover.png");
+  background-color: black;
+  border-radius: 8px;
+  transform: scale(0.95);
 }
 
-.butTransaction{
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    border: none;
-    background-color: transparent;
-    border-radius: 8px;
-    background-image: url("/imgs/TransactionsMenuBase.svg"); /* черная дверь */
-    background-size: cover;
-    background-position: center;
-    transition: all 0.2s ease; /* плавная анимация */
-    cursor: pointer;
+.butTransaction {
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+  background-image: url("/imgs/TransactionsMenuBase.svg"); /* черная дверь */
+  background-size: cover;
+  background-position: center;
+  transition: all 0.2s ease; /* плавная анимация */
+  cursor: pointer;
 }
 
 .butTransaction:hover {
-    background-image: url("/imgs/TransactionsButtonHover.svg"); /* белая дверь */
-    background-color: black; /* черный фон */
-    border-radius: 8px;
-    transform: scale(0.95);  /* небольшое уменьшение для "эффекта нажатия" */
+  background-image: url("/imgs/TransactionsButtonHover.svg"); /* белая дверь */
+  background-color: black; /* черный фон */
+  border-radius: 8px;
+  transform: scale(0.95); /* небольшое уменьшение для "эффекта нажатия" */
 }
 
 .profile {
-    margin-top: 72px;
-    height: 48px;
-    width: 49px;
-    border: none;
-    background-color: transparent;
-    border-radius: 8px;
-    background-image: url("/imgs/profile.png");
-    background-size: cover;
-    background-position: center;
-    transition: all 0.2s ease; /* плавная анимация */
-    cursor: pointer;
+  margin-top: 72px;
+  height: 48px;
+  width: 49px;
+  border: none;
+  background-color: transparent;
+  border-radius: 8px;
+  background-image: url("/imgs/profile.png");
+  background-size: cover;
+  background-position: center;
+  transition: all 0.2s ease; /* плавная анимация */
+  cursor: pointer;
 }
 
 .profile:hover {
-    background-image: url("/imgs/profile_hover.png");
-    background-color: black; /* черный фон */
-    border-radius: 8px;
-    transform: scale(0.95)
+  background-image: url("/imgs/profile_hover.png");
+  background-color: black; /* черный фон */
+  border-radius: 8px;
+  transform: scale(0.95);
 }
-

@@ -1,0 +1,41 @@
+
+<div class="modal-overlay" id="popup" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h1 class="modal-title">Редактирование профиля</h1>
+                <button class="close-button" onclick="closePopup()">
+                    <div class="close-icon"></div>
+                </button>
+            </div>
+
+            <div class="profile-info">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/cat-with-sunglasses-wwDjQ56tMJcECEI1EUrKB72ohx2K0D.jpg" alt="Profile Avatar" class="avatar">
+                <div class="user-details">
+                    <div class="user-name">{{fullName}}</div>
+                    <div class="user-id">ID : {{ID}}</div>
+                </div>
+            </div>
+
+            <form id="edit-profile-form" novalidate>
+                <div class="form-group">
+                    <label class="form-label">Имя</label>
+                    {{{firstNameInput}}}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Фамилия</label>
+                    {{{lastNameInput}}}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">E-mail</label>
+                    {{{emailInput}}}
+                </div>
+
+                <button type="submit" class="submit-button" id="edit-profile-button">
+                    Сохранить изменения
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

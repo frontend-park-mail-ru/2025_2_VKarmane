@@ -4,16 +4,21 @@ import profileTemplate from "../../templates/pages/Profile.hbs?raw";
 import { Menu } from "../../components/menu/index.js";
 import { Calendar } from "../../components/calendar/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
+import { EditProfile } from "../../components/editProfile/index.js";
 
 export class ProfilePage {
   menu: Menu;
   calendar: Calendar;
+  editProfile: EditProfile;
   template: TemplateFn;
 
   constructor() {
     this.menu = new Menu();
     this.calendar = new Calendar();
+    this.editProfile = new EditProfile(this.closePopup.bind(this));
     this.template = Handlebars.compile(profileTemplate);
+    window.openPopup = this.openPopup.bind(this);
+    window.closePopup = this.closePopup.bind(this);
   }
 
   async render(container: HTMLElement) {
@@ -35,11 +40,29 @@ export class ProfilePage {
       date: new Date(data.CreatedAt).toLocaleDateString("ru-RU"),
       login: data.Login,
       mail: data.Email,
+      editProfile: this.editProfile.getSelf(name, data.Email),
     });
-      this.setupEventListeners();
-
+    this.setupEventListeners();
   }
-    setupEventListeners() {
-        this.menu.setEvents();
-    }
+  setupEventListeners() {
+    const openBtn = document.getElementById("open-profile-edit-btn");
+    const closeBtn =
+      document.querySelector<HTMLButtonElement>("#closePopupBtn");
+    if (openBtn) openBtn.addEventListener("click", () => this.openPopup());
+    if (closeBtn) closeBtn.addEventListener("click", () => this.closePopup());
+    this.menu.setEvents();
+    this.editProfile.setEvents();
+  }
+
+  openPopup(): void {
+    console.log("aaaa");
+    const popup = document.getElementById("popup");
+    console.log(popup);
+    if (popup) popup.style.display = "flex";
+  }
+
+  closePopup(): void {
+    const popup = document.getElementById("popup");
+    if (popup) popup.style.display = "none";
+  }
 }

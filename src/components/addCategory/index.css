@@ -1,20 +1,20 @@
 .upload-label {
-    background-color: #F47200;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 15px;
-    transition: background-color 0.2s;
+  background-color: #f47200;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.2s;
 }
 
 .upload-label:hover {
-    background-color: #E16040;
+  background-color: #e16040;
 }
 
 .file-name {
-    font-size: 14px;
-    color: #666;
-    font-style: italic;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
 }

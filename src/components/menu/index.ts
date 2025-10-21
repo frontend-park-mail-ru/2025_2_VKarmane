@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import type { TemplateFn } from "../../types/handlebars.js";
 import menuTemplate from "../../templates/components/menu.hbs?raw";
-import {router} from "../../router.js";
+import { router } from "../../router.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { unsetBody } from "../../utils/bodySetters.js";
 
@@ -21,9 +21,8 @@ export class Menu {
 
     const transactionButton = document.getElementById("transaction");
     transactionButton?.addEventListener("click", () => {
-        router.navigate("/transactions");
-    })
-
+      router.navigate("/transactions");
+    });
 
     const logout = document.querySelector(".logout");
     if (!logout) return;

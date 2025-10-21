@@ -2,7 +2,7 @@ import { LoginPage } from "./pages/login/Login.js";
 import { SignUpPage } from "./pages/signup/Signup.js";
 import "./index.css";
 import { MainPage } from "./pages/main/Main.ts";
-import {TransactionsPage} from "./pages/transactions/Transactions.ts";
+import { TransactionsPage } from "./pages/transactions/Transactions.ts";
 
 const rootElement = document.getElementById("root");
 
@@ -12,10 +12,10 @@ export const config = {
     render: renderUserPage,
   },
 
-    transactions_page: {
-      href: "/transactions",
-        render: renderTransactionsPage
-    },
+  transactions_page: {
+    href: "/transactions",
+    render: renderTransactionsPage,
+  },
   login: {
     href: "/api/v1/login",
     render: renderLoginPage,
@@ -32,8 +32,8 @@ function renderUserPage() {
 }
 
 function renderTransactionsPage() {
-    const page = new TransactionsPage();
-    page.render(rootElement);
+  const page = new TransactionsPage();
+  page.render(rootElement);
 }
 
 function renderLoginPage() {
