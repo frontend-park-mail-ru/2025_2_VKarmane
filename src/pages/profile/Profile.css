@@ -1,4 +1,5 @@
 @import "../../components/calendar/index.css";
+@import "../../components/editProfile/index.css";
 
 .content {
   display: grid;
