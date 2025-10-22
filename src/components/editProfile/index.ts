@@ -71,7 +71,7 @@ export class EditProfile {
         return;
       }
       const { ok, error } = await apiFetch("/profile/edit", {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({
           first_name: firstNameInput.value,
           last_name: lastNameInput.value,

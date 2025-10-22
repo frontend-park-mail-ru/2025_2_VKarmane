@@ -30,17 +30,17 @@ export class ProfilePage {
       return;
     }
     const name =
-      data.FirstName + data.LastName
-        ? data.FirstName + " " + data.LastName
+      data.first_name + data.last_name
+        ? data.first_name + " " + data.last_name
         : "";
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
       calendar: this.calendar.getSelf(),
       name: name,
-      date: new Date(data.CreatedAt).toLocaleDateString("ru-RU"),
-      login: data.Login,
-      mail: data.Email,
-      editProfile: this.editProfile.getSelf(name, data.Email),
+      date: new Date(data.created_at).toLocaleDateString("ru-RU"),
+      login: data.login,
+      mail: data.email,
+      editProfile: this.editProfile.getSelf(name, data.email),
     });
     this.setupEventListeners();
   }
