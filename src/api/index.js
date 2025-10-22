@@ -14,6 +14,7 @@ async function fetchWithAuth(url, options = {}) {
   if (!response.ok)
     throw new Error(`Ошибка при запросе ${url}: ${response.status}`);
   return await response.json();
+
 }
 
 export function getBalance() {

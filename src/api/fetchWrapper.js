@@ -6,7 +6,6 @@ export async function apiFetch(url, options = {}) {
     },
     credentials: "include",
   };
-
   const finalOptions = {
     ...defaultOptions,
     ...options,
