@@ -70,13 +70,14 @@ export class MainPage {
                     100,
                     120,
                 ),
-                cards: this.card.getSelf(
+                cards: [this.card.getSelf(
                     balanceData?.accounts?.[0]?.balance ?? 0,
                     true,
                     32323,
                     1523,
                     "Развлечения",
                 ),
+                ],
                 PlanBal: this.planBal.getSelf(budgetsData?.budgets?.[0]?.amount ?? 0),
                 menu: this.menu.getSelf(),
                 Add: this.add.getSelf(),

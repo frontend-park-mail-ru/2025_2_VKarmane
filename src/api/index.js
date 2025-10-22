@@ -9,7 +9,7 @@ async function fetchWithAuth(url, options = {}) {
     const response = await fetch(API_URL + url, {
         ...options,
         headers,
-        // credentials: "include",
+        credentials: "include",
     });
     if (!response.ok)
         throw new Error(`Ошибка при запросе ${url}: ${response.status}`);
