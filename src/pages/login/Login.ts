@@ -112,7 +112,6 @@ export class LoginPage {
       router.navigate("/");
     }
 
-    router.navigate("/");
   }
 
   setInputsError(
