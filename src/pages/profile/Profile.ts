@@ -18,12 +18,12 @@ export class ProfilePage {
     this.calendar = new Calendar();
     this.editProfile = new EditProfile(this.closePopup.bind(this));
     this.template = Handlebars.compile(profileTemplate);
-    setBody();
     window.openPopup = this.openPopup.bind(this);
     window.closePopup = this.closePopup.bind(this);
   }
 
   async render(container: HTMLElement) {
+    setBody();
     const { ok, data } = await apiFetch(`/profile`, {
       method: "GET",
     });
