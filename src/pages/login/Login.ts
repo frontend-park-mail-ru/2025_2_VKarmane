@@ -6,7 +6,7 @@ import { ExpenseCard } from "../../components/expenseCard/index.js";
 import { LoginBackendTextError, loginStore } from "./store.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
-import {router} from "../../router.js";
+import { router } from "../../router.js";
 import loginTemplate from "../../templates/pages/Login.hbs?raw";
 import { LoginActions } from "./actions.js";
 import type { LoginState } from "./store.js";
@@ -31,7 +31,9 @@ export class LoginPage {
 
     this.template = Handlebars.compile(loginTemplate);
 
-    loginStore.on("change", () => this.render(document.querySelector("#root")!));
+    loginStore.on("change", () =>
+      this.render(document.querySelector("#root")!),
+    );
     loginStore.on("update", () => this.updateInputs());
   }
 
@@ -55,8 +57,18 @@ export class LoginPage {
     ];
     const data = {
       title: "Войти",
-      loginInput: this.inputField.getSelf("login", "login", "логин", state.login),
-      passwordInput: this.inputField.getSelf("password", "password", "пароль", state.password),
+      loginInput: this.inputField.getSelf(
+        "login",
+        "login",
+        "логин",
+        state.login,
+      ),
+      passwordInput: this.inputField.getSelf(
+        "password",
+        "password",
+        "пароль",
+        state.password,
+      ),
       absenceText: this.absText.getSelf(
         "Нет аккаунта?",
         "/register",
@@ -72,42 +84,49 @@ export class LoginPage {
   }
 
   setupEvents(container: HTMLElement, state: LoginState) {
-      const form = container.querySelector("#login") as HTMLFormElement;
-      if (!form) return;
-      const [loginInput, passwordInput] =
-            this.getLoginPasswordInput(form);
-  
-      if (!loginInput || !passwordInput) return;
-  
-      form.addEventListener("input", (e) => {
-        const input = e.target as HTMLInputElement;
-        LoginActions.updateField(input.name, input.value);
-      });
-  
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        LoginActions.submit();
-      });
+    const form = container.querySelector("#login") as HTMLFormElement;
+    if (!form) return;
+    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
 
-      const signupLink = container.querySelector(".absence-text a");
-      signupLink!.addEventListener("click", (e) => {
+    if (!loginInput || !passwordInput) return;
+
+    form.addEventListener("input", (e) => {
+      const input = e.target as HTMLInputElement;
+      LoginActions.updateField(input.name, input.value);
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      LoginActions.submit();
+    });
+
+    const signupLink = container.querySelector(".absence-text a");
+    signupLink!.addEventListener("click", (e) => {
       e.preventDefault();
       router.navigate("/signup");
     });
-  
-      if (state.errorBackend.text) {
-        console.log(state.errorBackend.text)
-        switch (state.errorBackend.text) {
-          case LoginBackendTextError.CREDENTIALS_ERROR:
-            this.inputField.setError([loginInput, passwordInput], true, state.errorBackend.text); 
-            break;
-          case LoginBackendTextError.SERVER_ERROR:
-            this.inputField.setError([passwordInput], false, state.errorBackend.text);
-            break;
-          }
-        }
-  
-      if (state.success) {
+
+    if (state.errorBackend.text) {
+      console.log(state.errorBackend.text);
+      switch (state.errorBackend.text) {
+        case LoginBackendTextError.CREDENTIALS_ERROR:
+          this.inputField.setError(
+            [loginInput, passwordInput],
+            true,
+            state.errorBackend.text,
+          );
+          break;
+        case LoginBackendTextError.SERVER_ERROR:
+          this.inputField.setError(
+            [passwordInput],
+            false,
+            state.errorBackend.text,
+          );
+          break;
+      }
+    }
+
+    if (state.success) {
       loginStore.clearState();
       router.navigate("/");
     }
@@ -134,13 +153,13 @@ export class LoginPage {
     return [loginInput, passwordInput];
   }
 
-    updateInputs() {
-      const form = document.querySelector("#login") as HTMLFormElement;
-      if (!form) return;
-      const [loginInput, passwordInput] = this.getLoginPasswordInput(form)
-      if (!loginInput || !passwordInput) throw new Error("no inputs");
-      const state = loginStore.getState();
-      loginInput.value = state.login;
-      passwordInput.value = state.password;
-    }
+  updateInputs() {
+    const form = document.querySelector("#login") as HTMLFormElement;
+    if (!form) return;
+    const [loginInput, passwordInput] = this.getLoginPasswordInput(form);
+    if (!loginInput || !passwordInput) throw new Error("no inputs");
+    const state = loginStore.getState();
+    loginInput.value = state.login;
+    passwordInput.value = state.password;
+  }
 }

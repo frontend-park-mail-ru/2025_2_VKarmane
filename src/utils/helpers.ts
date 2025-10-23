@@ -19,3 +19,9 @@ export function setWorkers() {
     });
   }
 }
+
+export function convertToISO(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-");
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
+  return date.toISOString();
+}

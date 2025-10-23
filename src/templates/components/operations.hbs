@@ -4,26 +4,26 @@
     {{#each operationsItems}}
     <div class="operations-item">
       <div class="operation" style="display: flex">
-        <img src="{{image_oper}}" alt="{{title_oper}}" />
+        <img src="/imgs/yandex.png" alt="{{title_oper}}" />
         <div class="title_with_category">
-          <div class="title_oper">{{title_oper}}</div>
-          <div class="category_oper">{{category_oper}}</div>
+          <div class="title_oper">{{OrganizationTitle}}</div>
+          <div class="category_oper">{{CategoryName}}</div>
         </div>
         <div class="price_and_time">
-          <div class="price_oper">{{price_oper}}₽</div>
-          <div class="time_oper">{{time_oper}}</div>
+          <div class="price_oper">{{OperationPrice}}₽</div>
+          <div class="time_oper">{{OperationTime}}</div>
         </div>
       </div>
     </div>
     {{/each}}
   </div>
   {{else}}
-    <div class="oper_not_exists">
-      <div class="oper_not_exists_img"></div>
-      <h2 class="oper_not_exists_text">
-        Тут пока ничего нет 2:(
-      </h2>
-      <button class="add_operation" onclick="openPopups()">+ Добавить операцию</button>
-    </div>
+  <div class="oper_not_exists">
+    <div class="oper_not_exists_img"></div>
+    <h2 class="oper_not_exists_text">Тут пока ничего нет 2:(</h2>
+    <button class="add_operation" onclick="openPopups()">
+      + Добавить операцию
+    </button>
+  </div>
   {{/if}}
 </div>
