@@ -73,6 +73,7 @@ self.addEventListener("fetch", (e) => {
   e.respondWith(fetch(e.request));
   return;
   }
+  
 // Сначала сеть для /
   if (url.pathname === "/" || url.pathname === "/index.html") {
     e.respondWith(

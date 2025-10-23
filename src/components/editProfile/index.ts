@@ -84,6 +84,39 @@ export class EditProfile {
       }
       console.log(error);
     });
+    const avatarPic = document.getElementById("editAvatarPic");
+    if (!avatarPic) throw new Error("no avatar pic element");
+    const editForm = document.querySelector(".avatar-edit") as HTMLDivElement;
+    if (!editForm) throw new Error("no edit avatar element");
+
+    avatarPic.addEventListener("mouseover", () => {
+      editForm.style.opacity = "1";
+      editForm.style.visibility = "visible";
+    });
+
+    editForm.addEventListener("mouseleave", () => {
+      editForm.style.opacity = "0";
+      editForm.style.visibility = "hidden";
+    });
+
+    const editBtn = document.getElementById("editAvatarBtn");
+    const fileInput = document.getElementById("avatarInput");
+    if (!editBtn || !fileInput) throw new Error("no avatar edit elements");
+
+    editBtn.addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        console.log("got pic");
+      };
+      reader.readAsDataURL(file);
+    });
   }
   validateSingleField(
     fieldName: string,

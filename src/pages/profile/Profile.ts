@@ -22,8 +22,10 @@ export class ProfilePage {
     window.closePopup = this.closePopup.bind(this);
   }
 
-  async render(container: HTMLElement) {
-    setBody();
+  async render(container: HTMLElement): Promise<void> {
+    if (!container) throw new Error("Container element not found!");
+    document.body.classList.remove("hide-scroller");
+    console.log("abb");
     const { ok, data } = await apiFetch(`/profile`, {
       method: "GET",
     });
@@ -44,6 +46,7 @@ export class ProfilePage {
       mail: data.email,
       editProfile: this.editProfile.getSelf(name, data.email),
     });
+    setBody();
     this.setupEventListeners();
   }
   setupEventListeners() {
