@@ -69,29 +69,37 @@ export class MainPage {
     try {
       const balanceData: BalanceData = await getBalance();
       const budgetsData: BudgetsData = await getBudgets();
-      if (!balanceData || !budgetsData) throw new Error("failed to get user data");
+      if (!balanceData || !budgetsData)
+        throw new Error("failed to get user data");
 
       const operations = await getAllUserTransactionsByAccIDs([1, 2]);
-      const cards =  balanceData.accounts.length !== 0
-         ? balanceData.accounts.map((account: Record<string, any>) =>
-            this.card.getSelf(
-             account.balance,
-             true,
-             32323,
-            1523,
-           "Развлечения",
-           ),
-           )
-         : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
+      const cards =
+        balanceData.accounts.length !== 0
+          ? balanceData.accounts.map((account: Record<string, any>) =>
+              this.card.getSelf(
+                account.balance,
+                true,
+                32323,
+                1523,
+                "Развлечения",
+              ),
+            )
+          : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
 
       const data = {
         FactBal: this.factBal.getSelf(
-          balanceData.accounts.length !== 0 ? balanceData.accounts[0].balance : null,
+          balanceData.accounts.length !== 0
+            ? balanceData.accounts[0].balance
+            : null,
           100,
           120,
         ),
         cards: cards,
-        PlanBal: this.planBal.getSelf(budgetsData.budgets.length !== 0 ? budgetsData.budgets[0].amount : null),
+        PlanBal: this.planBal.getSelf(
+          budgetsData.budgets.length !== 0
+            ? budgetsData.budgets[0].amount
+            : null,
+        ),
         menu: this.menu.getSelf(),
         Add: this.add.getSelf(),
         operations: this.operations.getList(operations),
@@ -165,7 +173,6 @@ export class MainPage {
           fileNameBox.textContent = target.files[0].name;
         } else {
           fileNameBox.textContent = "Файл не выбран";
-
         }
       }
     });

@@ -8,7 +8,6 @@ import { CategoriesList } from "../../components/CaregoryCardWindow/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { setBody } from "../../utils/bodySetters.js";
-
 interface Transaction {
   OrganizationTitle: string;
   CategoryName: string;

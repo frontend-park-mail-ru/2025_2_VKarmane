@@ -31,6 +31,7 @@ export function getBudgets() {
 export function getBudgetById(id) {
   return fetchWithAuth(`/budgets/${id}`);
 }
+
 export function getOperations(accountID) {
   return fetchWithAuth(`/account/${accountID}/operations`);
 }

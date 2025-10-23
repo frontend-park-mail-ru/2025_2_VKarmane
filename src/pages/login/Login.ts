@@ -130,7 +130,6 @@ export class LoginPage {
       loginStore.clearState();
       router.navigate("/");
     }
-
   }
 
   setInputsError(
