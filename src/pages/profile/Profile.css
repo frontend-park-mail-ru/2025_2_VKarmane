@@ -88,3 +88,13 @@
   background-color: white;
   height: 350px;
 }
+
+#open-profile-edit-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#open-profile-edit-btn:hover {
+  opacity: 0.8;
+}
