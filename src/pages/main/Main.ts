@@ -165,6 +165,7 @@ export class MainPage {
           fileNameBox.textContent = target.files[0].name;
         } else {
           fileNameBox.textContent = "Файл не выбран";
+
         }
       }
     });
