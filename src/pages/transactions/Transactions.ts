@@ -200,6 +200,5 @@ export class TransactionsPage {
     });
 
     this.addOperations.setEventListeners();
-
   }
 }
