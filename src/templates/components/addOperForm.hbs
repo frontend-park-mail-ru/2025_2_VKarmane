@@ -3,12 +3,7 @@
     <button class="close-btn" onclick="closePopup()">×</button>
     <h2>Новая операция</h2>
     <form id="add-operation-form">
-      <input
-        type="text"
-        placeholder="Стоимость (обяз.)"
-        required
-        id="create-operation-name"
-      />
+      {{{sumInput}}}
 
       <select
         id="operationType"
@@ -27,10 +22,8 @@
         id="create-operation-date"
       />
 
-      <!-- Дополнительные поля для дохода -->
       <div class="extra-field income-field hidden"></div>
 
-      <!-- Дополнительные поля для расхода -->
       <div class="extra-field expense-field hidden">
         <select id="create-operation-category">
           <option value="" disabled selected>Сфера услуг</option>

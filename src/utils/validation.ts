@@ -1,4 +1,15 @@
-type ruleType = Record<string, Record<string, any>>;
+type FieldRule = {
+  minLength?: number;
+  maxLength?: number;
+  pattern?: RegExp;
+  noSpaces?: boolean;
+  requireUppercase?: boolean;
+  requireLowercase?: boolean;
+  requireNumbers?: boolean;
+  minValue?: number;
+};
+
+type ruleType = Record<string, FieldRule>;
 
 export class Validator {
   rules: ruleType;
@@ -22,6 +33,10 @@ export class Validator {
         requireUppercase: true,
         requireLowercase: true,
         requireNumbers: true,
+      },
+      sum: {
+        minValue: 0,
+        pattern: /^[0-9]+$/,
       },
     };
 
@@ -48,6 +63,11 @@ export class Validator {
         numbers: "Пароль должен содержать хотя бы одну цифру",
         pattern:
           "Пароль может содержать только латинские буквы, цифры, дефис, подчеркивание и символы @, #, *, &, %, $, -",
+      },
+      sum: {
+        required: "Сумма обязательна",
+        minValue: "Минимальное значение суммы - 0",
+        pattern: "Сумма должна содержать только цифры 0-9",
       },
     };
   }
@@ -91,6 +111,10 @@ export class Validator {
     }
     if (rules.requireNumbers && !/\d/.test(value)) {
       return messages.numbers;
+    }
+
+    if (rules.minValue && !/\d/.test(value)) {
+      return messages.minValue;
     }
 
     return;
