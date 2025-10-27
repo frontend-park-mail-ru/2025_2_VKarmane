@@ -1,20 +1,20 @@
 export interface Action {
-    type: string,
-    payload: Object,
+  type: string;
+  payload: Object;
 }
 
 export class Dispatcher {
-    #callbacks: CallableFunction[] = [];
+  #callbacks: CallableFunction[] = [];
 
-    register(cb: CallableFunction) {
-        this.#callbacks.push(cb);
-    }
+  register(cb: CallableFunction) {
+    this.#callbacks.push(cb);
+  }
 
-    dispatch(action: Action) {
-        this.#callbacks.forEach((cb) => {
-            cb(action);
-        })
-    }
+  dispatch(action: Action) {
+    this.#callbacks.forEach((cb) => {
+      cb(action);
+    });
+  }
 }
 
 export const dispatcher = new Dispatcher();
