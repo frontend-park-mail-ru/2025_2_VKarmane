@@ -7,7 +7,7 @@ import { apiFetch } from "../../api/fetchWrapper.js";
 import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import signUpTemplate from "../../templates/pages/SignUp.hbs?raw";
-import {router} from "../../router.js";
+import { router } from "../../router.js";
 import { slogans } from "./slogans.js";
 
 export class SignUpPage {
@@ -271,4 +271,3 @@ export class SignUpPage {
     return randomSlogan;
   }
 }
-

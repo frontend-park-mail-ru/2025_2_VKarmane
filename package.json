@@ -12,7 +12,8 @@
     "start": "node server/index.js",
     "compile:templates": "handlebars src/templates/components src/templates/pages/ -f dist/templates/templates.js -e hbs -k",
     "format": "npx prettier --write .",
-    "lint": "npx eslint src/ server/"
+    "lint": "npx eslint src/ server/",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,8 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "3.6.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.45.0",
@@ -69,6 +72,12 @@
           "parser": "html"
         }
       }
+    ]
+  },
+  "lint-staged": {
+    "*.{js,ts,hbs,css,html,json,md}": [
+      "prettier --write",
+      "eslint --fix"
     ]
   }
 }
