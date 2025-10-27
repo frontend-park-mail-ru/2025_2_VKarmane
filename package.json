@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
     "compile:templates": "handlebars src/templates/components src/templates/pages/ -f dist/templates/templates.js -e hbs -k",
-    "format": "npx prettier --write .",
+    "format": "npx prettier --write.",
     "lint": "npx eslint src/ server/"
   },
   "repository": {
