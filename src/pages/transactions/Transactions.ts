@@ -187,7 +187,7 @@ export class TransactionsPage {
                 this.handleCategoryRequest(createCategoryForm);
             });
         } else {
-            console.warn("⚠️ Форма создания категории (#create-category-form) не найдена при инициализации");
+            console.warn("Форма создания категории (#create-category-form) не найдена при инициализации");
         }
 
         const editCategoryForm: HTMLFormElement | null = container.querySelector("#categoryEditPopup");
@@ -197,7 +197,7 @@ export class TransactionsPage {
                 this.handleCategoryRedactRequest(editCategoryForm);
             });
         } else {
-            console.warn("⚠️ Форма редактирования категории (#categoryEditPopup form) не найдена при инициализации");
+            console.warn("Форма редактирования категории (#categoryEditPopup form) не найдена при инициализации");
         }
 
 
@@ -321,7 +321,7 @@ export class TransactionsPage {
             );
 
             if (!isValid) {
-                console.warn("⚠️ Ошибка валидации данных операции");
+                console.warn("Ошибка валидации данных операции");
                 return;
             }
             const body = {
@@ -382,7 +382,7 @@ export class TransactionsPage {
             );
 
             if (!isValid) {
-                console.warn("⚠️ Ошибка валидации данных категории");
+                console.warn("Ошибка валидации данных категории");
                 return;
             }
 
@@ -438,7 +438,7 @@ export class TransactionsPage {
             );
 
             if (!isValid) {
-                console.warn("⚠️ Ошибка валидации данных редактируемой категории");
+                console.warn("Ошибка валидации данных редактируемой категории");
                 return;
             }
 

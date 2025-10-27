@@ -3,9 +3,6 @@ import { InputField } from "../../components/inputField/index.js";
 
 const inputField = new InputField();
 
-/**
- * Проверка одного поля.
- */
 
 export function validateField(
     fieldName: string,
@@ -45,9 +42,7 @@ export function validateOperationField(
     }
 }
 
-/**
- * Проверка формы создания категории.
- */
+
 export function validateCategoryForm(
     categoryName: string,
     categoryIcon: File | null,
@@ -82,9 +77,7 @@ export function validateCategoryForm(
     );
 }
 
-/**
- * Проверка формы редактирования категории.
- */
+
 export function validateCategoryRedactForm(
     categoryName: string,
     categoryIcon: File | null,
@@ -119,9 +112,7 @@ export function validateCategoryRedactForm(
     );
 }
 
-/**
- * Получить инпуты формы создания операции.
- */
+
 export function getOperationInputs(form: HTMLFormElement): HTMLInputElement[] {
     const costInput = form.querySelector<HTMLInputElement>('input[placeholder="Стоимость (обяз.)"]');
     const operationTypeInput = form.querySelector<HTMLSelectElement>("#operationType");
@@ -135,9 +126,7 @@ export function getOperationInputs(form: HTMLFormElement): HTMLInputElement[] {
     return [costInput, operationTypeInput, operationDateInput, commentInput, accountInput];
 }
 
-/**
- * Получить инпуты формы редактирования операции.
- */
+
 export function getEditOperationInputs(form: HTMLFormElement): (HTMLInputElement | HTMLSelectElement)[] {
     const costInput = form.querySelector<HTMLInputElement>('input[placeholder="Стоимость (обяз.)"]');
     const operationDateInput = form.querySelector<HTMLInputElement>('input[type="date"]');
@@ -151,9 +140,7 @@ export function getEditOperationInputs(form: HTMLFormElement): (HTMLInputElement
     return [costInput, operationDateInput, categoryInput, organizationInput, commentInput];
 }
 
-/**
- * Получить инпуты формы создания категории.
- */
+
 export function getCategoryInputs(form: HTMLFormElement): (HTMLInputElement | HTMLSelectElement)[] {
     const nameInput = form.querySelector<HTMLInputElement>('input[placeholder="Название категории (обяз.)"]');
     const iconInput = form.querySelector<HTMLInputElement>('input[type="file"]#categoryIcon');
@@ -165,9 +152,7 @@ export function getCategoryInputs(form: HTMLFormElement): (HTMLInputElement | HT
     return [nameInput, iconInput, descriptionInput];
 }
 
-/**
- * Получить инпуты формы редактирования категории.
- */
+
 export function getEditCategoryInputs(form: HTMLFormElement): (HTMLInputElement | HTMLSelectElement)[] {
     const nameInput = form.querySelector<HTMLInputElement>('input[placeholder="Название категории (обяз.)"]');
     const iconInput = form.querySelector<HTMLInputElement>('input[type="file"]#editCategoryIcon');
@@ -179,9 +164,7 @@ export function getEditCategoryInputs(form: HTMLFormElement): (HTMLInputElement 
     return [nameInput, iconInput, descriptionInput];
 }
 
-/**
- * Отображение ошибок на инпутах.
- */
+
 export function setInputsError(
     input: HTMLInputElement | HTMLInputElement[],
     text_error: string,
@@ -191,9 +174,7 @@ export function setInputsError(
     inputField.setError(arr, to_color, text_error);
 }
 
-/**
- * Ошибка при создании операции.
- */
+
 export function setServerCreateOperError(): void {
     const form = document.querySelector<HTMLFormElement>(".create-oper-form");
     if (!form) return;
@@ -202,9 +183,7 @@ export function setServerCreateOperError(): void {
     setInputsError(inputs, "При создании операции произошла ошибка. Повторите попытку позже", false);
 }
 
-/**
- * Ошибка при редактировании операции.
- */
+
 export function setServerEditOperError(): void {
     const form = document.querySelector<HTMLFormElement>("#editPopup form");
     if (!form) return;
@@ -213,9 +192,7 @@ export function setServerEditOperError(): void {
     setInputsError(inputs, "При редактировании операции произошла ошибка. Повторите попытку позже", false);
 }
 
-/**
- * Ошибка при создании категории.
- */
+
 export function setServerCreateCategoryError(): void {
     const form = document.querySelector<HTMLFormElement>(".create-category-form");
     if (!form) return;
@@ -224,9 +201,7 @@ export function setServerCreateCategoryError(): void {
     setInputsError(inputs, "При создании категории произошла ошибка. Повторите попытку позже", false);
 }
 
-/**
- * Ошибка при редактировании категории.
- */
+
 export function setServerEditCategoryError(): void {
     const form = document.querySelector<HTMLFormElement>("#categoryEditPopup form");
     if (!form) return;
@@ -280,9 +255,7 @@ export function validateOperationForm(
     );
 }
 
-/**
- * Проверка формы редактирования операции.
- */
+
 export function validateOperationRedactForm(
     cost: string,
     operationType: string,
