@@ -17,6 +17,7 @@ declare module "window" {
 declare global {
     interface Window {
         openPopups: () => void;
+        openEditPopup: () => void;
     }
 }
 

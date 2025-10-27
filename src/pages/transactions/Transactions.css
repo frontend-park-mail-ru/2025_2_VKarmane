@@ -163,6 +163,75 @@
     color: #949494;
 }
 
+.popup-menu {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
+    z-index: 10;
+    min-width: 160px;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition:
+            opacity 0.15s ease,
+            transform 0.15s ease;
+
+}
+
+.popup-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.popup-menu button {
+    border: none;
+    background: none;
+    text-align: left;
+    padding: 10px 16px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+
+
+.delete-btn {
+    color: #e53935;
+    font-family: Montserrat SemiBold;
+}
+
+.delete-btn:hover {
+    color: #FF9898;
+}
+
+.edit-btn{
+    font-family: Montserrat SemiBold;
+}
+
+.cat-edi{
+    font-family: Montserrat SemiBold;
+}
+
+.edit-cat:hover{
+    color: #8D8D8D;
+}
+
+.edit-btn:hover{
+    color: #8D8D8D;
+}
+
 .category-card-info{
     display: flex;
     align-items: center;
@@ -232,3 +301,164 @@
     transform: scale(0.95);
     background-color: #b73f26;
 }
+
+.submit-btn-cat {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2613f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.submit-btn-cat:hover {
+background-color: #d44f32;
+}
+
+/* === Форма редактирования операции === */
+.edit-oper-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.edit-oper-form .input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.edit-oper-form input,
+.edit-oper-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.edit-oper-form input:focus,
+.edit-oper-form select:focus {
+    border-color: #2361E9;
+}
+
+.extra-field.edit-income-field,
+.extra-field.edit-expense-field {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.extra-field.edit-income-field.hidden,
+.extra-field.edit-expense-field.hidden {
+    display: none;
+}
+
+/* === Кнопка отправки формы === */
+.edit-oper-form .submit-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2613f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-oper-form .submit-btn:hover {
+    background-color: #b73f26;
+}
+
+/* === Форма редактирования категории === */
+.create-category-form,
+.edit-category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.create-category-form .input-group,
+.edit-category-form .input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.create-category-form input,
+.create-category-form select,
+.edit-category-form input,
+.edit-category-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.create-category-form input:focus,
+.create-category-form select:focus,
+.edit-category-form input:focus,
+.edit-category-form select:focus {
+    border-color: #2361E9;
+}
+
+/* Стили для кнопки отправки */
+.create-category-form .submit-btn-cat,
+.edit-category-form .submit-btn-cat {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2613f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.create-category-form .submit-btn-cat:hover,
+.edit-category-form .submit-btn-cat:hover {
+    background-color: #d44f32;
+}
+
+/* Скрытые элементы */
+.hidden {
+    display: none;
+}
+
+/* Стили для блока загрузки иконки */
+.upload-label {
+    cursor: pointer;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #d44f32;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.upload-label:hover {
+    background-color: #b73f26;
+
+}
+
+.file-name {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #666;
+}
+

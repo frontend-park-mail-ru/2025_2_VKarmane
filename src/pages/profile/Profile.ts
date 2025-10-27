@@ -17,13 +17,13 @@ export class ProfilePage {
   }
 
   async render(container: HTMLElement) {
-    const { ok, data } = await apiFetch(`/profile`, {
-      method: "GET",
-    });
-    if (!ok) {
-      console.log("error");
-      return;
-    }
+    const data  = {
+        FirstName: "aboba",
+        LastName: "aboba",
+        CreatedAt: new Date(),
+        Login : "avobob",
+        Email : "avobob@mail.r",
+    };
     const name =
       data.FirstName + data.LastName
         ? data.FirstName + " " + data.LastName

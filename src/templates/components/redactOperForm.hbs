@@ -1,0 +1,38 @@
+<div class="overlay" id="editPopup" style="display: none;">
+    <div class="popup-form">
+        <button class="close-btn" onclick="closeEditPopup()">×</button>
+        <h2>Редактирование операции</h2>
+        <form class="edit-oper-form">
+
+            <div class="input-group">
+                <input type="text" placeholder="Стоимость (обяз.)" id="editAmount" required />
+            </div>
+
+            <div class="input-group">
+                <input type="date" id="editDate" required />
+            </div>
+
+            <div class="extra-field edit-income-field hidden"></div>
+
+            <div class="extra-field edit-expense-field hidden">
+                <div class="input-group">
+                    <select id="editCategory">
+                        <option value="" disabled selected>Сфера услуг</option>
+                        <option value="food">Еда / Напитки</option>
+                        <option value="games">Игры</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Наименование организации" id="editOrganization" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" placeholder="Комментарий к операции (необяз.)" id="editComment" />
+            </div>
+
+
+            <button type="submit" class="submit-btn">Сохранить изменения</button>
+        </form>
+    </div>
+</div>

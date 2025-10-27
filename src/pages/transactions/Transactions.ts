@@ -6,6 +6,35 @@ import { AddCategory } from "../../components/addCategory/index.js";
 import { TransactionsList } from "../../components/OperationCardWindow/index.js";
 import { CategoriesList } from "../../components/CaregoryCardWindow/index.js";
 import {ProfileBlock} from "../../components/profileBlock/index.js";
+import {redactOpers} from "../../components/redactOpers/index.js"
+import {RedactCategory} from "../../components/redactCategory/index.js";
+import { InputField } from "../../components/inputField/index.js";
+import {
+   addEventListeners
+} from "../transactions/events.js";
+
+
+
+import {
+    validateField,
+    validateOperationForm,
+    validateOperationRedactForm,
+    validateCategoryForm,
+    validateCategoryRedactForm,
+    setServerEditOperError,
+    setServerCreateCategoryError,
+    setServerEditCategoryError,
+    setInputsError,
+    getEditOperationInputs,
+    getCategoryInputs,
+    getEditCategoryInputs,
+    getOperationInputs,
+    validateOperationField, setServerCreateOperError
+} from "../transactions/validationForForms.js";
+
+
+import {openPopup, openEditPopup, closeEditPopup, closePopup, formatDateForInput} from "../transactions/operations.js"
+import {closeCategoryPopup, openCategoryPopup, openEditCategoryPopup, closeEditCategoryPopup} from "./categories.js";
 
 interface Transaction {
     OrganizationTitle: string;
@@ -26,8 +55,21 @@ declare global {
         closePopup: () => void;
         openCategoryPopup: () => void;
         closeCategoryPopup: () => void;
+        openEditPopup: (data: {
+            amount?: string;
+            type?: "income" | "expense";
+            date?: string;
+            category?: string;
+            organization?: string;
+            comment?: string;
+            account?: string;
+        }) => void;
+        closeEditPopup: () => void;
+        openEditCategoryPopup:  () => void;
+        closeEditCategoryPopup:  () => void;
     }
 }
+
 
 
 export class TransactionsPage {
@@ -38,20 +80,34 @@ export class TransactionsPage {
     private transactions: TransactionsList;
     private categories: CategoriesList;
     private profileBlock: ProfileBlock;
+    private redactOpers: redactOpers;
+    private RedactCategory: RedactCategory;
+    private inputField: InputField;
 
     constructor() {
         this.template = Handlebars.compile(TransactionsTemplate);
         this.menu = new Menu();
-        this.addOperations = new AddOperation(this.closePopup.bind(this), this.handleOperationTypeChange.bind(this));
+        this.addOperations = new AddOperation(closePopup.bind(this), this.handleOperationTypeChange.bind(this));
         this.addCategory = new AddCategory();
+        this.RedactCategory = new RedactCategory();
+        this.inputField = new InputField();
 
-        window.openPopup = this.openPopup.bind(this);
-        window.closePopup = this.closePopup.bind(this);
-        window.openCategoryPopup = this.openCategoryPopup.bind(this);
-        window.closeCategoryPopup = this.closeCategoryPopup.bind(this);
+
+
+        window.openPopup = openPopup.bind(this);
+        window.closePopup = closePopup.bind(this);
+        window.openCategoryPopup = openCategoryPopup.bind(this);
+        window.closeCategoryPopup = closeCategoryPopup.bind(this);
+        window.openEditPopup = openEditPopup.bind(this);
+        window.closeEditPopup = closeEditPopup.bind(this);
+        window.openEditCategoryPopup = openEditCategoryPopup.bind(this);
+        window.closeEditCategoryPopup = closeEditCategoryPopup.bind(this);
+
+
         this.transactions = new TransactionsList();
         this.categories = new CategoriesList();
         this.profileBlock = new ProfileBlock();
+        this.redactOpers = new redactOpers(closeEditPopup.bind(this), this.handleOperationTypeChange.bind(this));
 
     }
 
@@ -64,13 +120,13 @@ export class TransactionsPage {
                 OrganizationTitle: "1212",
                 CategoryName: "1212",
                 OperationPrice: "1212",
-                OperationTime: "121232",
+                OperationTime: "2025-10-03"
             },
             {
                 OrganizationTitle: "1212",
                 CategoryName: "1212",
                 OperationPrice: "1212",
-                OperationTime: "121232",
+                OperationTime: "08.10.2025"
             },
         ];
 
@@ -78,7 +134,7 @@ export class TransactionsPage {
             {
                 CategoryName: "1212",
                 CategoryStatus: "1212",
-                CategoryAmount: "1212",
+                CategoryAmount: "08.11.2022",
             },
             {
                 CategoryName: "1212",
@@ -91,31 +147,65 @@ export class TransactionsPage {
             menu: this.menu.getSelf(),
             addOperations: this.addOperations.getSelf(),
             addCategories: this.addCategory.getSelf(),
+            redactOperations: this.redactOpers.getSelf(),
             transactions: this.transactions.getList(dataTransactions),
             categories: this.categories.getList(dataCategories),
             profile_block: this.profileBlock.getSelf("aboba", 1111),
+            redactCategories : this.RedactCategory.getSelf(),
         };
 
         container.innerHTML = this.template(data);
-        this.addEventListeners();
-        this.setupEventListeners();
+        addEventListeners(this);
+        this.setupEventListeners(container);
+
 
 
     }
-    setupEventListeners() {
+    setupEventListeners(container: HTMLElement): void {
         this.menu.setEvents();
         this.profileBlock.setEvents();
+        const form: HTMLFormElement | null = container.querySelector("#create-oper-form");
+        if (!form) return;
+        if (form) {
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                this.handleOperationRequest(form);
+            });
+        }
+
+        const form2: HTMLFormElement | null = container.querySelector("#editPopup form");
+        if (!form2) return;
+        form2.addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.handleOperationRedactRequest(form2);
+        });
+
+        const createCategoryForm: HTMLFormElement | null = container.querySelector("#editCategoryForm");
+        if (createCategoryForm) {
+            createCategoryForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                this.handleCategoryRequest(createCategoryForm);
+            });
+        } else {
+            console.warn("⚠️ Форма создания категории (#create-category-form) не найдена при инициализации");
+        }
+
+        const editCategoryForm: HTMLFormElement | null = container.querySelector("#categoryEditPopup");
+        if (editCategoryForm) {
+            editCategoryForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                this.handleCategoryRedactRequest(editCategoryForm);
+            });
+        } else {
+            console.warn("⚠️ Форма редактирования категории (#categoryEditPopup form) не найдена при инициализации");
+        }
+
+
+
+
     }
 
-    openPopup(): void {
-        const popup = document.getElementById("popup");
-        if (popup) popup.style.display = "flex";
-    }
 
-    closePopup(): void {
-        const popup = document.getElementById("popup");
-        if (popup) popup.style.display = "none";
-    }
 
     handleOperationTypeChange(): void {
         const selectedType = (document.getElementById("operationType") as HTMLSelectElement)?.value;
@@ -135,41 +225,254 @@ export class TransactionsPage {
         }
     }
 
-    openCategoryPopup(): void {
-        const popup = document.getElementById("categoryPopup");
-        if (popup) popup.style.display = "flex";
-    }
+        async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {const [
+            costInput,
+            operationTypeInput,
+            operationDateInput,
+            commentInput,
+            accountInput,
+        ] = getEditOperationInputs(form);
 
-    closeCategoryPopup(): void {
-        const popup = document.getElementById("categoryPopup");
-        if (popup) popup.style.display = "none";
-    }
-
-    private addEventListeners(): void {
-        const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
-        const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
-        const openCategoryBtn = document.querySelector<HTMLButtonElement>("#openCategoryBtn");
-        const closeCategoryBtn = document.querySelector<HTMLButtonElement>("#closeCategoryBtn");
-
-        openBtn?.addEventListener("click", () => this.openPopup());
-        closeBtn?.addEventListener("click", () => this.closePopup());
-        openCategoryBtn?.addEventListener("click", () => this.openCategoryPopup());
-        closeCategoryBtn?.addEventListener("click", () => this.closeCategoryPopup());
-
-        document.body.addEventListener("change", (e: Event) => {
-            const target = e.target as HTMLInputElement;
-            if (target?.type === "file" && target.id === "categoryIcon") {
-                const popupForm = target.closest<HTMLElement>(".popup-form");
-                const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
-
-                if (!fileNameBox) return;
-
-                if (target.files && target.files.length > 0) {
-                    fileNameBox.textContent = target.files[0].name;
-                } else {
-                    fileNameBox.textContent = "Файл не выбран";
-                }
+            if (
+                !costInput ||
+                !operationTypeInput ||
+                !operationDateInput ||
+                !commentInput ||
+                !accountInput
+            ) {
+                console.error("Не удалось найти все поля формы операции");
+                return;
             }
-        });
-    }
+
+            const isValid = validateOperationRedactForm(
+                costInput.value,
+                operationTypeInput.value,
+                operationDateInput.value,
+                commentInput.value,
+                accountInput.value,
+                form
+            );
+
+            if (!isValid) {
+                console.warn("Ошибка валидации данных операции");
+                return;
+            }
+            const body = {
+                cost: parseFloat(costInput.value),
+                type: operationTypeInput.value,
+                date: operationDateInput.value,
+                comment: commentInput.value,
+                account: accountInput.value,
+            };
+            const { ok, status } = await apiFetch(`/operations/new`, {
+                method: "POST",
+                body: JSON.stringify(body),
+            });
+
+            if (!ok) {
+                if (status === 400) {
+                    this.inputField.setError(
+                        [costInput, operationTypeInput, operationDateInput, commentInput, accountInput],
+                        true,
+                        "Некорректные данные операции"
+                    );
+                } else if (status === 409) {
+                    this.inputField.setError(
+                        [commentInput],
+                        true,
+                        "Такая операция уже существует"
+                    );
+                } else if (status === 500) {
+                    setServerEditOperError();
+                } else {
+                    setServerEditOperError();
+                }
+                return;
+            }
+        }
+
+
+        async handleOperationRequest(form: HTMLFormElement): Promise<void> {const [
+                costInput,
+                operationTypeInput,
+                operationDateInput,
+                commentInput,
+                accountInput,
+            ] = getOperationInputs(form);
+
+            if (
+                !costInput ||
+                !operationTypeInput ||
+                !operationDateInput ||
+                !commentInput ||
+                !accountInput
+            ) {
+                console.error("Не удалось найти все поля формы операции");
+                return;
+            }
+
+            const isValid = validateOperationForm(
+                costInput.value,
+                operationTypeInput.value,
+                operationDateInput.value,
+                commentInput.value,
+                accountInput.value,
+                form
+            );
+
+            if (!isValid) {
+                console.warn("⚠️ Ошибка валидации данных операции");
+                return;
+            }
+            const body = {
+                cost: parseFloat(costInput.value),
+                type: operationTypeInput.value,
+                date: operationDateInput.value,
+                comment: commentInput.value,
+                account: accountInput.value,
+            };
+            const { ok, status } = await apiFetch(`/operations/new`, {
+                method: "POST",
+                body: JSON.stringify(body),
+            });
+
+            if (!ok) {
+                if (status === 400) {
+                    this.inputField.setError(
+                        [costInput, operationTypeInput, operationDateInput, commentInput, accountInput],
+                        true,
+                        "Некорректные данные операции"
+                    );
+                } else if (status === 409) {
+                    this.inputField.setError(
+                        [commentInput],
+                        true,
+                        "Такая операция уже существует"
+                    );
+                } else if (status === 500) {
+                    setServerCreateOperError();
+                } else {
+                    setServerCreateOperError();
+                }
+                return;
+            }
+        }
+        async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
+            const nameInput = form.querySelector<HTMLInputElement>(
+                'input[placeholder="Название категории (обяз.)"]'
+            );
+            const typeInput = form.querySelector<HTMLSelectElement>('#categoryType');
+            const iconInput = form.querySelector<HTMLInputElement>('#categoryIcon');
+            const descInput = form.querySelector<HTMLInputElement>(
+                'input[placeholder="Описание категории (необяз.)"]'
+            );
+
+            if (!nameInput || !typeInput || !iconInput || !descInput) {
+                console.error("Не удалось найти все поля формы категории");
+                return;
+            }
+
+            const file = iconInput.files?.[0] || null;
+
+            const isValid = validateCategoryForm(
+                nameInput.value,
+                file,
+                descInput.value,
+                form
+            );
+
+            if (!isValid) {
+                console.warn("⚠️ Ошибка валидации данных категории");
+                return;
+            }
+
+            const body = new FormData();
+            body.append("name", nameInput.value);
+            if (file) body.append("icon", file);
+            body.append("description", descInput.value);
+
+            const { ok, status } = await apiFetch(`/categories/new`, {
+                method: "POST",
+                body,
+            });
+
+            if (!ok) {
+                if (status === 400) {
+                    this.inputField.setError(
+                        [nameInput, iconInput, descInput],
+                        true,
+                        "Некорректные данные категории"
+                    );
+                } else if (status === 409) {
+                    this.inputField.setError([nameInput], true, "Такая категория уже существует");
+                } else {
+                    setServerCreateCategoryError();
+                }
+                return;
+            }
+        }
+
+
+        async handleCategoryRedactRequest(form: HTMLFormElement): Promise<void> {
+            const nameInput = form.querySelector<HTMLInputElement>(
+                'input[placeholder="Название категории (обяз.)"]'
+            );
+            const typeInput = form.querySelector<HTMLSelectElement>('#editCategoryType');
+            const iconInput = form.querySelector<HTMLInputElement>('#editCategoryIcon');
+            const descInput = form.querySelector<HTMLInputElement>(
+                'input[placeholder="Описание категории (необяз.)"]'
+            );
+
+            if (!nameInput || !typeInput || !iconInput || !descInput) {
+                console.error("Не удалось найти все поля формы редактирования категории");
+                return;
+            }
+
+            const file = iconInput.files?.[0] || null;
+
+            const isValid = validateCategoryRedactForm(
+                nameInput.value,
+                file,
+                descInput.value,
+                form
+            );
+
+            if (!isValid) {
+                console.warn("⚠️ Ошибка валидации данных редактируемой категории");
+                return;
+            }
+
+            const body = new FormData();
+            body.append("name", nameInput.value);
+            if (file) body.append("icon", file);
+            body.append("description", descInput.value);
+
+            const { ok, status } = await apiFetch(`/categories/edit`, {
+                method: "POST",
+                body,
+            });
+
+            if (!ok) {
+                if (status === 400) {
+                    this.inputField.setError(
+                        [nameInput, iconInput, descInput],
+                        true,
+                        "Некорректные данные при редактировании категории"
+                    );
+                } else if (status === 409) {
+                    this.inputField.setError([nameInput], true, "Категория с таким именем уже существует");
+                } else {
+                    setServerEditCategoryError();
+                }
+                return;
+            }
+        }
+
+
+
+
+
+
+
+
 }
