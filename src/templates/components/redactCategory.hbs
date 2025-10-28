@@ -1,0 +1,24 @@
+<div class="overlay" id="categoryEditPopup" style="display: none;">
+    <div class="popup-form">
+        <button class="close-btn" onclick="closeEditCategoryPopup()">×</button>
+        <h2>Редактирование категории</h2>
+        <form class="create-category-form" id="editCategoryForm">
+
+            <div class="input-group">
+                <input type="text" id="editCategoryName" placeholder="Название категории (обяз.)" required />
+            </div>
+
+            <div class="input-group">
+                <label for="editCategoryIcon" class="upload-label">Загрузить иконку</label>
+                <input type="file" id="editCategoryIcon" accept="image/*" style="display: none;" />
+                <div class="file-name" id="editFileName">Файл не выбран</div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="editCategoryDescription" placeholder="Описание категории (необяз.)" />
+            </div>
+
+            <button type="submit" class="submit-btn-cat">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
