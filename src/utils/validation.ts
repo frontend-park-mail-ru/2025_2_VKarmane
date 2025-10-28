@@ -1,7 +1,19 @@
-export class Validator {
-    rules: Record<string, any>;
-    messages: Record<string, Record<string, string>>;
+type FieldRule = {
+  minLength?: number;
+  maxLength?: number;
+  pattern?: RegExp;
+  noSpaces?: boolean;
+  requireUppercase?: boolean;
+  requireLowercase?: boolean;
+  requireNumbers?: boolean;
+  minValue?: number;
+};
 
+type ruleType = Record<string, FieldRule>;
+
+export class Validator {
+  rules: ruleType;
+  messages: Record<string, Record<string, string>>;
     constructor() {
         this.rules = {
             login: {
@@ -21,8 +33,11 @@ export class Validator {
                 requireUppercase: true,
                 requireLowercase: true,
                 requireNumbers: true,
+            }, 
+            sum: {
+                minValue: 0,
+                pattern: /^[0-9]+$/,
             },
-
             cost: {
                 pattern: /^\d+(\.\d+)?$/,
                 required: true,
@@ -84,7 +99,11 @@ export class Validator {
                 pattern:
                     "Пароль может содержать только латинские буквы, цифры, дефис, подчеркивание и символы @, #, *, &, %, $, -",
             },
-
+            sum: {
+                required: "Сумма обязательна",
+                minValue: "Минимальное значение суммы - 0",
+                pattern: "Сумма должна содержать только цифры 0-9",   
+            },
             cost: {
                 required: "Стоимость обязательна",
                 pattern: "Стоимость должна быть числом (например 1080 или 1080.50)",
@@ -125,6 +144,7 @@ export class Validator {
         const rules = this.rules[fieldName];
         const messages = this.messages[fieldName];
 
+
         if (!rules || !messages) return;
 
         if (!value && value !== "") {
@@ -132,6 +152,7 @@ export class Validator {
         }
 
         value = value.toString().trim();
+
 
         if (!value) {
             return messages.required;
@@ -167,6 +188,9 @@ export class Validator {
 
         if (rules.maxLength && value.length > rules.maxLength) {
             return messages.maxLength;
+        }
+        if (rules.minValue && !/\d/.test(value)) {
+            return messages.minValue;
         }
         if (rules.noSpaces && /\s/.test(value)) {
             return messages.spaces;
