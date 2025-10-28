@@ -35,6 +35,7 @@ import {
 
 import {openPopup, openEditPopup, closeEditPopup, closePopup, formatDateForInput} from "../transactions/operations.js"
 import {closeCategoryPopup, openCategoryPopup, openEditCategoryPopup, closeEditCategoryPopup} from "./categories.js";
+import {setBody} from "../../utils/bodySetters.js";
 
 interface Transaction {
     OrganizationTitle: string;
@@ -47,6 +48,12 @@ interface Category {
     CategoryName: string;
     CategoryStatus: string;
     CategoryAmount: string;
+}
+
+interface OperationFromBackend {
+    category_id: number;
+    sum: number;
+    date: Date;
 }
 
 declare global {
@@ -111,30 +118,43 @@ export class TransactionsPage {
 
     }
 
-    async render(container: HTMLElement | null) : Promise<void> {
+    async render(container: HTMLElement | null): Promise<void> {
         if (!container) throw new Error("Container element not found!");
         document.body.classList.remove("hide-scroller");
 
-        const dataTransactions: Transaction[] = [
-            {
-                OrganizationTitle: "1212",
-                CategoryName: "1212",
-                OperationPrice: "1212",
-                OperationTime: "2025-10-03"
-            },
-            {
-                OrganizationTitle: "1212",
-                CategoryName: "1212",
-                OperationPrice: "1212",
-                OperationTime: "08.10.2025"
-            },
-        ];
+        // пока нет ручек для работы с аккаунтами
+        const accounts = [1, 2];
+
+        const allOps = await Promise.all(
+            accounts.map(async (id) => {
+                const { ok, data, error } = await apiFetch(
+                    `/account/${id}/operations`,
+                    {
+                        method: "GET",
+                    },
+                );
+
+                if (!ok) {
+                    console.error("Ошибка получения операций:", error);
+                    return [];
+                }
+
+                return data.operations.map((operation: OperationFromBackend) => ({
+                    OrganizationTitle: "Мок",
+                    CategoryName: `Категория ${operation.category_id}`,
+                    OperationPrice: operation.sum,
+                    OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+                }));
+            }),
+        );
+
+        const operations: Transaction[] = allOps.flat();
 
         const dataCategories: Category[] = [
             {
                 CategoryName: "1212",
                 CategoryStatus: "1212",
-                CategoryAmount: "08.11.2022",
+                CategoryAmount: "1212",
             },
             {
                 CategoryName: "1212",
@@ -147,20 +167,17 @@ export class TransactionsPage {
             menu: this.menu.getSelf(),
             addOperations: this.addOperations.getSelf(),
             addCategories: this.addCategory.getSelf(),
-            redactOperations: this.redactOpers.getSelf(),
-            transactions: this.transactions.getList(dataTransactions),
+            transactions: this.transactions.getList(operations),
             categories: this.categories.getList(dataCategories),
             profile_block: this.profileBlock.getSelf("aboba", 1111),
-            redactCategories : this.RedactCategory.getSelf(),
         };
 
         container.innerHTML = this.template(data);
+        setBody();
         addEventListeners(this);
         this.setupEventListeners(container);
-
-
-
     }
+
     setupEventListeners(container: HTMLElement): void {
         this.menu.setEvents();
         this.profileBlock.setEvents();
@@ -292,46 +309,62 @@ export class TransactionsPage {
         }
 
 
-        async handleOperationRequest(form: HTMLFormElement): Promise<void> {const [
-                costInput,
-                operationTypeInput,
-                operationDateInput,
-                commentInput,
-                accountInput,
-            ] = getOperationInputs(form);
+    async handleOperationRequest(form: HTMLFormElement): Promise<void> {
+        const [
+            costInput,
+            operationTypeInput,
+            operationDateInput,
+            commentInput,
+            accountInput,
+            categoryInput,
+            receiverInput,
+            nameInput,
+        ] = getOperationInputs(form);
 
-            if (
-                !costInput ||
-                !operationTypeInput ||
-                !operationDateInput ||
-                !commentInput ||
-                !accountInput
-            ) {
-                console.error("Не удалось найти все поля формы операции");
-                return;
-            }
+        if (
+            !costInput ||
+            !operationTypeInput ||
+            !operationDateInput ||
+            !commentInput ||
+            !accountInput ||
+            !categoryInput ||
+            !nameInput
+        ) {
+            console.error("Не удалось найти все необходимые поля формы операции");
+            return;
+        }
 
-            const isValid = validateOperationForm(
-                costInput.value,
-                operationTypeInput.value,
-                operationDateInput.value,
-                commentInput.value,
-                accountInput.value,
-                form
-            );
+        const isValid = validateOperationForm(
+            costInput.value,
+            operationTypeInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            accountInput.value,
+            form
+        );
 
-            if (!isValid) {
-                console.warn("Ошибка валидации данных операции");
-                return;
-            }
-            const body = {
-                cost: parseFloat(costInput.value),
-                type: operationTypeInput.value,
-                date: operationDateInput.value,
-                comment: commentInput.value,
-                account: accountInput.value,
-            };
-            const { ok, status } = await apiFetch(`/operations/new`, {
+        if (!isValid) {
+            console.warn("Ошибка валидации данных операции");
+            return;
+        }
+
+        const accountId = parseInt(accountInput.value, 10);
+        const categoryId = parseInt(categoryInput.value, 10);
+        const receiverId = receiverInput?.value ? parseInt(receiverInput.value, 10) : undefined;
+
+        const body = {
+            account_id: accountId,
+            category_id: categoryId,
+            receiver_id: receiverId,
+            sum: parseFloat(costInput.value),
+            name: nameInput.value.trim(),
+            type: operationTypeInput.value,
+            description: commentInput.value.trim() || "",
+            created_at: new Date(operationDateInput.value).toISOString(),
+        };
+
+        try {
+            const { ok, status } = await apiFetch(`/api/v1/account/${accountId}/operations`, {
                 method: "POST",
                 body: JSON.stringify(body),
             });
@@ -339,16 +372,20 @@ export class TransactionsPage {
             if (!ok) {
                 if (status === 400) {
                     this.inputField.setError(
-                        [costInput, operationTypeInput, operationDateInput, commentInput, accountInput],
+                        [
+                            costInput,
+                            operationTypeInput,
+                            operationDateInput,
+                            commentInput,
+                            accountInput,
+                            categoryInput,
+                            nameInput,
+                        ],
                         true,
                         "Некорректные данные операции"
                     );
                 } else if (status === 409) {
-                    this.inputField.setError(
-                        [commentInput],
-                        true,
-                        "Такая операция уже существует"
-                    );
+                    this.inputField.setError([nameInput], true, "Такая операция уже существует");
                 } else if (status === 500) {
                     setServerCreateOperError();
                 } else {
@@ -356,8 +393,15 @@ export class TransactionsPage {
                 }
                 return;
             }
+
+            console.info("Операция успешно создана");
+        } catch (error) {
+            console.error("Ошибка при выполнении запроса:", error);
+            setServerCreateOperError();
         }
-        async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
+    }
+
+    async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
             const nameInput = form.querySelector<HTMLInputElement>(
                 'input[placeholder="Название категории (обяз.)"]'
             );
