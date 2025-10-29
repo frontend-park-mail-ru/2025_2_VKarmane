@@ -40,6 +40,7 @@ export function openEditPopup(data: {
     organization?: string;
     comment?: string;
     account?: string;
+    transaction_id?: string;
 }): void {
     const amountInput = document.getElementById("editAmount") as HTMLInputElement | null;
     const typeSelect = document.getElementById("editOperationType") as HTMLSelectElement | null;
@@ -67,6 +68,11 @@ export function openEditPopup(data: {
 
     const popup = document.getElementById("editPopup");
     if (popup) popup.style.display = "flex";
+
+    const form = document.getElementById("editForm")  as HTMLFormElement | null;
+    if (form && data.transaction_id) {
+        form.dataset.transactionId = data.transaction_id.toString();
+    }
 }
 
 export function closeEditPopup(): void {

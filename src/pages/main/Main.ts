@@ -17,6 +17,17 @@ import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
 import { setBody, unsetBody } from "../../utils/bodySetters.js";
+import { InputField } from "../../components/inputField/index.js";
+import {
+    addEventListeners
+} from "../transactions/events.js";
+
+import {
+    getOperationInputs, setServerCreateOperError,
+    validateOperationFormDohod,
+    validateOperationFormRashod
+} from "../transactions/validationForForms.js";
+import {apiFetch} from "../../api/fetchWrapper.js";
 
 interface BalanceData {
   accounts?: { balance: number }[];
@@ -41,6 +52,7 @@ export class MainPage {
   profileBlock: ProfileBlock;
   addOperations: AddOperation;
   template: TemplateFn;
+  inputField: InputField;
   constructor() {
     this.factBal = new FactBal();
     this.card = new Card();
@@ -52,6 +64,7 @@ export class MainPage {
       this.closePopup,
       this.handleOperationTypeChange,
     );
+    this.inputField = new InputField();
     this.addCard = new AddCard();
     this.profileBlock = new ProfileBlock();
     this.template = Handlebars.compile(mainTemplate);
@@ -110,7 +123,9 @@ export class MainPage {
       };
 
       container.innerHTML = this.template(data);
-      this.setupEventListeners();
+      this.setupEventListeners(container);
+      addEventListeners(this);
+
     } catch (err) {
       console.error(err);
       router.navigate("/login");
@@ -120,10 +135,19 @@ export class MainPage {
     setBody();
   }
 
-  setupEventListeners() {
+  setupEventListeners(container: HTMLElement) : void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
-    this.addEventListeners();
+      const form: HTMLFormElement | null = container.querySelector("#create-oper-form");
+      if (!form) return;
+      if (form) {
+          form.addEventListener("submit", (e) => {
+              e.preventDefault();
+              this.handleOperationRequest(form);
+          });
+      }
+
+      this.addEventListeners();
   }
   openPopup(): void {
     const popup = document.getElementById("popup");
@@ -153,6 +177,120 @@ export class MainPage {
     else if (selectedType === "expense" && expenseField)
       expenseField.classList.remove("hidden");
   }
+
+    async handleOperationRequest(form: HTMLFormElement): Promise<void> {
+        const [
+            costInput,
+            operationTypeInput,
+            operationDateInput,
+            commentInput,
+            accountInput,
+            // receiverInput,
+            // nameInput,
+            categoryInput,
+        ] = getOperationInputs(form);
+
+        if (
+            (!costInput ||
+                !operationTypeInput ||
+                !operationDateInput ||
+                !commentInput ||
+                !accountInput || !categoryInput) && operationTypeInput?.value == "expense"
+        ) {
+            console.error("Не удалось найти все необходимые поля формы операции");
+            return;
+        } else if(            (!costInput ||
+            !operationTypeInput ||
+            !operationDateInput ||
+            !commentInput ||
+            !accountInput ) && operationTypeInput?.value == "income"){
+            console.error("Не удалось найти все необходимые поля формы операции");
+            return;
+        }
+        const isValidRashod = validateOperationFormRashod(
+            costInput.value,
+            operationTypeInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            accountInput.value,
+            categoryInput.value,
+            form
+        );
+
+        const isValidDohod = validateOperationFormDohod(
+            costInput.value,
+            operationTypeInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            accountInput.value,
+            form
+        );
+
+        if (!isValidRashod && isValidDohod ) {
+            console.warn("Ошибка валидации данных операции - ValidRashod");
+            return;
+        }
+        if (!isValidDohod && isValidRashod ) {
+            console.warn("Ошибка валидации данных операции - ValidDohod");
+            return;
+        }
+
+        if (!isValidDohod && !isValidRashod ) {
+            console.warn("Ошибка валидации данных операции - ValidDohodRashod");
+            return;
+        }
+
+        const accountId = parseInt(accountInput.value, 10);
+        const categoryId = parseInt(categoryInput.value, 10);
+
+        const body = {
+            account_id: accountId,
+            category_id: categoryId,
+            sum: parseFloat(costInput.value),
+            name: "aboba323",
+            type: operationTypeInput.value,
+            description: commentInput.value.trim() || "",
+            created_at: new Date(operationDateInput.value).toISOString(),
+        };
+
+        try {
+            const { ok, status } = await apiFetch(`/account/1/operations`, {
+                method: "POST",
+                body: JSON.stringify(body),
+            });
+
+            if (!ok) {
+                if (status === 400) {
+                    this.inputField.setError(
+                        [
+                            costInput,
+                            operationTypeInput,
+                            operationDateInput,
+                            commentInput,
+                            accountInput,
+                            categoryInput,
+                            // nameInput,
+                        ],
+                        true,
+                        "Некорректные данные операции"
+                    );
+                    // } else if (status === 409) {
+                    //     this.inputField.setError([nameInput], true, "Такая операция уже существует");
+                } else if (status === 500) {
+                    setServerCreateOperError();
+                } else {
+                    setServerCreateOperError();
+                }
+                return;
+            }
+
+            console.info("Операция успешно создана");
+        } catch (error) {
+            console.error("Ошибка при выполнении запроса:", error);
+            setServerCreateOperError();
+        }
+        router.navigate('/');
+    }
 
   addEventListeners(): void {
     const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");

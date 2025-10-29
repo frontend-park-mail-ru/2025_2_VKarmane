@@ -26,6 +26,7 @@ export function openEditCategoryPopup(data: {
 
     const popup = document.getElementById("categoryEditPopup");
     if (popup) popup.style.display = "flex";
+
 }
 
 export function closeEditCategoryPopup(): void {

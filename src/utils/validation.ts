@@ -41,10 +41,10 @@ export class Validator {
                 minLength: 3,
                 maxLength: 100,
             },
-            account: {
-                required: true,
-                pattern: /^Счет\s*№\d+$/, // пока сделал так, потом поправим
-            },
+            // account: {
+            //     required: true,
+            //     pattern: /^Счет\s*№\d+$/, // пока сделал так, потом поправим
+            // },
             categoryName: {
                 required: true,
                 minLength: 3,
@@ -133,9 +133,15 @@ export class Validator {
 
         value = value.toString().trim();
 
-        if (!value) {
+        if (!value && rules.required) {
             return messages.required;
         }
+
+        if (!value && !rules.required)
+            return;
+
+
+
 
         if (rules.pattern && !rules.pattern.test(value)) {
             return messages.pattern;

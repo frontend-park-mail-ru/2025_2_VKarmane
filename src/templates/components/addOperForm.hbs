@@ -5,11 +5,10 @@
         <form class="create-oper-form" id="create-oper-form">
 
             <div class="input-group">
-                <input type="text" placeholder="Стоимость (обяз.)" required />
+                <input type="text" name="cost" placeholder="Стоимость (обяз.)" required />
             </div>
-
             <div class="input-group">
-                <select id="operationType" required onchange="handleOperationTypeChange()">
+                <select id="operationType" name="operationType" required  onchange="handleOperationTypeChange()">
                     <option value="" disabled selected>Тип операции (обяз.)</option>
                     <option value="income">Доход</option>
                     <option value="expense">Расход</option>
@@ -17,17 +16,17 @@
             </div>
 
             <div class="input-group">
-                <input type="date" required />
+                <input type="date" name="operationDate" required />
             </div>
 
             <div class="extra-field income-field hidden"></div>
 
             <div class="extra-field expense-field hidden">
                 <div class="input-group">
-                    <select>
+                    <select id="create-operation-category" name="category"">
                         <option value="" disabled selected>Сфера услуг</option>
-                        <option value="card">Еда / Напитки</option>
-                        <option value="cash">Игры</option>
+                        <option value="1">Еда / Напитки</option>
+                        <option value="2">Игры</option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -36,14 +35,14 @@
             </div>
 
             <div class="input-group">
-                <input type="text" placeholder="Комментарий к операции (необяз.)" />
+                <input type="text" name="comment" placeholder="Комментарий к операции (необяз.)" />
             </div>
 
             <div class="input-group">
-                <select>
+                <select id="create-operation-account-num" name="account">
                     <option value="" disabled selected>Выберите счет</option>
-                    <option value="card">Счет №1</option>
-                    <option value="cash">Счет №2</option>
+                    <option value="1">Счет №1</option>
+                    <option value="2">Счет №2</option>
                 </select>
             </div>
 

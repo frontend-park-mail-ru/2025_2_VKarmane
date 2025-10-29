@@ -113,32 +113,38 @@ export function validateCategoryRedactForm(
 }
 
 
-export function getOperationInputs(form: HTMLFormElement): HTMLInputElement[] {
-    const costInput = form.querySelector<HTMLInputElement>('input[placeholder="Стоимость (обяз.)"]');
-    const operationTypeInput = form.querySelector<HTMLSelectElement>("#operationType");
-    const operationDateInput = form.querySelector<HTMLInputElement>('input[type="date"]');
-    const commentInput = form.querySelector<HTMLInputElement>('input[placeholder="Комментарий к операции (необяз.)"]');
-    const accountInput = form.querySelector<HTMLSelectElement>('select:last-of-type');
+export function getOperationInputs(form: HTMLFormElement) {
+    const costInput = form.querySelector<HTMLInputElement>('input[name="cost"]');
+    const operationTypeInput = form.querySelector<HTMLSelectElement>('select[name="operationType"]');
+    const operationDateInput = form.querySelector<HTMLInputElement>('input[name="operationDate"]');
+    const commentInput = form.querySelector<HTMLInputElement>('input[name="comment"]');
+    const accountInput = form.querySelector<HTMLSelectElement>('select[name="account"]');
+    const categoryInput = form.querySelector<HTMLSelectElement>('select[name="category"]');
 
     if (!costInput || !operationTypeInput || !operationDateInput || !commentInput || !accountInput)
-        throw new Error("Один или несколько инпутов формы операции не найдены");
+        throw new Error("Не удалось найти все поля формы операции");
 
-    return [costInput, operationTypeInput, operationDateInput, commentInput, accountInput];
+    return [costInput, operationTypeInput, operationDateInput, commentInput, accountInput, categoryInput];
 }
 
 
-export function getEditOperationInputs(form: HTMLFormElement): (HTMLInputElement | HTMLSelectElement)[] {
+
+export function getEditOperationInputs(form: HTMLFormElement): (HTMLInputElement | HTMLSelectElement | string | null)[] {
     const costInput = form.querySelector<HTMLInputElement>('input[placeholder="Стоимость (обяз.)"]');
     const operationDateInput = form.querySelector<HTMLInputElement>('input[type="date"]');
-    const categoryInput = form.querySelector<HTMLSelectElement>("#editCategory");
-    const organizationInput = form.querySelector<HTMLInputElement>('input[placeholder="Наименование организации"]');
+    // const categoryInput = form.querySelector<HTMLSelectElement>("#editCategory");
+    // const organizationInput = form.querySelector<HTMLInputElement>('input[placeholder="Наименование организации"]');
     const commentInput = form.querySelector<HTMLInputElement>('input[placeholder="Комментарий к операции (необяз.)"]');
+    const transaction_id = form.dataset.transactionId ?? null;
 
-    if (!costInput || !operationDateInput || !commentInput)
+    if (!costInput || !operationDateInput || !commentInput) {
         throw new Error("Один или несколько инпутов формы редактирования операции не найдены");
+    }
 
-    return [costInput, operationDateInput, categoryInput, organizationInput, commentInput];
+    return [costInput, operationDateInput, commentInput, transaction_id];
 }
+
+
 
 
 export function getCategoryInputs(form: HTMLFormElement): (HTMLInputElement | HTMLSelectElement)[] {
@@ -211,7 +217,7 @@ export function setServerEditCategoryError(): void {
 }
 
 
-export function validateOperationForm(
+export function validateOperationFormDohod(
     cost: string,
     operationType: string,
     operationDate: string,
@@ -229,6 +235,7 @@ export function validateOperationForm(
         const error = validator.validate(fieldName, fieldValue);
         if (error !== undefined) {
             inputField.setError([inputElem as HTMLInputElement], true, error);
+            console.warn(error);
             return false;
         }
         return true;
@@ -243,8 +250,55 @@ export function validateOperationForm(
     if (!costInput || !typeInput || !dateInput || !commentInput || !accountInput)
         return false;
 
+    const formattedDate = operationDate ? operationDate.split("-").reverse().join(".") : "";
+
+    return (
+        checkField("cost", cost, costInput) &&
+        checkField("operationType", operationType, typeInput) &&
+        checkField("operationDate", formattedDate, dateInput) &&
+        checkField("comment", comment, commentInput)
+        // checkField("account", account, accountInput)
+    );
+}
+
+
+export function validateOperationFormRashod(
+    cost: string,
+    operationType: string,
+    operationDate: string,
+    comment: string,
+    account: string,
+    categoryInput : string,
+    form: HTMLFormElement
+) {
+    const validator = new Validator();
+
+    const checkField = (
+        fieldName: string,
+        fieldValue: string,
+        inputElem: HTMLInputElement | HTMLSelectElement
+    ) => {
+        const error = validator.validate(fieldName, fieldValue);
+        if (error !== undefined) {
+            inputField.setError([inputElem as HTMLInputElement], true, error);
+            console.warn(error);
+            return false;
+        }
+        return true;
+    };
+
+    const costInput = form.querySelector<HTMLInputElement>('input[name="cost"]');
+    const typeInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('[name="operationType"]');
+    const dateInput = form.querySelector<HTMLInputElement>('input[name="operationDate"]');
+    const commentInput = form.querySelector<HTMLInputElement>('input[name="comment"]');
+    const accountInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('input[name="account"], select[name="account"]');
+    const categorieInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('.select-category');
+
+    if (!costInput || !typeInput || !dateInput || !commentInput || !accountInput || categorieInput)
+        return false;
+
     // Преобразуем дату к нужному формату, если нужно
-    const formattedDate = dateInput.value ? dateInput.value.split("-").reverse().join(".") : "";
+    const formattedDate = operationDate ? operationDate.split("-").reverse().join(".") : "";
 
     return (
         checkField("cost", cost, costInput) &&
@@ -252,16 +306,15 @@ export function validateOperationForm(
         checkField("operationDate", formattedDate, dateInput) &&
         checkField("comment", comment, commentInput) &&
         checkField("account", account, accountInput)
+        // checkField("comment", categoryInput, categorieInput)
     );
 }
 
 
 export function validateOperationRedactForm(
     cost: string,
-    operationType: string,
     operationDate: string,
     comment: string,
-    account: string,
     form: HTMLFormElement
 ) {
     const validator = new Validator();
@@ -280,21 +333,17 @@ export function validateOperationRedactForm(
     };
 
     const costInput = form.querySelector<HTMLInputElement>('input[name="cost"]');
-    const typeInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('[name="operationType"]');
     const dateInput = form.querySelector<HTMLInputElement>('input[name="operationDate"]');
     const commentInput = form.querySelector<HTMLInputElement>('input[name="comment"]');
-    const accountInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('input[name="account"], select[name="account"]');
 
-    if (!costInput || !typeInput || !dateInput || !commentInput || !accountInput)
+    if (!costInput ||  !dateInput || !commentInput)
         return false;
 
-    const formattedDate = dateInput.value ? dateInput.value.split("-").reverse().join(".") : "";
+    const formattedDate = operationDate ? operationDate.split("-").reverse().join(".") : "";
 
     return (
         checkField("cost", cost, costInput) &&
-        checkField("operationType", operationType, typeInput) &&
         checkField("operationDate", formattedDate, dateInput) &&
-        checkField("comment", comment, commentInput) &&
-        checkField("account", account, accountInput)
+        checkField("comment", comment, commentInput)
     );
 }
