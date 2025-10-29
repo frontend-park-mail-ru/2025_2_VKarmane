@@ -136,6 +136,9 @@ export class TransactionsPage {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
+    const { ok, data } = await apiFetch("/profile");
+    if (!ok) throw new Error("failed to get user profile");
+
     //TODO: Сделать ручки для работы с аккаунтами
     const accounts = [1, 2];
 
@@ -149,7 +152,7 @@ export class TransactionsPage {
         );
         if (!ok) {
           console.error("Ошибка получения операций:", error);
-          return [];
+          router.navigate("/login");
         }
 
         return data.operations.map((operation: OperationFromBackend) => ({
@@ -178,18 +181,18 @@ export class TransactionsPage {
       },
     ];
 
-    const data = {
+    const data_ = {
       menu: this.menu.getSelf(),
       addOperations: this.addOperations.getSelf(),
       addCategories: this.addCategory.getSelf(),
       transactions: this.transactions.getList(operations),
       categories: this.categories.getList(dataCategories),
-      profile_block: this.profileBlock.getSelf("aboba", 1111),
+      profile_block: this.profileBlock.getSelf(data.login, data.user_id),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.RedactCategory.getSelf(),
     };
 
-    container.innerHTML = this.template(data);
+    container.innerHTML = this.template(data_);
     setBody();
 
     this.setupEventListeners(container);
