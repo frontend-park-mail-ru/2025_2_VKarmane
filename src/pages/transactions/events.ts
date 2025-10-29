@@ -8,7 +8,33 @@ import {
 import { router } from "../../router.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
+const trackedListeners: {
+  element: EventTarget;
+  type: string;
+  handler: EventListenerOrEventListenerObject;
+  options?: boolean | AddEventListenerOptions | undefined;
+}[] = [];
+
+function addListener(
+  element: EventTarget,
+  type: string,
+  handler: EventListenerOrEventListenerObject,
+  options?: boolean | AddEventListenerOptions,
+) {
+  element.addEventListener(type, handler, options);
+  trackedListeners.push({ element, type, handler, options });
+}
+
+function removeAllListeners() {
+  for (const { element, type, handler, options } of trackedListeners) {
+    element.removeEventListener(type, handler, options);
+  }
+  trackedListeners.length = 0;
+}
+
 export function addEventListeners(context: any): void {
+  removeAllListeners();
+
   const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
   const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
   const openCategoryBtn =
@@ -23,7 +49,7 @@ export function addEventListeners(context: any): void {
     context.closeCategoryPopup(),
   );
 
-  document.addEventListener("change", (e: Event) => {
+  addListener(document, "change", (e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target?.type === "file" && target.id === "categoryIcon") {
       const popupForm = target.closest<HTMLElement>(".popup-form");
@@ -33,7 +59,17 @@ export function addEventListeners(context: any): void {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  // document.addEventListener("change", (e: Event) => {
+  //   const target = e.target as HTMLInputElement;
+  //   if (target?.type === "file" && target.id === "categoryIcon") {
+  //     const popupForm = target.closest<HTMLElement>(".popup-form");
+  //     const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
+  //     if (!fileNameBox) return;
+  //     fileNameBox.textContent = target.files?.[0]?.name || "Файл не выбран";
+  //   }
+  // });
+
+  addListener(document, "click", (e) => {
     let target = e.target as HTMLElement | null;
     if (!target) return;
 
@@ -84,7 +120,8 @@ export function addEventListeners(context: any): void {
 
     window.openEditPopup(data);
   });
-  document.addEventListener("click", async (e) => {
+
+  addListener(document, "click", async (e) => {
     const target = e.target as HTMLElement;
     console.log(target);
     const deleteBtn = target.closest(".delete-btn");
@@ -110,13 +147,13 @@ export function addEventListeners(context: any): void {
       },
     );
     if (ok) {
-      router.navigate("/profile");
+      router.navigate("/transactions");
     } else {
       console.log(error);
     }
   });
 
-  document.addEventListener("click", (e) => {
+  addListener(document, "click", (e) => {
     const target = e.target as HTMLElement;
     document.querySelectorAll<HTMLElement>(".popup-menu").forEach((menu) => {
       const kebabMenu = menu.closest(".kebab-menu");
@@ -139,7 +176,7 @@ export function addEventListeners(context: any): void {
     }
   });
 
-  document.addEventListener("click", (e) => {
+  addListener(document, "click", (e) => {
     const btn = (e.target as HTMLElement).closest(".cat-edi");
     if (!btn) return;
 
@@ -167,11 +204,11 @@ export function addEventListeners(context: any): void {
       categoryInput,
     ] = getOperationInputs(form);
 
-    costInput.addEventListener("input", () => {
+    addListener(costInput, "input", () => {
       validateOperationField("cost", costInput.value, costInput);
     });
 
-    operationTypeInput.addEventListener("change", () => {
+    addListener(operationTypeInput, "change", () => {
       validateOperationField(
         "operationType",
         operationTypeInput.value,
@@ -179,7 +216,7 @@ export function addEventListeners(context: any): void {
       );
     });
 
-    operationDateInput.addEventListener("input", () => {
+    addListener(operationDateInput, "input", () => {
       let formattedDate = "";
       if (operationDateInput.value) {
         formattedDate = operationDateInput.value.split("-").reverse().join(".");
@@ -191,16 +228,16 @@ export function addEventListeners(context: any): void {
       );
     });
 
-    commentInput.addEventListener("input", () => {
+    addListener(commentInput, "input", () => {
       validateOperationField("comment", commentInput.value, commentInput);
     });
 
-    accountInput.addEventListener("change", () => {
+    addListener(accountInput, "change", () => {
       validateOperationField("account", accountInput.value, accountInput);
     });
 
     if (categoryInput) {
-      categoryInput.addEventListener("change", () => {
+      addListener(categoryInput, "change", () => {
         validateOperationField("category", categoryInput.value, categoryInput);
       });
     }
@@ -211,11 +248,11 @@ export function addEventListeners(context: any): void {
     const [editCostInput, editOperationDateInput, editCommentInput] =
       getEditOperationInputs(editForm);
 
-    editCostInput.addEventListener("input", () => {
+    addListener(editCostInput, "input", () => {
       validateOperationField("cost", editCostInput.value, editCostInput);
     });
 
-    editOperationDateInput.addEventListener("input", () => {
+    addListener(editOperationDateInput, "input", () => {
       let formattedDate = "";
       if (editOperationDateInput.value) {
         formattedDate = editOperationDateInput.value
@@ -230,7 +267,7 @@ export function addEventListeners(context: any): void {
       );
     });
 
-    editCommentInput.addEventListener("input", () => {
+    addListener(editCommentInput, "input", () => {
       validateOperationField(
         "comment",
         editCommentInput.value,
@@ -245,7 +282,7 @@ export function addEventListeners(context: any): void {
     const [categoryNameInput, categoryIconInput, categoryDescInput] =
       getCategoryInputs(createCategoryForm);
 
-    categoryNameInput.addEventListener("input", () => {
+    addListener(categoryNameInput, "input", () => {
       validateOperationField(
         "categoryName",
         categoryNameInput.value,
@@ -253,12 +290,12 @@ export function addEventListeners(context: any): void {
       );
     });
 
-    categoryIconInput.addEventListener("change", () => {
+    addListener(categoryIconInput, "change", () => {
       const file = categoryIconInput.files?.[0];
       validateOperationField("categoryIcon", file as any, categoryIconInput);
     });
 
-    categoryDescInput.addEventListener("input", () => {
+    addListener(categoryDescInput, "input", () => {
       validateOperationField(
         "categoryDescription",
         categoryDescInput.value,
@@ -277,7 +314,7 @@ export function addEventListeners(context: any): void {
       editCategoryDescInput,
     ] = getEditCategoryInputs(editCategoryForm);
 
-    editCategoryNameInput.addEventListener("input", () => {
+    addListener(editCategoryNameInput, "input", () => {
       validateOperationField(
         "categoryName",
         editCategoryNameInput.value,
@@ -285,7 +322,7 @@ export function addEventListeners(context: any): void {
       );
     });
 
-    editCategoryIconInput.addEventListener("change", () => {
+    addListener(editCategoryIconInput, "change", () => {
       const file = editCategoryIconInput.files?.[0];
       validateOperationField(
         "categoryIcon",
@@ -294,7 +331,7 @@ export function addEventListeners(context: any): void {
       );
     });
 
-    editCategoryDescInput.addEventListener("input", () => {
+    addListener(editCategoryDescInput, "input", () => {
       validateOperationField(
         "categoryDescription",
         editCategoryDescInput.value,
