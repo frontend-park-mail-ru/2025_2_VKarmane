@@ -185,7 +185,6 @@ export class MainPage {
             operationDateInput,
             commentInput,
             accountInput,
-            // receiverInput,
             // nameInput,
             categoryInput,
         ] = getOperationInputs(form);

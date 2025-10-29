@@ -31,7 +31,6 @@ export function addEventListeners(context: any): void {
         let target = e.target as HTMLElement | null;
         if (!target) return;
 
-        // Если клик по текстовому узлу, берем родителя
         if (target.nodeType !== 1) {
             target = target.parentElement;
             if (!target) return;

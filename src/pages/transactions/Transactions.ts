@@ -56,6 +56,7 @@ interface OperationFromBackend {
     sum: number;
     date: Date;
     transaction_id : number;
+    name : string;
 }
 
 declare global {
@@ -142,7 +143,7 @@ export class TransactionsPage {
                 }
 
                 return data.operations.map((operation: OperationFromBackend) => ({
-                    OrganizationTitle: "Мок",
+                    OrganizationTitle: operation.name,
                     CategoryName: `Категория ${operation.category_id}`,
                     OperationPrice: operation.sum,
                     OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
@@ -255,9 +256,8 @@ export class TransactionsPage {
             operationDateInput,
             commentInput,
             accountInput,
-            // receiverInput,
-            // nameInput,
             categoryInput,
+            titleInput,
         ] = getOperationInputs(form);
 
         if (
@@ -265,7 +265,7 @@ export class TransactionsPage {
             !operationTypeInput ||
             !operationDateInput ||
             !commentInput ||
-            !accountInput || !categoryInput) && operationTypeInput?.value == "expense"
+            !accountInput || !categoryInput ||!titleInput) && operationTypeInput?.value == "expense"
         ) {
             console.error("Не удалось найти все необходимые поля формы операции");
             return;
@@ -284,6 +284,7 @@ export class TransactionsPage {
             commentInput.value,
             accountInput.value,
             categoryInput.value,
+            titleInput.value,
             form
         );
 
@@ -317,7 +318,7 @@ export class TransactionsPage {
             account_id: accountId,
             category_id: categoryId,
             sum: parseFloat(costInput.value),
-            name: "aboba323",
+            name: titleInput.value,
             type: operationTypeInput.value,
             description: commentInput.value.trim() || "",
             created_at: new Date(operationDateInput.value).toISOString(),

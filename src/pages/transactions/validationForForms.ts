@@ -120,11 +120,12 @@ export function getOperationInputs(form: HTMLFormElement) {
     const commentInput = form.querySelector<HTMLInputElement>('input[name="comment"]');
     const accountInput = form.querySelector<HTMLSelectElement>('select[name="account"]');
     const categoryInput = form.querySelector<HTMLSelectElement>('select[name="category"]');
+    const titleInput = form.querySelector<HTMLInputElement>('input[name="title"]');
 
-    if (!costInput || !operationTypeInput || !operationDateInput || !commentInput || !accountInput)
+    if (!costInput || !operationTypeInput || !operationDateInput || !commentInput || !accountInput || !titleInput)
         throw new Error("Не удалось найти все поля формы операции");
 
-    return [costInput, operationTypeInput, operationDateInput, commentInput, accountInput, categoryInput];
+    return [costInput, operationTypeInput, operationDateInput, commentInput, accountInput, categoryInput, titleInput];
 }
 
 
@@ -257,7 +258,6 @@ export function validateOperationFormDohod(
         checkField("operationType", operationType, typeInput) &&
         checkField("operationDate", formattedDate, dateInput) &&
         checkField("comment", comment, commentInput)
-        // checkField("account", account, accountInput)
     );
 }
 
@@ -269,6 +269,7 @@ export function validateOperationFormRashod(
     comment: string,
     account: string,
     categoryInput : string,
+    title : string,
     form: HTMLFormElement
 ) {
     const validator = new Validator();
@@ -293,8 +294,9 @@ export function validateOperationFormRashod(
     const commentInput = form.querySelector<HTMLInputElement>('input[name="comment"]');
     const accountInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('input[name="account"], select[name="account"]');
     const categorieInput = form.querySelector<HTMLInputElement | HTMLSelectElement>('.select-category');
+    const titleInput = form.querySelector<HTMLInputElement>('input[name="title"]');
 
-    if (!costInput || !typeInput || !dateInput || !commentInput || !accountInput || categorieInput)
+    if (!costInput || !typeInput || !dateInput || !commentInput || !accountInput || categorieInput || !titleInput)
         return false;
 
     // Преобразуем дату к нужному формату, если нужно
@@ -305,8 +307,8 @@ export function validateOperationFormRashod(
         checkField("operationType", operationType, typeInput) &&
         checkField("operationDate", formattedDate, dateInput) &&
         checkField("comment", comment, commentInput) &&
-        checkField("account", account, accountInput)
-        // checkField("comment", categoryInput, categorieInput)
+        checkField("account", account, accountInput) &&
+        checkField("comment", title, titleInput)
     );
 }
 
