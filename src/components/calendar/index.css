@@ -64,3 +64,17 @@
 .calendar-day.empty:hover {
   background-color: transparent;
 }
+
+.calendar-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.calendar-legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
