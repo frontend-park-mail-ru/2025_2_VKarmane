@@ -1,8 +1,11 @@
 import Handlebars from "handlebars";
 import AddOperTemplate from "../../templates/components/addOperForm.hbs?raw";
+import { InputField } from "../inputField/index.js";
+import type { TemplateFn } from "../../types/handlebars.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { convertToISO } from "../../utils/helpers.js";
 import { router } from "../../router.js";
+import { Validator } from "../../utils/validation.js";
 
 declare global {
   interface Window {
@@ -15,19 +18,23 @@ export class AddOperation {
     Доход: "income",
     Расход: "expense",
   };
-  template: Handlebars.TemplateDelegate;
+  inputField: InputField;
+  template: TemplateFn;
 
   constructor(
     ClosePopupCallback: () => void,
     handleOperationTypeChange: () => void,
   ) {
     this.template = Handlebars.compile(AddOperTemplate);
+    this.inputField = new InputField();
     window.closePopup = ClosePopupCallback.bind(this);
     window.handleOperationTypeChange = handleOperationTypeChange.bind(this);
   }
 
-  getSelf(): Handlebars.TemplateDelegate {
-    return this.template;
+  getSelf(): string {
+    return this.template({
+      sumInput: this.inputField.getSelf("text", "sum", "Стоимость (обяз.)"),
+    });
   }
 
   setEventListeners(): void {
@@ -35,8 +42,22 @@ export class AddOperation {
       "add-operation-form",
     ) as HTMLFormElement;
     if (!form) return;
+
+    const sumInput = document.querySelector(".input-field") as HTMLInputElement;
+    if (!sumInput) throw new Error("no sum input element");
+
+    sumInput.addEventListener("input", () => {
+      this.validateSingleField("sum", sumInput.value, sumInput);
+    });
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const validator = new Validator();
+      const sumError = validator.validate("sum", sumInput.value);
+      if (sumError) {
+        this.inputField.setError([sumInput], true, sumError);
+        return;
+      }
       const { cost, type, date, comment, account, category, receiver } =
         this.getValuesFromForm();
       const { ok, error } = await apiFetch(`/account/${account}/operations`, {
@@ -61,8 +82,8 @@ export class AddOperation {
   }
 
   getValuesFromForm() {
-    const costInput = document.getElementById(
-      "create-operation-name",
+    const costInput = document.querySelector(
+      ".input-field",
     ) as HTMLInputElement;
     const typeSelect = document.getElementById(
       "operationType",
@@ -100,5 +121,25 @@ export class AddOperation {
       category,
       receiver,
     };
+  }
+
+  validateSingleField(
+    fieldName: string,
+    fieldValue: string,
+    inputElem: HTMLInputElement,
+  ) {
+    const validator = new Validator();
+
+    let error = validator.validate(fieldName, fieldValue);
+
+    if (error !== undefined) {
+      this.inputField.setError([inputElem], true, error);
+      return false;
+    } else {
+      this.inputField.setError([inputElem], false, "");
+      inputElem.classList.remove("border-red");
+      inputElem.classList.add("border-grey");
+      return true;
+    }
   }
 }

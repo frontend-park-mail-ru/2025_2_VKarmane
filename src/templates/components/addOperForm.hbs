@@ -1,14 +1,10 @@
+
 <div class="overlay" id="popup" style="display: none">
   <div class="popup-form">
     <button class="close-btn" onclick="closePopup()">×</button>
     <h2>Новая операция</h2>
     <form id="add-operation-form">
-      <input
-        type="text"
-        placeholder="Стоимость (обяз.)"
-        required
-        id="create-operation-name"
-      />
+      {{{sumInput}}}
 
       <select
         id="operationType"
@@ -27,10 +23,8 @@
         id="create-operation-date"
       />
 
-      <!-- Дополнительные поля для дохода -->
       <div class="extra-field income-field hidden"></div>
 
-      <!-- Дополнительные поля для расхода -->
       <div class="extra-field expense-field hidden">
         <select id="create-operation-category">
           <option value="" disabled selected>Сфера услуг</option>
@@ -52,4 +46,56 @@
       </button>
     </form>
   </div>
-</div>
+=======
+<div class="overlay" id="popup" style="display: none;">
+    <div class="popup-form">
+        <button class="close-btn" onclick="closePopup()">×</button>
+        <h2>Новая операция</h2>
+        <form class="create-oper-form" id="create-oper-form">
+
+            <div class="input-group">
+                <input type="text" placeholder="Стоимость (обяз.)" required />
+            </div>
+
+            <div class="input-group">
+                <select id="operationType" required onchange="handleOperationTypeChange()">
+                    <option value="" disabled selected>Тип операции (обяз.)</option>
+                    <option value="income">Доход</option>
+                    <option value="expense">Расход</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <input type="date" required />
+            </div>
+
+            <div class="extra-field income-field hidden"></div>
+
+            <div class="extra-field expense-field hidden">
+                <div class="input-group">
+                    <select>
+                        <option value="" disabled selected>Сфера услуг</option>
+                        <option value="card">Еда / Напитки</option>
+                        <option value="cash">Игры</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="text" placeholder="Наименование организации" />
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" placeholder="Комментарий к операции (необяз.)" />
+            </div>
+
+            <div class="input-group">
+                <select>
+                    <option value="" disabled selected>Выберите счет</option>
+                    <option value="card">Счет №1</option>
+                    <option value="cash">Счет №2</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn-cat" >+ Добавить операцию</button>
+        </form>
+    </div>

@@ -1,23 +1,26 @@
-<div class="calendar-section">
-  <div class="calendar-widget">
-    <div class="calendar-header">
-      <div class="calendar-month">{{month}}</div>
-    </div>
+<div class="calendar-widget">
+  <div class="calendar-header">
+    <div class="calendar-month">{{month}}</div>
+  </div>
 
-    <div class="calendar-grid">
-      <div class="calendar-day-header">пн</div>
-      <div class="calendar-day-header">вт</div>
-      <div class="calendar-day-header">ср</div>
-      <div class="calendar-day-header">чт</div>
-      <div class="calendar-day-header">пт</div>
-      <div class="calendar-day-header">сб</div>
-      <div class="calendar-day-header">вс</div>
-
-      {{#each days}}
-      <div class="calendar-day {{#if this.highlighted}}highlighted{{/if}}">
-        {{this.day}}
-      </div>
-      {{/each}}
+  <div class="calendar-grid">
+    {{#each emptyDays}}
+    <div class="calendar-day empty"></div>
+    {{/each}} {{#each days}}
+    <div
+      class="calendar-day"
+      style="background-color: {{color}}"
+      title="Сумма: {{sum}}"
+    >
+      {{day}}
     </div>
+    {{/each}}
+  </div>
+
+  <div class="calendar-legend">
+    <span>меньше</span>
+    <div class="calendar-legend-color" style="background-color: #ffd7c2"></div>
+    <div class="calendar-legend-color" style="background-color: #eb5b1d"></div>
+    <span>больше</span>
   </div>
 </div>

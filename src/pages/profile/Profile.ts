@@ -6,6 +6,8 @@ import { Calendar } from "../../components/calendar/index.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { setBody } from "../../utils/bodySetters.js";
 import { EditProfile } from "../../components/editProfile/index.js";
+import type { TransactionIntefrace } from "../../schemas/index.js";
+import { router } from "../../router.js";
 
 export class ProfilePage {
   menu: Menu;
@@ -25,21 +27,42 @@ export class ProfilePage {
   async render(container: HTMLElement): Promise<void> {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
-    console.log("abb");
     const { ok, data } = await apiFetch(`/profile`, {
       method: "GET",
     });
     if (!ok) {
-      console.log("error");
+      router.navigate("/login");
       return;
     }
+
+    const accounts = [1, 2];
+    const allOps = await Promise.all(
+      accounts.map(async (id) => {
+        const { ok, data, error } = await apiFetch(
+          `/account/${id}/operations`,
+          {
+            method: "GET",
+          },
+        );
+
+        if (!ok) {
+          console.error("Ошибка получения операций:", error);
+          return [];
+        }
+
+        return data.operations.map(
+          (operation: TransactionIntefrace) => operation,
+        );
+      }),
+    );
+    const operations = allOps.flat();
     const name =
       data.first_name + data.last_name
         ? data.first_name + " " + data.last_name
         : "";
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
-      calendar: this.calendar.getSelf(),
+      calendar: this.calendar.getSelf(operations),
       name: name,
       date: new Date(data.created_at).toLocaleDateString("ru-RU"),
       login: data.login,

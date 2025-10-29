@@ -1,48 +1,54 @@
 <div class="Categories">
-  <div class="metric-list"></div>
-  <div class="category-list">
-    {{#if categories_exists}}
-    <div class="Transaction-header">
-      <p class="Transact-Category-text">Категории</p>
-      <button onclick="openCategoryPopup()" class="open-btn">+</button>
+    <div class="metric-list">
     </div>
-    <div class="cat-list">
-      {{#each categoriesItems}}
-      <div class="category-card">
-        <div class="category-card-info">
-          <div class="category-card-img">
-            <img src="/imgs/Eat_Drinks.svg" alt="" />
-          </div>
-          <div class="category-card-info-text">
-            <div class="category-card-text-group">
-              <p class="category-card-info-title">{{CategoryName}}</p>
-              <p class="category-card-info-status">{{CategoryStatus}}</p>
-            </div>
-            <div
-              class="category-card-text-group2"
-              style="display: flex; gap: 5px; font-size: 0.8rem"
-            >
-              <p class="category-card-info-time">Количество операций:</p>
-              <p class="category-card-info-number">{{CategoryAmount}}</p>
-            </div>
-          </div>
-          <div class="kebab-menu">
-            <button class="kebab-btn">&#8942;</button>
-          </div>
+    <div class="category-list">
+        {{#if categories_exists}}
+        <div class="Transaction-header">
+            <p class="Transact-Category-text">Категории</p>
+            <button onclick="openCategoryPopup()" class="open-btn">+</button>
         </div>
-      </div>
-      {{/each}}
+        <div class="cat-list">
+            {{#each categoriesItems}}
+            <div class="category-card">
+                <div class="category-card-info">
+                    <div class="category-card-img">
+                        <img src="/imgs/Eat_Drinks.svg" alt="">
+                    </div>
+                    <div class="category-card-info-text">
+                        <div class="category-card-text-group">
+                            <p class="category-card-info-title">{{CategoryName}}</p>
+                            <p class="category-card-info-status">{{CategoryStatus}}</p>
+                        </div>
+                        <div class="category-card-text-group2" style="display: flex; gap: 5px; font-size: 0.8rem">
+                            <p class="category-card-info-time">Количество операций:</p>
+                            <p class="category-card-info-number">{{CategoryAmount}}</p>
+                        </div>
+                    </div>
+                    <div class="kebab-menu">
+                        <button class="kebab-btn">&#8942;</button>
+                        <div class="popup-menu">
+                            <button class="cat-edi" >
+                                Редактировать <img src="/imgs/RedactButtonImg.svg" alt="">
+                            </button>
+                            <button class="delete-btn">
+                                Удалить <img src="/imgs/DeleteButtonImg.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+            <div>
+                <div class="oper_not_exists">
+                    <div class="oper_not_exists_img"></div>
+                    <h2 style="color: #949494; font-size: 20px">
+                        Тут пока ничего нет :(
+                    </h2>
+                    <a class="add_operation" onclick="openCategoryPopup()">+ Добавить категорию</a>
+                </div>
+            </div>
+        {{/if}}
     </div>
-    {{else}}
-    <div>
-      <div class="oper_not_exists">
-        <div class="oper_not_exists_img"></div>
-        <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
-        <a class="add_operation" onclick="openCategoryPopup()"
-          >+ Добавить категорию</a
-        >
-      </div>
-    </div>
-    {{/if}}
-  </div>
 </div>

@@ -1,36 +1,24 @@
-<div class="overlay" id="categoryPopup" style="display: none">
-  <div class="popup-form">
-    <button class="close-btn" onclick="closeCategoryPopup()">×</button>
-    <h2>Новая категория</h2>
+<div class="overlay" id="categoryPopup" style="display: none;">
+    <div class="popup-form">
+        <button class="close-btn" onclick="closeCategoryPopup()">×</button>
+        <h2>Новая категория</h2>
+        <form class="create-category-form" id="categoryForm">
 
-    <form id="categoryForm">
-      <!-- Название категории -->
-      <input type="text" placeholder="Название категории (обяз.)" required />
+            <div class="input-group">
+                <input type="text" placeholder="Название категории (обяз.)" required />
+            </div>
 
-      <!-- Тип категории -->
-      <select id="categoryType" required>
-        <option value="" disabled selected>Тип категории (обяз.)</option>
-        <option value="income">Доход</option>
-        <option value="expense">Расход</option>
-      </select>
+            <div class="input-group">
+                <label for="categoryIcon" class="upload-label">Загрузить иконку</label>
+                <input type="file" id="categoryIcon" accept="image/*" style="display: none;" />
+                <div class="file-name" id="fileName">Файл не выбран</div>
+            </div>
 
-      <!-- Загрузка иконки -->
-      <label for="categoryIcon" class="upload-label">Загрузить иконку</label>
-      <input
-        type="file"
-        id="categoryIcon"
-        accept="image/*"
-        style="display: none"
-      />
+            <div class="input-group">
+                <input type="text" placeholder="Описание категории (необяз.)" />
+            </div>
 
-      <!-- Отображение имени файла -->
-      <div class="file-name" id="fileName">Файл не выбран</div>
-
-      <!-- Описание -->
-      <input type="text" placeholder="Описание категории (необяз.)" />
-
-      <!-- Кнопка -->
-      <button type="submit" class="submit-btn">+ Добавить категорию</button>
-    </form>
-  </div>
+            <button type="submit" class="submit-btn-cat">+ Добавить категорию</button>
+        </form>
+    </div>
 </div>
