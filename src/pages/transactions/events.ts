@@ -8,7 +8,7 @@ import {
 import { router } from "../../router.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 
-export function addEventListeners(context: any, container: HTMLElement): void {
+export function addEventListeners(context: any): void {
   const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
   const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
   const openCategoryBtn =

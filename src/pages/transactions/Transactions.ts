@@ -193,7 +193,7 @@ export class TransactionsPage {
     setBody();
 
     this.setupEventListeners(container);
-    addEventListeners(this, container);
+    addEventListeners(this);
   }
 
   setupEventListeners(container: HTMLElement): void {
