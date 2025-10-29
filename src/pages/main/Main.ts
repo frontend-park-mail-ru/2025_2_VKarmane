@@ -23,9 +23,10 @@ import {
 } from "../transactions/events.js";
 
 import {
-    getOperationInputs, setServerCreateOperError,
+    getEditOperationInputs,
+    getOperationInputs, setServerCreateOperError, setServerEditOperError,
     validateOperationFormDohod,
-    validateOperationFormRashod
+    validateOperationFormRashod, validateOperationRedactForm
 } from "../transactions/validationForForms.js";
 import {apiFetch} from "../../api/fetchWrapper.js";
 
@@ -178,15 +179,15 @@ export class MainPage {
       expenseField.classList.remove("hidden");
   }
 
-    async handleOperationRequest(form: HTMLFormElement): Promise<void> {
+    sync handleOperationRequest(form: HTMLFormElement): Promise<void> {
         const [
             costInput,
             operationTypeInput,
             operationDateInput,
             commentInput,
             accountInput,
-            // nameInput,
             categoryInput,
+            titleInput,
         ] = getOperationInputs(form);
 
         if (
@@ -194,7 +195,7 @@ export class MainPage {
                 !operationTypeInput ||
                 !operationDateInput ||
                 !commentInput ||
-                !accountInput || !categoryInput) && operationTypeInput?.value == "expense"
+                !accountInput || !categoryInput ||!titleInput) && operationTypeInput?.value == "expense"
         ) {
             console.error("Не удалось найти все необходимые поля формы операции");
             return;
@@ -213,6 +214,7 @@ export class MainPage {
             commentInput.value,
             accountInput.value,
             categoryInput.value,
+            titleInput.value,
             form
         );
 
@@ -246,7 +248,7 @@ export class MainPage {
             account_id: accountId,
             category_id: categoryId,
             sum: parseFloat(costInput.value),
-            name: "aboba323",
+            name: titleInput.value,
             type: operationTypeInput.value,
             description: commentInput.value.trim() || "",
             created_at: new Date(operationDateInput.value).toISOString(),
@@ -287,6 +289,79 @@ export class MainPage {
         } catch (error) {
             console.error("Ошибка при выполнении запроса:", error);
             setServerCreateOperError();
+        }
+        router.navigate('/transactions');
+    }
+
+    async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {const [
+        costInput,
+        operationDateInput,
+        commentInput,
+        transaction_id
+    ] = getEditOperationInputs(form);
+
+        if (
+            !costInput ||
+            !operationDateInput ||
+            !commentInput ||
+            !transaction_id
+        ) {
+            console.error(transaction_id);
+            return;
+        }
+
+        const isValid = validateOperationRedactForm(
+            costInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            form
+        );
+
+        if (!isValid) {
+            console.warn("Ошибка валидации данных операции");
+            return;
+        }
+        const body = {
+            category_id: 1,
+            sum: parseFloat(costInput.value),
+            name: operationDateInput.value,
+            description: commentInput.value.trim() || "",
+            created_at: new Date(operationDateInput.value).toISOString(),
+        };
+        if (!transaction_id) {
+            console.error("transaction_id отсутствует!");
+            return;
+        }
+        const opId = Number(transaction_id);
+        if (isNaN(opId)) {
+            console.error(transaction_id);
+            return;
+        }
+
+        const { ok, status } = await apiFetch(`/account/1/operations/${opId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+        });
+
+        if (!ok) {
+            if (status === 400) {
+                this.inputField.setError(
+                    [costInput, operationDateInput, commentInput, transaction_id],
+                    true,
+                    "Некорректные данные операции"
+                );
+            } else if (status === 409) {
+                this.inputField.setError(
+                    [commentInput],
+                    true,
+                    "Такая операция уже существует"
+                );
+            } else if (status === 500) {
+                setServerEditOperError();
+            } else {
+                setServerEditOperError();
+            }
+            return
         }
         router.navigate('/');
     }
