@@ -354,7 +354,6 @@ export class TransactionsPage {
     const body = {
       category_id: 1,
       sum: parseFloat(costInput.value),
-      name: operationDateInput.value,
       description: commentInput.value.trim() || "",
       created_at: new Date(operationDateInput.value).toISOString(),
     };
