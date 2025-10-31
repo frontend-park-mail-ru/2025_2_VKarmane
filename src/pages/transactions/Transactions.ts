@@ -12,40 +12,27 @@ import { InputField } from "../../components/inputField/index.js";
 import { addEventListeners } from "../transactions/events.js";
 
 import {
-  validateField,
-  validateOperationRedactForm,
-  validateCategoryForm,
-  validateCategoryRedactForm,
-  setServerEditOperError,
-  setServerCreateCategoryError,
-  setServerEditCategoryError,
-  setInputsError,
-  getEditOperationInputs,
-  getCategoryInputs,
-  getEditCategoryInputs,
-  getOperationInputs,
-  validateOperationField,
-  setServerCreateOperError,
-  validateOperationFormRashod,
-  validateOperationFormDohod,
+    validateField,
+    validateOperationRedactForm,
+    validateCategoryForm,
+    validateCategoryRedactForm,
+    setServerEditOperError,
+    setServerCreateCategoryError,
+    setServerEditCategoryError,
+    setInputsError,
+    getEditOperationInputs,
+    getCategoryInputs,
+    getEditCategoryInputs,
+    getOperationInputs,
+    validateOperationField, setServerCreateOperError, validateOperationFormRashod, validateOperationFormDohod
 } from "../transactions/validationForForms.js";
 
-import {
-  openPopup,
-  openEditPopup,
-  closeEditPopup,
-  closePopup,
-  formatDateForInput,
-} from "../transactions/operations.js";
-import {
-  closeCategoryPopup,
-  openCategoryPopup,
-  openEditCategoryPopup,
-  closeEditCategoryPopup,
-} from "./categories.js";
-import { setBody } from "../../utils/bodySetters.js";
-import { apiFetch } from "../../api/fetchWrapper.js";
-import { router } from "../../router.js";
+
+import {openPopup, openEditPopup, closeEditPopup, closePopup, formatDateForInput} from "../transactions/operations.js"
+import {closeCategoryPopup, openCategoryPopup, openEditCategoryPopup, closeEditCategoryPopup} from "./categories.js";
+import {setBody} from "../../utils/bodySetters.js";
+import {apiFetch} from "../../api/fetchWrapper.js";
+import {router} from "../../router.js";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -66,6 +53,7 @@ interface OperationFromBackend {
   date: Date;
   transaction_id: number;
   account_id: number;
+  name : string;
 }
 
 declare global {
@@ -92,87 +80,147 @@ declare global {
 }
 
 export class TransactionsPage {
-  private template: Handlebars.TemplateDelegate;
-  private menu: Menu;
-  private addOperations: AddOperation;
-  private addCategory: AddCategory;
-  private transactions: TransactionsList;
-  private categories: CategoriesList;
-  private profileBlock: ProfileBlock;
-  private redactOpers: redactOpers;
-  private RedactCategory: RedactCategory;
-  private inputField: InputField;
+private template: Handlebars.TemplateDelegate;
+private menu: Menu;
+private addOperations: AddOperation;
+private addCategory: AddCategory;
+private transactions: TransactionsList;
+private categories: CategoriesList;
+private profileBlock: ProfileBlock;
+private redactOpers: redactOpers;
+private RedactCategory: RedactCategory;
+private inputField: InputField;
 
-  constructor() {
-    this.template = Handlebars.compile(TransactionsTemplate);
-    this.menu = new Menu();
-    this.addOperations = new AddOperation(
-      closePopup.bind(this),
-      this.handleOperationTypeChange.bind(this),
+constructor() {
+  this.template = Handlebars.compile(TransactionsTemplate);
+  this.menu = new Menu();
+  this.addOperations = new AddOperation(closePopup.bind(this), this.handleOperationTypeChange.bind(this));
+  this.addCategory = new AddCategory();
+  this.inputField = new InputField();
+  this.RedactCategory = new RedactCategory();
+
+  
+  window.openPopup = openPopup.bind(this);
+  window.closePopup = closePopup.bind(this);
+  window.openCategoryPopup = openCategoryPopup.bind(this);
+  window.closeCategoryPopup = closeCategoryPopup.bind(this);
+  window.openEditPopup = openEditPopup.bind(this);
+  window.closeEditPopup = closeEditPopup.bind(this);
+  window.openEditCategoryPopup = openEditCategoryPopup.bind(this);
+  window.closeEditCategoryPopup = closeEditCategoryPopup.bind(this);
+
+  this.transactions = new TransactionsList();
+  this.categories = new CategoriesList();
+  this.profileBlock = new ProfileBlock();
+  this.redactOpers = new redactOpers(closeEditPopup.bind(this), this.handleOperationTypeChange.bind(this));
+}
+
+async render(container: HTMLElement | null): Promise<void> {
+  if (!container) throw new Error("Container element not found!");
+  document.body.classList.remove("hide-scroller");
+
+
+  const { ok, data: profileData } = await apiFetch("/profile");
+  if (!ok) throw new Error("Failed to get user profile");
+
+  let operations: Transaction[] = [];
+  try {
+    const accounts = [1, 2];
+    const allOps = await Promise.all(
+      accounts.map(async (id) => {
+        const { ok, data, error, status } = await apiFetch(`/account/${id}/operations`, {
+          method: "GET",
+        });
+
+        if (!ok) {
+          console.error("Ошибка получения операций:", error);
+          if (status !== 403) router.navigate("/login");
+          return [];
+        }
+
+        return data.operations.map((operation: OperationFromBackend) => ({
+          OrganizationTitle: operation.name || "Мок",
+          CategoryName: `Категория ${operation.category_id}`,
+          OperationPrice: operation.sum,
+          OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+          OperationID: operation.transaction_id,
+          AccountID: operation.account_id,
+        }));
+      })
     );
-    this.addCategory = new AddCategory();
-    this.inputField = new InputField();
-    this.RedactCategory = new RedactCategory();
 
-    window.openPopup = openPopup.bind(this);
-    window.closePopup = closePopup.bind(this);
-    window.openCategoryPopup = openCategoryPopup.bind(this);
-    window.closeCategoryPopup = closeCategoryPopup.bind(this);
-    window.openEditPopup = openEditPopup.bind(this);
-    window.closeEditPopup = closeEditPopup.bind(this);
-    window.openEditCategoryPopup = openEditCategoryPopup.bind(this);
-    window.closeEditCategoryPopup = closeEditCategoryPopup.bind(this);
-
-    this.transactions = new TransactionsList();
-    this.categories = new CategoriesList();
-    this.profileBlock = new ProfileBlock();
-    this.redactOpers = new redactOpers(
-      closeEditPopup.bind(this),
-      this.handleOperationTypeChange.bind(this),
-    );
+    operations = allOps.flat();
+  } catch (err) {
+    console.error("Ошибка при загрузке операций:", err);
+    operations = [];
   }
 
-  async render(container: HTMLElement | null): Promise<void> {
-    if (!container) throw new Error("Container element not found!");
-    document.body.classList.remove("hide-scroller");
+  
+  const dataCategories: Category[] = [
+    { CategoryName: "Продукты", CategoryStatus: "Активна", CategoryAmount: "1200" },
+    { CategoryName: "Транспорт", CategoryStatus: "Неактивна", CategoryAmount: "800" },
+  ];
 
-    const { ok, data } = await apiFetch("/profile");
-    if (!ok) throw new Error("failed to get user profile");
 
-    let operations;
+  const data = {
+    menu: this.menu.getSelf(),
+    addOperations: this.addOperations.getSelf(),
+    addCategories: this.addCategory.getSelf(),
+    transactions: this.transactions.getList(operations),
+    categories: this.categories.getList(dataCategories),
+    profile_block: this.profileBlock.getSelf(profileData?.name || "User", profileData?.balance || 0),
+    redactOperations: this.redactOpers.getSelf(),
+    redactCategories: this.RedactCategory.getSelf(),
+  };
 
-    try {
-      //TODO: Сделать ручки для работы с аккаунтами
-      const accounts = [1, 2];
+  // рендерим
+  container.innerHTML = this.template(data);
+  setBody();
+  addEventListeners(this);
+  this.setupEventListeners(container);
+}
 
-      const allOps = await Promise.all(
-        accounts.map(async (id) => {
-          const { ok, data, error, status } = await apiFetch(
-            `/account/${id}/operations`,
-            {
-              method: "GET",
-            },
-          );
-          if (!ok) {
-            console.error("Ошибка получения операций:", error);
-            if (status != 403) router.navigate("/login");
-          }
+setupEventListeners(container: HTMLElement): void {
+  this.menu.setEvents();
+  this.profileBlock.setEvents();
 
-          return data.operations.map((operation: OperationFromBackend) => ({
-            OrganizationTitle: "Мок",
-            CategoryName: `Категория ${operation.category_id}`,
-            OperationPrice: operation.sum,
-            OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
-            OperationID: operation.transaction_id,
-            AccountID: operation.account_id,
-          }));
-        }),
-      );
-      operations = allOps.flat();
-    } catch {
-      operations = [];
-      console.log("aaaaa");
-    }
+  const createOperForm = container.querySelector<HTMLFormElement>("#create-oper-form");
+  if (createOperForm) {
+    createOperForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleOperationRequest(createOperForm);
+    });
+  }
+
+  const editOperForm = container.querySelector<HTMLFormElement>("#editPopup form");
+  if (editOperForm) {
+    editOperForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleOperationRedactRequest(editOperForm);
+    });
+  }
+
+  const createCategoryForm = container.querySelector<HTMLFormElement>("#create-category-form");
+  if (createCategoryForm) {
+    createCategoryForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleCategoryRequest(createCategoryForm);
+    });
+  } else {
+    console.warn("Форма создания категории (#create-category-form) не найдена при инициализации");
+  }
+
+  const editCategoryForm = container.querySelector<HTMLFormElement>("#categoryEditPopup form");
+  if (editCategoryForm) {
+    editCategoryForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.handleCategoryRedactRequest(editCategoryForm);
+    });
+  } else {
+    console.warn("Форма редактирования категории (#categoryEditPopup form) не найдена при инициализации");
+  }
+}
+
 
     const dataCategories: Category[] = [
       {
@@ -340,84 +388,188 @@ export class TransactionsPage {
       return;
     }
 
+async handleOperationRequest(form: HTMLFormElement): Promise<void> {
+    const [
+        costInput,
+        operationTypeInput,
+        operationDateInput,
+        commentInput,
+        accountInput,
+        categoryInput,
+        titleInput,
+    ] = getOperationInputs(form);
+
+    if (
+        (!costInput || !operationTypeInput || !operationDateInput || !commentInput || !accountInput || !categoryInput || !titleInput)
+    ) {
+        console.error("Не удалось найти все необходимые поля формы операции");
+        return;
+    }
+
+    // Валидация расходов и доходов
+    const isValidRashod = validateOperationFormRashod(
+        costInput.value,
+        operationTypeInput.value,
+        operationDateInput.value,
+        commentInput.value,
+        accountInput.value,
+        categoryInput.value,
+        titleInput.value,
+        form
+    );
+    const isValidDohod = validateOperationFormDohod(
+        costInput.value,
+        operationTypeInput.value,
+        operationDateInput.value,
+        commentInput.value,
+        accountInput.value,
+        form
+    );
+
+    if (!isValidRashod && !isValidDohod) {
+        console.warn("Ошибка валидации данных операции");
+        return;
+    }
+
     const accountId = parseInt(accountInput.value, 10);
     const categoryId = parseInt(categoryInput.value, 10);
 
     const body = {
-      account_id: accountId,
-      category_id: categoryId,
-      sum: parseFloat(costInput.value),
-      name: "aboba323",
-      type: operationTypeInput.value,
-      description: commentInput.value.trim() || "",
-      created_at: new Date(operationDateInput.value).toISOString(),
+        account_id: accountId,
+        category_id: categoryId,
+        sum: parseFloat(costInput.value),
+        name: titleInput.value,
+        type: operationTypeInput.value,
+        description: commentInput.value.trim() || "",
+        created_at: new Date(operationDateInput.value).toISOString(),
     };
 
     try {
-      const { ok, status } = await apiFetch(`/account/1/operations`, {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
+        const { ok, status } = await apiFetch(`/account/${accountId}/operations`, {
+            method: "POST",
+            body: JSON.stringify(body),
+        });
 
-      if (!ok) {
-        if (status === 400) {
-          this.inputField.setError(
-            [
-              costInput,
-              operationTypeInput,
-              operationDateInput,
-              commentInput,
-              accountInput,
-              categoryInput,
-              // nameInput,
-            ],
-            true,
-            "Некорректные данные операции",
-          );
-          // } else if (status === 409) {
-          //     this.inputField.setError([nameInput], true, "Такая операция уже существует");
-        } else if (status === 500) {
-          setServerCreateOperError();
-        } else {
-          setServerCreateOperError();
+        if (!ok) {
+            if (status === 400) {
+                this.inputField.setError(
+                    [costInput, operationTypeInput, operationDateInput, commentInput, accountInput, categoryInput],
+                    true,
+                    "Некорректные данные операции"
+                );
+            } else if (status === 500) {
+                setServerCreateOperError();
+            } else {
+                setServerCreateOperError();
+            }
+            return;
         }
-        return;
-      }
 
-      console.info("Операция успешно создана");
+        console.info("Операция успешно создана");
     } catch (error) {
-      console.error("Ошибка при выполнении запроса:", error);
-      setServerCreateOperError();
+        console.error("Ошибка при выполнении запроса:", error);
+        setServerCreateOperError();
     }
-    router.navigate("/transactions");
-  }
 
-  async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {
-    const [
-      costInput,
-      operationDateInput,
-      commentInput,
-      transaction_id,
-      account_id,
-    ] = getEditOperationInputs(form);
+    router.navigate('/transactions');
+}
 
-    if (
-      !costInput ||
-      !operationDateInput ||
-      !commentInput ||
-      !transaction_id ||
-      !account_id
-    ) {
-      console.error(transaction_id);
-      return;
+async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {
+    const [costInput, operationDateInput, commentInput, transaction_id] = getEditOperationInputs(form);
+
+    if (!costInput || !operationDateInput || !commentInput || !transaction_id) {
+        console.error("Не удалось найти все необходимые поля формы редактирования");
+        return;
     }
 
     const isValid = validateOperationRedactForm(
-      costInput.value,
-      operationDateInput.value,
-      commentInput.value,
-      form,
+        costInput.value,
+        operationDateInput.value,
+        commentInput.value,
+        form
     );
+
+    if (!isValid) {
+        console.warn("Ошибка валидации данных операции");
+        return;
+    }
+
+    const body = {
+        category_id: 1,
+        sum: parseFloat(costInput.value),
+        name: operationDateInput.value,
+        description: commentInput.value.trim() || "",
+        created_at: new Date(operationDateInput.value).toISOString(),
+    };
+
+    const opId = Number(transaction_id);
+    if (isNaN(opId)) {
+        console.error("Некорректный transaction_id:", transaction_id);
+        return;
+    }
+
+    const { ok, status } = await apiFetch(`/account/1/operations/${opId}`, {
+        method: "PUT",
+        body: JSON.stringify(body),
+    });
+
+    if (!ok) {
+        if (status === 400) {
+            this.inputField.setError([costInput, operationDateInput, commentInput, transaction_id], true, "Некорректные данные операции");
+        } else if (status === 409) {
+            this.inputField.setError([commentInput], true, "Такая операция уже существует");
+        } else if (status === 500) {
+            setServerEditOperError();
+        } else {
+            setServerEditOperError();
+        }
+        return;
+    }
+
+    router.navigate('/transactions');
+}
+
+async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
+    const nameInput = form.querySelector<HTMLInputElement>('input[placeholder="Название категории (обяз.)"]');
+    const typeInput = form.querySelector<HTMLSelectElement>('#categoryType');
+    const iconInput = form.querySelector<HTMLInputElement>('#categoryIcon');
+    const descInput = form.querySelector<HTMLInputElement>('input[placeholder="Описание категории (необяз.)"]');
+
+    if (!nameInput || !typeInput || !iconInput || !descInput) {
+        console.error("Не удалось найти все поля формы категории");
+        return;
+    }
+
+    const file = iconInput.files?.[0] || null;
+
+    const isValid = validateCategoryForm(nameInput.value, file, descInput.value, form);
+    if (!isValid) {
+        console.warn("Ошибка валидации данных категории");
+        return;
+    }
+
+    const body = new FormData();
+    body.append("name", nameInput.value);
+    if (file) body.append("icon", file);
+    body.append("description", descInput.value);
+
+    const { ok, status } = await apiFetch(`/categories/new`, {
+        method: "POST",
+        body,
+    });
+
+    if (!ok) {
+        if (status === 400) {
+            this.inputField.setError([nameInput, iconInput, descInput], true, "Некорректные данные категории");
+        } else if (status === 409) {
+            this.inputField.setError([nameInput], true, "Такая категория уже существует");
+        } else {
+            setServerCreateCategoryError();
+        }
+        router.navigate('/transactions');
+    }
+}
+
 
     if (!isValid) {
       console.warn("Ошибка валидации данных операции");
