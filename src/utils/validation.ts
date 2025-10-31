@@ -1,19 +1,7 @@
-type FieldRule = {
-  minLength?: number;
-  maxLength?: number;
-  pattern?: RegExp;
-  noSpaces?: boolean;
-  requireUppercase?: boolean;
-  requireLowercase?: boolean;
-  requireNumbers?: boolean;
-  minValue?: number;
-};
-
-type ruleType = Record<string, FieldRule>;
-
 export class Validator {
-  rules: ruleType;
-  messages: Record<string, Record<string, string>>;
+    rules: Record<string, any>;
+    messages: Record<string, Record<string, string>>;
+
     constructor() {
         this.rules = {
             login: {
@@ -33,11 +21,8 @@ export class Validator {
                 requireUppercase: true,
                 requireLowercase: true,
                 requireNumbers: true,
-            }, 
-            sum: {
-                minValue: 0,
-                pattern: /^[0-9]+$/,
             },
+
             cost: {
                 pattern: /^\d+(\.\d+)?$/,
                 required: true,
@@ -56,10 +41,10 @@ export class Validator {
                 minLength: 3,
                 maxLength: 100,
             },
-            account: {
-                required: true,
-                pattern: /^Счет\s*№\d+$/, // пока сделал так, потом поправим
-            },
+            // account: {
+            //     required: true,
+            //     pattern: /^Счет\s*№\d+$/, // пока сделал так, потом поправим
+            // },
             categoryName: {
                 required: true,
                 minLength: 3,
@@ -99,11 +84,7 @@ export class Validator {
                 pattern:
                     "Пароль может содержать только латинские буквы, цифры, дефис, подчеркивание и символы @, #, *, &, %, $, -",
             },
-            sum: {
-                required: "Сумма обязательна",
-                minValue: "Минимальное значение суммы - 0",
-                pattern: "Сумма должна содержать только цифры 0-9",   
-            },
+
             cost: {
                 required: "Стоимость обязательна",
                 pattern: "Стоимость должна быть числом (например 1080 или 1080.50)",
@@ -144,7 +125,6 @@ export class Validator {
         const rules = this.rules[fieldName];
         const messages = this.messages[fieldName];
 
-
         if (!rules || !messages) return;
 
         if (!value && value !== "") {
@@ -153,10 +133,15 @@ export class Validator {
 
         value = value.toString().trim();
 
-
-        if (!value) {
+        if (!value && rules.required) {
             return messages.required;
         }
+
+        if (!value && !rules.required)
+            return;
+
+
+
 
         if (rules.pattern && !rules.pattern.test(value)) {
             return messages.pattern;
@@ -188,9 +173,6 @@ export class Validator {
 
         if (rules.maxLength && value.length > rules.maxLength) {
             return messages.maxLength;
-        }
-        if (rules.minValue && !/\d/.test(value)) {
-            return messages.minValue;
         }
         if (rules.noSpaces && /\s/.test(value)) {
             return messages.spaces;

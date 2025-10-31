@@ -6,7 +6,6 @@ import {
     getEditCategoryInputs,
 } from "./validationForForms.js";
 
-
 export function addEventListeners(context: any): void {
     const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
     const closeBtn = document.querySelector<HTMLButtonElement>("#closePopupBtn");
@@ -23,35 +22,42 @@ export function addEventListeners(context: any): void {
         if (target?.type === "file" && target.id === "categoryIcon") {
             const popupForm = target.closest<HTMLElement>(".popup-form");
             const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
-
             if (!fileNameBox) return;
-
-            if (target.files && target.files.length > 0) {
-                fileNameBox.textContent = target.files[0].name;
-            } else {
-                fileNameBox.textContent = "Файл не выбран";
-            }
+            fileNameBox.textContent = target.files?.[0]?.name || "Файл не выбран";
         }
     });
 
     document.addEventListener("click", (e) => {
-        const target = e.target as HTMLElement;
+        let target = e.target as HTMLElement | null;
+        if (!target) return;
+
+        if (target.nodeType !== 1) {
+            target = target.parentElement;
+            if (!target) return;
+        }
+
         const editBtn = target.closest(".edit-btn");
         if (!editBtn) return;
 
         const card = editBtn.closest(".transaction-card");
         if (!card) return;
+
+        const idText = card.querySelector("#transaction_id")?.textContent?.trim() || "";
+        const op_id = idText.replace("ID:", "").trim();
+
         const data = {
+            transaction_id: op_id,
             amount: card.querySelector(".transaction-card-info-price")?.textContent?.trim() || "",
-            type: (card as HTMLElement).dataset.type || "",
             date: card.querySelector(".transaction-card-info-time")?.textContent?.trim() || "",
             category: card.querySelector(".transaction-card-info-category")?.textContent?.trim() || "",
             organization: card.querySelector(".transaction-card-info-title")?.textContent?.trim() || "",
-            comment: "",
-            account: ""
+            comment: card.querySelector(".transaction-card-info-comment")?.textContent?.trim() || "",
         };
+
         window.openEditPopup(data);
     });
+
+
 
     document.addEventListener("click", (e) => {
         const target = e.target as HTMLElement;
@@ -72,6 +78,7 @@ export function addEventListeners(context: any): void {
         }
     });
 
+
     document.addEventListener("click", (e) => {
         const btn = (e.target as HTMLElement).closest(".cat-edi");
         if (!btn) return;
@@ -89,6 +96,7 @@ export function addEventListeners(context: any): void {
         window.openEditCategoryPopup(data);
     });
 
+
     const form = document.querySelector<HTMLFormElement>("#create-oper-form");
     if (form) {
         const [
@@ -97,6 +105,7 @@ export function addEventListeners(context: any): void {
             operationDateInput,
             commentInput,
             accountInput,
+            categoryInput,
         ] = getOperationInputs(form);
 
         costInput.addEventListener("input", () => {
@@ -119,14 +128,21 @@ export function addEventListeners(context: any): void {
             validateOperationField("comment", commentInput.value, commentInput);
         });
 
-        accountInput.addEventListener("input", () => {
+        accountInput.addEventListener("change", () => {
             validateOperationField("account", accountInput.value, accountInput);
         });
+
+        if (categoryInput) {
+            categoryInput.addEventListener("change", () => {
+                validateOperationField("category", categoryInput.value, categoryInput);
+            });
+        }
     }
 
-    const editForm = document.querySelector<HTMLFormElement>("#editPopup form");
+    const editForm = document.querySelector<HTMLFormElement>("#editForm");
     if (editForm) {
-        const [editCostInput, editOperationDateInput, editCommentInput] = getEditOperationInputs(editForm);
+        const [editCostInput, editOperationDateInput, editCommentInput] =
+            getEditOperationInputs(editForm);
 
         editCostInput.addEventListener("input", () => {
             validateOperationField("cost", editCostInput.value, editCostInput);
@@ -162,6 +178,7 @@ export function addEventListeners(context: any): void {
             validateOperationField("categoryDescription", categoryDescInput.value, categoryDescInput);
         });
     }
+
 
     const editCategoryForm = document.querySelector<HTMLFormElement>("#categoryEditPopup form");
     if (editCategoryForm) {

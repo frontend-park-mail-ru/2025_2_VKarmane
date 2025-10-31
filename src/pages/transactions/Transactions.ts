@@ -17,7 +17,6 @@ import {
 
 import {
     validateField,
-    validateOperationForm,
     validateOperationRedactForm,
     validateCategoryForm,
     validateCategoryRedactForm,
@@ -29,12 +28,15 @@ import {
     getCategoryInputs,
     getEditCategoryInputs,
     getOperationInputs,
-    validateOperationField, setServerCreateOperError
+    validateOperationField, setServerCreateOperError, validateOperationFormRashod, validateOperationFormDohod
 } from "../transactions/validationForForms.js";
 
 
 import {openPopup, openEditPopup, closeEditPopup, closePopup, formatDateForInput} from "../transactions/operations.js"
 import {closeCategoryPopup, openCategoryPopup, openEditCategoryPopup, closeEditCategoryPopup} from "./categories.js";
+import {setBody} from "../../utils/bodySetters.js";
+import {apiFetch} from "../../api/fetchWrapper.js";
+import {router} from "../../router.js";
 
 interface Transaction {
     OrganizationTitle: string;
@@ -47,6 +49,14 @@ interface Category {
     CategoryName: string;
     CategoryStatus: string;
     CategoryAmount: string;
+}
+
+interface OperationFromBackend {
+    category_id: number;
+    sum: number;
+    date: Date;
+    transaction_id : number;
+    name : string;
 }
 
 declare global {
@@ -63,6 +73,7 @@ declare global {
             organization?: string;
             comment?: string;
             account?: string;
+            transaction_id?: string;
         }) => void;
         closeEditPopup: () => void;
         openEditCategoryPopup:  () => void;
@@ -89,8 +100,8 @@ export class TransactionsPage {
         this.menu = new Menu();
         this.addOperations = new AddOperation(closePopup.bind(this), this.handleOperationTypeChange.bind(this));
         this.addCategory = new AddCategory();
-        this.RedactCategory = new RedactCategory();
         this.inputField = new InputField();
+        this.RedactCategory = new RedactCategory();
 
 
 
@@ -111,30 +122,43 @@ export class TransactionsPage {
 
     }
 
-    async render(container: HTMLElement | null) : Promise<void> {
+    async render(container: HTMLElement | null): Promise<void> {
         if (!container) throw new Error("Container element not found!");
         document.body.classList.remove("hide-scroller");
 
-        const dataTransactions: Transaction[] = [
-            {
-                OrganizationTitle: "1212",
-                CategoryName: "1212",
-                OperationPrice: "1212",
-                OperationTime: "2025-10-03"
-            },
-            {
-                OrganizationTitle: "1212",
-                CategoryName: "1212",
-                OperationPrice: "1212",
-                OperationTime: "08.10.2025"
-            },
-        ];
+        //TODO: Сделать ручки для работы с аккаунтами
+        const accounts = [1, 2];
+
+        const allOps = await Promise.all(
+            accounts.map(async (id) => {
+                const { ok, data, error } = await apiFetch(
+                    `/account/1/operations`,
+                    {
+                        method: "GET",
+                    },
+                );
+                if (!ok) {
+                    console.error("Ошибка получения операций:", error);
+                    return [];
+                }
+
+                return data.operations.map((operation: OperationFromBackend) => ({
+                    OrganizationTitle: operation.name,
+                    CategoryName: `Категория ${operation.category_id}`,
+                    OperationPrice: operation.sum,
+                    OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+                    OperationID: operation.transaction_id
+                }));
+            }),
+        );
+
+        const operations: Transaction[] = allOps.flat();
 
         const dataCategories: Category[] = [
             {
                 CategoryName: "1212",
                 CategoryStatus: "1212",
-                CategoryAmount: "08.11.2022",
+                CategoryAmount: "1212",
             },
             {
                 CategoryName: "1212",
@@ -147,20 +171,19 @@ export class TransactionsPage {
             menu: this.menu.getSelf(),
             addOperations: this.addOperations.getSelf(),
             addCategories: this.addCategory.getSelf(),
-            redactOperations: this.redactOpers.getSelf(),
-            transactions: this.transactions.getList(dataTransactions),
+            transactions: this.transactions.getList(operations),
             categories: this.categories.getList(dataCategories),
             profile_block: this.profileBlock.getSelf("aboba", 1111),
-            redactCategories : this.RedactCategory.getSelf(),
+            redactOperations: this.redactOpers.getSelf(),
+            redactCategories: this.RedactCategory.getSelf(),
         };
 
         container.innerHTML = this.template(data);
+        setBody();
         addEventListeners(this);
         this.setupEventListeners(container);
-
-
-
     }
+
     setupEventListeners(container: HTMLElement): void {
         this.menu.setEvents();
         this.profileBlock.setEvents();
@@ -225,46 +248,84 @@ export class TransactionsPage {
         }
     }
 
-        async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {const [
+
+    async handleOperationRequest(form: HTMLFormElement): Promise<void> {
+        const [
             costInput,
             operationTypeInput,
             operationDateInput,
             commentInput,
             accountInput,
-        ] = getEditOperationInputs(form);
+            categoryInput,
+            titleInput,
+        ] = getOperationInputs(form);
 
-            if (
-                !costInput ||
-                !operationTypeInput ||
-                !operationDateInput ||
-                !commentInput ||
-                !accountInput
-            ) {
-                console.error("Не удалось найти все поля формы операции");
-                return;
-            }
+        if (
+            (!costInput ||
+            !operationTypeInput ||
+            !operationDateInput ||
+            !commentInput ||
+            !accountInput || !categoryInput ||!titleInput) && operationTypeInput?.value == "expense"
+        ) {
+            console.error("Не удалось найти все необходимые поля формы операции");
+            return;
+        } else if(            (!costInput ||
+            !operationTypeInput ||
+            !operationDateInput ||
+            !commentInput ||
+            !accountInput ) && operationTypeInput?.value == "income"){
+            console.error("Не удалось найти все необходимые поля формы операции");
+            return;
+        }
+        const isValidRashod = validateOperationFormRashod(
+            costInput.value,
+            operationTypeInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            accountInput.value,
+            categoryInput.value,
+            titleInput.value,
+            form
+        );
 
-            const isValid = validateOperationRedactForm(
-                costInput.value,
-                operationTypeInput.value,
-                operationDateInput.value,
-                commentInput.value,
-                accountInput.value,
-                form
-            );
+        const isValidDohod = validateOperationFormDohod(
+            costInput.value,
+            operationTypeInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            accountInput.value,
+            form
+        );
 
-            if (!isValid) {
-                console.warn("Ошибка валидации данных операции");
-                return;
-            }
-            const body = {
-                cost: parseFloat(costInput.value),
-                type: operationTypeInput.value,
-                date: operationDateInput.value,
-                comment: commentInput.value,
-                account: accountInput.value,
-            };
-            const { ok, status } = await apiFetch(`/operations/new`, {
+        if (!isValidRashod && isValidDohod ) {
+            console.warn("Ошибка валидации данных операции - ValidRashod");
+            return;
+        }
+        if (!isValidDohod && isValidRashod ) {
+            console.warn("Ошибка валидации данных операции - ValidDohod");
+            return;
+        }
+
+        if (!isValidDohod && !isValidRashod ) {
+            console.warn("Ошибка валидации данных операции - ValidDohodRashod");
+            return;
+        }
+
+        const accountId = parseInt(accountInput.value, 10);
+        const categoryId = parseInt(categoryInput.value, 10);
+
+        const body = {
+            account_id: accountId,
+            category_id: categoryId,
+            sum: parseFloat(costInput.value),
+            name: titleInput.value,
+            type: operationTypeInput.value,
+            description: commentInput.value.trim() || "",
+            created_at: new Date(operationDateInput.value).toISOString(),
+        };
+
+        try {
+            const { ok, status } = await apiFetch(`/account/1/operations`, {
                 method: "POST",
                 body: JSON.stringify(body),
             });
@@ -272,83 +333,20 @@ export class TransactionsPage {
             if (!ok) {
                 if (status === 400) {
                     this.inputField.setError(
-                        [costInput, operationTypeInput, operationDateInput, commentInput, accountInput],
+                        [
+                            costInput,
+                            operationTypeInput,
+                            operationDateInput,
+                            commentInput,
+                            accountInput,
+                            categoryInput,
+                            // nameInput,
+                        ],
                         true,
                         "Некорректные данные операции"
                     );
-                } else if (status === 409) {
-                    this.inputField.setError(
-                        [commentInput],
-                        true,
-                        "Такая операция уже существует"
-                    );
-                } else if (status === 500) {
-                    setServerEditOperError();
-                } else {
-                    setServerEditOperError();
-                }
-                return;
-            }
-        }
-
-
-        async handleOperationRequest(form: HTMLFormElement): Promise<void> {const [
-                costInput,
-                operationTypeInput,
-                operationDateInput,
-                commentInput,
-                accountInput,
-            ] = getOperationInputs(form);
-
-            if (
-                !costInput ||
-                !operationTypeInput ||
-                !operationDateInput ||
-                !commentInput ||
-                !accountInput
-            ) {
-                console.error("Не удалось найти все поля формы операции");
-                return;
-            }
-
-            const isValid = validateOperationForm(
-                costInput.value,
-                operationTypeInput.value,
-                operationDateInput.value,
-                commentInput.value,
-                accountInput.value,
-                form
-            );
-
-            if (!isValid) {
-                console.warn("Ошибка валидации данных операции");
-                return;
-            }
-            const body = {
-                cost: parseFloat(costInput.value),
-                type: operationTypeInput.value,
-                date: operationDateInput.value,
-                comment: commentInput.value,
-                account: accountInput.value,
-            };
-            const { ok, status } = await apiFetch(`/operations/new`, {
-                method: "POST",
-                body: JSON.stringify(body),
-            });
-
-            if (!ok) {
-                if (status === 400) {
-                    this.inputField.setError(
-                        [costInput, operationTypeInput, operationDateInput, commentInput, accountInput],
-                        true,
-                        "Некорректные данные операции"
-                    );
-                } else if (status === 409) {
-                    this.inputField.setError(
-                        [commentInput],
-                        true,
-                        "Такая операция уже существует"
-                    );
+                // } else if (status === 409) {
+                //     this.inputField.setError([nameInput], true, "Такая операция уже существует");
                 } else if (status === 500) {
                     setServerCreateOperError();
                 } else {
@@ -356,8 +354,89 @@ export class TransactionsPage {
                 }
                 return;
             }
+
+            console.info("Операция успешно создана");
+        } catch (error) {
+            console.error("Ошибка при выполнении запроса:", error);
+            setServerCreateOperError();
         }
-        async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
+        router.navigate('/transactions');
+    }
+
+    async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {const [
+        costInput,
+        operationDateInput,
+        commentInput,
+        transaction_id
+    ] = getEditOperationInputs(form);
+
+        if (
+            !costInput ||
+            !operationDateInput ||
+            !commentInput ||
+            !transaction_id
+        ) {
+            console.error(transaction_id);
+            return;
+        }
+
+        const isValid = validateOperationRedactForm(
+            costInput.value,
+            operationDateInput.value,
+            commentInput.value,
+            form
+        );
+
+        if (!isValid) {
+            console.warn("Ошибка валидации данных операции");
+            return;
+        }
+        const body = {
+            category_id: 1,
+            sum: parseFloat(costInput.value),
+            name: operationDateInput.value,
+            description: commentInput.value.trim() || "",
+            created_at: new Date(operationDateInput.value).toISOString(),
+        };
+        if (!transaction_id) {
+            console.error("transaction_id отсутствует!");
+            return;
+        }
+        const opId = Number(transaction_id);
+        if (isNaN(opId)) {
+            console.error(transaction_id);
+            return;
+        }
+
+        const { ok, status } = await apiFetch(`/account/1/operations/${opId}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+        });
+
+        if (!ok) {
+            if (status === 400) {
+                this.inputField.setError(
+                    [costInput, operationDateInput, commentInput, transaction_id],
+                    true,
+                    "Некорректные данные операции"
+                );
+            } else if (status === 409) {
+                this.inputField.setError(
+                    [commentInput],
+                    true,
+                    "Такая операция уже существует"
+                );
+            } else if (status === 500) {
+                setServerEditOperError();
+            } else {
+                setServerEditOperError();
+            }
+            return
+        }
+        router.navigate('/transactions');
+    }
+
+    async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
             const nameInput = form.querySelector<HTMLInputElement>(
                 'input[placeholder="Название категории (обяз.)"]'
             );
@@ -408,7 +487,7 @@ export class TransactionsPage {
                 } else {
                     setServerCreateCategoryError();
                 }
-                return;
+                router.navigate('/transactions');
             }
         }
 
