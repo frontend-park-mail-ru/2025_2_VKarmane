@@ -139,34 +139,40 @@ export class TransactionsPage {
     const { ok, data } = await apiFetch("/profile");
     if (!ok) throw new Error("failed to get user profile");
 
-    //TODO: Сделать ручки для работы с аккаунтами
-    const accounts = [1, 2];
+    let operations;
 
-    const allOps = await Promise.all(
-      accounts.map(async (id) => {
-        const { ok, data, error } = await apiFetch(
-          `/account/${id}/operations`,
-          {
-            method: "GET",
-          },
-        );
-        if (!ok) {
-          console.error("Ошибка получения операций:", error);
-          router.navigate("/login");
-        }
+    try {
+      //TODO: Сделать ручки для работы с аккаунтами
+      const accounts = [1, 2];
 
-        return data.operations.map((operation: OperationFromBackend) => ({
-          OrganizationTitle: "Мок",
-          CategoryName: `Категория ${operation.category_id}`,
-          OperationPrice: operation.sum,
-          OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
-          OperationID: operation.transaction_id,
-          AccountID: operation.account_id,
-        }));
-      }),
-    );
+      const allOps = await Promise.all(
+        accounts.map(async (id) => {
+          const { ok, data, error, status } = await apiFetch(
+            `/account/${id}/operations`,
+            {
+              method: "GET",
+            },
+          );
+          if (!ok) {
+            console.error("Ошибка получения операций:", error);
+            if (status != 403) router.navigate("/login");
+          }
 
-    const operations: Transaction[] = allOps.flat();
+          return data.operations.map((operation: OperationFromBackend) => ({
+            OrganizationTitle: "Мок",
+            CategoryName: `Категория ${operation.category_id}`,
+            OperationPrice: operation.sum,
+            OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+            OperationID: operation.transaction_id,
+            AccountID: operation.account_id,
+          }));
+        }),
+      );
+      operations = allOps.flat();
+    } catch {
+      operations = [];
+      console.log("aaaaa");
+    }
 
     const dataCategories: Category[] = [
       {

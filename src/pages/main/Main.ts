@@ -86,8 +86,13 @@ export class MainPage {
 
       if (!balanceData || !budgetsData)
         throw new Error("failed to get user data");
+      let operations;
+      try {
+        operations = await getAllUserTransactionsByAccIDs([1, 2]);
+      } catch {
+        operations = [];
+      }
 
-      const operations = await getAllUserTransactionsByAccIDs([1, 2]);
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
