@@ -41,6 +41,7 @@ import {
 import { setBody } from "../../utils/bodySetters.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { router } from "../../router.js";
+import { stat } from "fs";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -126,8 +127,15 @@ export class TransactionsPage {
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
-    const { ok, data: profileData } = await apiFetch("/profile");
-    if (!ok) throw new Error("Failed to get user profile");
+    const { ok, status, data: profileData } = await apiFetch("/profile");
+    if (!ok) {
+      console.log(status);
+      if (status === 401) {
+        router.navigate("/login");
+        return;
+      }
+      throw new Error("Failed to get user profile");
+    }
 
     const operations = await this.loadOperations();
 
@@ -179,7 +187,9 @@ export class TransactionsPage {
           }
           return data.operations.map((op: OperationFromBackend) => ({
             OrganizationTitle: op.name || "Мок",
-            CategoryName: `Категория ${op.category_id}`,
+            CategoryName: op.category_id
+              ? `Категория ${op.category_id}`
+              : "Доход",
             OperationPrice: op.sum.toString(),
             OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
             OperationID: op.transaction_id,
