@@ -1,50 +1,52 @@
 <div class="Transactions">
-    {{#if operations_exists}}
+  {{#if operations_exists}}
     <div class="Transaction-header">
-        <p class="Transact-Category-text">Операции</p>
-        <button onclick="openPopup()" class="open-btn">+</button>
+      <p class="Transact-Category-text">Операции</p>
+      <button onclick="openPopup()" class="open-btn">+</button>
     </div>
-        <div class="transaction-list">
-            {{#each operationsItems}}
-                <div class="transaction-card">
-                    <div class="transaction-card-info">
-                        <div class="transaction-card-img">
-                            <img src="/imgs/yandex_logo.svg" alt="">
-                        </div>
-                        <div class="transaction-card-info-text">
-                            <div class="transaction-card-text-group">
-                                <p class="transaction-card-info-title">{{OrganizationTitle}}</p>
-                                <p class="transaction-card-info-category">{{CategoryName}}</p>
-                            </div>
-                            <div class="transaction-card-text-group">
-                                <p class="transaction-card-info-price">{{OperationPrice}}</p>
-                                <p class="transaction-card-info-time">{{OperationTime}}</p>
-                            </div>
-                        </div>
-                        <div class="kebab-menu">
-                            <button class="kebab-btn">&#8942;</button>
-                            <div class="popup-menu">
-                                <button class="edit-btn" >
-                                    Редактировать <img src="/imgs/RedactButtonImg.svg" alt="">
-                                </button>
-                                <button class="delete-btn">
-                                    Удалить <img src="/imgs/DeleteButtonImg.svg" alt="">
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{/each}}
-        </div>
-    {{else}}
-        <div>
-            <div class="oper_not_exists">
-                <div class="oper_not_exists_img"></div>
-                <h2 style="color: #949494; font-size: 20px">
-                    Тут пока ничего нет :(
-                </h2>
-                <a class="add_operation" onclick="openPopups()">+ Добавить операцию</a>
+    <div class="transaction-list">
+      {{#each operationsItems}}
+        <div class="transaction-card">
+          <div class="transaction-card-info">
+            <div class="transaction-card-img">
+              <img src="/imgs/yandex_logo.svg" alt="">
             </div>
+            <div class="transaction-card-info-text">
+              <div class="transaction-card-text-group">
+                <p class="transaction-card-info-title">{{OrganizationTitle}}</p>
+                <p class="transaction-card-info-category">{{CategoryName}}</p>
+              </div>
+              <div class="transaction-card-text-group">
+                <p class="transaction-card-info-price">{{OperationPrice}}</p>
+                <p class="transaction-card-info-time">{{OperationTime}}</p>
+                <p class="transaction-card-info-time" style="color: grey" id="transaction_id">
+                  ID: {{OperationID}}
+                </p>
+                <p class="transaction-card-info-time" style="color: grey" id="transaction_account_id">
+                  Счет: {{AccountID}}
+                </p>
+              </div>
+            </div>
+            <div class="kebab-menu">
+              <button class="kebab-btn">&#8942;</button>
+              <div class="popup-menu">
+                <button class="edit-btn">
+                  Редактировать <img src="/imgs/RedactButtonImg.svg" alt="">
+                </button>
+                <button class="delete-btn">
+                  Удалить <img src="/imgs/DeleteButtonImg.svg" alt="">
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    {{/if}}
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="oper_not_exists">
+      <div class="oper_not_exists_img"></div>
+      <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
+      <a class="add_operation" onclick="openPopups()">+ Добавить операцию</a>
+    </div>
+  {{/if}}
 </div>

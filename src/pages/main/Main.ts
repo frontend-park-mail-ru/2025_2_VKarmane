@@ -17,6 +17,19 @@ import type { TemplateFn } from "../../types/handlebars.js";
 import Handlebars from "handlebars";
 import mainTemplate from "../../templates/pages/main.hbs?raw";
 import { setBody, unsetBody } from "../../utils/bodySetters.js";
+import { InputField } from "../../components/inputField/index.js";
+import { addEventListeners } from "../transactions/events.js";
+
+import {
+  getEditOperationInputs,
+  getOperationInputs,
+  setServerCreateOperError,
+  setServerEditOperError,
+  validateOperationFormDohod,
+  validateOperationFormRashod,
+  validateOperationRedactForm,
+} from "../transactions/validationForForms.js";
+import { apiFetch } from "../../api/fetchWrapper.js";
 
 interface BalanceData {
   accounts?: { balance: number }[];
@@ -41,6 +54,7 @@ export class MainPage {
   profileBlock: ProfileBlock;
   addOperations: AddOperation;
   template: TemplateFn;
+  inputField: InputField;
   constructor() {
     this.factBal = new FactBal();
     this.card = new Card();
@@ -52,6 +66,7 @@ export class MainPage {
       this.closePopup,
       this.handleOperationTypeChange,
     );
+    this.inputField = new InputField();
     this.addCard = new AddCard();
     this.profileBlock = new ProfileBlock();
     this.template = Handlebars.compile(mainTemplate);
@@ -69,10 +84,18 @@ export class MainPage {
     try {
       const balanceData: BalanceData = await getBalance();
       const budgetsData: BudgetsData = await getBudgets();
+      const { ok, data } = await apiFetch("/profile");
+      if (!ok) throw new Error("failed to get user profile");
+
       if (!balanceData || !budgetsData)
         throw new Error("failed to get user data");
+      let operations;
+      try {
+        operations = await getAllUserTransactionsByAccIDs([1, 2]);
+      } catch {
+        operations = [];
+      }
 
-      const operations = await getAllUserTransactionsByAccIDs([1, 2]);
       const cards =
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
@@ -86,7 +109,7 @@ export class MainPage {
             )
           : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
 
-      const data = {
+      const data_ = {
         FactBal: this.factBal.getSelf(
           balanceData.accounts.length !== 0
             ? balanceData.accounts[0].balance
@@ -105,12 +128,13 @@ export class MainPage {
         operations: this.operations.getList(operations),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf("aboba", 1111),
+        profile_block: this.profileBlock.getSelf(data.login, data.user_id),
         addOperations: this.addOperations.getSelf(),
       };
 
-      container.innerHTML = this.template(data);
-      this.setupEventListeners();
+      container.innerHTML = this.template(data_);
+      this.setupEventListeners(container);
+      addEventListeners(this);
     } catch (err) {
       console.error(err);
       router.navigate("/login");
@@ -120,10 +144,18 @@ export class MainPage {
     setBody();
   }
 
-  setupEventListeners() {
+  setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
-    this.addEventListeners();
+    const form: HTMLFormElement | null =
+      container.querySelector("#create-oper-form");
+    if (!form) return;
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.handleOperationRequest(form);
+      });
+    }
   }
   openPopup(): void {
     const popup = document.getElementById("popup");
@@ -154,27 +186,188 @@ export class MainPage {
       expenseField.classList.remove("hidden");
   }
 
-  addEventListeners(): void {
-    const openBtn = document.querySelector<HTMLButtonElement>("#openPopupBtn");
-    const closeBtn =
-      document.querySelector<HTMLButtonElement>("#closePopupBtn");
+  async handleOperationRequest(form: HTMLFormElement) {
+    const [
+      costInput,
+      operationTypeInput,
+      operationDateInput,
+      commentInput,
+      accountInput,
+      categoryInput,
+      titleInput,
+    ] = getOperationInputs(form);
 
-    if (openBtn) openBtn.addEventListener("click", () => this.openPopup());
-    if (closeBtn) closeBtn.addEventListener("click", () => this.closePopup());
+    if (
+      (!costInput ||
+        !operationTypeInput ||
+        !operationDateInput ||
+        !commentInput ||
+        !accountInput ||
+        !categoryInput ||
+        !titleInput) &&
+      operationTypeInput?.value == "expense"
+    ) {
+      console.error("Не удалось найти все необходимые поля формы операции");
+      return;
+    } else if (
+      (!costInput ||
+        !operationTypeInput ||
+        !operationDateInput ||
+        !commentInput ||
+        !accountInput) &&
+      operationTypeInput?.value == "income"
+    ) {
+      console.error("Не удалось найти все необходимые поля формы операции");
+      return;
+    }
+    const isValidRashod = validateOperationFormRashod(
+      costInput.value,
+      operationTypeInput.value,
+      operationDateInput.value,
+      commentInput.value,
+      accountInput.value,
+      categoryInput.value,
+      titleInput.value,
+      form,
+    );
 
-    document.body.addEventListener("change", (e: Event) => {
-      const target = e.target as HTMLInputElement;
-      if (target && target.type === "file" && target.id === "categoryIcon") {
-        const popupForm = target.closest<HTMLElement>(".popup-form");
-        const fileNameBox = popupForm?.querySelector<HTMLElement>("#fileName");
-        if (!fileNameBox) return;
+    const isValidDohod = validateOperationFormDohod(
+      costInput.value,
+      operationTypeInput.value,
+      operationDateInput.value,
+      commentInput.value,
+      accountInput.value,
+      form,
+    );
 
-        if (target.files && target.files.length > 0) {
-          fileNameBox.textContent = target.files[0].name;
+    if (!isValidRashod && isValidDohod) {
+      console.warn("Ошибка валидации данных операции - ValidRashod");
+      return;
+    }
+    if (!isValidDohod && isValidRashod) {
+      console.warn("Ошибка валидации данных операции - ValidDohod");
+      return;
+    }
+
+    if (!isValidDohod && !isValidRashod) {
+      console.warn("Ошибка валидации данных операции - ValidDohodRashod");
+      return;
+    }
+
+    const accountId = parseInt(accountInput.value, 10);
+    const categoryId = parseInt(categoryInput.value, 10);
+
+    const body = {
+      account_id: accountId,
+      category_id: categoryId,
+      sum: parseFloat(costInput.value),
+      name: titleInput.value ? titleInput.value : "no name",
+      type: operationTypeInput.value,
+      description: commentInput.value.trim() || "",
+      created_at: new Date(operationDateInput.value).toISOString(),
+    };
+
+    try {
+      const { ok, status } = await apiFetch(`/account/1/operations`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      if (!ok) {
+        if (status === 400) {
+          this.inputField.setError(
+            [
+              costInput,
+              operationTypeInput,
+              operationDateInput,
+              commentInput,
+              accountInput,
+              categoryInput,
+              // nameInput,
+            ],
+            true,
+            "Некорректные данные операции",
+          );
+          // } else if (status === 409) {
+          //     this.inputField.setError([nameInput], true, "Такая операция уже существует");
+        } else if (status === 500) {
+          setServerCreateOperError();
         } else {
-          fileNameBox.textContent = "Файл не выбран";
+          setServerCreateOperError();
         }
+        return;
       }
+
+      console.info("Операция успешно создана");
+    } catch (error) {
+      console.error("Ошибка при выполнении запроса:", error);
+      setServerCreateOperError();
+    }
+    router.navigate("/");
+  }
+
+  async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {
+    const [costInput, operationDateInput, commentInput, transaction_id] =
+      getEditOperationInputs(form);
+
+    if (!costInput || !operationDateInput || !commentInput || !transaction_id) {
+      console.error(transaction_id);
+      return;
+    }
+
+    const isValid = validateOperationRedactForm(
+      costInput.value,
+      operationDateInput.value,
+      commentInput.value,
+      form,
+    );
+
+    if (!isValid) {
+      console.warn("Ошибка валидации данных операции");
+      return;
+    }
+    const body = {
+      category_id: 1,
+      sum: parseFloat(costInput.value),
+      name: operationDateInput.value,
+      description: commentInput.value.trim() || "",
+      created_at: new Date(operationDateInput.value).toISOString(),
+    };
+    if (!transaction_id) {
+      console.error("transaction_id отсутствует!");
+      return;
+    }
+    const opId = Number(transaction_id);
+    if (isNaN(opId)) {
+      console.error(transaction_id);
+      return;
+    }
+
+    const { ok, status } = await apiFetch(`/account/1/operations/${opId}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
     });
+
+    if (!ok) {
+      if (status === 400) {
+        this.inputField.setError(
+          [costInput, operationDateInput, commentInput, transaction_id],
+          true,
+          "Некорректные данные операции",
+        );
+      } else if (status === 409) {
+        this.inputField.setError(
+          [commentInput],
+          true,
+          "Такая операция уже существует",
+        );
+      } else if (status === 500) {
+        setServerEditOperError();
+      } else {
+        setServerEditOperError();
+      }
+      return;
+    }
+    router.navigate("/");
   }
 }
