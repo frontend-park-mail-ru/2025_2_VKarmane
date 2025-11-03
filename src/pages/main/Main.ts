@@ -179,7 +179,7 @@ export class MainPage {
       expenseField.classList.remove("hidden");
   }
 
-    sync handleOperationRequest(form: HTMLFormElement): Promise<void> {
+    async handleOperationRequest(form: HTMLFormElement): Promise<void> {
         const [
             costInput,
             operationTypeInput,
