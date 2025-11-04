@@ -179,7 +179,7 @@ export function addEventListeners(context: any): void {
       window.openEditCategoryPopup(data);
     }
 
-    const delCatBtn = target.closest(".delete-btn");
+    const delCatBtn = target.closest(".cat-del");
     console.log(delCatBtn);
     if (delCatBtn) {
       const card = delCatBtn.closest(".category-card") as HTMLElement | null;
