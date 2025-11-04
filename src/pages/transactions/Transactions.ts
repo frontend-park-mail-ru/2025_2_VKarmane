@@ -160,7 +160,8 @@ export class TransactionsPage {
       categories: this.categories.getList(categories),
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
-        profileData.user_id,
+        profileData.id,
+        profileData.logo_url,
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
@@ -209,7 +210,7 @@ export class TransactionsPage {
       method: "GET",
     });
     if (ok) {
-      return data.map((ctg) => ({
+      return data.categories.map((ctg) => ({
         id: ctg.id,
         name: ctg.name,
         logo: ctg.logo_url,
