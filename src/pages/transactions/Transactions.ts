@@ -463,8 +463,8 @@ export class TransactionsPage {
           "Такая категория уже существует",
         );
       else setServerCreateCategoryError();
-      router.navigate("/transactions");
     }
+    router.navigate("/transactions");
   }
 
   private async handleCategoryRedactRequest(
