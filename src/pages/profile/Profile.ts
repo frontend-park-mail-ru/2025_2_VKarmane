@@ -36,14 +36,26 @@ export class ProfilePage {
       return;
     }
 
-    const balanceData = await getBalance();
-    let operations;
+    const accounts = await getBalance();
+    let operations = [];
     try {
-      let accounts: number[] = [];
-      balanceData.accounts?.forEach((acc) => {
-        accounts.push(acc.id);
-      });
-      operations = await getAllUserTransactionsByAccIDs(accounts);
+      const allOps = await Promise.all(
+        accounts.map(async (id) => {
+          const { ok, data, error, status } = await apiFetch(
+            `/account/${id}/operations`,
+          );
+          if (!ok) {
+            console.error("Ошибка получения операций:", error);
+            if (status !== 403) router.navigate("/login");
+            return [];
+          }
+          return data.operations.map((op) => ({
+            sum: op.sum.toString(),
+            date: new Date(op.date).toLocaleDateString("ru-RU"),
+          }));
+        }),
+      );
+      operations = allOps.flat();
     } catch {
       operations = [];
     }
