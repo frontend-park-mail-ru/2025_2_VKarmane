@@ -68,7 +68,7 @@ export class ProfilePage {
       login: data.login,
       mail: data.email,
       avatar: data.logo_url ? data.logo_url : "/imgs/empty_avatar.png",
-      editProfile: this.editProfile.getSelf(name, data.email),
+      editProfile: this.editProfile.getSelf(name, data.email, data.id),
     });
     setBody();
     this.setupEventListeners();

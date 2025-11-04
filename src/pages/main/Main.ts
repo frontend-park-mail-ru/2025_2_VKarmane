@@ -130,7 +130,7 @@ export class MainPage {
         exist_card: true,
         profile_block: this.profileBlock.getSelf(
           data.login,
-          data.user_id,
+          data.id,
           data.logo_url,
         ),
         addOperations: this.addOperations.getSelf(),
