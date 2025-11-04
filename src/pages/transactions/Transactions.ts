@@ -61,7 +61,7 @@ interface OperationFromBackend {
   category_id: number;
   sum: number;
   date: Date;
-  _id: number;
+  id: number;
   account_id: number;
   name: string;
 }
@@ -191,28 +191,47 @@ export class TransactionsPage {
   private async loadOperations(): Promise<Transaction[]> {
     try {
       const accounts = await this.loadAccounts();
+
       const allOps = await Promise.all(
         accounts.map(async (id) => {
           const { ok, data, error, status } = await apiFetch(
             `/account/${id}/operations`,
           );
+
           if (!ok) {
             console.error("Ошибка получения операций:", error);
             if (status !== 403) router.navigate("/login");
             return [];
           }
-          return data.operations.map((op: OperationFromBackend) => ({
-            OrganizationTitle: op.name || "Мок",
-            CategoryName: op.category_id
-              ? `Категория ${op.category_id}`
-              : "Доход",
-            OperationPrice: op.sum.toString(),
-            OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
-            OperationID: op.id,
-            AccountID: op.account_id,
-          }));
+
+          const operations = await Promise.all(
+            data.operations.map(async (op: OperationFromBackend) => {
+              let categoryName = "Доход";
+
+              if (op.category_id) {
+                const categoryRes = await apiFetch(
+                  `/categories/${op.category_id}`,
+                );
+                if (categoryRes.ok && categoryRes.data?.name) {
+                  categoryName = categoryRes.data.name;
+                }
+              }
+
+              return {
+                OrganizationTitle: op.name || "Мок",
+                CategoryName: categoryName,
+                OperationPrice: op.sum.toString(),
+                OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
+                OperationID: op.id,
+                AccountID: op.account_id,
+              };
+            }),
+          );
+
+          return operations;
         }),
       );
+
       return allOps.flat();
     } catch (err) {
       console.error("Ошибка при загрузке операций:", err);
