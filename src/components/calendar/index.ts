@@ -28,6 +28,7 @@ export class Calendar {
   }
 
   getSelf(transactions: TransactionIntefrace[]): string {
+    console.log(transactions);
     const data = this.getCalendarData(transactions);
     return this.template(data);
   }

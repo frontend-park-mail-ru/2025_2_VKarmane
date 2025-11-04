@@ -214,6 +214,11 @@
   font-family: Montserrat SemiBold;
 }
 
+.cat-del {
+  color: #e53935;
+  font-family: Montserrat SemiBold;
+}
+
 .edit-cat:hover {
   color: #8d8d8d;
 }
