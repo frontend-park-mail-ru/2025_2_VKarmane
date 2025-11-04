@@ -235,7 +235,7 @@ export class TransactionsPage {
         handler: this.handleOperationRedactRequest.bind(this),
       },
       {
-        selector: "#create-category-form",
+        selector: "#categoryForm",
         handler: this.handleCategoryRequest.bind(this),
       },
       {
@@ -412,12 +412,12 @@ export class TransactionsPage {
     const nameInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Название категории (обяз.)"]',
     );
-    const typeInput = form.querySelector<HTMLSelectElement>("#categoryType");
+    // const typeInput = form.querySelector<HTMLSelectElement>("#categoryType");
     const iconInput = form.querySelector<HTMLInputElement>("#categoryIcon");
     const descInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Описание категории (необяз.)"]',
     );
-    if (!nameInput || !typeInput || !iconInput || !descInput)
+    if (!nameInput || !iconInput || !descInput)
       return console.error("Не удалось найти все поля формы категории");
 
     const file = iconInput.files?.[0] || null;
