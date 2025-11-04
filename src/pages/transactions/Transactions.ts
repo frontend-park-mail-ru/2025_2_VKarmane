@@ -41,6 +41,7 @@ import {
 import { setBody } from "../../utils/bodySetters.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { router } from "../../router.js";
+import { describe } from "node:test";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -137,19 +138,20 @@ export class TransactionsPage {
     }
 
     const operations = await this.loadOperations();
+    const categories = await this.loadCategories();
 
-    const categories: Category[] = [
-      {
-        CategoryName: "Продукты",
-        CategoryStatus: "Активна",
-        CategoryAmount: "1200",
-      },
-      {
-        CategoryName: "Транспорт",
-        CategoryStatus: "Неактивна",
-        CategoryAmount: "800",
-      },
-    ];
+    // const categories: Category[] = [
+    //   {
+    //     CategoryName: "Продукты",
+    //     CategoryStatus: "Активна",
+    //     CategoryAmount: "1200",
+    //   },
+    //   {
+    //     CategoryName: "Транспорт",
+    //     CategoryStatus: "Неактивна",
+    //     CategoryAmount: "800",
+    //   },
+    // ];
 
     const data = {
       menu: this.menu.getSelf(),
@@ -201,6 +203,22 @@ export class TransactionsPage {
       console.error("Ошибка при загрузке операций:", err);
       return [];
     }
+  }
+
+  private async loadCategories() {
+    const { ok, data, error } = await apiFetch("/categories", {
+      method: "GET",
+    });
+    if (ok) {
+      return data.map((ctg) => ({
+        id: ctg.id,
+        name: ctg.name,
+        logo: ctg.logo_url,
+        cnt_op: ctg.operations_count,
+        description: ctg.description,
+      }));
+    }
+    console.error(error);
   }
 
   private setupEventListeners(container: HTMLElement): void {
@@ -408,10 +426,10 @@ export class TransactionsPage {
 
     const body = new FormData();
     body.append("name", nameInput.value);
-    if (file) body.append("icon", file);
+    if (file) body.append("image", file);
     body.append("description", descInput.value);
 
-    const { ok, status } = await apiFetch(`/categories/new`, {
+    const { ok, status } = await apiFetch(`/categories`, {
       method: "POST",
       body,
     });
@@ -445,7 +463,8 @@ export class TransactionsPage {
     const descInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Описание категории (необяз.)"]',
     );
-    if (!nameInput || !typeInput || !iconInput || !descInput)
+    const idInput = form.querySelector<HTMLInputElement>("#editCategoryId");
+    if (!nameInput || !typeInput || !iconInput || !descInput || !idInput)
       return console.error(
         "Не удалось найти все поля формы редактирования категории",
       );
@@ -458,13 +477,16 @@ export class TransactionsPage {
 
     const body = new FormData();
     body.append("name", nameInput.value);
-    if (file) body.append("icon", file);
+    if (file) body.append("image", file);
     body.append("description", descInput.value);
 
-    const { ok, status } = await apiFetch(`/categories/edit`, {
-      method: "POST",
-      body,
-    });
+    const { ok, status } = await apiFetch(
+      `/categories/${Number(idInput.value)}`,
+      {
+        method: "PUT",
+        body,
+      },
+    );
     if (!ok) {
       if (status === 400)
         this.inputField.setError(

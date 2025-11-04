@@ -32,8 +32,10 @@ export class AddOperation {
   }
 
   getSelf(): string {
+    const categories = this.getCategories();
     return this.template({
       sumInput: this.inputField.getSelf("text", "sum", "Стоимость (обяз.)"),
+      categories: categories,
     });
   }
 
@@ -141,5 +143,14 @@ export class AddOperation {
       inputElem.classList.add("border-grey");
       return true;
     }
+  }
+  async getCategories() {
+    const { ok, data, error } = await apiFetch("/categories", {
+      method: "GET",
+    });
+    if (ok) {
+      return data;
+    }
+    console.error(error);
   }
 }

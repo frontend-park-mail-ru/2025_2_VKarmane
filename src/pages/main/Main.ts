@@ -268,10 +268,13 @@ export class MainPage {
     };
 
     try {
-      const { ok, status } = await apiFetch(`/account/1/operations`, {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
+      const { ok, status } = await apiFetch(
+        `/account/${accountId}/operations`,
+        {
+          method: "POST",
+          body: JSON.stringify(body),
+        },
+      );
 
       if (!ok) {
         if (status === 400) {
@@ -307,10 +310,21 @@ export class MainPage {
   }
 
   async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {
-    const [costInput, operationDateInput, commentInput, transaction_id] =
-      getEditOperationInputs(form);
+    const [
+      costInput,
+      operationDateInput,
+      commentInput,
+      transaction_id,
+      account_id,
+    ] = getEditOperationInputs(form);
 
-    if (!costInput || !operationDateInput || !commentInput || !transaction_id) {
+    if (
+      !costInput ||
+      !operationDateInput ||
+      !commentInput ||
+      !transaction_id ||
+      !account_id
+    ) {
       console.error(transaction_id);
       return;
     }
@@ -343,15 +357,24 @@ export class MainPage {
       return;
     }
 
-    const { ok, status } = await apiFetch(`/account/1/operations/${opId}`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-    });
+    const accId = Number(account_id);
+    if (isNaN(accId)) {
+      console.error(account_id);
+      return;
+    }
+
+    const { ok, status } = await apiFetch(
+      `/account/${accId}/operations/${opId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(body),
+      },
+    );
 
     if (!ok) {
       if (status === 400) {
         this.inputField.setError(
-          [costInput, operationDateInput, commentInput, transaction_id],
+          [costInput, operationDateInput, commentInput],
           true,
           "Некорректные данные операции",
         );

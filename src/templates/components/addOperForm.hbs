@@ -1,54 +1,70 @@
-<div class="overlay" id="popup" style="display: none;">
-    <div class="popup-form">
-        <button class="close-btn" onclick="closePopup()">×</button>
-        <h2>Новая операция</h2>
-        <form class="create-oper-form" id="create-oper-form">
+<div class="overlay" id="popup" style="display: none">
+  <div class="popup-form">
+    <button class="close-btn" onclick="closePopup()">×</button>
+    <h2>Новая операция</h2>
+    <form class="create-oper-form" id="create-oper-form">
+      <div class="input-group">
+        <input
+          type="text"
+          name="cost"
+          placeholder="Стоимость (обяз.)"
+          required
+        />
+      </div>
+      <div class="input-group">
+        <select
+          id="operationType"
+          name="operationType"
+          required
+          onchange="handleOperationTypeChange()"
+        >
+          <option value="" disabled selected>Тип операции (обяз.)</option>
+          <option value="income">Доход</option>
+          <option value="expense">Расход</option>
+        </select>
+      </div>
 
-            <div class="input-group">
-                <input type="text" name="cost" placeholder="Стоимость (обяз.)" required />
-            </div>
-            <div class="input-group">
-                <select id="operationType" name="operationType" required  onchange="handleOperationTypeChange()">
-                    <option value="" disabled selected>Тип операции (обяз.)</option>
-                    <option value="income">Доход</option>
-                    <option value="expense">Расход</option>
-                </select>
-            </div>
+      <div class="input-group">
+        <input type="date" name="operationDate" required />
+      </div>
 
-            <div class="input-group">
-                <input type="date" name="operationDate" required />
-            </div>
+      <div class="extra-field income-field hidden"></div>
 
-            <div class="extra-field income-field hidden"></div>
+      <div class="extra-field expense-field hidden">
+        <div class="input-group">
+          <select id="create-operation-category" name="category">
+            <option value="" disabled selected>Сфера услуг</option>
+            {{#each categories}}
+            <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="input-group">
+          <input
+            type="text"
+            name="title"
+            placeholder="Наименование организации"
+          />
+        </div>
+      </div>
 
+      <div class="input-group">
+        <input
+          type="text"
+          name="comment"
+          placeholder="Комментарий к операции (необяз.)"
+        />
+      </div>
 
+      <div class="input-group">
+        <select id="create-operation-account-num" name="account">
+          <option value="" disabled selected>Выберите счет</option>
+          <option value="1">Счет №1</option>
+          <option value="2">Счет №2</option>
+        </select>
+      </div>
 
-            <div class="extra-field expense-field hidden">
-                <div class="input-group">
-                    <select id="create-operation-category" name="category"">
-                        <option value="" disabled selected>Сфера услуг</option>
-                        <option value="1">Еда / Напитки</option>
-                        <option value="2">Игры</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <input type="text" name="title" placeholder="Наименование организации" />
-                </div>
-            </div>
-
-            <div class="input-group">
-                <input type="text" name="comment" placeholder="Комментарий к операции (необяз.)" />
-            </div>
-
-            <div class="input-group">
-                <select id="create-operation-account-num" name="account">
-                    <option value="" disabled selected>Выберите счет</option>
-                    <option value="1">Счет №1</option>
-                    <option value="2">Счет №2</option>
-                </select>
-            </div>
-
-            <button type="submit" class="submit-btn-cat" >+ Добавить операцию</button>
-        </form>
-    </div>
+      <button type="submit" class="submit-btn-cat">+ Добавить операцию</button>
+    </form>
+  </div>
 </div>

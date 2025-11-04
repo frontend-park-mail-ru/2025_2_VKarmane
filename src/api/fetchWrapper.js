@@ -1,17 +1,16 @@
 const API_URL = import.meta.env.VITE_API_URL;
 export async function apiFetch(url, options = {}) {
-  const defaultOptions = {
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    credentials: "include",
-  };
+  const isFormData = options.body instanceof FormData;
+
+  const defaultHeaders = isFormData
+    ? {}
+    : { "Content-Type": "application/json;charset=utf-8" };
 
   const finalOptions = {
-    ...defaultOptions,
+    credentials: "include",
     ...options,
     headers: {
-      ...defaultOptions.headers,
+      ...defaultHeaders,
       ...(options.headers || {}),
     },
   };

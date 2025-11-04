@@ -67,6 +67,7 @@ export class ProfilePage {
       date: new Date(data.created_at).toLocaleDateString("ru-RU"),
       login: data.login,
       mail: data.email,
+      avatar: data.logo_url ? data.logo_url : "/imgs/empty_avatar.png",
       editProfile: this.editProfile.getSelf(name, data.email),
     });
     setBody();
