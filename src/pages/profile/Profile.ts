@@ -50,8 +50,8 @@ export class ProfilePage {
             return [];
           }
           return data.operations.map((op) => ({
-            sum: op.sum.toString(),
-            date: new Date(op.date).toLocaleDateString("ru-RU"),
+            sum: op.sum,
+            date: op.date,
           }));
         }),
       );
