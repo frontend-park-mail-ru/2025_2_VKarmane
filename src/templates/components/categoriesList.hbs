@@ -11,7 +11,9 @@
       <div class="category-card">
         <div class="category-card-info">
           <div class="category-card-img">
-            {{#if this.logo}} {{else}}
+            {{#if this.logo}}
+            <img src="{{this.logo}}" alt="" />
+            {{else}}
             <img src="imgs/default_transaction.svg" alt="" />
             {{/if}}
           </div>
