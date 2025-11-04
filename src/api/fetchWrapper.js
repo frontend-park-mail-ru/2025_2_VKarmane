@@ -11,7 +11,6 @@ export async function apiFetch(url, options = {}) {
     headers: {
       ...defaultHeaders,
       ...(options.headers || {}),
-      credentials: "include",
     },
     credentials: "include",
   };

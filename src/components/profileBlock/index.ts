@@ -8,10 +8,11 @@ export class ProfileBlock {
   constructor() {
     this.template = Handlebars.compile(profileBlock);
   }
-  getSelf(userName: string, userId: number): string {
+  getSelf(userName: string, userId: number, logo: string): string {
     return this.template({
       user_name: userName,
       user_id: userId,
+      avatar: logo ? logo : "/imgs/empty_avatar.png",
     });
   }
   setEvents(): void {

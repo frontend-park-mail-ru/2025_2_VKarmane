@@ -128,7 +128,11 @@ export class MainPage {
         operations: this.operations.getList(operations),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf(data.login, data.user_id),
+        profile_block: this.profileBlock.getSelf(
+          data.login,
+          data.user_id,
+          data.logo_url,
+        ),
         addOperations: this.addOperations.getSelf(),
       };
 
