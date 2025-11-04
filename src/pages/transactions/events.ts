@@ -180,6 +180,7 @@ export function addEventListeners(context: any): void {
     }
 
     const delCatBtn = target.closest(".delete-btn");
+    console.log(delCatBtn);
     if (delCatBtn) {
       const card = delCatBtn.closest(".category-card") as HTMLElement | null;
       if (!card) return;
@@ -188,7 +189,7 @@ export function addEventListeners(context: any): void {
       const ctg_id = ctgIdText.replace("ID:", "").trim();
       if (!ctg_id) return;
 
-      apiFetch(`/categgories/${ctg_id}`, {
+      apiFetch(`/categories/${ctg_id}`, {
         method: "DELETE",
       }).then(({ ok, error }) => {
         if (ok) router.navigate("/transactions");
