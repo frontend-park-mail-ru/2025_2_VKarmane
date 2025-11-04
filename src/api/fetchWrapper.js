@@ -7,12 +7,13 @@ export async function apiFetch(url, options = {}) {
     : { "Content-Type": "application/json;charset=utf-8" };
 
   const finalOptions = {
-    credentials: "include",
     ...options,
     headers: {
       ...defaultHeaders,
       ...(options.headers || {}),
+      credentials: "include",
     },
+    credentials: "include",
   };
 
   try {
