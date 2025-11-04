@@ -208,7 +208,7 @@ export class TransactionsPage {
               : "Доход",
             OperationPrice: op.sum.toString(),
             OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
-            OperationID: op._id,
+            OperationID: op.id,
             AccountID: op.account_id,
           }));
         }),

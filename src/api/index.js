@@ -44,7 +44,7 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
       });
 
       return ops.operations.map((operation) => ({
-        OrganizationTitle: "Мок",
+        OrganizationTitle: operation.name || "Мок",
         CategoryName: `Категория ${operation.category_id}`,
         OperationPrice: operation.sum,
         OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
