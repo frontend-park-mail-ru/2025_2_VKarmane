@@ -30,6 +30,33 @@ export async function openPopup(): Promise<void> {
   } catch (err) {
     console.error("Ошибка при открытии popup:", err);
   }
+
+  const selectAccount = document.getElementById("create-operation-account-num");
+  if (!selectAccount) return;
+
+  selectAccount.innerHTML = '<option value="" disabled selected>Счет</option>';
+
+  try {
+    const { ok, data, error } = await apiFetch("/balance", {
+      method: "GET",
+    });
+
+    if (!ok) {
+      console.error("Ошибка при загрузке счетов:", error);
+      return;
+    }
+
+    const accounts = data.accounts || [];
+
+    for (const acc of accounts) {
+      const option = document.createElement("option");
+      option.value = String(acc.id);
+      option.textContent = `Счет №${acc.id}`;
+      select.appendChild(option);
+    }
+  } catch (err) {
+    console.error("Ошибка при открытии popup:", err);
+  }
 }
 
 export function closePopup(): void {

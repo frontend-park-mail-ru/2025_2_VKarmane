@@ -100,6 +100,7 @@ export class MainPage {
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
               this.card.getSelf(
+                account.id,
                 account.balance,
                 true,
                 32323,
