@@ -36,13 +36,13 @@ export class ProfilePage {
       return;
     }
 
-    const accounts = await getBalance();
+    const balanceData = await getBalance();
     let operations = [];
     try {
       const allOps = await Promise.all(
-        accounts.map(async (id) => {
+        balanceData.accounts.map(async (acc) => {
           const { ok, data, error, status } = await apiFetch(
-            `/account/${id}/operations`,
+            `/account/${acc.id}/operations`,
           );
           if (!ok) {
             console.error("Ошибка получения операций:", error);
