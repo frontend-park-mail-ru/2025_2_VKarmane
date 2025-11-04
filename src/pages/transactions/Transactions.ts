@@ -473,14 +473,14 @@ export class TransactionsPage {
     const nameInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Название категории (обяз.)"]',
     );
-    const typeInput =
-      form.querySelector<HTMLSelectElement>("#editCategoryType");
+    // const typeInput =
+    //   form.querySelector<HTMLSelectElement>("#editCategoryType");
     const iconInput = form.querySelector<HTMLInputElement>("#editCategoryIcon");
     const descInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Описание категории (необяз.)"]',
     );
     const idInput = form.querySelector<HTMLInputElement>("#editCategoryId");
-    if (!nameInput || !typeInput || !iconInput || !descInput || !idInput)
+    if (!nameInput || !iconInput || !descInput || !idInput)
       return console.error(
         "Не удалось найти все поля формы редактирования категории",
       );
