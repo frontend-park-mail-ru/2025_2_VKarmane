@@ -8,6 +8,7 @@ import { setBody } from "../../utils/bodySetters.js";
 import { EditProfile } from "../../components/editProfile/index.js";
 import type { TransactionIntefrace } from "../../schemas/index.js";
 import { router } from "../../router.js";
+import { getAllUserTransactionsByAccIDs, getBalance } from "../../api/index.js";
 
 export class ProfilePage {
   menu: Menu;
@@ -35,27 +36,17 @@ export class ProfilePage {
       return;
     }
 
-    const accounts = [1, 2];
-    const allOps = await Promise.all(
-      accounts.map(async (id) => {
-        const { ok, data, error } = await apiFetch(
-          `/account/${id}/operations`,
-          {
-            method: "GET",
-          },
-        );
-
-        if (!ok) {
-          console.error("Ошибка получения операций:", error);
-          return [];
-        }
-
-        return data.operations.map(
-          (operation: TransactionIntefrace) => operation,
-        );
-      }),
-    );
-    const operations = allOps.flat();
+    const balanceData = await getBalance();
+    let operations;
+    try {
+      let accounts: number[] = [];
+      balanceData.accounts?.forEach((acc) => {
+        accounts.push(acc.id);
+      });
+      operations = await getAllUserTransactionsByAccIDs(accounts);
+    } catch {
+      operations = [];
+    }
     const name =
       data.first_name + data.last_name
         ? data.first_name + " " + data.last_name
