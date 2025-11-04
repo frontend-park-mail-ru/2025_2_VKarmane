@@ -28,7 +28,6 @@ export class Calendar {
   }
 
   getSelf(transactions: TransactionIntefrace[]): string {
-    console.log(`ops: ${transactions}`);
     const data = this.getCalendarData(transactions);
     return this.template(data);
   }
@@ -52,20 +51,12 @@ export class Calendar {
 
     const emptyDaysCount = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
 
-    console.log(transactions);
     const currentMonthTransactions = transactions.filter((t) => {
       const d = new Date(t.date);
-      console.log(
-        d.getMonth(),
-        currentMonthIndex,
-        d.getFullYear(),
-        currentYear,
-      );
       return (
         d.getMonth() === currentMonthIndex && d.getFullYear() === currentYear
       );
     });
-    console.log(currentMonthTransactions);
 
     const daySums = this.getTransactionsByDay(currentMonthTransactions);
     const maxSum = Math.max(0, ...Object.values(daySums));
@@ -95,19 +86,15 @@ export class Calendar {
   ): Record<number, number> {
     const daySums: Record<number, number> = {};
     transactions.forEach((t) => {
-      console.log(`date: ${new Date(t.date)} `);
       const date = new Date(t.date);
       const day = date.getDate();
-      console.log(`day: ${day} `);
       daySums[day] = (daySums[day] || 0) + t.sum;
     });
-    console.log(daySums);
 
     return daySums;
   }
 
   getColorForSum(sum: number, maxSum: number): string {
-    console.log(sum);
     if (!sum) return "#f6f6f8";
 
     const minColor = [255, 215, 194];

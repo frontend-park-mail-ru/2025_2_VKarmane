@@ -88,9 +88,7 @@ export class ProfilePage {
   }
 
   openPopup(): void {
-    console.log("aaaa");
     const popup = document.getElementById("popup");
-    console.log(popup);
     if (popup) popup.style.display = "flex";
   }
 

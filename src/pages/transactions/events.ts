@@ -180,7 +180,6 @@ export function addEventListeners(context: any): void {
     }
 
     const delCatBtn = target.closest(".cat-del");
-    console.log(delCatBtn);
     if (delCatBtn) {
       const card = delCatBtn.closest(".category-card") as HTMLElement | null;
       if (!card) return;

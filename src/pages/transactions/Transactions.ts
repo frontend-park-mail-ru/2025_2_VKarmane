@@ -128,7 +128,6 @@ export class TransactionsPage {
 
     const { ok, status, data: profileData } = await apiFetch("/profile");
     if (!ok) {
-      console.log(status);
       if (status === 401) {
         router.navigate("/login");
         return;
