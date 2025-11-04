@@ -52,7 +52,7 @@ export async function openPopup(): Promise<void> {
       const option = document.createElement("option");
       option.value = String(acc.id);
       option.textContent = `Счет №${acc.id}`;
-      select.appendChild(option);
+      selectAccount.appendChild(option);
     }
   } catch (err) {
     console.error("Ошибка при открытии popup:", err);
