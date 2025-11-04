@@ -52,8 +52,6 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
             );
             if (categoryRes.ok && categoryRes.data?.name) {
               categoryName = categoryRes.data.name;
-            } else {
-              categoryName = "Без категории";
             }
           }
 
