@@ -173,9 +173,25 @@ export class TransactionsPage {
     this.setupEventListeners(container);
   }
 
+  private async loadAccounts() {
+    try {
+      let accounts: number[] = [];
+      const { ok, data, error } = await apiFetch("/balance");
+      if (ok) {
+        data.accounts.forEach((acc) => {
+          accounts.push(acc.id);
+        });
+        return accounts;
+      }
+      console.error(error);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   private async loadOperations(): Promise<Transaction[]> {
     try {
-      const accounts = [1, 2];
+      const accounts = await this.loadAccounts();
       const allOps = await Promise.all(
         accounts.map(async (id) => {
           const { ok, data, error, status } = await apiFetch(

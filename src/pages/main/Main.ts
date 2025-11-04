@@ -91,7 +91,11 @@ export class MainPage {
         throw new Error("failed to get user data");
       let operations;
       try {
-        operations = await getAllUserTransactionsByAccIDs([1, 2]);
+        let accounts: number[] = [];
+        balanceData.accounts?.forEach((acc) => {
+          accounts.push(acc.id);
+        });
+        operations = await getAllUserTransactionsByAccIDs(accounts);
       } catch {
         operations = [];
       }
