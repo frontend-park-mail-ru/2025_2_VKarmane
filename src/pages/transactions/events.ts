@@ -7,7 +7,6 @@ import {
 } from "./validationForForms.js";
 import { router } from "../../router.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
-import { error } from "console";
 
 const trackedListeners: {
   element: EventTarget;
