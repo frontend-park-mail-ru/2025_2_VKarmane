@@ -138,19 +138,6 @@ export class TransactionsPage {
     const operations = await this.loadOperations();
     const categories = await this.loadCategories();
 
-    // const categories: Category[] = [
-    //   {
-    //     CategoryName: "Продукты",
-    //     CategoryStatus: "Активна",
-    //     CategoryAmount: "1200",
-    //   },
-    //   {
-    //     CategoryName: "Транспорт",
-    //     CategoryStatus: "Неактивна",
-    //     CategoryAmount: "800",
-    //   },
-    // ];
-
     const data = {
       menu: this.menu.getSelf(),
       addOperations: this.addOperations.getSelf(),

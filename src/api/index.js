@@ -1,3 +1,4 @@
+import { apiFetch } from "./fetchWrapper.js";
 const API_URL = import.meta.env.VITE_API_URL;
 
 async function fetchWithAuth(url, options = {}) {
@@ -39,20 +40,35 @@ export function getOperations(accountID) {
 export async function getAllUserTransactionsByAccIDs(accountIDs) {
   const allOps = await Promise.all(
     accountIDs.map(async (id) => {
-      const ops = await getOperations(id, {
-        method: "GET",
-      });
+      const ops = await getOperations(id, { method: "GET" });
 
-      return ops.operations.map((operation) => ({
-        OrganizationTitle: operation.name || "Мок",
-        CategoryName: `Категория ${operation.category_id}`,
-        OperationPrice: operation.sum,
-        OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
-      }));
+      const operationsWithCategories = await Promise.all(
+        ops.operations.map(async (operation) => {
+          let categoryName = "Доход";
+
+          if (operation.category_id) {
+            const categoryRes = await apiFetch(
+              `/categories/${operation.category_id}`,
+            );
+            if (categoryRes.ok && categoryRes.data?.name) {
+              categoryName = categoryRes.data.name;
+            } else {
+              categoryName = "Без категории";
+            }
+          }
+
+          return {
+            OrganizationTitle: operation.name || "Мок",
+            CategoryName: categoryName,
+            OperationPrice: operation.sum,
+            OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+          };
+        }),
+      );
+
+      return operationsWithCategories;
     }),
   );
 
-  const operations = allOps.flat();
-
-  return operations;
+  return allOps.flat();
 }
