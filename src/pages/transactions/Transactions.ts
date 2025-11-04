@@ -61,7 +61,7 @@ interface OperationFromBackend {
   category_id: number;
   sum: number;
   date: Date;
-  transaction_id: number;
+  _id: number;
   account_id: number;
   name: string;
 }
@@ -209,7 +209,7 @@ export class TransactionsPage {
               : "Доход",
             OperationPrice: op.sum.toString(),
             OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
-            OperationID: op.transaction_id,
+            OperationID: op._id,
             AccountID: op.account_id,
           }));
         }),
