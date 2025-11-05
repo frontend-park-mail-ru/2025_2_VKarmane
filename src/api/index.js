@@ -45,6 +45,7 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
       const operationsWithCategories = await Promise.all(
         ops.operations.map(async (operation) => {
           let categoryName = "Доход";
+          let CategoryLogo = "";
 
           if (operation.category_id) {
             const categoryRes = await apiFetch(
@@ -53,6 +54,10 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
             if (categoryRes.ok && categoryRes.data?.name) {
               categoryName = categoryRes.data.name;
             }
+            CategoryLogo = categoryRes.data?.logo_url.match(/\/images\/[^?]+/)
+              ? "https://vkarmane.duckdns.org/test/" +
+                categoryRes.data.logo_url.match(/\/images\/[^?]+/)[0]
+              : "";
           }
 
           return {
@@ -60,6 +65,7 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
             CategoryName: categoryName,
             OperationPrice: operation.sum,
             OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+            CategoryLogo: CategoryLogo,
           };
         }),
       );
