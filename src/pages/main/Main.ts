@@ -144,7 +144,7 @@ export class MainPage {
 
       container.innerHTML = this.template(data_);
       this.setupEventListeners(container);
-      addEventListeners(this);
+      await addEventListeners(this);
     } catch (err) {
       console.error(err);
       router.navigate("/login");
@@ -154,10 +154,10 @@ export class MainPage {
     setBody();
   }
 
-  setupEventListeners(container: HTMLElement): void {
+  async setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
-    this.addOperations.setEventListeners();
+    await this.addOperations.setEventListeners();
     const form: HTMLFormElement | null =
       container.querySelector("#create-oper-form");
     if (!form) return;

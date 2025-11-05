@@ -54,6 +54,7 @@ export class AddOperation {
       this.validateSingleField("sum", sumInput.value, sumInput);
     });
     if (this.GetDataPostRender) {
+      console.log("abaaaaa");
       const categoriesOrError = await this.getCategories();
       if (categoriesOrError instanceof Error) throw categoriesOrError;
       const selectCategory = document.getElementById(
@@ -79,7 +80,7 @@ export class AddOperation {
       if (!selectAccount) throw new Error("no account select element");
       selectAccount.innerHTML =
         '<option value="" disabled selected>Счет</option>';
-      const accs = categoriesOrError.accounts || [];
+      const accs = AccountsOrError.accounts || [];
 
       for (const acc of accs) {
         const option = document.createElement("option");
