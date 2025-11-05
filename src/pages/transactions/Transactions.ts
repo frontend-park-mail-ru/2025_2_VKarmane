@@ -137,6 +137,10 @@ export class TransactionsPage {
 
     const operations = await this.loadOperations();
     const categories = await this.loadCategories();
+    const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
+    const logo = logoMatch
+      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      : "imgs/empty_avatar.png";
 
     const data = {
       menu: this.menu.getSelf(),
@@ -147,10 +151,7 @@ export class TransactionsPage {
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
         profileData.id,
-        profileData?.logo_url?.match(/\/images\/[^?]+/)
-          ? "https://vkarmane.duckdns.org/test/" +
-              profileData?.logo_url?.match(/\/images\/[^?]+/)[0]
-          : "imgs/empty_avatar.png",
+        logo,
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),

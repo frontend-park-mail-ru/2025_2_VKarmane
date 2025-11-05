@@ -114,6 +114,10 @@ export class MainPage {
             )
           : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
 
+      const logoMatch = data?.logo_url?.match(/\/images\/[^?]+/);
+      const logo = logoMatch
+        ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+        : "imgs/empty_avatar.png";
       const data_ = {
         FactBal: this.factBal.getSelf(
           balanceData.accounts.length !== 0
@@ -133,14 +137,7 @@ export class MainPage {
         operations: this.operations.getList(operations),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf(
-          data.login,
-          data.id,
-          data?.logo_url?.match(/\/images\/[^?]+/)
-            ? "https://vkarmane.duckdns.org/test/" +
-                data?.logo_url?.match(/\/images\/[^?]+/)[0]
-            : "imgs/empty_avatar.png",
-        ),
+        profile_block: this.profileBlock.getSelf(data.login, data.id, logo),
         addOperations: this.addOperations.getSelf(),
       };
 
