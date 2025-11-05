@@ -235,7 +235,7 @@ export class TransactionsPage {
         id: ctg.id,
         name: ctg.name,
         logo: ctg.logo_url.match(/\/images\/[^\?]+/)
-          ? "https://vkarmane.duckdns.org" +
+          ? "https://vkarmane.duckdns.org/test/" +
             ctg.logo_url.match(/\/images\/[^\?]+/)[0]
           : "",
         cnt_op: ctg.operations_count,
