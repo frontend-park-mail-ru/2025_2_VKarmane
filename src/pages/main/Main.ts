@@ -112,7 +112,7 @@ export class MainPage {
                 "Развлечения",
               ),
             )
-          : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
+          : [this.card.getSelf(0, null, true, 0, 0, "Нет счетов")];
 
       const logoMatch = data?.logo_url?.match(/\/images\/[^?]+/);
       const logo = logoMatch
