@@ -157,6 +157,7 @@ export class MainPage {
   setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
+    this.addOperations.setEventListeners();
     const form: HTMLFormElement | null =
       container.querySelector("#create-oper-form");
     if (!form) return;
