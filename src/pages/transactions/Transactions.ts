@@ -525,8 +525,8 @@ export class TransactionsPage {
           "Категория с таким именем уже существует",
         );
       else setServerEditCategoryError();
-      router.navigate("/transactions");
       return;
     }
+    router.navigate("/transactions");
   }
 }

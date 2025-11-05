@@ -12,7 +12,11 @@
         <div class="category-card-info">
           <div class="category-card-img">
             {{#if this.logo}}
-            <img src="{{this.logo}}" alt="" />
+            <img
+              src="{{this.logo}}"
+              alt=""
+              onerror="this.src='/imgs/default_transaction.svg'"
+            />
             {{else}}
             <img src="/imgs/default_transaction.svg" alt="" />
             {{/if}}
