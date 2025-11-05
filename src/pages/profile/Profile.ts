@@ -63,9 +63,9 @@ export class ProfilePage {
       data.first_name + data.last_name
         ? data.first_name + " " + data.last_name
         : "";
-    const avatarUrl = data?.logo_url.match(/\/images\/[^?]+/)
+    const avatarUrl = data?.logo_url?.match(/\/images\/[^?]+/)
       ? "https://vkarmane.duckdns.org/test/" +
-        data?.logo_url.match(/\/images\/[^?]+/)[0]
+        data?.logo_url?.match(/\/images\/[^?]+/)[0]
       : "imgs/empty_avatar.png";
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
@@ -74,9 +74,9 @@ export class ProfilePage {
       date: new Date(data.created_at).toLocaleDateString("ru-RU"),
       login: data.login,
       mail: data.email,
-      avatar: data?.logo_url.match(/\/images\/[^?]+/)
+      avatar: data?.logo_url?.match(/\/images\/[^?]+/)
         ? "https://vkarmane.duckdns.org/test/" +
-          data?.logo_url.match(/\/images\/[^?]+/)[0]
+          data?.logo_url?.match(/\/images\/[^?]+/)[0]
         : "imgs/empty_avatar.png",
       editProfile: this.editProfile.getSelf(
         name,

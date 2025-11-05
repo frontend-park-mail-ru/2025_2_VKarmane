@@ -147,9 +147,9 @@ export class TransactionsPage {
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
         profileData.id,
-        profileData.logo_url?.match(/\/images\/[^?]+/)
+        profileData?.logo_url?.match(/\/images\/[^?]+/)
           ? "https://vkarmane.duckdns.org/test/" +
-              profileData?.logo_url.match(/\/images\/[^?]+/)[0]
+              profileData?.logo_url?.match(/\/images\/[^?]+/)[0]
           : "imgs/empty_avatar.png",
       ),
       redactOperations: this.redactOpers.getSelf(),
@@ -205,11 +205,11 @@ export class TransactionsPage {
                 );
                 if (categoryRes.ok && categoryRes.data?.name) {
                   categoryName = categoryRes.data.name;
-                  categoryLogo = categoryRes.data?.logo_url.match(
+                  categoryLogo = categoryRes.data?.logo_url?.match(
                     /\/images\/[^?]+/,
                   )
                     ? "https://vkarmane.duckdns.org/test/" +
-                      categoryRes.data?.logo_url.match(/\/images\/[^?]+/)[0]
+                      categoryRes.data?.logo_url?.match(/\/images\/[^?]+/)[0]
                     : "";
                 }
               }
@@ -245,9 +245,9 @@ export class TransactionsPage {
       return data.categories.map((ctg) => ({
         id: ctg.id,
         name: ctg.name,
-        logo: ctg?.logo_url.match(/\/images\/[^\?]+/)
+        logo: ctg?.logo_url?.match(/\/images\/[^\?]+/)
           ? "https://vkarmane.duckdns.org/test/" +
-            ctg?.logo_url.match(/\/images\/[^\?]+/)[0]
+            ctg?.logo_url?.match(/\/images\/[^\?]+/)[0]
           : "",
         cnt_op: ctg.operations_count,
         description: ctg.description,

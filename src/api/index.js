@@ -54,9 +54,9 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
             if (categoryRes.ok && categoryRes.data?.name) {
               categoryName = categoryRes.data.name;
             }
-            CategoryLogo = categoryRes.data?.logo_url.match(/\/images\/[^?]+/)
+            CategoryLogo = categoryRes.data?.logo_url?.match(/\/images\/[^?]+/)
               ? "https://vkarmane.duckdns.org/test/" +
-                categoryRes.data.logo_url.match(/\/images\/[^?]+/)[0]
+                categoryRes.data.logo_url?.match(/\/images\/[^?]+/)[0]
               : "";
           }
 
