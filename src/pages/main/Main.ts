@@ -138,7 +138,7 @@ export class MainPage {
           data.id,
           data?.logo_url.match(/\/images\/[^?]+/)
             ? "https://vkarmane.duckdns.org/test/" +
-                data.logo_url.match(/\/images\/[^?]+/)[0]
+                data?.logo_url.match(/\/images\/[^?]+/)[0]
             : "imgs/empty_avatar.png",
         ),
         addOperations: this.addOperations.getSelf(),
