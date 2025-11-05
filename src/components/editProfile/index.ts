@@ -22,10 +22,16 @@ export class EditProfile {
     window.closePopup = ClosePopupCallback.bind(this);
   }
 
-  getSelf(fullName: string, email: string, userID: number): string {
+  getSelf(
+    fullName: string,
+    email: string,
+    userID: number,
+    logo: string,
+  ): string {
     const [name, surname] = fullName.split(" ");
 
     return this.template({
+      logo: logo,
       fullName: fullName,
       ID: userID,
       firstNameInput: this.inputField.getSelf(

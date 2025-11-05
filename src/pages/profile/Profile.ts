@@ -63,6 +63,10 @@ export class ProfilePage {
       data.first_name + data.last_name
         ? data.first_name + " " + data.last_name
         : "";
+    const avatarUrl = data?.logo_url.match(/\/images\/[^?]+/)
+      ? "https://vkarmane.duckdns.org/test/" +
+        data?.logo_url.match(/\/images\/[^?]+/)[0]
+      : "imgs/empty_avatar.png";
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
       calendar: this.calendar.getSelf(operations),
@@ -71,7 +75,12 @@ export class ProfilePage {
       login: data.login,
       mail: data.email,
       avatar: data.logo_url ? data.logo_url : "/imgs/empty_avatar.png",
-      editProfile: this.editProfile.getSelf(name, data.email, data.id),
+      editProfile: this.editProfile.getSelf(
+        name,
+        data.email,
+        data.id,
+        avatarUrl,
+      ),
     });
     setBody();
     this.setupEventListeners();
