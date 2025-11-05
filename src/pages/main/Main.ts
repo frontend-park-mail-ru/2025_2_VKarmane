@@ -65,6 +65,7 @@ export class MainPage {
     this.addOperations = new AddOperation(
       this.closePopup,
       this.handleOperationTypeChange,
+      true,
     );
     this.inputField = new InputField();
     this.addCard = new AddCard();
