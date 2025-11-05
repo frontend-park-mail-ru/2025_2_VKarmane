@@ -193,6 +193,7 @@ export class TransactionsPage {
 
           const operations = await Promise.all(
             data.operations.map(async (op: OperationFromBackend) => {
+              let categoryLogo = "";
               let categoryName = "Доход";
 
               if (op.category_id) {
@@ -201,6 +202,12 @@ export class TransactionsPage {
                 );
                 if (categoryRes.ok && categoryRes.data?.name) {
                   categoryName = categoryRes.data.name;
+                  categoryLogo = categoryRes.data?.logo_url.match(
+                    /\/images\/[^?]+/,
+                  )
+                    ? "https://vkarmane.duckdns.org/test/" +
+                      categoryRes.data.logo_url.match(/\/images\/[^?]+/)[0]
+                    : "";
                 }
               }
 
@@ -211,6 +218,7 @@ export class TransactionsPage {
                 OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
                 OperationID: op.id,
                 AccountID: op.account_id,
+                CategoryLogo: categoryLogo,
               };
             }),
           );
