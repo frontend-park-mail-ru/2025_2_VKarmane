@@ -144,7 +144,7 @@ export class MainPage {
 
       container.innerHTML = this.template(data_);
       this.setupEventListeners(container);
-      await addEventListeners(this);
+      addEventListeners(this);
     } catch (err) {
       console.error(err);
       router.navigate("/login");

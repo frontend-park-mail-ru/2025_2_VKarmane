@@ -42,12 +42,9 @@ export class AddOperation {
   }
 
   async setEventListeners(): Promise<void> {
-    const form = document.getElementById(
-      "add-operation-form",
-    ) as HTMLFormElement;
-    if (!form) return;
-
-    const sumInput = document.querySelector(".input-field") as HTMLInputElement;
+    const sumInput = document.getElementById(
+      "operationCost",
+    ) as HTMLInputElement;
     if (!sumInput) throw new Error("no sum input element");
 
     sumInput.addEventListener("input", () => {
