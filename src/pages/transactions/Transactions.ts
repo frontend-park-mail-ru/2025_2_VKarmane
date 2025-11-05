@@ -421,27 +421,32 @@ export class TransactionsPage {
       created_at: new Date(operationDateInput.value).toISOString(),
     };
 
-    const { ok, status } = await apiFetch(
-      `/account/${accId}/operations/${opId}`,
-      { method: "PUT", body: JSON.stringify(body) },
-    );
-    if (!ok) {
-      if (status === 400)
-        this.inputField.setError(
-          [costInput, operationDateInput, commentInput, transaction_id],
-          true,
-          "Некорректные данные операции",
-        );
-      else if (status === 409)
-        this.inputField.setError(
-          [commentInput],
-          true,
-          "Такая операция уже существует",
-        );
-      else setServerEditOperError();
-      return;
+    try {
+      const { ok, status, error } = await apiFetch(
+        `/account/${accId}/operations/${opId}`,
+        { method: "PUT", body: JSON.stringify(body) },
+      );
+      if (!ok) {
+        if (status === 400)
+          this.inputField.setError(
+            [costInput, operationDateInput, commentInput, transaction_id],
+            true,
+            "Некорректные данные операции",
+          );
+        else if (status === 409)
+          this.inputField.setError(
+            [commentInput],
+            true,
+            "Такая операция уже существует",
+          );
+        else setServerEditOperError();
+        console.error(error);
+        return;
+      }
+      router.navigate("/transactions");
+    } catch (error) {
+      console.error(error);
     }
-    router.navigate("/transactions");
   }
 
   private async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
