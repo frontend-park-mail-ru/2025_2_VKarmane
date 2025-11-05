@@ -234,7 +234,10 @@ export class TransactionsPage {
       return data.categories.map((ctg) => ({
         id: ctg.id,
         name: ctg.name,
-        logo: ctg.logo_url,
+        logo: ctg.logo_url.match(/\/images\/[^\?]+/)
+          ? "https://vkarmane.duckdns.org" +
+            ctg.logo_url.match(/\/images\/[^\?]+/)[0]
+          : "",
         cnt_op: ctg.operations_count,
         description: ctg.description,
       }));
