@@ -42,6 +42,9 @@ export class AddOperation {
   }
 
   async setEventListeners(): Promise<void> {
+    const form = document.getElementById("create-oper-form");
+    if (!form) throw new Error("no form");
+
     const sumInput = document.getElementById(
       "operationCost",
     ) as HTMLInputElement;
