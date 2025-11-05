@@ -415,7 +415,6 @@ export class TransactionsPage {
       return console.error("Некорректный transaction_id:", transaction_id);
 
     const body = {
-      category_id: 1,
       sum: parseFloat(costInput.value),
       description: commentInput.value.trim() || "",
       created_at: new Date(operationDateInput.value).toISOString(),
