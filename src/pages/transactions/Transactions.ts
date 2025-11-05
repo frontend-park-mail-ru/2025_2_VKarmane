@@ -147,7 +147,10 @@ export class TransactionsPage {
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
         profileData.id,
-        profileData.logo_url,
+        profileData.logo_url.match(/\/images\/[^?]+/)
+          ? "https://vkarmane.duckdns.org/test/" +
+              profileData.logo_url.match(/\/images\/[^?]+/)[0]
+          : "imgs/empty_avatar.png",
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),

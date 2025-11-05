@@ -136,7 +136,10 @@ export class MainPage {
         profile_block: this.profileBlock.getSelf(
           data.login,
           data.id,
-          data.logo_url,
+          data?.logo_url.match(/\/images\/[^?]+/)
+            ? "https://vkarmane.duckdns.org/test/" +
+                data.logo_url.match(/\/images\/[^?]+/)[0]
+            : "imgs/empty_avatar.png",
         ),
         addOperations: this.addOperations.getSelf(),
       };
