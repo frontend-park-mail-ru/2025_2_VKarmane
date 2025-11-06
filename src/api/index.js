@@ -1,11 +1,14 @@
 import { apiFetch } from "./fetchWrapper.js";
 const API_URL = import.meta.env.VITE_API_URL;
+import { csrfToken } from "./fetchWrapper.js";
 
 async function fetchWithAuth(url, options = {}) {
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
   };
+
+  if (csrfToken) headers["X-CSRF-Token"] = csrfToken;
 
   const response = await fetch(API_URL + url, {
     ...options,

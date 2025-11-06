@@ -1,4 +1,20 @@
 const API_URL = import.meta.env.VITE_API_URL;
+export let csrfToken = "";
+
+export async function fetchCSRFToken() {
+  const res = await fetch(`${API_URL}/auth/csrf`, {
+    method: "GET",
+    credentials: "include", // обязательно! чтобы получить cookie
+  });
+
+  if (!res.ok) throw new Error("Не удалось получить CSRF токен");
+
+  const data = await res.json();
+  csrfToken = data.csrf_token; // сохраняем токен
+}
+
+await fetchCSRFToken();
+
 export async function apiFetch(url, options = {}) {
   const isFormData = options.body instanceof FormData;
 
@@ -11,9 +27,12 @@ export async function apiFetch(url, options = {}) {
     headers: {
       ...defaultHeaders,
       ...(options.headers || {}),
+      "X-CSRF-Token": csrfToken,
     },
     credentials: "include",
   };
+
+  // if (csrfToken) finalOptions.headers["X-CSRF-Token"] = csrfToken;
 
   try {
     const response = await fetch(API_URL + url, finalOptions);
