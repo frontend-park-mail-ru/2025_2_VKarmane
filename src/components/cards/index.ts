@@ -8,6 +8,7 @@ export class Card {
     this.template = Handlebars.compile(cardsTemplate);
   }
   getSelf(
+    id: number,
     balance: number | null,
     hasUpdateFactPlan: boolean,
     updateCardFortwoWeek: number,
@@ -18,6 +19,7 @@ export class Card {
       return this.template({ is_empty: true });
     }
     return this.template({
+      id: id,
       balance: balance,
       hasUpdateFactPlan: hasUpdateFactPlan,
       has_update_for_2_week: updateCardFortwoWeek,

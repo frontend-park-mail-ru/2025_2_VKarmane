@@ -1,14 +1,19 @@
 <div class="operations">
   {{#if operations_exists}}
-      <div class="Transaction-header" style="margin-left: 3vh">
-          <p class="Transact-Category-text">Операции</p>
-          <button onclick="openPopups()" class="open-btn">+</button>
-      </div>
+  <div class="Transaction-header" style="margin-left: 3vh">
+    <p class="Transact-Category-text">Операции</p>
+    <button onclick="openPopups()" class="open-btn">+</button>
+  </div>
   <div class="operations-list">
     {{#each operationsItems}}
     <div class="operations-item">
       <div class="operation" style="display: flex">
-        <img src="/imgs/yandex.png" alt="{{title_oper}}" />
+        <img
+          class="operation_img"
+          src="{{CategoryLogo}}"
+          alt=""
+          onerror="this.src='/imgs/default_transaction.svg'"
+        />
         <div class="title_with_category">
           <div class="title_oper">{{OrganizationTitle}}</div>
           <div class="category_oper">{{CategoryName}}</div>

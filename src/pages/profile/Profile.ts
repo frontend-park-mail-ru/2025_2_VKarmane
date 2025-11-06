@@ -8,6 +8,7 @@ import { setBody } from "../../utils/bodySetters.js";
 import { EditProfile } from "../../components/editProfile/index.js";
 import type { TransactionIntefrace } from "../../schemas/index.js";
 import { router } from "../../router.js";
+import { getAllUserTransactionsByAccIDs, getBalance } from "../../api/index.js";
 
 export class ProfilePage {
   menu: Menu;
@@ -35,31 +36,37 @@ export class ProfilePage {
       return;
     }
 
-    const accounts = [1, 2];
-    const allOps = await Promise.all(
-      accounts.map(async (id) => {
-        const { ok, data, error } = await apiFetch(
-          `/account/${id}/operations`,
-          {
-            method: "GET",
-          },
-        );
-
-        if (!ok) {
-          console.error("Ошибка получения операций:", error);
-          return [];
-        }
-
-        return data.operations.map(
-          (operation: TransactionIntefrace) => operation,
-        );
-      }),
-    );
-    const operations = allOps.flat();
+    const balanceData = await getBalance();
+    let operations = [];
+    try {
+      const allOps = await Promise.all(
+        balanceData.accounts.map(async (acc) => {
+          const { ok, data, error, status } = await apiFetch(
+            `/account/${acc.id}/operations`,
+          );
+          if (!ok) {
+            console.error("Ошибка получения операций:", error);
+            if (status !== 403) router.navigate("/login");
+            return [];
+          }
+          return data.operations.map((op) => ({
+            sum: op.sum,
+            date: op.date,
+          }));
+        }),
+      );
+      operations = allOps.flat();
+    } catch {
+      operations = [];
+    }
     const name =
       data.first_name + data.last_name
         ? data.first_name + " " + data.last_name
         : "";
+    const logoMatch = data?.logo_url?.match(/\/images\/[^?]+/);
+    const logo = logoMatch
+      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      : "imgs/empty_avatar.png";
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),
       calendar: this.calendar.getSelf(operations),
@@ -67,7 +74,8 @@ export class ProfilePage {
       date: new Date(data.created_at).toLocaleDateString("ru-RU"),
       login: data.login,
       mail: data.email,
-      editProfile: this.editProfile.getSelf(name, data.email),
+      avatar: logo,
+      editProfile: this.editProfile.getSelf(name, data.email, data.id, logo),
     });
     setBody();
     this.setupEventListeners();
@@ -84,9 +92,7 @@ export class ProfilePage {
   }
 
   openPopup(): void {
-    console.log("aaaa");
     const popup = document.getElementById("popup");
-    console.log(popup);
     if (popup) popup.style.display = "flex";
   }
 

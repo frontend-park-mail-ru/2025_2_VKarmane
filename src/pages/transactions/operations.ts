@@ -1,6 +1,62 @@
-export function openPopup(): void {
+import { apiFetch } from "../../api/fetchWrapper.js";
+
+export async function openPopup(): Promise<void> {
   const popup = document.getElementById("popup");
   if (popup) popup.style.display = "flex";
+
+  const select = document.getElementById("create-operation-category");
+  if (!select) return;
+
+  select.innerHTML = '<option value="" disabled selected>Сфера услуг</option>';
+
+  try {
+    const { ok, data, error } = await apiFetch("/categories", {
+      method: "GET",
+    });
+
+    if (!ok) {
+      console.error("Ошибка при загрузке категорий:", error);
+      return;
+    }
+
+    const categories = data.categories || [];
+
+    for (const ctg of categories) {
+      const option = document.createElement("option");
+      option.value = String(ctg.id);
+      option.textContent = ctg.name;
+      select.appendChild(option);
+    }
+  } catch (err) {
+    console.error("Ошибка при открытии popup:", err);
+  }
+
+  const selectAccount = document.getElementById("create-operation-account-num");
+  if (!selectAccount) return;
+
+  selectAccount.innerHTML = '<option value="" disabled selected>Счет</option>';
+
+  try {
+    const { ok, data, error } = await apiFetch("/balance", {
+      method: "GET",
+    });
+
+    if (!ok) {
+      console.error("Ошибка при загрузке счетов:", error);
+      return;
+    }
+
+    const accounts = data.accounts || [];
+
+    for (const acc of accounts) {
+      const option = document.createElement("option");
+      option.value = String(acc.id);
+      option.textContent = `Счет №${acc.id}`;
+      selectAccount.appendChild(option);
+    }
+  } catch (err) {
+    console.error("Ошибка при открытии popup:", err);
+  }
 }
 
 export function closePopup(): void {

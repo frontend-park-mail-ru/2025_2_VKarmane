@@ -22,12 +22,18 @@ export class EditProfile {
     window.closePopup = ClosePopupCallback.bind(this);
   }
 
-  getSelf(fullName: string, email: string): string {
+  getSelf(
+    fullName: string,
+    email: string,
+    userID: number,
+    logo: string,
+  ): string {
     const [name, surname] = fullName.split(" ");
 
     return this.template({
+      logo: logo,
       fullName: fullName,
-      ID: 1,
+      ID: userID,
       firstNameInput: this.inputField.getSelf(
         "text",
         "firstName",
@@ -64,26 +70,38 @@ export class EditProfile {
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const validator = new Validator();
       const emailError = validator.validate("email", emailInput.value);
       if (emailError) {
         this.inputField.setError([emailInput], true, emailError);
         return;
       }
+
+      const formData = new FormData();
+      formData.append("first_name", firstNameInput.value);
+      formData.append("last_name", lastNameInput.value);
+      formData.append("email", emailInput.value);
+
+      const avatarFile = (
+        document.getElementById("avatarInput") as HTMLInputElement
+      ).files?.[0];
+      if (avatarFile) {
+        formData.append("avatar", avatarFile);
+      }
+
       const { ok, error } = await apiFetch("/profile/edit", {
         method: "PUT",
-        body: JSON.stringify({
-          first_name: firstNameInput.value,
-          last_name: lastNameInput.value,
-          email: emailInput.value,
-        }),
+        body: formData,
       });
+
       if (ok) {
         router.navigate("/profile");
-        return;
+      } else {
+        console.error(error);
       }
-      console.log(error);
     });
+
     const avatarPic = document.getElementById("editAvatarPic");
     if (!avatarPic) throw new Error("no avatar pic element");
     const editForm = document.querySelector(".avatar-edit") as HTMLDivElement;
@@ -107,16 +125,27 @@ export class EditProfile {
       fileInput.click();
     });
 
-    fileInput.addEventListener("change", (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
+    // fileInput.addEventListener("change", (event) => {
+    //   const file = event.target.files[0];
+    //   if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        console.log("got pic");
-      };
-      reader.readAsDataURL(file);
-    });
+    //   const reader = new FileReader();
+    //   reader.onload = async (e) => {
+    //     const formData = new FormData();
+    //     formData.append("avatar", fileInput.files[0]);
+    //     const {ok, data, status, error} = await apiFetch("/profile/edit",{
+    //       method: "PUT",
+    //       body: formData
+    //     });
+    //     if (ok) {
+    //       router.navigate("/profile");
+    //     }
+    //     else{
+    //       console.log(error)
+    //     }
+    //   };
+    //   reader.readAsDataURL(file);
+    // });
   }
   validateSingleField(
     fieldName: string,

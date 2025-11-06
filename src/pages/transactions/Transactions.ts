@@ -61,7 +61,7 @@ interface OperationFromBackend {
   category_id: number;
   sum: number;
   date: Date;
-  transaction_id: number;
+  id: number;
   account_id: number;
   name: string;
 }
@@ -128,7 +128,6 @@ export class TransactionsPage {
 
     const { ok, status, data: profileData } = await apiFetch("/profile");
     if (!ok) {
-      console.log(status);
       if (status === 401) {
         router.navigate("/login");
         return;
@@ -137,19 +136,11 @@ export class TransactionsPage {
     }
 
     const operations = await this.loadOperations();
-
-    const categories: Category[] = [
-      {
-        CategoryName: "Продукты",
-        CategoryStatus: "Активна",
-        CategoryAmount: "1200",
-      },
-      {
-        CategoryName: "Транспорт",
-        CategoryStatus: "Неактивна",
-        CategoryAmount: "800",
-      },
-    ];
+    const categories = await this.loadCategories();
+    const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
+    const logo = logoMatch
+      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      : "imgs/empty_avatar.png";
 
     const data = {
       menu: this.menu.getSelf(),
@@ -159,7 +150,8 @@ export class TransactionsPage {
       categories: this.categories.getList(categories),
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
-        profileData.user_id,
+        profileData.id,
+        logo,
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
@@ -171,36 +163,98 @@ export class TransactionsPage {
     this.setupEventListeners(container);
   }
 
+  private async loadAccounts() {
+    try {
+      let accounts: number[] = [];
+      const { ok, data, error } = await apiFetch("/balance");
+      if (ok) {
+        data.accounts.forEach((acc) => {
+          accounts.push(acc.id);
+        });
+        return accounts;
+      }
+      console.error(error);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   private async loadOperations(): Promise<Transaction[]> {
     try {
-      const accounts = [1, 2];
+      const accounts = await this.loadAccounts();
+
       const allOps = await Promise.all(
         accounts.map(async (id) => {
           const { ok, data, error, status } = await apiFetch(
             `/account/${id}/operations`,
           );
+
           if (!ok) {
             console.error("Ошибка получения операций:", error);
             if (status !== 403) router.navigate("/login");
             return [];
           }
-          return data.operations.map((op: OperationFromBackend) => ({
-            OrganizationTitle: op.name || "Мок",
-            CategoryName: op.category_id
-              ? `Категория ${op.category_id}`
-              : "Доход",
-            OperationPrice: op.sum.toString(),
-            OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
-            OperationID: op.transaction_id,
-            AccountID: op.account_id,
-          }));
+
+          const operations = await Promise.all(
+            data.operations.map(async (op: OperationFromBackend) => {
+              let categoryLogo = "";
+              let categoryName = "Доход";
+
+              if (op.category_id) {
+                const categoryRes = await apiFetch(
+                  `/categories/${op.category_id}`,
+                );
+                if (categoryRes.ok && categoryRes.data?.name) {
+                  categoryName = categoryRes.data.name;
+                  categoryLogo = categoryRes.data?.logo_url?.match(
+                    /\/images\/[^?]+/,
+                  )
+                    ? "https://vkarmane.duckdns.org/test/" +
+                      categoryRes.data?.logo_url?.match(/\/images\/[^?]+/)[0]
+                    : "";
+                }
+              }
+
+              return {
+                OrganizationTitle: op.name || "Мок",
+                CategoryName: categoryName,
+                OperationPrice: op.sum.toString(),
+                OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
+                OperationID: op.id,
+                AccountID: op.account_id,
+                CategoryLogo: categoryLogo,
+              };
+            }),
+          );
+
+          return operations;
         }),
       );
+
       return allOps.flat();
     } catch (err) {
       console.error("Ошибка при загрузке операций:", err);
       return [];
     }
+  }
+
+  private async loadCategories() {
+    const { ok, data, error } = await apiFetch("/categories", {
+      method: "GET",
+    });
+    if (ok) {
+      return data.categories.map((ctg) => ({
+        id: ctg.id,
+        name: ctg.name,
+        logo: ctg?.logo_url?.match(/\/images\/[^\?]+/)
+          ? "https://vkarmane.duckdns.org/test/" +
+            ctg?.logo_url?.match(/\/images\/[^\?]+/)[0]
+          : "",
+        cnt_op: ctg.operations_count,
+        description: ctg.description,
+      }));
+    }
+    console.error(error);
   }
 
   private setupEventListeners(container: HTMLElement): void {
@@ -217,7 +271,7 @@ export class TransactionsPage {
         handler: this.handleOperationRedactRequest.bind(this),
       },
       {
-        selector: "#create-category-form",
+        selector: "#categoryForm",
         handler: this.handleCategoryRequest.bind(this),
       },
       {
@@ -361,45 +415,49 @@ export class TransactionsPage {
       return console.error("Некорректный transaction_id:", transaction_id);
 
     const body = {
-      category_id: 1,
       sum: parseFloat(costInput.value),
       description: commentInput.value.trim() || "",
       created_at: new Date(operationDateInput.value).toISOString(),
     };
 
-    const { ok, status } = await apiFetch(
-      `/account/${accId}/operations/${opId}`,
-      { method: "PUT", body: JSON.stringify(body) },
-    );
-    if (!ok) {
-      if (status === 400)
-        this.inputField.setError(
-          [costInput, operationDateInput, commentInput, transaction_id],
-          true,
-          "Некорректные данные операции",
-        );
-      else if (status === 409)
-        this.inputField.setError(
-          [commentInput],
-          true,
-          "Такая операция уже существует",
-        );
-      else setServerEditOperError();
-      return;
+    try {
+      const { ok, status, error } = await apiFetch(
+        `/account/${accId}/operations/${opId}`,
+        { method: "PUT", body: JSON.stringify(body) },
+      );
+      if (!ok) {
+        if (status === 400)
+          this.inputField.setError(
+            [costInput, operationDateInput, commentInput, transaction_id],
+            true,
+            "Некорректные данные операции",
+          );
+        else if (status === 409)
+          this.inputField.setError(
+            [commentInput],
+            true,
+            "Такая операция уже существует",
+          );
+        else setServerEditOperError();
+        console.error(error);
+        return;
+      }
+      router.navigate("/transactions");
+    } catch (error) {
+      console.error(error);
     }
-    router.navigate("/transactions");
   }
 
   private async handleCategoryRequest(form: HTMLFormElement): Promise<void> {
     const nameInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Название категории (обяз.)"]',
     );
-    const typeInput = form.querySelector<HTMLSelectElement>("#categoryType");
+    // const typeInput = form.querySelector<HTMLSelectElement>("#categoryType");
     const iconInput = form.querySelector<HTMLInputElement>("#categoryIcon");
     const descInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Описание категории (необяз.)"]',
     );
-    if (!nameInput || !typeInput || !iconInput || !descInput)
+    if (!nameInput || !iconInput || !descInput)
       return console.error("Не удалось найти все поля формы категории");
 
     const file = iconInput.files?.[0] || null;
@@ -408,10 +466,10 @@ export class TransactionsPage {
 
     const body = new FormData();
     body.append("name", nameInput.value);
-    if (file) body.append("icon", file);
+    if (file) body.append("image", file);
     body.append("description", descInput.value);
 
-    const { ok, status } = await apiFetch(`/categories/new`, {
+    const { ok, status } = await apiFetch(`/categories`, {
       method: "POST",
       body,
     });
@@ -429,8 +487,8 @@ export class TransactionsPage {
           "Такая категория уже существует",
         );
       else setServerCreateCategoryError();
-      router.navigate("/transactions");
     }
+    router.navigate("/transactions");
   }
 
   private async handleCategoryRedactRequest(
@@ -439,13 +497,14 @@ export class TransactionsPage {
     const nameInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Название категории (обяз.)"]',
     );
-    const typeInput =
-      form.querySelector<HTMLSelectElement>("#editCategoryType");
+    // const typeInput =
+    //   form.querySelector<HTMLSelectElement>("#editCategoryType");
     const iconInput = form.querySelector<HTMLInputElement>("#editCategoryIcon");
     const descInput = form.querySelector<HTMLInputElement>(
       'input[placeholder="Описание категории (необяз.)"]',
     );
-    if (!nameInput || !typeInput || !iconInput || !descInput)
+    const idInput = form.querySelector<HTMLInputElement>("#editCategoryId");
+    if (!nameInput || !iconInput || !descInput || !idInput)
       return console.error(
         "Не удалось найти все поля формы редактирования категории",
       );
@@ -458,13 +517,16 @@ export class TransactionsPage {
 
     const body = new FormData();
     body.append("name", nameInput.value);
-    if (file) body.append("icon", file);
+    if (file) body.append("image", file);
     body.append("description", descInput.value);
 
-    const { ok, status } = await apiFetch(`/categories/edit`, {
-      method: "POST",
-      body,
-    });
+    const { ok, status } = await apiFetch(
+      `/categories/${Number(idInput.value)}`,
+      {
+        method: "PUT",
+        body,
+      },
+    );
     if (!ok) {
       if (status === 400)
         this.inputField.setError(
@@ -481,5 +543,6 @@ export class TransactionsPage {
       else setServerEditCategoryError();
       return;
     }
+    router.navigate("/transactions");
   }
 }

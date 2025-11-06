@@ -65,6 +65,7 @@ export class MainPage {
     this.addOperations = new AddOperation(
       this.closePopup,
       this.handleOperationTypeChange,
+      true,
     );
     this.inputField = new InputField();
     this.addCard = new AddCard();
@@ -91,7 +92,11 @@ export class MainPage {
         throw new Error("failed to get user data");
       let operations;
       try {
-        operations = await getAllUserTransactionsByAccIDs([1, 2]);
+        let accounts: number[] = [];
+        balanceData.accounts?.forEach((acc) => {
+          accounts.push(acc.id);
+        });
+        operations = await getAllUserTransactionsByAccIDs(accounts);
       } catch {
         operations = [];
       }
@@ -100,6 +105,7 @@ export class MainPage {
         balanceData.accounts.length !== 0
           ? balanceData.accounts.map((account: Record<string, any>) =>
               this.card.getSelf(
+                account.id,
                 account.balance,
                 true,
                 32323,
@@ -107,8 +113,12 @@ export class MainPage {
                 "Развлечения",
               ),
             )
-          : [this.card.getSelf(null, true, 0, 0, "Нет счетов")];
+          : [this.card.getSelf(0, null, true, 0, 0, "Нет счетов")];
 
+      const logoMatch = data?.logo_url?.match(/\/images\/[^?]+/);
+      const logo = logoMatch
+        ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+        : "imgs/empty_avatar.png";
       const data_ = {
         FactBal: this.factBal.getSelf(
           balanceData.accounts.length !== 0
@@ -128,7 +138,7 @@ export class MainPage {
         operations: this.operations.getList(operations),
         addCard: this.addCard.getSelf(),
         exist_card: true,
-        profile_block: this.profileBlock.getSelf(data.login, data.user_id),
+        profile_block: this.profileBlock.getSelf(data.login, data.id, logo),
         addOperations: this.addOperations.getSelf(),
       };
 
@@ -144,9 +154,10 @@ export class MainPage {
     setBody();
   }
 
-  setupEventListeners(container: HTMLElement): void {
+  async setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
+    await this.addOperations.setEventListeners();
     const form: HTMLFormElement | null =
       container.querySelector("#create-oper-form");
     if (!form) return;
@@ -268,10 +279,13 @@ export class MainPage {
     };
 
     try {
-      const { ok, status } = await apiFetch(`/account/1/operations`, {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
+      const { ok, status } = await apiFetch(
+        `/account/${accountId}/operations`,
+        {
+          method: "POST",
+          body: JSON.stringify(body),
+        },
+      );
 
       if (!ok) {
         if (status === 400) {
@@ -307,10 +321,21 @@ export class MainPage {
   }
 
   async handleOperationRedactRequest(form: HTMLFormElement): Promise<void> {
-    const [costInput, operationDateInput, commentInput, transaction_id] =
-      getEditOperationInputs(form);
+    const [
+      costInput,
+      operationDateInput,
+      commentInput,
+      transaction_id,
+      account_id,
+    ] = getEditOperationInputs(form);
 
-    if (!costInput || !operationDateInput || !commentInput || !transaction_id) {
+    if (
+      !costInput ||
+      !operationDateInput ||
+      !commentInput ||
+      !transaction_id ||
+      !account_id
+    ) {
       console.error(transaction_id);
       return;
     }
@@ -343,15 +368,24 @@ export class MainPage {
       return;
     }
 
-    const { ok, status } = await apiFetch(`/account/1/operations/${opId}`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-    });
+    const accId = Number(account_id);
+    if (isNaN(accId)) {
+      console.error(account_id);
+      return;
+    }
+
+    const { ok, status } = await apiFetch(
+      `/account/${accId}/operations/${opId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(body),
+      },
+    );
 
     if (!ok) {
       if (status === 400) {
         this.inputField.setError(
-          [costInput, operationDateInput, commentInput, transaction_id],
+          [costInput, operationDateInput, commentInput],
           true,
           "Некорректные данные операции",
         );
