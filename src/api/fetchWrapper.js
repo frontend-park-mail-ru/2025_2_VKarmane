@@ -1,6 +1,11 @@
 const API_URL = import.meta.env.VITE_API_URL;
 export let csrfToken = "";
 
+const safeMethods = {
+  GET: "GET",
+  OPTIONS: "OPTIONS",
+};
+
 export async function fetchCSRFToken() {
   const res = await fetch(`${API_URL}/auth/csrf`, {
     method: "GET",
@@ -14,7 +19,7 @@ export async function fetchCSRFToken() {
 }
 
 export async function apiFetch(url, options = {}) {
-  if (options?.method == "POST") {
+  if (!(options?.method in safeMethods)) {
     await fetchCSRFToken();
   }
   const isFormData = options.body instanceof FormData;
