@@ -1,4 +1,3 @@
-// src/pages/main/index.js
 import { FactBal } from "../../components/Fact_Bal/index.js";
 import { Card } from "../../components/cards/index.js";
 import { PlanBal } from "../../components/Plan_Bal/index.js";

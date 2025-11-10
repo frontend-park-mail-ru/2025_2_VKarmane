@@ -13,9 +13,10 @@ export async function fetchCSRFToken() {
   csrfToken = data.csrf_token;
 }
 
-await fetchCSRFToken();
-
 export async function apiFetch(url, options = {}) {
+  if (options?.method == "POST") {
+    await fetchCSRFToken();
+  }
   const isFormData = options.body instanceof FormData;
 
   const defaultHeaders = isFormData
