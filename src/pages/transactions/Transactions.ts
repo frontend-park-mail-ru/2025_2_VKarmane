@@ -353,8 +353,10 @@ export class TransactionsPage {
       name: titleInput.value ? titleInput.value : "no name",
       type: operationTypeInput.value,
       description: commentInput.value.trim() || "",
-      created_at: new Date(operationDateInput.value).toISOString(),
+      date: new Date(operationDateInput.value).toISOString(),
     };
+
+    console.log(body);
 
     try {
       const { ok, status } = await apiFetch(

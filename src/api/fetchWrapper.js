@@ -4,13 +4,13 @@ export let csrfToken = "";
 export async function fetchCSRFToken() {
   const res = await fetch(`${API_URL}/auth/csrf`, {
     method: "GET",
-    credentials: "include", // обязательно! чтобы получить cookie
+    credentials: "include",
   });
 
   if (!res.ok) throw new Error("Не удалось получить CSRF токен");
 
   const data = await res.json();
-  csrfToken = data.csrf_token; // сохраняем токен
+  csrfToken = data.csrf_token;
 }
 
 await fetchCSRFToken();
