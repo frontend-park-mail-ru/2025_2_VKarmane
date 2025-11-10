@@ -32,8 +32,6 @@ export async function apiFetch(url, options = {}) {
     credentials: "include",
   };
 
-  // if (csrfToken) finalOptions.headers["X-CSRF-Token"] = csrfToken;
-
   try {
     const response = await fetch(API_URL + url, finalOptions);
     const contentType = response.headers.get("Content-Type");

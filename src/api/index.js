@@ -1,4 +1,3 @@
-import { apiFetch } from "./fetchWrapper.js";
 const API_URL = import.meta.env.VITE_API_URL;
 import { csrfToken } from "./fetchWrapper.js";
 
@@ -43,35 +42,31 @@ export function getOperations(accountID) {
 export async function getAllUserTransactionsByAccIDs(accountIDs) {
   const allOps = await Promise.all(
     accountIDs.map(async (id) => {
-      const ops = await getOperations(id, { method: "GET" });
+      const ops = await getOperations(id);
 
-      const operationsWithCategories = await Promise.all(
-        ops.operations.map(async (operation) => {
-          let categoryName = "Доход";
-          let CategoryLogo = "";
+      const operationsWithCategories = ops.operations.map((operation) => {
+        let categoryName = "Доход";
+        let categoryLogo = "";
 
-          if (operation.category_id) {
-            const categoryRes = await apiFetch(
-              `/categories/${operation.category_id}`,
-            );
-            if (categoryRes.ok && categoryRes.data?.name) {
-              categoryName = categoryRes.data.name;
-            }
-            CategoryLogo = categoryRes.data?.logo_url?.match(/\/images\/[^?]+/)
-              ? "https://vkarmane.duckdns.org/test/" +
-                categoryRes.data.logo_url?.match(/\/images\/[^?]+/)[0]
-              : "";
+        if (operation.category_id) {
+          categoryName = operation.category_name || categoryName;
+        }
+
+        if (operation.category_logo) {
+          const match = operation.category_logo.match(/\/images\/[^?]+/);
+          if (match) {
+            categoryLogo = "https://vkarmane.duckdns.org/test/" + match[0];
           }
+        }
 
-          return {
-            OrganizationTitle: operation.name || "Мок",
-            CategoryName: categoryName,
-            OperationPrice: operation.sum,
-            OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
-            CategoryLogo: CategoryLogo,
-          };
-        }),
-      );
+        return {
+          OrganizationTitle: operation.name || "Мок",
+          CategoryName: categoryName,
+          OperationPrice: operation.sum,
+          OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+          CategoryLogo: categoryLogo,
+        };
+      });
 
       return operationsWithCategories;
     }),
