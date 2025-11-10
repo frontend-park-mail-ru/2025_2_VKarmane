@@ -1,3 +1,4 @@
+import { apiFetch } from "./fetchWrapper.js";
 const API_URL = import.meta.env.VITE_API_URL;
 import { csrfToken } from "./fetchWrapper.js";
 

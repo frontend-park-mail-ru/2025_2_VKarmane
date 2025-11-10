@@ -14,7 +14,6 @@ export async function fetchCSRFToken() {
 }
 
 await fetchCSRFToken();
-
 export async function apiFetch(url, options = {}) {
   const isFormData = options.body instanceof FormData;
 
