@@ -96,7 +96,15 @@ export class EditProfile {
       });
 
       if (ok) {
-        router.navigate("/profile");
+        window.closePopup?.();
+
+        this.updatePage(
+          firstNameInput.value + lastNameInput.value
+            ? firstNameInput.value + lastNameInput.value
+            : "Неизвестно",
+          emailInput.value,
+          avatarPic.src,
+        );
       } else {
         console.error(error);
       }
@@ -124,28 +132,24 @@ export class EditProfile {
     editBtn.addEventListener("click", () => {
       fileInput.click();
     });
+    fileInput.addEventListener("change", (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files?.[0];
+      if (!file) return;
 
-    // fileInput.addEventListener("change", (event) => {
-    //   const file = event.target.files[0];
-    //   if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        console.warn("Выберите изображение");
+        return;
+      }
 
-    //   const reader = new FileReader();
-    //   reader.onload = async (e) => {
-    //     const formData = new FormData();
-    //     formData.append("avatar", fileInput.files[0]);
-    //     const {ok, data, status, error} = await apiFetch("/profile/edit",{
-    //       method: "PUT",
-    //       body: formData
-    //     });
-    //     if (ok) {
-    //       router.navigate("/profile");
-    //     }
-    //     else{
-    //       console.log(error)
-    //     }
-    //   };
-    //   reader.readAsDataURL(file);
-    // });
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          avatarPic.src = reader.result;
+        }
+      };
+      reader.readAsDataURL(file);
+    });
   }
   validateSingleField(
     fieldName: string,
@@ -165,5 +169,20 @@ export class EditProfile {
       inputElem.classList.add("border-grey");
       return true;
     }
+  }
+
+  updatePage(fullName: string, email: string, avatarSrc: string) {
+    const fullNameElement = document.querySelector(
+      ".profile__data_name",
+    ) as HTMLElement;
+    const emailElement = document.querySelector(
+      ".profile__data_row__field",
+    ) as HTMLElement;
+    const avatarElement =
+      document.querySelector<HTMLImageElement>(".profile__avatar");
+
+    if (fullNameElement) fullNameElement.textContent = fullName;
+    if (emailElement) emailElement.textContent = email;
+    if (avatarElement) avatarElement.src = avatarSrc;
   }
 }

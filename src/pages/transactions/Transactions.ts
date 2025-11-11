@@ -64,6 +64,8 @@ interface OperationFromBackend {
   id: number;
   account_id: number;
   name: string;
+  category_name: string;
+  category_logo: string;
 }
 
 declare global {
@@ -182,6 +184,9 @@ export class TransactionsPage {
   private async loadOperations(): Promise<Transaction[]> {
     try {
       const accounts = await this.loadAccounts();
+      if (!accounts || accounts.length === 0) {
+        return [];
+      }
 
       const allOps = await Promise.all(
         accounts.map(async (id) => {
@@ -190,41 +195,42 @@ export class TransactionsPage {
           );
 
           if (!ok) {
-            console.error("Ошибка получения операций:", error);
-            if (status !== 403) router.navigate("/login");
+            console.error(
+              `Ошибка получения операций для аккаунта ${id}:`,
+              error,
+            );
+            if (status === 403) {
+              router.navigate("/login");
+            }
             return [];
           }
 
-          const operations = await Promise.all(
-            data.operations.map(async (op: OperationFromBackend) => {
-              let categoryLogo = "";
-              let categoryName = "Доход";
+          if (!data?.operations?.length) {
+            return [];
+          }
 
-              if (op.category_id) {
-                const categoryRes = await apiFetch(
-                  `/categories/${op.category_id}`,
-                );
-                if (categoryRes.ok && categoryRes.data?.name) {
-                  categoryName = categoryRes.data.name;
-                  categoryLogo = categoryRes.data?.logo_url?.match(
-                    /\/images\/[^?]+/,
-                  )
-                    ? "https://vkarmane.duckdns.org/test/" +
-                      categoryRes.data?.logo_url?.match(/\/images\/[^?]+/)[0]
-                    : "";
-                }
+          const operations: Transaction[] = data.operations.map(
+            (op: OperationFromBackend) => {
+              const categoryName = op.category_id
+                ? (op.category_name ?? "Без категории")
+                : "Доход";
+
+              let categoryLogo = "";
+              const match = op?.category_logo?.match(/\/images\/[^?]+/);
+              if (match) {
+                categoryLogo = `https://vkarmane.duckdns.org/test${match[0]}`;
               }
 
               return {
-                OrganizationTitle: op.name || "Мок",
-                CategoryName: categoryName,
-                OperationPrice: op.sum.toString(),
-                OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
                 OperationID: op.id,
                 AccountID: op.account_id,
+                OrganizationTitle: op.name || "Без названия",
+                CategoryName: categoryName,
+                OperationPrice: op.sum?.toString() ?? "0",
+                OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
                 CategoryLogo: categoryLogo,
               };
-            }),
+            },
           );
 
           return operations;
