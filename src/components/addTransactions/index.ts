@@ -20,35 +20,76 @@ export class AddOperation {
   };
   inputField: InputField;
   template: TemplateFn;
+  GetDataPostRender: boolean;
 
   constructor(
     ClosePopupCallback: () => void,
     handleOperationTypeChange: () => void,
+    GetDataPostRender: boolean = false,
   ) {
     this.template = Handlebars.compile(AddOperTemplate);
     this.inputField = new InputField();
+    this.GetDataPostRender = GetDataPostRender;
     window.closePopup = ClosePopupCallback.bind(this);
     window.handleOperationTypeChange = handleOperationTypeChange.bind(this);
   }
 
   getSelf(): string {
+    // const categories = this.getCategories();
     return this.template({
       sumInput: this.inputField.getSelf("text", "sum", "Стоимость (обяз.)"),
     });
   }
 
-  setEventListeners(): void {
-    const form = document.getElementById(
-      "add-operation-form",
-    ) as HTMLFormElement;
-    if (!form) return;
+  async setEventListeners(): Promise<void> {
+    const form = document.getElementById("create-oper-form");
+    if (!form) throw new Error("no form");
 
-    const sumInput = document.querySelector(".input-field") as HTMLInputElement;
+    const sumInput = document.getElementById(
+      "operationCost",
+    ) as HTMLInputElement;
     if (!sumInput) throw new Error("no sum input element");
 
     sumInput.addEventListener("input", () => {
       this.validateSingleField("sum", sumInput.value, sumInput);
     });
+    console.log(this.GetDataPostRender);
+    if (this.GetDataPostRender) {
+      console.log("abaaaaa");
+      const categoriesOrError = await this.getCategories();
+      if (categoriesOrError instanceof Error) throw categoriesOrError;
+      const selectCategory = document.getElementById(
+        "create-operation-category",
+      );
+      if (!selectCategory) throw new Error("no category select element");
+      selectCategory.innerHTML =
+        '<option value="" disabled selected>Сфера услуг</option>';
+      const ctgs = categoriesOrError.categories || [];
+
+      for (const ctg of ctgs) {
+        const option = document.createElement("option");
+        option.value = String(ctg.id);
+        option.textContent = `${ctg.name}`;
+        selectCategory.appendChild(option);
+      }
+
+      const AccountsOrError = await this.getAccounts();
+      if (AccountsOrError instanceof Error) throw AccountsOrError;
+      const selectAccount = document.getElementById(
+        "create-operation-account-num",
+      );
+      if (!selectAccount) throw new Error("no account select element");
+      selectAccount.innerHTML =
+        '<option value="" disabled selected>Счет</option>';
+      const accs = AccountsOrError.accounts || [];
+
+      for (const acc of accs) {
+        const option = document.createElement("option");
+        option.value = String(acc.id);
+        option.textContent = `Счет №${acc.id}`;
+        selectAccount.appendChild(option);
+      }
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -141,5 +182,26 @@ export class AddOperation {
       inputElem.classList.add("border-grey");
       return true;
     }
+  }
+  async getCategories() {
+    const { ok, data, error } = await apiFetch("/categories", {
+      method: "GET",
+    });
+    if (ok) {
+      return data;
+    }
+    console.error(error);
+    return error;
+  }
+
+  async getAccounts() {
+    const { ok, data, error } = await apiFetch("/balance", {
+      method: "GET",
+    });
+    if (ok) {
+      return data;
+    }
+    console.error(error);
+    return error;
   }
 }

@@ -1,10 +1,13 @@
 const API_URL = import.meta.env.VITE_API_URL;
+import { csrfToken } from "./fetchWrapper.js";
 
 async function fetchWithAuth(url, options = {}) {
   const headers = {
     "Content-Type": "application/json",
     ...options.headers,
   };
+
+  if (csrfToken) headers["X-CSRF-Token"] = csrfToken;
 
   const response = await fetch(API_URL + url, {
     ...options,
@@ -39,20 +42,35 @@ export function getOperations(accountID) {
 export async function getAllUserTransactionsByAccIDs(accountIDs) {
   const allOps = await Promise.all(
     accountIDs.map(async (id) => {
-      const ops = await getOperations(id, {
-        method: "GET",
+      const ops = await getOperations(id);
+
+      const operationsWithCategories = ops.operations.map((operation) => {
+        let categoryName = "Доход";
+        let categoryLogo = "";
+
+        if (operation.category_id) {
+          categoryName = operation.category_name || categoryName;
+        }
+
+        if (operation.category_logo) {
+          const match = operation.category_logo.match(/\/images\/[^?]+/);
+          if (match) {
+            categoryLogo = "https://vkarmane.duckdns.org/test/" + match[0];
+          }
+        }
+
+        return {
+          OrganizationTitle: operation.name || "Мок",
+          CategoryName: categoryName,
+          OperationPrice: operation.sum,
+          OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
+          CategoryLogo: categoryLogo,
+        };
       });
 
-      return ops.operations.map((operation) => ({
-        OrganizationTitle: "Мок",
-        CategoryName: `Категория ${operation.category_id}`,
-        OperationPrice: operation.sum,
-        OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
-      }));
+      return operationsWithCategories;
     }),
   );
 
-  const operations = allOps.flat();
-
-  return operations;
+  return allOps.flat();
 }
