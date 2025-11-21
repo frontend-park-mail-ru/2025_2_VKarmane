@@ -1,109 +1,267 @@
-.logo {
-  width: 85px; /* Ширина в пикселях */
-  height: 85px; /* Высота в пикселях */
-  background-color: #ffffff;
-  background-image: url("/imgs/logo.png");
-  border-radius: 15px;
-  background-size: cover;
-  background-position: center;
-  margin-top: 34px;
-  justify-content: center;
+.LeftPart{
+    width: 24vh;
+    height: 30%;
+}
+.logoPlanero {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 5vh;
+    margin-top: 1vh;
 }
 
-.butMain {
-  margin-top: 72px;
-  height: 48px;
-  width: 49px;
-  border: none;
-  background-color: transparent;
-  border-radius: 8px;
-  background-image: url("/imgs/main_page.png"); /* черная дверь */
-  background-size: cover;
-  background-position: center;
-  transition: all 0.2s ease; /* плавная анимация */
-  cursor: pointer;
+.RawLogoMenu{
+    display: grid;
 }
 
-.butMain:hover {
-  background-image: url("/imgs/main_page_hover.png"); /* белая дверь */
-  background-color: black; /* черный фон */
-  border-radius: 8px;
-  transform: scale(0.95); /* небольшое уменьшение для "эффекта нажатия" */
-}
-.LeftPart {
-  width: 7%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  margin-right: 1vh;
-  position: fixed;
-  left: 1vh;
-  top: 0;
-}
-.mainPage {
-  display: grid;
-  justify-content: center;
+.RawMenu{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 4vh;
 }
 
-.logout {
-  margin-top: 30vh;
-  height: 48px;
-  width: 49px;
-  border: none;
-  background-color: transparent;
-  border-radius: 8px;
-  background-image: url("/imgs/logout.png"); /* черная дверь */
-  background-size: cover;
-  background-position: center;
-  transition: all 0.2s ease; /* плавная анимация */
-  cursor: pointer;
+
+.mainRoute button{
+    width: 22vh;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    gap: 2vh;
+    font-family: Montserrat Semibold;
+    font-size: 1.02rem;
+    color: #6D2100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
 }
 
-.logout:hover {
-  background-image: url("/imgs/logout_hover.png");
-  background-color: black;
-  border-radius: 8px;
-  transform: scale(0.95);
+.MainPicture{
+    background-image: url("/imgs/MainPage.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 19px;
+    height: 20px;
+    transition: background-image 0.3s ease-in-out;
 }
 
-.butTransaction {
-  margin-top: 72px;
-  height: 48px;
-  width: 49px;
-  border: none;
-  background-color: transparent;
-  border-radius: 8px;
-  background-image: url("/imgs/TransactionsMenuBase.svg"); /* черная дверь */
-  background-size: cover;
-  background-position: center;
-  transition: all 0.2s ease; /* плавная анимация */
-  cursor: pointer;
+.mainRoute button:hover{
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
 }
 
-.butTransaction:hover {
-  background-image: url("/imgs/TransactionsButtonHover.svg"); /* белая дверь */
-  background-color: black; /* черный фон */
-  border-radius: 8px;
-  transform: scale(0.95); /* небольшое уменьшение для "эффекта нажатия" */
+.mainRoute button:hover .MainPicture{
+    background-image: url("/imgs/MainPageHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
 }
 
-.profile {
-  margin-top: 72px;
-  height: 48px;
-  width: 49px;
-  border: none;
-  background-color: transparent;
-  border-radius: 8px;
-  background-image: url("/imgs/profile.png");
-  background-size: cover;
-  background-position: center;
-  transition: all 0.2s ease; /* плавная анимация */
-  cursor: pointer;
+.mainRoute button:active{
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
 }
 
-.profile:hover {
-  background-image: url("/imgs/profile_hover.png");
-  background-color: black; /* черный фон */
-  border-radius: 8px;
-  transform: scale(0.95);
+.mainRoute button.active,
+.profileRoute button.active,
+.cardsRoute button.active,
+.transactionRoute button.active {
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
+    font-weight: bold;
+}
+
+.mainRoute button.active .MainPicture {
+    background-image: url("/imgs/MainPageHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.profileRoute button.active .ProfilePicture {
+    background-image: url("/imgs/ProfilePictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.cardsRoute button.active .CardsPicture {
+    background-image: url("/imgs/CardsPictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.transactionRoute button.active .TransactionPicture {
+    background-image: url("/imgs/TransactionPictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+
+.profileRoute button{
+    display: flex;
+    gap: 2vh;
+    width: 22vh;
+    height: 5vh;
+    align-items: center;
+    font-family: Montserrat Semibold;
+    font-size: 1.02rem;
+    color: #6D2100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+}
+.ProfilePicture{
+    background-image: url("/imgs/ProfilePicture.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 20px;
+    height: 24px;
+    transition: background-image 0.3s ease-in-out;
+}
+
+.profileRoute button:hover{
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
+}
+.profileRoute button:hover .ProfilePicture{
+    background-image: url("/imgs/ProfilePictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.transactionRoute button{
+    display: flex;
+    gap: 2vh;
+    width: 22vh;
+    height: 5vh;
+    align-items: center;
+    font-family: Montserrat Semibold;
+    font-size: 1.02rem;
+    color: #6D2100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+}
+.TransactionPicture{
+    background-image: url("/imgs/TransactionPicture.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 20px;
+    height: 24px;
+    transition: background-image 0.3s ease-in-out;
+}
+
+.transactionRoute button:hover{
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
+}
+
+.transactionRoute button:hover .TransactionPicture{
+    background-image: url("/imgs/TransactionPictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.cardsRoute button{
+    display: flex;
+    gap: 2vh;
+    width: 22vh;
+    height: 5vh;
+    align-items: center;
+    font-family: Montserrat Semibold;
+    font-size: 1.02rem;
+    color: #6D2100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+}
+
+.CardsPicture{
+    background-image: url("/imgs/CardsPicture.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 31px;
+    height: 24px;
+    transition: background-image 0.3s ease-in-out;
+}
+
+.cardsRoute button:hover{
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
+}
+
+.cardsRoute button:hover .CardsPicture{
+    background-image: url("/imgs/CardsPictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+.logoutRoute button{
+    display: flex;
+    gap: 2vh;
+    position: absolute;
+    bottom: 4vh ;
+    width: 22vh;
+    height: 5vh;
+    align-items: center;
+    font-family: Montserrat Semibold;
+    font-size: 1.02rem;
+    color: #6D2100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+}
+.LogoutPicture{
+    background-image: url("/imgs/LogoutPicture.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    width: 31px;
+    height: 24px;
+    transition: background-image 0.3s ease-in-out;
+}
+
+.logoutRoute button:hover{
+    color: #EB5B1D;
+    background: white;
+    border-radius: 12px;
+    transform: scale(1.02);
+}
+
+.logoutRoute button:hover .LogoutPicture{
+    background-image: url("/imgs/LogoutPictureHover.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+
+
+
+.menu-divider {
+    border: none;
+    border-top: 1px solid #6D2100;
+    margin: 10px -20px;
+    width: calc(100% + 20px);
+    opacity: 38% ;
 }

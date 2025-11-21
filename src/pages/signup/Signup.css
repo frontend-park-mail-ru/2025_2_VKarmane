@@ -44,7 +44,6 @@ div {
 }
 .container {
   display: flex;
-  height: 100vh;
 }
 .signup-section {
   flex: 1.2;

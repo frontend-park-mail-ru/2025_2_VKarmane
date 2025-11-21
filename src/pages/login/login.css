@@ -9,7 +9,6 @@ div {
 }
 .container {
   display: flex;
-  height: 100vh;
 }
 .login-section {
   flex: 1.2;
