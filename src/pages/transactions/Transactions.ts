@@ -92,6 +92,7 @@ export class TransactionsPage {
   private redactOpers: redactOpers;
   private redactCategory: RedactCategory;
   private inputField: InputField;
+  private allOperations: Transaction[] = [];
 
   constructor() {
     this.template = Handlebars.compile(TransactionsTemplate);
@@ -104,6 +105,7 @@ export class TransactionsPage {
     this.addCategory = new AddCategory();
     this.inputField = new InputField();
     this.redactCategory = new RedactCategory();
+
 
     this.transactions = new TransactionsList();
     this.categories = new CategoriesList();
@@ -138,6 +140,7 @@ export class TransactionsPage {
     }
 
     const operations = await this.loadOperations();
+    this.allOperations = operations;
     const categories = await this.loadCategories();
     const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
@@ -244,7 +247,28 @@ export class TransactionsPage {
     }
   }
 
-  private async loadCategories() {
+    private filterOperations(query: string, container: HTMLElement) {
+        let filtered: Transaction[];
+
+        if (!query) {
+            filtered = this.allOperations;
+        } else {
+            filtered = this.allOperations.filter((op) =>
+                op.OrganizationTitle.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+
+        const list = container.querySelector('.transaction-list');
+
+        if (!list) return;
+
+        list.innerHTML = this.transactions.getCards(filtered);
+    }
+
+
+
+
+    private async loadCategories() {
     const { ok, data, error } = await apiFetch("/categories", {
       method: "GET",
     });
@@ -266,6 +290,14 @@ export class TransactionsPage {
   private setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
+    const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
+
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+              const q = searchInput.value.toLowerCase().trim();
+              this.filterOperations(q, container);
+          });
+      }
 
     const forms = [
       {

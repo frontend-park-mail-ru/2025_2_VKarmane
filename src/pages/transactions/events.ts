@@ -32,6 +32,7 @@ function removeAllListeners() {
   trackedListeners.length = 0;
 }
 
+
 export function addEventListeners(context: any): void {
   removeAllListeners();
 
@@ -106,7 +107,6 @@ export function addEventListeners(context: any): void {
             .querySelector(".transaction-card-info-comment")
             ?.textContent?.trim() || "",
       };
-
       window.openEditPopup(data);
       return;
     }
@@ -269,6 +269,8 @@ export function addEventListeners(context: any): void {
     );
   }
 
+
+
   // Форма создания категории
   const createCategoryForm =
     document.querySelector<HTMLFormElement>("#categoryForm");
@@ -330,4 +332,6 @@ export function addEventListeners(context: any): void {
       ),
     );
   }
+
+
 }
