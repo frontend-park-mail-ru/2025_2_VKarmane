@@ -37,7 +37,7 @@ export async function openPopup(): Promise<void> {
   selectAccount.innerHTML = '<option value="" disabled selected>Счет</option>';
 
   try {
-    const { ok, data, error } = await apiFetch("/balance", {
+    const { ok, data, error } = await apiFetch("/accounts", {
       method: "GET",
     });
 
