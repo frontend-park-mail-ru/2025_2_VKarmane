@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="LeftPart">
+        {{{menu}}}
+    </div>
+    <div id="main">
+        <div class="wrapper">
+            <div class="main__header">
+                <h1 class="general">Мои счета</h1>
+                {{{profile_block}}}
+            </div>
+            <div class="cards__sections">
+                <div class="cards__left_section">
+                    <div class="cards__top_left_section">
+                        <div class="cards__summary_budget">
+                            <div class="cards_text_title_block">
+                                Суммарный бюджет
+                            </div>
+                            <div class="cards_price_budget">
+                                500  297 ₽
+                            </div>
+                            <div class="cards_budget_grey_block">
+
+                            </div>
+                        </div>
+                        <div class="cards__most_used_card">
+                            <div class="_not_exists">
+                                <div class="_not_exists_img"></div>
+                                <h2 style="color: #949494; font-size: 20px">
+                                    Тут пока ничего нет :(
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cards__bottom_left_section">
+                        <div class="cards__title_block_bills">
+                            Счета
+                            <button class="open-btn" id="open_card_menu">+</button>
+                        </div>
+                        {{{ cards_list }}}
+                    </div>
+                </div>
+
+                <div class="cards__right_section">
+                    <div class="cards__calendar">
+                        {{{ calendar }}}
+                    </div>
+                    <div class="cards__add">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{{ AddBill }}}
+</div>

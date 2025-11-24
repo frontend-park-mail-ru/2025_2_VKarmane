@@ -168,7 +168,7 @@ export class TransactionsPage {
   private async loadAccounts() {
     try {
       let accounts: number[] = [];
-      const { ok, data, error } = await apiFetch("/balance");
+      const { ok, data, error } = await apiFetch("/accounts");
       if (ok) {
         data.accounts.forEach((acc) => {
           accounts.push(acc.id);

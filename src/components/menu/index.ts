@@ -19,6 +19,11 @@ export class Menu {
       router.navigate("/profile");
     });
 
+    const cardButton = document.getElementById("cardsButtn");
+    cardButton?.addEventListener("click", () => {
+        router.navigate("/cards");
+    });
+
     const transactionButton = document.getElementById("transaction");
     transactionButton?.addEventListener("click", () => {
       router.navigate("/transactions");

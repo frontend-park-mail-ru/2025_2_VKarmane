@@ -3,6 +3,7 @@ import { SignUpPage } from "./pages/signup/Signup.js";
 import "./index.css";
 import { MainPage } from "./pages/main/Main.ts";
 import { TransactionsPage } from "./pages/transactions/Transactions.ts";
+import {CardsPage} from "./pages/cards/Cards.ts";
 
 const rootElement = document.getElementById("root");
 
@@ -24,6 +25,10 @@ export const config = {
     href: "/api/v1/register",
     render: renderSignUpPage,
   },
+    cards:{
+      href: "/cards",
+        render: renderCardsPage,
+    }
 };
 
 function renderUserPage() {
@@ -49,6 +54,11 @@ function renderSignUpPage() {
 export function goToPage(pageToGo) {
   rootElement.innerHTML = "";
   pageToGo.render();
+}
+
+function renderCardsPage()  {
+    const page =  new CardsPage();
+    page.render(rootElement);
 }
 
 renderUserPage();

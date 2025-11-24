@@ -195,7 +195,7 @@ export class AddOperation {
   }
 
   async getAccounts() {
-    const { ok, data, error } = await apiFetch("/balance", {
+    const { ok, data, error } = await apiFetch("/accounts", {
       method: "GET",
     });
     if (ok) {
