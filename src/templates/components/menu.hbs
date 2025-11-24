@@ -1,11 +1,36 @@
 <div class="menu">
-  <div class="logo"></div>
-  <div class="pages">
-    <div class="mainPage">
-      <button type="button" class="butMain" id="mainButtn"></button>
-      <button type="button" class="butTransaction" id="transaction"></button>
-      <button type="button" class="profile" id="profile"></button>
-      <button type="button" class="logout" id="logout"></button>
+    <div class="logo"></div>
+    <div class="pages">
+        <div class="mainPage">
+            <div class="logoPlanero"><img src="/imgs/LogoPlanero.svg" alt="Logo"></div>
+            <div class="RawMenu">
+                <div class="mainRoute">
+                    <button type="button" class="butMain" id="mainButtn" data-page="main">
+                        <div class="MainPicture"></div> Главная
+                    </button>
+                </div>
+                <div class="profileRoute">
+                    <button type="button" class="profile" id="profile" data-page="profile">
+                        <div class="ProfilePicture"></div> Профиль
+                    </button>
+                </div>
+                <div class="cardsRoute">
+                    <button type="button" class="butCards" id="cardsButtn" data-page="cards">
+                        <div class="CardsPicture"></div> Мои счета
+                    </button>
+                </div>
+                <div class="transactionRoute">
+                    <button type="button" class="butTransaction" id="transaction" data-page="transactions">
+                        <div class="TransactionPicture"></div> Транзакции
+                    </button>
+                </div>
+                <hr class="menu-divider">
+                <div class="logoutRoute">
+                    <button type="button" class="logout" id="logout">
+                        <div class="LogoutPicture"></div> Выйти
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

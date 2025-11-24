@@ -19,6 +19,11 @@ export class Menu {
       router.navigate("/profile");
     });
 
+    const cardButton = document.getElementById("cardsButtn");
+    cardButton?.addEventListener("click", () => {
+        router.navigate("/cards");
+    });
+
     const transactionButton = document.getElementById("transaction");
     transactionButton?.addEventListener("click", () => {
       router.navigate("/transactions");
@@ -37,11 +42,38 @@ export class Menu {
         return;
       }
     });
-
     const mainButton = document.getElementById("mainButtn");
     if (!mainButton) return;
     mainButton.addEventListener("click", () => {
       router.navigate("/");
     });
+
+      router.on('afterRouteLoad', () => {
+          this.setActiveMenuButton();
+      });
+      this.setActiveMenuButton();
   }
+    private setActiveMenuButton(): void {
+        const currentPath = router.getCurrentPath();
+        console.log('Setting active menu button for path:', currentPath);
+
+        let page = 'main';
+        if (currentPath.includes('/profile')) {
+            page = 'profile';
+        } else if (currentPath.includes('/cards')) {
+            page = 'cards';
+        } else if (currentPath.includes('/transactions')) {
+            page = 'transactions';
+        }
+
+        const activeButton = document.querySelector(`button[data-page="${page}"]`);
+
+        if (activeButton) {
+            document.querySelectorAll('button[data-page]').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            activeButton.classList.add('active');
+            console.log('Active menu button set to:', page);
+        }
+    }
 }

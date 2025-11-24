@@ -24,7 +24,7 @@ export function getBalance() {
 }
 
 export function getBalanceById(id) {
-  return fetchWithAuth(`/accounts/${id}`);
+  return fetchWithAuth(`/account/${id}`);
 }
 
 export function getBudgets() {

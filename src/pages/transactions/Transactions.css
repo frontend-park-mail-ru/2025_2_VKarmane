@@ -1,126 +1,341 @@
-@import "../../components/addTransactions/index.css";
-@import "../../components/addCategory/index.css";
 .Transact-categories {
-  margin-top: 11vh;
-  margin-left: 2vh;
-  display: flex;
-  gap: 4vh;
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    width: 100%;
 }
+
 
 .Transactions {
-  width: 87vh;
-  height: 90vh;
-  background-color: #ffffff;
-  border-radius: 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-  display: flex; /* ← вместо grid */
-  flex-direction: column; /* выстраиваем элементы вертикально */
-  justify-content: flex-start; /* не растягиваем */
-  align-items: flex-start;
-  padding: 2vh;
-  overflow-y: auto; /* вместо overflow-block */
+    flex: 1;
+    min-width: 350px;
+    max-width: 55%;
+    height: 78vh;
+    background-color: #fff;
+    border-radius: 26px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
+
 
 .transaction-list {
-  position: relative;
-  top: -2vh;
+    width: 100%;
+    overflow-y: auto;
 }
+
 
 .transaction-card {
-  width: 81vh;
-  display: flex;
-  height: 20vh;
-  background-color: #ffffff;
-  margin-top: 2vh;
-  border-radius: 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-  align-items: center;
-  position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-height: 140px;
+    background: #fff;
+    margin-top: 16px;
+    border-radius: 26px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    box-sizing: border-box;
 }
+
 
 .Categories {
-  display: grid;
-  gap: 4vh;
+    flex: 1;
+    min-width: 350px;
+    max-width: 45%;
+    display: grid;
+    gap: 20px;
 }
+
 
 .metric-list {
-  width: 60vh;
-  height: 33vh;
-  background-color: #ffffff;
-  border-radius: 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-  background-image: url("/imgs/tut_poka_nichego_net.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.Transact-Category-text {
-  font-size: 1.5rem;
-  color: #949494;
-  font-weight: bold;
-}
-
-.cat-list {
-  display: grid;
-  gap: 1vh;
+    width: 100%;
+    height: 32vh;
+    background-color: #fff;
+    border-radius: 26px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.05);
+    background-image: url("/imgs/tut_poka_nichego_net.svg");
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .category-list {
-  width: 60vh;
-  height: 54vh;
-  background-color: #ffffff;
-  border-radius: 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-  justify-content: center;
-  display: grid;
-  overflow-block: scroll;
-  gap: 1vh;
-}
-
-.cat-list {
-  position: relative;
-  top: -1vh;
+    width: 100%;
+    height: 48vh;
+    background-color: #fff;
+    border-radius: 26px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.05);
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .category-card {
-  display: flex;
-  height: 18vh;
-  width: 56vh;
-  background-color: #ffffff;
-  margin-bottom: 1vh;
-  border-radius: 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-  position: relative;
-  align-items: center;
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 26px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.15);
+    padding: 16px;
+    box-sizing: border-box;
 }
 
-/* .transaction-card-img {
-  margin-left: 4vh;
-} */
+.transaction-card-img,
+.category-card-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+
+
+
+.Transaction-header button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f2613f;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.Transaction-header button:hover {
+    background-color: #d44f32;
+    transform: scale(1.08);
+}
+
+.Transaction-header button:active {
+    transform: scale(0.95);
+    background-color: #b73f26;
+}
+
+.submit-btn-cat {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2613f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.cat-list{
+    display: grid;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+.submit-btn-cat:hover {
+    background-color: #d44f32;
+}
+
+
+.edit-oper-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.edit-oper-form .input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.edit-oper-form input,
+.edit-oper-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.edit-oper-form input:focus,
+.edit-oper-form select:focus {
+    border-color: #2361e9;
+}
+
+.extra-field.edit-income-field,
+.extra-field.edit-expense-field {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.extra-field.edit-income-field.hidden,
+.extra-field.edit-expense-field.hidden {
+    display: none;
+}
+
+.edit-oper-form .submit-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2613f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.edit-oper-form .submit-btn:hover {
+    background-color: #b73f26;
+}
+
+.create-category-form,
+.edit-category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.create-category-form .input-group,
+.edit-category-form .input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.create-category-form input,
+.create-category-form select,
+.edit-category-form input,
+.edit-category-form select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.create-category-form input:focus,
+.create-category-form select:focus,
+.edit-category-form input:focus,
+.edit-category-form select:focus {
+    border-color: #2361e9;
+}
+
+.create-category-form .submit-btn-cat,
+.edit-category-form .submit-btn-cat {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f2613f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.create-category-form .submit-btn-cat:hover,
+.edit-category-form .submit-btn-cat:hover {
+    background-color: #d44f32;
+}
+
+
+.hidden {
+    display: none;
+}
+
+
+.upload-label {
+    cursor: pointer;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #d44f32;
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.upload-label:hover {
+    background-color: #b73f26;
+}
+
+.file-name {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+.transaction-list {
+    position: relative;
+    top: -2vh;
+}
+
+.transaction-card {
+    width: 81vh;
+    display: flex;
+    height: 20vh;
+    background-color: #ffffff;
+    margin-top: 2vh;
+    border-radius: 26px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+    align-items: center;
+    position: relative;
+}
+
+
+.Transact-Category-text {
+    font-size: 1.5rem;
+    color: #949494;
+    font-weight: bold;
+}
 
 .transaction-card-info {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .transaction-card-img {
-  position: relative;
-  right: 2.5vh;
-  margin-left: 4vh;
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: relative;
+    right: 2.5vh;
+    margin-left: 4vh;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .transaction-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 /* .transaction-card-img {
   position: relative;
@@ -128,127 +343,133 @@
 } */
 
 .transaction-card-info-text {
-  margin-left: 5vh;
-  display: grid;
-  gap: 3vh;
+    margin-left: 5vh;
+    display: grid;
+    gap: 3vh;
 }
 
 .transaction-card-info-text p {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .transaction-card-info-title {
-  font-size: 1.3rem;
-  font-weight: bold;
-}
-
-.transaction-card-info-category {
-  font-family: Montserrat SemiBold;
-  font-size: 0.9rem;
-  color: #949494;
+    font-size: 1.3rem;
+    font-weight: bold;
 }
 
 .transaction-card-info-price {
-  font-weight: bold;
-  font-size: 1.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
 .transaction-card-info-time {
-  font-size: 0.9rem;
+    font-size: 0.9rem;
 }
 
 .kebab-menu {
-  position: absolute;
-  top: 1.6vh;
-  right: 2vh;
+    position: absolute;
+    top: 1.6vh;
+    right: 2vh;
 }
 
 .kebab-btn {
-  font-size: 2.7rem;
-  font-weight: bold;
-  background: none;
-  border: none;
-  cursor: pointer;
+    font-size: 2.7rem;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 .kebab-btn:hover {
-  color: #949494;
+    color: #949494;
 }
 
+.Transaction-header button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f2613f;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.Transaction-header button:hover {
+    background-color: #d44f32;
+    transform: scale(1.08);
+}
+
+
 .popup-menu {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-  padding: 8px 0;
-  z-index: 10;
-  min-width: 160px;
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
+    z-index: 10;
+    min-width: 160px;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition:
+            opacity 0.15s ease,
+            transform 0.15s ease;
 }
 
 .popup-menu.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
 }
 
 .popup-menu button {
-  border: none;
-  background: none;
-  text-align: left;
-  padding: 10px 16px;
-  cursor: pointer;
-  width: 100%;
-  font-size: 15px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: space-between;
+    border: none;
+    background: none;
+    text-align: left;
+    padding: 10px 16px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
 }
 
 .delete-btn {
-  color: #e53935;
-  font-family: Montserrat SemiBold;
+    color: #e53935;
+    font-family: Montserrat SemiBold;
 }
 
 .delete-btn:hover {
-  color: #ff9898;
+    color: #ff9898;
 }
 
 .edit-btn {
-  font-family: Montserrat SemiBold;
+    font-family: Montserrat SemiBold;
 }
 
-.cat-edi {
-  font-family: Montserrat SemiBold;
-}
-
-.cat-del {
-  color: #e53935;
-  font-family: Montserrat SemiBold;
-}
-
-.edit-cat:hover {
-  color: #8d8d8d;
-}
-
-.edit-btn:hover {
-  color: #8d8d8d;
+.Transaction-header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
 }
 
 .category-card-info {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 /* .category-card-img {
@@ -256,241 +477,43 @@
 } */
 
 .category-card-img {
-  margin-left: 4vh;
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    margin-left: 4vh;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .category-card-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .category-card-info-text {
-  margin-left: 5vh;
-  display: grid;
-  gap: 3vh;
+    margin-left: 5vh;
+    display: grid;
+    gap: 3vh;
 }
 
 .category-card-info-text p {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .category-card-info-title {
-  font-size: 1.3rem;
-  font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: bold;
 }
 
 .category-card-info-status {
-  font-size: 0.7rem;
+    font-size: 0.7rem;
 }
 
 .category-card-info-time .category-card-info-number {
-  font-size: 0.8rem;
-}
-
-.hidden {
-  display: none;
-}
-
-.Transaction-header {
-  display: flex;
-  gap: 2.5vh;
-  align-items: center;
-}
-
-.Transaction-header button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #f2613f;
-  color: white;
-  font-size: 32px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
-}
-
-.Transaction-header button:hover {
-  background-color: #d44f32;
-  transform: scale(1.08);
-}
-
-.Transaction-header button:active {
-  transform: scale(0.95);
-  background-color: #b73f26;
-}
-
-.submit-btn-cat {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background-color: #f2613f;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.submit-btn-cat:hover {
-  background-color: #d44f32;
-}
-
-/* === Форма редактирования операции === */
-.edit-oper-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.edit-oper-form .input-group {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.edit-oper-form input,
-.edit-oper-form select {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.2s;
-}
-
-.edit-oper-form input:focus,
-.edit-oper-form select:focus {
-  border-color: #2361e9;
-}
-
-.extra-field.edit-income-field,
-.extra-field.edit-expense-field {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-}
-
-.extra-field.edit-income-field.hidden,
-.extra-field.edit-expense-field.hidden {
-  display: none;
-}
-
-/* === Кнопка отправки формы === */
-.edit-oper-form .submit-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background-color: #f2613f;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.edit-oper-form .submit-btn:hover {
-  background-color: #b73f26;
-}
-
-/* === Форма редактирования категории === */
-.create-category-form,
-.edit-category-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.create-category-form .input-group,
-.edit-category-form .input-group {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 15px;
-}
-
-.create-category-form input,
-.create-category-form select,
-.edit-category-form input,
-.edit-category-form select {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.2s;
-}
-
-.create-category-form input:focus,
-.create-category-form select:focus,
-.edit-category-form input:focus,
-.edit-category-form select:focus {
-  border-color: #2361e9;
-}
-
-/* Стили для кнопки отправки */
-.create-category-form .submit-btn-cat,
-.edit-category-form .submit-btn-cat {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background-color: #f2613f;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.create-category-form .submit-btn-cat:hover,
-.edit-category-form .submit-btn-cat:hover {
-  background-color: #d44f32;
-}
-
-/* Скрытые элементы */
-.hidden {
-  display: none;
-}
-
-/* Стили для блока загрузки иконки */
-.upload-label {
-  cursor: pointer;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  text-align: center;
-  background-color: #d44f32;
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
-}
-
-.upload-label:hover {
-  background-color: #b73f26;
-}
-
-.file-name {
-  margin-top: 8px;
-  font-size: 0.9rem;
-  color: #666;
+    font-size: 0.8rem;
 }

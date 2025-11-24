@@ -17,18 +17,41 @@
   position: relative;
   top: -15px;
 }
-
 #main {
-  flex: 1;
-  width: 155vh;
-  height: 118vh;
-  background-color: #f6f6f8;
-  margin-left: 13vh;
-  border-radius: 48px;
-  padding-right: 20px;
-  padding-left: 29px;
-  padding-bottom: 20px;
+    position: relative;
+    flex: 1;
+    width: 63vw;
+    height: 95vh;
+    float: right;
+    margin-right: 10px;
+    background-color: #f6f6f8;
+    border-radius: 48px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+    container-type: size;
+    overflow: hidden;
 }
+
+
+
+.wrapper {
+    transform-origin: top left;
+    width: max-content;
+    height: max-content;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.main__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
 
 .section {
   display: flex;
@@ -55,6 +78,7 @@
   font-size: 40px;
   margin-left: 30px;
   padding-top: 4px;
+    margin-block-end: 10px;
 }
 
 .addCard {
@@ -79,10 +103,24 @@
   position: relative;
   bottom: -152px;
 }
-
-.main__header {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
 }
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (max-width: 1100px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+

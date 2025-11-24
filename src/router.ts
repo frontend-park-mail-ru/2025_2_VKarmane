@@ -4,6 +4,7 @@ import { MainPage } from "./pages/main/Main.js";
 import { ProfilePage } from "./pages/profile/Profile.js";
 import { TransactionsPage } from "./pages/transactions/Transactions.js";
 import { Router } from "./router/index.js";
+import {CardsPage} from "./pages/cards/Cards.js";
 
 const rootElement: HTMLElement | null = document.getElementById("root");
 
@@ -37,11 +38,18 @@ function renderManagementTransaction(): void {
   page.render(rootElement);
 }
 
+function renderCardsPage(): void {
+    if (!rootElement) return;
+    const page: CardsPage = new CardsPage();
+    page.render(rootElement);
+}
+
 export const router = new Router({
   "/": renderUserPage,
   "/login": renderLoginPage,
   "/signup": renderSignUpPage,
   "/profile": renderProfilePage,
   "/transactions": renderManagementTransaction,
+    "/cards" : renderCardsPage,
   "*": renderUserPage,
 });

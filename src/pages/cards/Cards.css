@@ -1,0 +1,209 @@
+
+@import "../../components/addBills/index.css";
+.cards__sections{
+    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+    margin-right: 10px;
+}
+
+.cards__left_section{
+    display: grid;
+    gap: 20px;
+    margin-left: 30px;
+}
+
+.cards__top_left_section{
+    display: flex;
+    gap: 20px;
+}
+
+
+
+.cards__summary_budget{
+    width: 28vw;
+    height: 28vh;
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+.cards_text_title_block{
+    padding-left: 10px;
+    padding-top: 15px;
+}
+
+.cards_price_budget{
+    font-family: Montserrat SemiBold;
+    font-size: 56px;
+    text-align: center;
+    position: relative;
+    top: 22%;
+    margin-bottom: 59px;
+}
+
+.cards_budget_grey_block{
+    background: #E6E6E6;
+    flex-grow: 3;
+    border-radius: 0 0 26px 26px;
+}
+
+.open-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #F47200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+    border: none;
+    font-family: Montserrat SemiBold;
+
+}
+
+.open-btn:hover {
+    background: #D66400;
+    transform: scale(1.08);
+}
+.cards__most_used_card{
+    width: 28vw;
+    height: 28vh;
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+.cards__bottom_left_section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 53vh;
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+.cards__title_block_bills{
+    margin-bottom: 10px;
+    padding-top: 15px;
+    padding-left: 15px;
+    font-family: Montserrat SemiBold;
+    color: #949494;
+    font-size: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.cards__right_section{
+    display: grid;
+    gap: 20px;
+}
+
+.cards__calendar{
+    width: 23vw;
+    height: 100%;
+}
+
+.cards__add{
+    height: 39vh;
+    width: 23vw;
+    background: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+}
+
+.cards__list{
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 26px 26px;
+    background: #F8F8F8;
+    flex-grow: 3
+}
+
+.cards__list_scroll{
+    margin-top: 10px;
+    display: grid;
+    gap: 20px;
+}
+
+.cards__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.cards__avatar_and_title{
+    display: flex;
+    gap: 20px;
+}
+
+.cards__avatar{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-image: url("/imgs/vk-add.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.cards_info_title{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cards__title{
+    font-family: Montserrat SemiBold;
+    color: black;
+}
+
+.cards__status{
+    color: #A7A7A7;
+    font-family: Montserrat SemiBold;
+    font-size: 0.8rem;
+}
+
+.cards__price{
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #24A500;
+}
+
+.cards__type{
+    font-family: Montserrat SemiBold;
+}
+
+.cards__date_of_creation{
+    font-family: Montserrat SemiBold;
+    color: #A7A7A7;
+}
+
+.cards__activity_type{
+    border-radius: 26px;
+    font-family: Montserrat SemiBold;
+    color: #077507;
+    background-color: #A1FF89;
+    width: 105px;
+    height: 32px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+
+
+
+
