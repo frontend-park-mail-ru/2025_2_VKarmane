@@ -20,11 +20,11 @@ async function fetchWithAuth(url, options = {}) {
 }
 
 export function getBalance() {
-  return fetchWithAuth(`/balance`);
+  return fetchWithAuth(`/accounts`);
 }
 
 export function getBalanceById(id) {
-  return fetchWithAuth(`/balance/${id}`);
+  return fetchWithAuth(`/accounts/${id}`);
 }
 
 export function getBudgets() {
