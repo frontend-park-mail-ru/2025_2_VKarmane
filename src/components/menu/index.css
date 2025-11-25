@@ -30,7 +30,7 @@
     display: flex;
     align-items: center;
     gap: 2vh;
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat Semibold";
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -111,7 +111,7 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat Semibold";
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -147,7 +147,7 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat Semibold";
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -184,7 +184,7 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat Semibold";
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -224,7 +224,7 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: Montserrat Semibold;
+    font-family: "Montserrat Semibold";
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
