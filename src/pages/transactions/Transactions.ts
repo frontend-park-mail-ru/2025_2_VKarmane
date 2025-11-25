@@ -41,6 +41,7 @@ import {
 import { setBody } from "../../utils/bodySetters.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { router } from "../../router.js";
+import {SearchByFilters} from "../../components/SearchByFilters/index.js";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -93,6 +94,7 @@ export class TransactionsPage {
   private redactCategory: RedactCategory;
   private inputField: InputField;
   private allOperations: Transaction[] = [];
+  private searching: SearchByFilters;
 
   constructor() {
     this.template = Handlebars.compile(TransactionsTemplate);
@@ -110,6 +112,11 @@ export class TransactionsPage {
     this.transactions = new TransactionsList();
     this.categories = new CategoriesList();
     this.profileBlock = new ProfileBlock();
+      this.searching = new SearchByFilters(
+          this.allOperations,
+          this.categories,
+          this.transactions
+      );
     this.redactOpers = new redactOpers(
       closeEditPopup.bind(this),
       this.handleOperationTypeChange.bind(this),
@@ -142,6 +149,7 @@ export class TransactionsPage {
     const operations = await this.loadOperations();
     this.allOperations = operations;
     const categories = await this.loadCategories();
+      this.searching.setData(operations, categories);
     const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
       ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
@@ -160,6 +168,7 @@ export class TransactionsPage {
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
+        searching : this.searching.getSelf(),
     };
 
     container.innerHTML = this.template(data);
@@ -290,6 +299,7 @@ export class TransactionsPage {
   private setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
+    this.searching.setEvents(container);
     const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
 
     if (searchInput) {

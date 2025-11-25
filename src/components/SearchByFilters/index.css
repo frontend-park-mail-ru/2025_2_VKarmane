@@ -1,0 +1,120 @@
+#filterOperationsBox .transaction-card {
+    margin-bottom: 12px;
+}
+
+.filter-popup {
+    display: none; /* скрыто по умолчанию */
+}
+
+.filter-popup .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.filter-popup .modal {
+    width: 820px;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.filter-popup .modal-left {
+    width: 34%;
+    background: linear-gradient(180deg, #fff 0%, #ffd1b3 40%, #ff961f 100%);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.filter-popup .modal-right {
+    width: 66%;
+    padding: 24px 28px;
+    position: relative;
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-item {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.category-item.selected {
+    border-color: #ff651a;
+    background: #ffe9dc;
+}
+
+#filterOperationsBox{
+    transform: scale(60%);
+    width: 125% ;
+    float: left;
+}
+
+/* Общий стиль формы */
+.categories-list {
+    background-color: #fff7f0;
+    border: 2px solid #ff651a;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 300px;
+    font-family: Arial, sans-serif;
+}
+
+
+
+/* Общий стиль кнопок */
+button.btn, button.btn-secondary {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+
+.button.btn-secondary{
+    position: absolute;
+    bottom: 0;
+}
+/* Основные кнопки оранжевые */
+button#filterNextBtn {
+    background: #ff651a;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(255, 140, 0, 0.4);
+}
+
+/* Hover эффект */
+button#filterNextBtn:hover {
+    background: #C25100;
+    transform: translateY(-2px);
+}
+
+/* Второстепенные кнопки */
+button#filterPrevBtn, button.btn-secondary {
+    background: #ff651a;
+    color: white;
+    border: 1px solid #ff9900;
+}
+
+/* Hover для второстепенной кнопки */
+button#filterPrevBtn:hover, button.btn-secondary:hover {
+    background: #C25100;
+    transform: translateY(-1px);
+}

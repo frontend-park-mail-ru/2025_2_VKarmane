@@ -1,0 +1,61 @@
+<div class="filter-popup" id="filterPopup">
+
+    <div class="overlay">
+        <div class="modal">
+
+            <!-- LEFT PANEL -->
+            <div class="modal-left">
+                <div class="left-top">
+                    <img src="/imgs/LogoPlanero.svg" class="logo" alt="">
+                </div>
+
+                <div class="left-content">
+                    <h2>Фильтрация операций</h2>
+                    <p>Выберите категорию, а затем просмотрите подходящие операции.</p>
+                </div>
+
+                <div class="left-bottom">
+                    <div class="step-num" id="filterStepIndicator">1 / 2</div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="modal-right">
+
+                <button class="close-btn" id="closeFilterPopup">✕</button>
+
+                <!-- STEP 1 — CATEGORY PICK -->
+                <div class="step" id="filterStep1" data-step="1">
+                    <h3>Выберите категорию</h3>
+
+                    <div id="filterCategoriesBox" class="categories-list">
+                        <select id="find-operation-category" name="category">
+                            <option value="">Сфера услуг</option>
+                        </select>
+                    </div>
+
+
+                    <div class="buttons">
+                        <div></div>
+                        <button class="btn" id="filterNextBtn">Продолжить</button>
+                    </div>
+                </div>
+
+                <!-- STEP 2 — OPERATIONS LIST -->
+                <div class="step" id="filterStep2" data-step="2" style="display: none;">
+                    <h3>Операции по категории</h3>
+
+                    <div id="filterOperationsBox"></div>
+
+                    <div class="buttons">
+                        <button class="btn btn-secondary" id="filterPrevBtn">Назад</button>
+                        <div></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
