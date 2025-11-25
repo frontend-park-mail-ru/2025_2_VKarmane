@@ -88,65 +88,58 @@ export class CardsPage {
         this.setupEventListeners();
     }
 
+
     setupEventListeners() {
         this.menu.setEvents();
         this.profileBlock.setEvents();
-
-        // ИНИЦИАЛИЗИРУЕМ КОМПОНЕНТЫ СРАЗУ
         this.AddBill.setEvents();
         this.EditBill.setEvents();
+        this.setupCardDelegation()
+    }
 
-        document.addEventListener("click", (e) => {
+
+    private setupCardDelegation() {
+        const container = document.querySelector('.cards__list'); // общий контейнер карточек
+        if (!container) return;
+
+        container.addEventListener('click', async (e) => {
             let target = e.target as HTMLElement | null;
             if (!target) return;
-            if (target.nodeType !== 1) target = target.parentElement;
-            if (!target) return;
 
-            // Закрытие меню
-            document.querySelectorAll<HTMLElement>(".popup-menu-cards").forEach((menu) => {
-                const kebabMenu = menu.closest(".kebab-card-menu");
-                const kebabBtn = kebabMenu?.querySelector(".kebab-btn-card");
-                if (!menu.contains(target) && !kebabBtn?.contains(target)) {
-                    menu.classList.remove("show");
-                }
-            });
-
-            // Открытие меню
-            if (target.closest(".kebab-btn-card")) {
-                const menu = target
-                    .closest(".kebab-card-menu")
-                    ?.querySelector<HTMLElement>(".popup-menu-cards");
-                if (menu) {
-                    const isVisible = menu.classList.contains("show");
-                    document
-                        .querySelectorAll<HTMLElement>(".popup-menu-cards")
-                        .forEach((m) => m.classList.remove("show"));
-                    if (!isVisible) menu.classList.add("show");
-                }
-            }
-
-            // Удаление карточки
-            const deleteBtn = target.closest(".card-del");
-            if (deleteBtn) {
-                const card = deleteBtn.closest(".cards__item");
-                if (!card) return;
-                const idText = card.querySelector(".cards__title")?.textContent?.trim() || "";
-                const cardID = idText.trim();
-
-                if (!cardID) return;
-                apiFetch(`/account/${cardID}`, {
-                    method: "DELETE",
-                }).then(({ ok, error }) => {
-                    if (ok) router.navigate("/cards");
-                    else console.error(error);
-                });
-
+            // Открытие/закрытие меню
+            if (target.closest('.kebab-btn-card')) {
+                const menu = target.closest('.kebab-card-menu')?.querySelector<HTMLElement>('.popup-menu-cards');
+                if (!menu) return;
+                const isVisible = menu.classList.contains('show');
+                container.querySelectorAll<HTMLElement>('.popup-menu-cards').forEach(m => m.classList.remove('show'));
+                if (!isVisible) menu.classList.add('show');
                 return;
             }
 
+            // Удаление карточки
+            const deleteBtn = target.closest('.card-del');
+            if (deleteBtn) {
+                const card = deleteBtn.closest('.cards__item');
+                if (!card) return;
+                const cardID = card.querySelector('.cards__title')?.textContent?.trim();
+                if (!cardID) return;
+
+                const { ok, error } = await apiFetch(`/account/${cardID}`, { method: 'DELETE' });
+                if (ok) router.navigate('/cards');
+                else console.error(error);
+                return;
+            }
+
+            // Открытие редактирования карточки
+            const editBtn = target.closest('.card-edi');
+            if (editBtn) {
+                const card = editBtn.closest('.cards__item');
+                if (!card) return;
+                this.EditBill.openPopup(card); // метод, который заполняет popup и показывает его
+                return;
+            }
         });
     }
-
 
 
 
