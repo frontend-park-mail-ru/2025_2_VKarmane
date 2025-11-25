@@ -1,0 +1,122 @@
+<div class="create-account-popup" aria-hidden="false">
+
+    <div class="overlay" role="dialog" aria-modal="true" aria-label="Создание счета">
+        <div class="modal">
+
+            <!-- LEFT PANEL -->
+            <div class="modal-left">
+                <div class="left-top">
+                    <!-- пример использования ваших загруженных картинок (логотип/иллюстрация) -->
+                    <img src="/imgs/LogoPlanero.svg" alt="Logo" class="logo">
+                </div>
+
+                <div class="left-content">
+                    <h2>Создание счета</h2>
+                    <p>Создайте новый счет в несколько шагов и избавьтесь от хаоса в финансах прямо сейчас!</p>
+                </div>
+
+                <div class="left-bottom">
+                    <div class="step-num" id="stepIndicator">1 / 4</div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="modal-right">
+
+                <button class="close-btn" aria-label="Закрыть" title="Закрыть">✕</button>
+
+                <!-- STEP 1 -->
+                <form class="step" id="step1" data-step="1" novalidate>
+                    <h3>Выберите тип счета</h3>
+
+                    <label for="accountType" class="label">Тип счета</label>
+                    <select id="accountType" class="input select">
+                        <option value="actual">Фактический</option>
+                        <option value="planned">Планируемый</option>
+                    </select>
+
+                    <label for="plannedDate" class="label">Укажите дату (формат ДД.ММ.ГГГГ)</label>
+                    <input id="plannedDate" class="input" type="text" placeholder="ДД.ММ.ГГГГ" disabled pattern="^\d{2}\.\d{2}\.\d{4}$">
+
+                    <label for="plannedBalance" class="label">Укажите баланс на планируемую дату</label>
+                    <input id="plannedBalance" class="input" type="number" placeholder="Только числа" disabled>
+
+                    <div class="buttons">
+                        <div></div>
+                        <button type="button" class="btn" data-next>Продолжить</button>
+                    </div>
+                </form>
+
+                <!-- STEP 2 -->
+                <form class="step" id="step2" data-step="2" style="display:none;" novalidate>
+                    <h3>Укажите наименование счета</h3>
+
+                    <label for="accName" class="label">Название счета</label>
+                    <input id="accName" class="input" type="text" maxlength="50" placeholder="До 50 символов" required>
+
+                    <label for="comment" class="label">Комментарий</label>
+                    <textarea id="comment" class="input" rows="4" maxlength="200" placeholder="До 200 символов"></textarea>
+
+                    <label for="initialBalance" class="label">Первоначальный баланс</label>
+                    <input id="initialBalance" class="input" type="number" placeholder="Только числа" required>
+
+                    <div class="buttons">
+                        <button type="button" class="btn btn-secondary" data-prev>Предыдущий шаг</button>
+                        <button type="button" class="btn" data-next>Продолжить</button>
+                    </div>
+                </form>
+
+                <!-- STEP 3 -->
+                <form class="step" id="step3" data-step="3" style="display:none;" novalidate>
+                    <h3>Дополнительные настройки</h3>
+
+                    <label for="accountType" class="label">Тип доступа к счету</label>
+                    <select id="accountType" class="input select">
+                        <option value="actual">Личный</option>
+                        <option value="planned">Совместный</option>
+                    </select>
+
+                    <label for="avatarUpload" class="label">Загрузить аватар (опционально)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file"
+                               id="avatarUpload"
+                               class="file-input"
+                               accept="image/*"
+                               style="display: none;">
+                        <button type="button" class="btn btn-outline file-upload-btn" id="fileUploadTrigger">
+                            Выберите файл
+                        </button>
+                        <span class="file-name" id="fileName">Файл не выбран</span>
+                    </div>
+
+                    <!-- Предпросмотр изображения -->
+                    <div class="image-preview" id="imagePreview" style="display: none;">
+                        <img id="previewImage" src="" alt="Предпросмотр">
+                        <button type="button" class="btn-remove" id="removeImage">×</button>
+                    </div>
+
+
+                    <div class="buttons">
+                        <button type="button" class="btn btn-secondary" data-prev>Предыдущий шаг</button>
+                        <button type="button" class="btn" data-next>Продолжить</button>
+                    </div>
+                </form>
+
+                <!-- STEP 4 -->
+                <div class="step" id="step4" data-step="4" style="display:none;">
+                    <h3>Подтверждение</h3>
+
+                    <div class="summary" id="summaryBox">
+                        <!-- сюда JS подставит краткое содержание -->
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn btn-secondary" data-prev>Предыдущий шаг</button>
+                        <button type="button" class="btn" id="createBtn">Создать счёт</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

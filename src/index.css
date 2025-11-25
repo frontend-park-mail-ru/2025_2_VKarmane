@@ -3,6 +3,7 @@
 @import "pages/main/Main.css";
 @import "pages/profile/Profile.css";
 @import "pages/transactions/Transactions.css";
+@import "pages/cards/Cards.css";
 @font-face {
   font-family: "Montserrat";
   src: url("/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
