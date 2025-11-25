@@ -122,6 +122,7 @@ export class TransactionsPage {
       this.handleOperationTypeChange.bind(this),
     );
 
+    // глобальные функции
     window.openPopup = openPopup.bind(this);
     window.closePopup = closePopup.bind(this);
     window.openCategoryPopup = openCategoryPopup.bind(this);
