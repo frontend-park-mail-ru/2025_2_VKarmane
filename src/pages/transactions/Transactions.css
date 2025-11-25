@@ -451,7 +451,7 @@
 
 .delete-btn {
     color: #e53935;
-    font-family: Montserrat SemiBold;
+    font-family: "Montserrat SemiBold";
 }
 
 .delete-btn:hover {
@@ -459,7 +459,7 @@
 }
 
 .edit-btn {
-    font-family: Montserrat SemiBold;
+    font-family: "Montserrat SemiBold";
 }
 
 .Transaction-header {
