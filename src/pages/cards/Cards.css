@@ -1,5 +1,6 @@
 
 @import "../../components/addBills/index.css";
+@import "../../components/EditBill/index.css";
 .cards__sections{
     margin-top: 15px;
     display: flex;
@@ -132,6 +133,7 @@
 }
 
 .cards__item{
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;

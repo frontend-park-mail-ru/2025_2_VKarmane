@@ -41,6 +41,7 @@ import {
 import { setBody } from "../../utils/bodySetters.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { router } from "../../router.js";
+import {SearchByFilters} from "../../components/SearchByFilters/index.js";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -92,6 +93,8 @@ export class TransactionsPage {
   private redactOpers: redactOpers;
   private redactCategory: RedactCategory;
   private inputField: InputField;
+  private allOperations: Transaction[] = [];
+  private searching: SearchByFilters;
 
   constructor() {
     this.template = Handlebars.compile(TransactionsTemplate);
@@ -105,15 +108,20 @@ export class TransactionsPage {
     this.inputField = new InputField();
     this.redactCategory = new RedactCategory();
 
+
     this.transactions = new TransactionsList();
     this.categories = new CategoriesList();
     this.profileBlock = new ProfileBlock();
+      this.searching = new SearchByFilters(
+          this.allOperations,
+          this.categories,
+          this.transactions
+      );
     this.redactOpers = new redactOpers(
       closeEditPopup.bind(this),
       this.handleOperationTypeChange.bind(this),
     );
 
-    // глобальные функции
     window.openPopup = openPopup.bind(this);
     window.closePopup = closePopup.bind(this);
     window.openCategoryPopup = openCategoryPopup.bind(this);
@@ -138,7 +146,9 @@ export class TransactionsPage {
     }
 
     const operations = await this.loadOperations();
+    this.allOperations = operations;
     const categories = await this.loadCategories();
+      this.searching.setData(operations, categories);
     const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
       ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
@@ -157,6 +167,7 @@ export class TransactionsPage {
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
+        searching : this.searching.getSelf(),
     };
 
     container.innerHTML = this.template(data);
@@ -244,7 +255,28 @@ export class TransactionsPage {
     }
   }
 
-  private async loadCategories() {
+    private filterOperations(query: string, container: HTMLElement) {
+        let filtered: Transaction[];
+
+        if (!query) {
+            filtered = this.allOperations;
+        } else {
+            filtered = this.allOperations.filter((op) =>
+                op.OrganizationTitle.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+
+        const list = container.querySelector('.transaction-list');
+
+        if (!list) return;
+
+        list.innerHTML = this.transactions.getCards(filtered);
+    }
+
+
+
+
+    private async loadCategories() {
     const { ok, data, error } = await apiFetch("/categories", {
       method: "GET",
     });
@@ -266,6 +298,15 @@ export class TransactionsPage {
   private setupEventListeners(container: HTMLElement): void {
     this.menu.setEvents();
     this.profileBlock.setEvents();
+    this.searching.setEvents(container);
+    const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
+
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+              const q = searchInput.value.toLowerCase().trim();
+              this.filterOperations(q, container);
+          });
+      }
 
     const forms = [
       {

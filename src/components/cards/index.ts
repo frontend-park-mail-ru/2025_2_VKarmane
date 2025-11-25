@@ -28,4 +28,6 @@ export class Card {
       is_empty: false,
     });
   }
+
+
 }

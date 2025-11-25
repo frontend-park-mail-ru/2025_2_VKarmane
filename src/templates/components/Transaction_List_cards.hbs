@@ -1,0 +1,48 @@
+{{#each operationsItems}}
+    <div class="transaction-card">
+        <div class="transaction-card-info">
+            <div class="transaction-card-img">
+                <img
+                        src="{{CategoryLogo}}"
+                        alt=""
+                        onerror="this.src='/imgs/default_transaction.svg'"
+                />
+            </div>
+            <div class="transaction-card-info-text">
+                <div class="transaction-card-text-group">
+                    <p class="transaction-card-info-title">{{OrganizationTitle}}</p>
+                    <p class="transaction-card-info-category">{{CategoryName}}</p>
+                </div>
+                <div class="transaction-card-text-group">
+                    <p class="transaction-card-info-price">{{OperationPrice}}</p>
+                    <p class="transaction-card-info-time">{{OperationTime}}</p>
+                    <p
+                            class="transaction-card-info-time"
+                            style="color: grey"
+                            id="transaction_id"
+                    >
+                        ID: {{OperationID}}
+                    </p>
+                    <p
+                            class="transaction-card-info-time"
+                            style="color: grey"
+                            id="transaction_account_id"
+                    >
+                        Счет: {{AccountID}}
+                    </p>
+                </div>
+            </div>
+            <div class="kebab-menu">
+                <button class="kebab-btn">&#8942;</button>
+                <div class="popup-menu">
+                    <button class="edit-btn">
+                        Редактировать <img src="/imgs/RedactButtonImg.svg" alt="" />
+                    </button>
+                    <button class="delete-btn">
+                        Удалить <img src="/imgs/DeleteButtonImg.svg" alt="" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/each}}
