@@ -1,6 +1,5 @@
 import Handlebars from "handlebars";
 import SearchingWithFilters from "../../templates/components/SeachingWithFilters.hbs?raw";
-import * as EVENTS from "node:events";
 import {apiFetch} from "../../api/fetchWrapper.js";
 
 export class SearchByFilters {

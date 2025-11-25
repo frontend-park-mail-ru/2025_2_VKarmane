@@ -64,7 +64,7 @@
     float: left;
 }
 
-/* Общий стиль формы */
+
 .categories-list {
     background-color: #fff7f0;
     border: 2px solid #ff651a;
@@ -77,7 +77,7 @@
 
 
 
-/* Общий стиль кнопок */
+
 button.btn, button.btn-secondary {
     padding: 10px 20px;
     font-size: 14px;
@@ -93,27 +93,26 @@ button.btn, button.btn-secondary {
     position: absolute;
     bottom: 0;
 }
-/* Основные кнопки оранжевые */
+
 button#filterNextBtn {
     background: #ff651a;
     color: #fff;
     box-shadow: 0 4px 6px rgba(255, 140, 0, 0.4);
 }
 
-/* Hover эффект */
+
 button#filterNextBtn:hover {
     background: #C25100;
     transform: translateY(-2px);
 }
 
-/* Второстепенные кнопки */
+
 button#filterPrevBtn, button.btn-secondary {
     background: #ff651a;
     color: white;
     border: 1px solid #ff9900;
 }
 
-/* Hover для второстепенной кнопки */
 button#filterPrevBtn:hover, button.btn-secondary:hover {
     background: #C25100;
     transform: translateY(-1px);
