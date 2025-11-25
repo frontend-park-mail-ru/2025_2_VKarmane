@@ -313,7 +313,7 @@ export class AddBills {
         let summaryHTML = `
             <div class="summary-item"><strong>Тип счета:</strong> ${accountTypeText}</div>
             <div class="summary-item"><strong>Название:</strong> ${accountName}</div>
-            <div class="summary-item"><strong>Баланс:</strong> ${initialBalance} ${currency}</div>
+            <div class="summary-item"><strong>Баланс:</strong> ${initialBalance} рублей</div>
             <div class="summary-item"><strong>Аватар:</strong> ${avatarFileName}</div>
         `;
 

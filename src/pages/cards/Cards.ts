@@ -10,6 +10,7 @@ import { Calendar } from "../../components/calendar/index.js";
 import {getBalance} from "../../api/index.js";
 import {AddBills} from "../../components/addBills/index.js";
 import {CardList} from "../../components/card_list/index.js";
+import {EditBill} from "../../components/EditBill/index.js";
 
 export class CardsPage {
     menu: Menu;
@@ -18,6 +19,7 @@ export class CardsPage {
     calendar: Calendar;
     AddBill: AddBills;
     cards: CardList;
+    EditBill : EditBill;
 
 
     constructor() {
@@ -27,6 +29,7 @@ export class CardsPage {
         this.calendar = new Calendar();
         this.AddBill = new AddBills();
         this.cards = new CardList();
+        this.EditBill = new EditBill();
 
     }
 
@@ -77,6 +80,7 @@ export class CardsPage {
             ),
             calendar: this.calendar.getSelf(operations),
             AddBill: this.AddBill.getSelf(),
+            EditBill : this.EditBill.getSelf(),
             cards_list: this.cards.getList(card_list),
         });
 
@@ -87,11 +91,64 @@ export class CardsPage {
     setupEventListeners() {
         this.menu.setEvents();
         this.profileBlock.setEvents();
-        setTimeout(() => {
-            this.AddBill.setEvents();
-            console.log("AddBill events set");
-        }, 0);
+
+        // ИНИЦИАЛИЗИРУЕМ КОМПОНЕНТЫ СРАЗУ
+        this.AddBill.setEvents();
+        this.EditBill.setEvents();
+
+        document.addEventListener("click", (e) => {
+            let target = e.target as HTMLElement | null;
+            if (!target) return;
+            if (target.nodeType !== 1) target = target.parentElement;
+            if (!target) return;
+
+            // Закрытие меню
+            document.querySelectorAll<HTMLElement>(".popup-menu-cards").forEach((menu) => {
+                const kebabMenu = menu.closest(".kebab-card-menu");
+                const kebabBtn = kebabMenu?.querySelector(".kebab-btn-card");
+                if (!menu.contains(target) && !kebabBtn?.contains(target)) {
+                    menu.classList.remove("show");
+                }
+            });
+
+            // Открытие меню
+            if (target.closest(".kebab-btn-card")) {
+                const menu = target
+                    .closest(".kebab-card-menu")
+                    ?.querySelector<HTMLElement>(".popup-menu-cards");
+                if (menu) {
+                    const isVisible = menu.classList.contains("show");
+                    document
+                        .querySelectorAll<HTMLElement>(".popup-menu-cards")
+                        .forEach((m) => m.classList.remove("show"));
+                    if (!isVisible) menu.classList.add("show");
+                }
+            }
+
+            // Удаление карточки
+            const deleteBtn = target.closest(".card-del");
+            if (deleteBtn) {
+                const card = deleteBtn.closest(".cards__item");
+                if (!card) return;
+                const idText = card.querySelector(".cards__title")?.textContent?.trim() || "";
+                const cardID = idText.trim();
+
+                if (!cardID) return;
+                apiFetch(`/account/${cardID}`, {
+                    method: "DELETE",
+                }).then(({ ok, error }) => {
+                    if (ok) router.navigate("/cards");
+                    else console.error(error);
+                });
+
+                return;
+            }
+
+        });
     }
+
+
+
 
     private async loadAccounts() {
         try {
@@ -106,6 +163,8 @@ export class CardsPage {
             return [];
         }
     }
+
+
 
     private async loadCards() {
         try {
