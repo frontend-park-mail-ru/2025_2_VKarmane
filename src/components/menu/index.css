@@ -258,10 +258,107 @@
 
 
 
+
 .menu-divider {
     border: none;
     border-top: 1px solid #6D2100;
     margin: 10px -20px;
     width: calc(100% + 20px);
     opacity: 38% ;
+}
+
+
+@media (max-width: 768px) {
+    .LeftPart{
+        display: block;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .RawMenu{
+        display: flex;
+        flex-direction: row;
+        width: 72vw;
+        justify-content: space-between;
+    }
+
+    .logoPlanero{
+        display: none;
+    }
+
+    #mainButtn{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 6px;
+        justify-content: center;
+    }
+
+    #profile{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 6px;
+        justify-content: center;
+    }
+
+    #cardsButtn{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 6px;
+        justify-content: center;
+    }
+
+    #transaction{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 6px;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+    .mainRoute button{
+        height: 49px;
+        width: 49px;
+    }
+
+    #logout{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 6px;
+        justify-content: center;
+    }
+
+    .profileRoute button{
+        height: 49px;
+        width: 53px;
+    }
+
+    .cardsRoute button{
+        width: 58px;
+        height: 49px;
+    }
+
+    .transactionRoute button{
+        width: 68px;
+        height: 49px;
+    }
+
+    .logoutRoute button{
+        height: 68px;
+        width: 68px;
+        position: relative;
+        bottom: 10px;
+        left: -30px;
+    }
+
+    .menu-divider{
+        display: none;
+    }
+
 }

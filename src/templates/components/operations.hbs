@@ -1,8 +1,8 @@
 <div class="operations">
   {{#if operations_exists}}
   <div class="Transaction-header" style="margin-left: 3vh">
-    <p class="Transact-Category-text">Операции</p>
-    <button onclick="openPopups()" class="open-btn">+</button>
+    <p class="Transact-Category-text" id="transactions-title">Операции</p>
+    <button onclick="openPopups()" class="open-btn" id="oper-btn-add">+</button>
   </div>
   <div class="operations-list">
     {{#each operationsItems}}

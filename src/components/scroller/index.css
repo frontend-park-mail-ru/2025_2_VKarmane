@@ -17,3 +17,9 @@
 .cards-scroll::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width: 768px) {
+    .cards-scroll-container {
+        display: none;
+    }
+}
