@@ -24,77 +24,40 @@ export class EditBill {
         const popup = document.querySelector('.popup-edit-bill') as HTMLElement;
         if (!popup) return;
 
-        const openBtns = document.querySelectorAll('.card-edi') as NodeListOf<HTMLElement>;
-        openBtns.forEach(openBtn => {
-            openBtn.addEventListener('click', () => {
-                const card = openBtn.closest('.cards__item');
-                console.log(card);
-                if (!card) return;
+        const container = document.querySelector('.cards__list') as HTMLElement;
+        if (!container) return;
 
-                const accountName = card.querySelector('.cards__title')?.textContent || '';
-                const cardId = accountName;
-                const accountType = card.querySelector('.cards__status')?.textContent.includes('Фактический') ? 'actual' : 'planned';
-                let balance = card.querySelector('.cards__price')?.textContent || '';
-                const comment = ''; // если есть отдельный элемент для комментария, можно его сюда добавить
-                const plannedDate = ''; // если есть отдельный элемент для планируемой даты
-                const plannedBalance = ''; // если есть отдельный элемент для планируемого баланса
+        container.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            const btn = target.closest('.card-edi');
+            if (!btn) return;
 
+            const card = btn.closest('.cards__item');
+            if (!card) return;
 
-                const nameInput = popup.querySelector('#editBillAccName') as HTMLInputElement;
-                const typeSelect = popup.querySelector('#editBillAccountType') as HTMLSelectElement;
-                const balanceInput = popup.querySelector('#editBillInitialBalance') as HTMLInputElement;
-                const commentInput = popup.querySelector('#editBillComment') as HTMLTextAreaElement;
-                const plannedDateInput = popup.querySelector('#editBillPlannedDate') as HTMLInputElement;
-                const plannedBalanceInput = popup.querySelector('#editBillPlannedBalance') as HTMLInputElement;
+            const accountName = card.querySelector('.cards__title')?.textContent || '';
+            const accountType = card.querySelector('.cards__status')?.textContent.includes('Фактический') ? 'actual' : 'planned';
+            let balance = card.querySelector('.cards__price')?.textContent || '';
 
-                if (nameInput) nameInput.value = accountName;
-                if (typeSelect) typeSelect.value = accountType;
-                balance = balance.replace(/[^\d.]/g, '');
-                if (balanceInput) balanceInput.value = balance;
-                if (commentInput) commentInput.value = comment;
+            const nameInput = popup.querySelector('#editBillAccName') as HTMLInputElement;
+            const typeSelect = popup.querySelector('#editBillAccountType') as HTMLSelectElement;
+            const balanceInput = popup.querySelector('#editBillInitialBalance') as HTMLInputElement;
 
-                if (accountType === 'planned') {
-                    if (plannedDateInput && plannedBalanceInput) {
-                        plannedDateInput.disabled = false;
-                        plannedBalanceInput.disabled = false;
-                        plannedDateInput.required = true;
-                        plannedBalanceInput.required = true;
-                        plannedDateInput.value = plannedDate;
-                        plannedBalanceInput.value = plannedBalance;
-                    }
-                } else {
-                    if (plannedDateInput && plannedBalanceInput) {
-                        plannedDateInput.disabled = true;
-                        plannedBalanceInput.disabled = true;
-                        plannedDateInput.required = false;
-                        plannedBalanceInput.required = false;
-                        plannedDateInput.value = '';
-                        plannedBalanceInput.value = '';
-                    }
-                }
+            if (nameInput) nameInput.value = accountName;
+            if (typeSelect) typeSelect.value = accountType;
+            balance = balance.replace(/[^\d.]/g, '');
+            if (balanceInput) balanceInput.value = balance;
 
-                // открываем попап
-                popup.style.display = 'block';
-            });
+            popup.style.display = 'block';
         });
 
-
-        const closeBtn = popup.querySelector('.close-btn') as HTMLElement;
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
-                popup.style.display = 'none';
-            });
-        }
-
-        const overlay = popup.querySelector('.popup-edit-overlay') as HTMLElement;
-        if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    popup.style.display = 'none';
-                }
-            });
-        }
+        // Закрытие
+        popup.querySelector('.close-btn')?.addEventListener('click', () => popup.style.display = 'none');
+        popup.querySelector('.popup-edit-overlay')?.addEventListener('click', (e) => {
+            if (e.target === popup.querySelector('.popup-edit-overlay')) popup.style.display = 'none';
+        });
     }
+
 
 
 

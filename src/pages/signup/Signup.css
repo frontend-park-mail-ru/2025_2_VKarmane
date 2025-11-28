@@ -404,3 +404,21 @@ div {
     rgba(255, 255, 255, 0.1) 20px
   );
 }
+
+@media (max-width: 768px) {
+    .preview-section{
+        display: none;
+    }
+
+    .signup-section{
+        background-color: white;
+    }
+
+    #signup {
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+        transform: scale(0.85);
+        transform-origin: left top;
+    }
+}

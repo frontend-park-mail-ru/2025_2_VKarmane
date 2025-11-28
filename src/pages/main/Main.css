@@ -73,7 +73,7 @@
 }
 
 .general {
-  font-family: Montserrat;
+  font-family: "Montserrat";
   font-weight: bold;
   font-size: 40px;
   margin-left: 30px;
@@ -121,6 +121,52 @@
     }
 }
 
+@media (max-width: 768px) {
+    .balance{
+        margin-left: 4px;
+    }
 
+    .general {
+        margin-left: 2px;
+        font-size: 30px;
+    }
+
+    #profileBlock {
+        display: none;
+    }
+
+    .Add{
+        display: none;
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+    }
+    .budgets_and_Add{
+        display: flex;
+        gap: 4px;
+    }
+    #main{
+        padding-left: 0;
+        height: 80vh;
+    }
+
+    .banks{
+        margin-left: 4px;
+    }
+
+    .LeftPart {
+        clear: both;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+        padding-bottom: 20px ;
+    }
+
+
+
+}
 
 

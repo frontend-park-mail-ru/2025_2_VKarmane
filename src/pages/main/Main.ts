@@ -20,6 +20,7 @@ import {
 } from "../transactions/validationForForms.js";
 import { setServerCreateOperError } from "../transactions/validationForForms.js";
 import type { TemplateFn } from "../../types/handlebars.js";
+import {router} from "../../router.js";
 
 export class MainPage {
   factBal: FactBal;
@@ -115,6 +116,7 @@ export class MainPage {
     this.menu.setEvents();
     this.profileBlock.setEvents();
     this.addOperations.setEventListeners();
+    this.ngAfterViewInit();
 
     const form = container.querySelector("#create-oper-form");
     if (form) {
@@ -129,8 +131,18 @@ export class MainPage {
     const popup = document.getElementById("popup");
     if (popup) popup.style.display = "flex";
   }
+    ngAfterViewInit() {
+        const link = document.querySelector('.add_cards');
+        if (link) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                 router.navigate("/cards");;
+            });
+        }
+    }
 
-  closePopup() {
+
+    closePopup() {
     const popup = document.getElementById("popup");
     if (popup) popup.style.display = "none";
   }
@@ -182,6 +194,7 @@ export class MainPage {
       console.warn("Ошибка валидации данных операции");
       return;
     }
+
 
     const body = {
       account_id: parseInt(accountInput.value, 10),

@@ -280,7 +280,7 @@
 
 .card-del {
     color: #e53935;
-    font-family: Montserrat SemiBold;
+    font-family: "Montserrat SemiBold";
 }
 
 .card-del:hover {
@@ -288,5 +288,9 @@
 }
 
 .card-edi {
-    font-family: Montserrat SemiBold;
+    font-family: "Montserrat SemiBold";
+}
+
+.card-edi:hover {
+    color: #6c757d;
 }

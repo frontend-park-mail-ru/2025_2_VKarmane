@@ -24,7 +24,7 @@
 }
 
 .oper_not_exists_img {
-  background-image: url(/imgs/not_list.png);
+  background-image: url('/imgs/not_list.png');
   height: 73px;
   width: 74px;
 }
@@ -98,4 +98,28 @@
 .operation_img {
   width: 43px;
   height: 43px;
+}
+
+
+@media (max-width: 768px) {
+    .operations {
+        height: 290px ;
+        width: 342px;
+        border-radius: 22px;
+    }
+
+    .right-section{
+        margin-top: 15px;
+    }
+
+    #transactions-title{
+        font-size: 16px;
+    }
+
+    #oper-btn-add{
+        width: 30px;
+        height: 30px;
+        font-size: 17px;
+    }
+
 }

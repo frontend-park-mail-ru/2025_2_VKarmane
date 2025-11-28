@@ -111,7 +111,6 @@
     background-color: #357ab8;
 }
 
-/* Классы для красной рамки при ошибке */
 .border-red {
     border-color: red !important;
 }

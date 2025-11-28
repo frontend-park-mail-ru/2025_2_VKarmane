@@ -97,3 +97,40 @@
 #open-profile-edit-btn:hover {
   opacity: 0.8;
 }
+
+
+@media (max-width: 768px) {
+    .profile__profile{
+        height: 150px;
+        width: 307px;
+        order: 1;
+    }
+
+    .profile__data_row__field{
+        font-size: 8px;
+    }
+
+    .profile__data_row__data{
+        font-size: 10px;
+    }
+
+    .profile__planned_purchases{
+        order: 2;
+    }
+
+    .white_back{
+        display: none;
+    }
+    #profile-page-block{
+       display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+    }
+
+    .profile__avatar{
+        height: 100px;
+        width: 100px;
+    }
+
+
+}
