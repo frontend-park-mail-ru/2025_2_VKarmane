@@ -1,0 +1,109 @@
+<div class="popup-edit-bill" aria-hidden="false">
+    <div class="popup-edit-overlay" role="dialog" aria-modal="true" aria-label="Редактирование счета">
+        <div class="popup-edit-modal">
+
+            <!-- LEFT PANEL -->
+            <div class="popup-edit-left">
+                <div class="left-top">
+                    <img src="/imgs/LogoPlanero.svg" alt="Logo" class="logo">
+                </div>
+
+                <div class="left-content">
+                    <h2>Редактирование счета</h2>
+                    <p>Измените счет за несколько шагов</p>
+                </div>
+
+                <div class="left-bottom">
+                    <div class="step-num" id="editBillStepIndicator">1 / 4</div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL -->
+            <div class="popup-edit-right">
+                <button class="close-btn" aria-label="Закрыть" title="Закрыть">✕</button>
+
+                <!-- STEP 1 -->
+                <form class="step" id="editBill-step1" data-step="1" novalidate>
+                    <h3>Выберите тип счета</h3>
+
+                    <label for="editBillAccountType" class="label">Тип счета</label>
+                    <select id="editBillAccountType" class="input select">
+                        <option value="actual">Фактический</option>
+                        <option value="planned">Планируемый</option>
+                    </select>
+
+                    <label for="editBillPlannedDate" class="label">Укажите дату (ДД.ММ.ГГГГ)</label>
+                    <input id="editBillPlannedDate" class="input" type="text" placeholder="ДД.ММ.ГГГГ" disabled pattern="^\d{2}\.\d{2}\.\d{4}$">
+
+                    <label for="editBillPlannedBalance" class="label">Укажите баланс</label>
+                    <input id="editBillPlannedBalance" class="input" type="number" placeholder="Только числа" disabled>
+
+                    <div class="buttons">
+                        <div></div>
+                        <button type="button" class="btn" data-next>Продолжить</button>
+                    </div>
+                </form>
+
+                <!-- STEP 2 -->
+                <form class="step" id="editBill-step2" data-step="2" style="display:none;" novalidate>
+                    <h3>Укажите наименование счета</h3>
+
+                    <label for="editBillAccName" class="label">Название счета</label>
+                    <input id="editBillAccName" class="input" type="text" maxlength="50" placeholder="До 50 символов" required>
+
+                    <label for="editBillComment" class="label">Комментарий</label>
+                    <textarea id="editBillComment" class="input" rows="4" maxlength="200" placeholder="До 200 символов"></textarea>
+
+                    <label for="editBillInitialBalance" class="label">Первоначальный баланс</label>
+                    <input id="editBillInitialBalance" class="input" type="number" placeholder="Только числа" required>
+
+                    <div class="buttons">
+                        <button type="button" class="btn btn-secondary" data-prev>Предыдущий шаг</button>
+                        <button type="button" class="btn" data-next>Продолжить</button>
+                    </div>
+                </form>
+
+                <!-- STEP 3 -->
+                <form class="step" id="editBill-step3" data-step="3" style="display:none;" novalidate>
+                    <h3>Дополнительные настройки</h3>
+
+                    <label for="editBillAccessType" class="label">Тип доступа к счету</label>
+                    <select id="editBillAccessType" class="input select">
+                        <option value="personal">Личный</option>
+                        <option value="shared">Совместный</option>
+                    </select>
+
+                    <label for="editBillAvatarUpload" class="label">Загрузить аватар (опционально)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="editBillAvatarUpload" class="file-input" accept="image/*" style="display: none;">
+                        <button type="button" class="btn btn-outline file-upload-btn" id="editBillFileUploadTrigger">Выберите файл</button>
+                        <span class="file-name" id="editBillFileName">Файл не выбран</span>
+                    </div>
+
+                    <div class="image-preview" id="editBillImagePreview" style="display: none;">
+                        <img id="editBillPreviewImage" src="" alt="Предпросмотр">
+                        <button type="button" class="btn-remove" id="editBillRemoveImage">×</button>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="btn btn-secondary" data-prev>Предыдущий шаг</button>
+                        <button type="button" class="btn" data-next>Продолжить</button>
+                    </div>
+                </form>
+
+                <!-- STEP 4 -->
+                <div class="step" id="editBill-step4" data-step="4" style="display:none;">
+                    <h3>Подтверждение</h3>
+                    <div class="summary" id="editBillSummaryBox">
+
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="btn btn-secondary" data-prev>Предыдущий шаг</button>
+                        <button type="button" class="btn" id="editBillFinishBtn">Изменить счёт</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
