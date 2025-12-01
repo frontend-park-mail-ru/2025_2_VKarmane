@@ -50,3 +50,38 @@
   height: 73px;
   width: 74px;
 }
+
+
+@media (max-width: 768px) {
+    .Plan-Balance{
+        width: 162px; /* Ширина в пикселях */
+        height: 92px; /* Высота в пикселях */
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+    }
+    .Plan-Balance-text {
+        font-family: Montserrat;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+    .Fact-Plan-text{
+        font-size: 10px;
+        margin-left: 10px;
+        padding-top: 5px ;
+    }
+
+    .PlanSum{
+        font-size: 10px;
+        margin-left: 10px;
+        margin-top: 25px;
+    }
+
+    #scheta{
+        display: none;
+    }
+
+
+
+
+}

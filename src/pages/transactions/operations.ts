@@ -41,6 +41,7 @@ export async function openPopup(): Promise<void> {
       method: "GET",
     });
 
+
     if (!ok) {
       console.error("Ошибка при загрузке счетов:", error);
       return;

@@ -11,6 +11,12 @@
   color: #555353;
 }
 
+.priceAndBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 .Fact-Balance {
   width: 34vw; /* Ширина в пикселях */
   height: 21vw; /* Высота в пикселях */
@@ -73,9 +79,9 @@
   height: 32px;
   width: 67px;
   float: right;
-  margin-top: 43px;
-  margin-left: 81px;
+  margin-left: 150px;
   border-radius: 5px;
+
 }
 
 .ProcentDown {
@@ -83,8 +89,7 @@
   height: 32px;
   width: 67px;
   float: right;
-  margin-top: 43px;
-  margin-left: 81px;
+  margin-left: 150px;
   border-radius: 5px;
 }
 
@@ -123,4 +128,93 @@
   background-image: url(/imgs/not_list.png);
   height: 73px;
   width: 74px;
+}
+
+
+@media (max-width: 768px) {
+    .Fact-Balance{
+        width: 176px; /* Ширина в пикселях */
+        height: 92px; /* Высота в пикселях */
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+    }
+
+    .FactSum{
+        font-size: 10px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    .Fact-balance-text {
+        font-family: "Montserrat";
+        font-weight: bold;
+        margin-left: 10px;
+        padding-top: 20px;
+        font-size: 7px;
+    }
+
+    .ProcentUp {
+        background-color: #a1ff89;
+        height: 15px;
+        width: 34px;
+        float: right;
+        margin-left: 81px;
+        border-radius: 5px;
+    }
+
+    .ProcentDown {
+        background-color: #ff7c7c;
+        height: 15px;
+        width: 34px;
+        float: right;
+        margin-left: 81px;
+        border-radius: 5px;
+    }
+
+    .ProcTextUp {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 7px;
+        color: #24a600;
+        text-align: center;
+        position: relative;
+        top: -5px;
+    }
+
+    .ProcTextDown {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 7px;
+        color: #9e0c0c;
+        text-align: center;
+        position: relative;
+        top: -5px;
+    }
+
+    .Fact-text {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 9px;
+    }
+
+    .Fact-minus-text {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 9px;
+        color: #9e0c0c;
+    }
+
+    .Fact-plus-text {
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 9px;
+        color: #72b552;
+    }
+    .priceAndBlock{
+        margin-top: 17px;
+    }
+
+
+
 }

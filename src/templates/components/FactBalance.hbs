@@ -2,17 +2,19 @@
   {{#if (not is_empty)}}
   <h3 class="Fact-Plan-text">Фактический</h3>
   <div class="CheckSum">
-    <h2 class="FactSum">{{FactSum}} ₽</h2>
-    {{#if hasUpdateFactPlan}}
-    <div class="ProcentUp">
-      <p class="ProcTextUp">↑{{GetBalance}}%</p>
-    </div>
-    {{else}}
-    <div class="ProcentDown" style="align-items: center">
-      <p class="ProcTextDown">↓{{GetBalance}}%</p>
-    </div>
-    {{/if}}
-  </div>
+      <div class="priceAndBlock">
+          <h2 class="FactSum">{{FactSum}} ₽</h2>
+          {{#if hasUpdateFactPlan}}
+              <div class="ProcentUp">
+                  <p class="ProcTextUp">↑{{GetBalance}}%</p>
+              </div>
+          {{else}}
+              <div class="ProcentDown" style="align-items: center">
+                  <p class="ProcTextDown">↓{{GetBalance}}%</p>
+              </div>
+          {{/if}}
+      </div>
+      </div>
   {{#if hasUpdateFactPlan}}
   <div class="Fact-balance-text" style="display: flex">
     <p class="Fact-plus-text">+{{updateFactFortwoWeek}}₽&nbsp;</p>
