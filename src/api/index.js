@@ -55,7 +55,7 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
         if (operation.category_logo) {
           const match = operation.category_logo.match(/\/images\/[^?]+/);
           if (match) {
-            categoryLogo = "https://vkarmane.duckdns.org/test/" + match[0];
+            categoryLogo = "https://vkarmane-planero.duckdns.org/test/" + match[0];
           }
         }
 

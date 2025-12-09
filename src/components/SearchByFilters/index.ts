@@ -149,6 +149,21 @@ export class SearchByFilters {
         return data;
     }
 
+    private formatDate(dateString: string): string {
+        if (!dateString) return "";
+
+        const date = new Date(dateString);
+
+        if (isNaN(date.getTime())) return "";
+
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    }
+
+
 
 
 
@@ -170,8 +185,10 @@ export class SearchByFilters {
 
         if (matchingAccounts.length === 0) {
             console.warn(`Нет счетов с типом "${data.account_type}"`);
-            return;
+            return [];
         }
+
+        let collectedOperations: any[] = [];
 
         const requests = matchingAccounts.map(async (account) => {
             const queryParams = new URLSearchParams({
@@ -184,14 +201,62 @@ export class SearchByFilters {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' }
                 });
+
                 console.log(`Фильтры отправлены для счета ID=${account.id}`, response);
+
+                if (response?.data?.operations) {
+                    collectedOperations.push(...response.data.operations);
+                }
+
             } catch (err) {
                 console.error(`Ошибка при отправке фильтров для счета ID=${account.id}`, err);
             }
         });
 
         await Promise.all(requests);
+
+        this.renderFilteredOperations(collectedOperations);
     }
+
+
+
+    private renderFilteredOperations(operations: any[]) {
+        const container = document.getElementById("operationsContainer");
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (operations.length === 0) {
+            container.innerHTML = "<p>Нет операций по вашему запросу.</p>";
+            return;
+        }
+
+        operations.forEach(op => {
+            const item = document.createElement("div");
+            item.className = "operations-item";
+
+            item.innerHTML = `
+            <div class="operation" style="display: flex">
+                <img
+                    class="operation_img"
+                    src="${op.category_logo || '/imgs/default_transaction.svg'}"
+                    onerror="this.src='/imgs/default_transaction.svg'"
+                />
+                <div class="title_with_category">
+                    <div class="title_oper">${op.name}</div>
+                    <div class="category_oper">${op.category_name}</div>
+                </div>
+                <div class="price_and_time">
+                    <div class="price_oper">${op.sum}₽</div>
+                    <div class="time_oper">${this.formatDate(op.date)}</div>
+                </div>
+            </div>
+        `;
+
+            container.appendChild(item);
+        });
+    }
+
 
 
 
@@ -289,6 +354,8 @@ export class SearchByFilters {
             stepIndicator.textContent = "2 / 3";
         });
     }
+
+
 
 
 }

@@ -26,6 +26,6 @@
 
 ## Ссылки
 
-- 🌐 [**Деплой**](https://vkarmane.duckdns.org:8000/)
+- 🌐 [**Деплой**](https://vkarmane-planero.duckdns.org:8000/)
 - 🎨 [**Figma**](https://www.figma.com/design/MRITYWRJ9ZEVQrO8k89Vjy/V%D0%9A%D0%B0%D1%80%D0%BC%D0%B0%D0%BD%D0%B5-%7C-PLANERO?node-id=1-2&t=6VUvYldbeFpV7HQB-1)
 - 💻 [**Backend репозиторий**](https://github.com/go-park-mail-ru/2025_2_VKarmane)

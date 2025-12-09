@@ -151,7 +151,7 @@ export class TransactionsPage {
       this.searching.setData(operations, categories);
     const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
-      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      ? `https://vkarmane-planero.duckdns.org/test/${logoMatch[0]}`
       : "imgs/empty_avatar.png";
 
     const data = {
@@ -229,7 +229,7 @@ export class TransactionsPage {
               let categoryLogo = "";
               const match = op?.category_logo?.match(/\/images\/[^?]+/);
               if (match) {
-                categoryLogo = `https://vkarmane.duckdns.org/test${match[0]}`;
+                categoryLogo = `https://vkarmane-planero.duckdns.org/test${match[0]}`;
               }
 
               return {
@@ -285,7 +285,7 @@ export class TransactionsPage {
         id: ctg.id,
         name: ctg.name,
         logo: ctg?.logo_url?.match(/\/images\/[^\?]+/)
-          ? "https://vkarmane.duckdns.org/test/" +
+          ? "https://vkarmane-planero.duckdns.org/test/" +
             ctg?.logo_url?.match(/\/images\/[^\?]+/)[0]
           : "",
         cnt_op: ctg.operations_count,

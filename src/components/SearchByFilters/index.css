@@ -143,11 +143,32 @@
     gap: 10px;
 }
 
+#filterStep3 .category-search{
+    height: 75%;
+}
+
+#filterStep3{
+    height: 100%;
+}
+
 .selected-tags{
     margin-top: 10px;
     width: 100%;
     display: flex;
     gap: 10px;
+}
+
+#filterStep3 .operations-item{
+    background: #ffffff;
+    border-radius: 26px;
+    height: max-content;
+    padding: 10px;
+}
+
+#filterStep3 .category-search-list{
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 

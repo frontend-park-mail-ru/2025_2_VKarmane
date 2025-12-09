@@ -71,7 +71,7 @@ export class MainPage {
 
     const logoMatch = profile?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
-      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      ? `https://vkarmane-planero.duckdns.org/test/${logoMatch[0]}`
       : "imgs/empty_avatar.png";
 
     const cards =
