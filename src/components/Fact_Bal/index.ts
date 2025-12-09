@@ -21,11 +21,18 @@ export class FactBal {
     let informationsAboutSign = updateFactFortwoWeek > 0;
     let procents = Math.abs(FactSum / (PrevFactSum / 100) - 100).toFixed(1);
     return this.template({
-      FactSum: FactSum,
+      FactSum: this.shortNumber(FactSum),
       updateFactFortwoWeek: updateFactFortwoWeek,
       hasUpdateFactPlan: informationsAboutSign,
-      GetBalance: procents,
+      GetBalance: this.shortNumber(procents),
       is_empty: false,
     });
   }
+    shortNumber(num: number) {
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн";
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыс";
+        return num;
+    }
 }

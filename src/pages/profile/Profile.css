@@ -3,11 +3,12 @@
 
 .content {
   display: grid;
-  grid-template-rows: 25px auto auto;
+  grid-template-rows: 25px 300px auto;
   grid-template-columns: auto 300px;
   row-gap: 20px;
   box-sizing: border-box;
   column-gap: 20px;
+    height: 100%;
 }
 
 .profile__profile {
@@ -15,7 +16,6 @@
   border-radius: 26px;
   background-color: white;
   grid-template-columns: auto 2fr;
-  max-height: 320px;
   padding: 20px;
   gap: 20px;
 }
@@ -85,7 +85,6 @@
 .white_back {
   border-radius: 24px;
   background-color: white;
-  height: 350px;
 }
 
 #open-profile-edit-btn {

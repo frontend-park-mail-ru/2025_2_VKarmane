@@ -24,33 +24,112 @@
 
                 <button class="close-btn" id="closeFilterPopup">✕</button>
 
-                <!-- STEP 1 — CATEGORY PICK -->
                 <div class="step" id="filterStep1" data-step="1">
-                    <h3>Выберите категорию</h3>
+                    <div class="filters-list">
+                        <div class="type_account_filt">
+                            <h3>Выберите тип счета</h3>
+                            <div class="toggle" id="toggleType">
+                                <button class="toggle-option active">Личный</button>
+                                <button class="toggle-option">Совместный</button>
+                            </div>
+                        </div>
+                        <div class="type_account_filt">
+                            <h3>Выберите тип операций</h3>
+                            <div class="toggle" id="toggleOper">
+                                <button class="toggle-option active">Доход</button>
+                                <button class="toggle-option">Расход</button>
+                            </div>
+                        </div>
 
-                    <div id="filterCategoriesBox" class="categories-list">
-                        <select id="find-operation-category" name="category">
-                            <option value="">Сфера услуг</option>
-                        </select>
+                        <div class="date_filter">
+                            <h3>Выберите дату</h3>
+                            <div class="toggle">
+                                <input type="date" class="date-input">
+                            </div>
+                        </div>
+
+
                     </div>
 
 
                     <div class="buttons">
-                        <div></div>
-                        <button class="btn" id="filterNextBtn">Продолжить</button>
+                        <button class="btn" id="filterNextBtn">Следующий шаг</button>
                     </div>
                 </div>
 
-                <!-- STEP 2 — OPERATIONS LIST -->
                 <div class="step" id="filterStep2" data-step="2" style="display: none;">
-                    <h3>Операции по категории</h3>
-
-                    <div id="filterOperationsBox"></div>
+                    <h3>Выберите категории</h3>
+                    <div class="category-search">
+                        <div class="search-wrapper">
+                            <div class="search-box">
+                                <img src="/imgs/search.svg" alt="">
+                                <input type="text" placeholder="Название категории">
+                            </div>
+                        </div>
+                        <div class="category-search-list">
+                            <div class="category-search-card">
+                                {{#each categoriesItems}}
+                                    <div class="category-card"
+                                         data-id="{{this.id}}"
+                                         data-name="{{this.name}}">
+                                        <div class="category-card-info">
+                                            <div class="category-card-img">
+                                                {{#if this.logo}}
+                                                    <img
+                                                            src="{{this.logo}}"
+                                                            alt=""
+                                                            onerror="this.src='/imgs/default_transaction.svg'"
+                                                    />
+                                                {{else}}
+                                                    <img src="/imgs/default_transaction.svg" alt="" />
+                                                {{/if}}
+                                            </div>
+                                            <div class="category-card-info-text">
+                                                <div class="category-card-text-group">
+                                                    <p class="category-card-info-title">{{this.name}}</p>
+                                                </div>
+                                                <div
+                                                        class="category-card-text-group2"
+                                                        style="display: flex; gap: 5px; font-size: 0.8rem"
+                                                >
+                                                    <p class="category-card-info-time">Количество операций:</p>
+                                                    <p class="category-card-info-number">{{this.cnt_op}}</p>
+                                                    <p class="category-card-info-number" id="category-card-id">
+                                                        ID:{{this.id}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selected-tags" id="selectedTags"></div>
 
                     <div class="buttons">
-                        <button class="btn btn-secondary" id="filterPrevBtn">Назад</button>
-                        <div></div>
+                        <button class="btn-cancel" id="filterPrevBtn">Предыдущий шаг</button>
+                        <button class="btn" id="filterNextBtn">Следующий шаг</button>
                     </div>
+
+                </div>
+
+
+                <div class="step" id="filterStep3" data-step="3" style="display: none;">
+                    <h3>Результаты поиска</h3>
+                    <div class="category-search">
+                        <div class="category-search-list">
+                            <div class="category-search-card">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="selected-tags" id="selectedTags"></div>
+
+                    <div class="buttons">
+                        <button class="btn-cancel" id="filterPrevBtn2">Предыдущий шаг</button>
+                    </div>
+
                 </div>
 
             </div>
