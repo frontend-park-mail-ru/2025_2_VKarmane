@@ -37,6 +37,6 @@ export class FactBal {
         if (num >= 100_000)
             return Math.round(num / 100) / 10 + " тыc.";
 
-        return format.format(num); // например 10023 → 10 023
+        return format.format(num);
     }
 }

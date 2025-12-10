@@ -79,7 +79,7 @@ export class MainPage {
         ? balance.accounts.map((account) =>
             this.card.getSelf(
               account.id,
-              account.balance,
+                this.shortNumber(account.balance),
               true,
               32323,
               1523,
@@ -126,6 +126,18 @@ export class MainPage {
       });
     }
   }
+
+    shortNumber(num: number) {
+        const format = new Intl.NumberFormat('ru-RU');
+
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн.";
+
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыc.";
+
+        return format.format(num);
+    }
 
 
   openPopup() {

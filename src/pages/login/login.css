@@ -9,7 +9,6 @@ div {
 }
 .container {
   display: flex;
-    height: 100vh;
 }
 .login-section {
   flex: 1.2;
@@ -18,8 +17,6 @@ div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-    height: 100%;
 }
 
 .login-form {
@@ -251,7 +248,6 @@ div {
 }
 
 .vectors-bottom_up {
-  margin-top: 10vh;
   width: 100%;
   display: flex;
   justify-content: space-between;
