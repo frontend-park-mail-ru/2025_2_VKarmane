@@ -48,6 +48,9 @@ export class CardsPage {
         const card_list = await this.loadCards();
 
         const balanceData = await getBalance();
+
+        const accounts = await this.loadAccounts();
+
         let operations = [];
         try {
             const allOps = await Promise.all(
@@ -73,6 +76,7 @@ export class CardsPage {
 
         container.innerHTML = this.template({
             menu: this.menu.getSelf(),
+            budgets: this.shortNumber(accounts[0].balance),
             profile_block: this.profileBlock.getSelf(
                 profileData.login || "User",
                 profileData.id,
@@ -172,9 +176,9 @@ export class CardsPage {
             const cards = accounts.map((account) => {
                 return {
                     card_id: account.id,
-                    card_balance: account.balance,
-                    card_type: account.type,
-                    card_created_at: account.created_at,
+                    card_balance: this.shortNumber(account.balance),
+                    card_type: (account.type === "private" ? "Личный" : "Совместный"),
+                    card_created_at: this.formatDate(account.created_at),
                 };
             });
 
@@ -185,5 +189,31 @@ export class CardsPage {
             console.error("Ошибка при загрузке карточек:", err);
             return [];
         }
+    }
+
+    private formatDate(dateString: string): string {
+        if (!dateString) return "";
+
+        const date = new Date(dateString);
+
+        if (isNaN(date.getTime())) return "";
+
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    }
+
+    private shortNumber(num: number) {
+        const format = new Intl.NumberFormat('ru-RU');
+
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн.";
+
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыc.";
+
+        return format.format(num); // например 10023 → 10 023
     }
 }

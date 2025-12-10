@@ -79,6 +79,10 @@
     margin-top: 2px;
 }
 
+.Categories .category-card{
+    max-height: 10%;
+}
+
 .transaction-card-img,
 .category-card-img {
     width: 70px;
@@ -490,6 +494,7 @@
 .category-card-info {
     display: flex;
     align-items: center;
+
 }
 
 /* .category-card-img {

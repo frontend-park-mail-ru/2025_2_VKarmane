@@ -2,31 +2,37 @@
 @import "../../components/addBills/index.css";
 @import "../../components/EditBill/index.css";
 .cards__sections{
-    margin-top: 15px;
     display: flex;
     gap: 20px;
     margin-right: 10px;
+    margin-top: 15px;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 20px;
 }
 
 .cards__left_section{
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     margin-left: 30px;
+    width: 70%;
 }
 
 .cards__top_left_section{
     display: flex;
     gap: 20px;
+    width: 100%;
 }
 
 .cards__summary_budget{
-    width: 28vw;
-    height: 28vh;
-    background: #ffffff;
+    background: #fff;
     border-radius: 26px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 40px #0000000d;
     display: flex;
     flex-direction: column;
+    height: 28vh;
+    width: 60%;
 }
 .cards_text_title_block{
     padding-left: 10px;
@@ -43,9 +49,9 @@
 }
 
 .cards_budget_grey_block{
-    background: #E6E6E6;
-    flex-grow: 3;
+    background: #e6e6e6;
     border-radius: 0 0 26px 26px;
+    height: 100%;
 }
 
 .open-btn {
@@ -71,21 +77,31 @@
     transform: scale(1.08);
 }
 .cards__most_used_card{
-    width: 28vw;
     height: 28vh;
+    flex: 1;
     background: #ffffff;
     border-radius: 26px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.cards_text_not_exists{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .cards__bottom_left_section{
+    background: #fff;
+    border-radius: 26px;
+    box-shadow: 0 20px 40px #0000000d;
     display: flex;
+    flex: 1;
     flex-direction: column;
     width: 100%;
-    height: 53vh;
-    background: #ffffff;
-    border-radius: 26px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 .cards__title_block_bills{
     margin-bottom: 10px;
@@ -99,35 +115,55 @@
 }
 
 .cards__right_section{
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+    flex: 1;
+    align-items: center;
 }
 
 .cards__calendar{
-    width: 23vw;
-    height: 100%;
+    width: 100%;
+}
+
+.cards__sections ._not_exists{
+    display: grid;
+    place-items: center;
+    align-items: center;
+    gap: 5px;
+    position: static;
+    text-align: center;
 }
 
 .cards__add{
-    height: 39vh;
-    width: 23vw;
+    height: 100%;
+    width: 100%;
     background: #ffffff;
     border-radius: 26px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
+.cards__sections ._not_exists{
+    margin-top: 0;
+}
+
 .cards__list{
-    width: 100%;
-    height: 100%;
+    background: #f8f8f8;
     border-radius: 0 0 26px 26px;
-    background: #F8F8F8;
-    flex-grow: 3
+    flex-grow: 3;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    max-height: 100%;
 }
 
 .cards__list_scroll{
-    margin-top: 10px;
     display: grid;
     gap: 20px;
+    margin-top: 10px;
+    height: 100%;
+    overflow-y: auto;
+    max-height: 42vh;
 }
 
 .cards__item{

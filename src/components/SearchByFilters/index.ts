@@ -164,9 +164,6 @@ export class SearchByFilters {
     }
 
 
-
-
-
     private async loadAccounts() {
         try {
             const accounts = await apiFetch('/accounts', { method: 'GET' });
@@ -227,7 +224,12 @@ export class SearchByFilters {
         container.innerHTML = "";
 
         if (operations.length === 0) {
-            container.innerHTML = "<p>Нет операций по вашему запросу.</p>";
+            container.innerHTML = `
+        <div class="oper_not_exists">
+            <div class="oper_not_exists_img">
+            </div>
+            <h2 class="oper_not_exists_text">Не удалось найти операций по вашему запросу :(</h2>
+        </div>`;
             return;
         }
 

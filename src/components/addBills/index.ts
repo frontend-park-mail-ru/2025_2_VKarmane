@@ -65,7 +65,7 @@ export class AddBills {
 
 
         if (stepIndicator) {
-            stepIndicator.textContent = '1 / 4';
+            stepIndicator.textContent = '1 / 3';
         }
 
         this.resetAvatarUpload();
@@ -112,7 +112,7 @@ export class AddBills {
             }
 
             if (stepIndicator) {
-                stepIndicator.textContent = `${stepNumber} / 4`;
+                stepIndicator.textContent = `${stepNumber} / 3`;
             }
         };
 
@@ -134,10 +134,10 @@ export class AddBills {
                     }
                 }
 
-                if (nextStepNumber <= 4) {
+                if (nextStepNumber <= 3) {
                     goToStep(nextStepNumber);
 
-                    if (nextStepNumber === 4) {
+                    if (nextStepNumber === 3) {
                         this.updateSummary();
                     }
                 }
@@ -299,7 +299,7 @@ export class AddBills {
         if (!summaryBox) return;
 
         const accountType = (document.getElementById('accountType') as HTMLSelectElement)?.value;
-        const accountTypeText = accountType === 'actual' ? 'Фактический' : 'Планируемый';
+        const accountTypeText = accountType === 'personal' ? 'Личный' : 'Совместный';
         const accountName = (document.getElementById('accName') as HTMLInputElement)?.value;
         const comment = (document.getElementById('comment') as HTMLTextAreaElement)?.value;
         const initialBalance = (document.getElementById('initialBalance') as HTMLInputElement)?.value;
@@ -317,12 +317,6 @@ export class AddBills {
             <div class="summary-item"><strong>Аватар:</strong> ${avatarFileName}</div>
         `;
 
-        if (accountType === 'planned') {
-            const plannedDate = (document.getElementById('plannedDate') as HTMLInputElement)?.value;
-            const plannedBalance = (document.getElementById('plannedBalance') as HTMLInputElement)?.value;
-            summaryHTML += `<div class="summary-item"><strong>Планируемая дата:</strong> ${plannedDate}</div>`;
-            summaryHTML += `<div class="summary-item"><strong>Планируемый баланс:</strong> ${plannedBalance} ${currency}</div>`;
-        }
 
         if (comment) {
             summaryHTML += `<div class="summary-item"><strong>Комментарий:</strong> ${comment}</div>`;

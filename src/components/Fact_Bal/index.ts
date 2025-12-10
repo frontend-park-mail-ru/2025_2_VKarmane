@@ -29,10 +29,14 @@ export class FactBal {
     });
   }
     shortNumber(num: number) {
+        const format = new Intl.NumberFormat('ru-RU');
+
         if (num >= 1_000_000)
-            return Math.round(num / 100_000) / 10 + " млн";
+            return Math.round(num / 100_000) / 10 + " млн.";
+
         if (num >= 100_000)
-            return Math.round(num / 100) / 10 + " тыс";
-        return num;
+            return Math.round(num / 100) / 10 + " тыc.";
+
+        return format.format(num); // например 10023 → 10 023
     }
 }
