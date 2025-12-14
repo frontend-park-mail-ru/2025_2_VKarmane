@@ -5,13 +5,13 @@ export class Validator {
     constructor() {
         this.rules = {
             login: {
-                minLength: 3,
+                minLength: 4,
                 maxLength: 20,
                 pattern: /^[a-zA-Z0-9_-]+$/,
                 noSpaces: true,
             },
             email: {
-                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                pattern: /^[^\s@]+@[^\s@]+$/,
                 maxLength: 254,
             },
             password: {
@@ -26,6 +26,7 @@ export class Validator {
             cost: {
                 pattern: /^\d+(\.\d+)?$/,
                 required: true,
+                price: 999999999,
             },
             operationType: {
                 allowedValues: ["income", "expense"],
@@ -41,10 +42,6 @@ export class Validator {
                 minLength: 3,
                 maxLength: 100,
             },
-            // account: {
-            //     required: true,
-            //     pattern: /^Счет\s*№\d+$/, // пока сделал так, потом поправим
-            // },
             categoryName: {
                 required: true,
                 minLength: 3,
@@ -88,6 +85,7 @@ export class Validator {
             cost: {
                 required: "Стоимость обязательна",
                 pattern: "Стоимость должна быть числом (например 1080 или 1080.50)",
+                price: "Стоимость не должна превышать 999 млн."
             },
             operationType: {
                 required: "Тип операции обязателен",
@@ -141,8 +139,6 @@ export class Validator {
             return;
 
 
-
-
         if (rules.pattern && !rules.pattern.test(value)) {
             return messages.pattern;
         }
@@ -167,8 +163,14 @@ export class Validator {
         }
 
 
+
+
         if (rules.minLength && value.length < rules.minLength) {
             return messages.minLength;
+        }
+
+        if (rules.price && value > rules.price) {
+            return messages.price;
         }
 
         if (rules.maxLength && value.length > rules.maxLength) {

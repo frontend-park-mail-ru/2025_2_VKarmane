@@ -75,6 +75,11 @@
   color: black;
 }
 
+#planCheckSum{
+    flex-direction: column;
+    gap: 5px;
+}
+
 .ProcentUp {
   background-color: #a1ff89;
   height: auto;

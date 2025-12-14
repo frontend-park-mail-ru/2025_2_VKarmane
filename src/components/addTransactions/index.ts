@@ -63,7 +63,7 @@ export class AddOperation {
       );
       if (!selectCategory) throw new Error("no category select element");
       selectCategory.innerHTML =
-        '<option value="" disabled selected>Сфера услуг</option>';
+        '<option value="" disabled selected>Выберите категорию</option>';
       const ctgs = categoriesOrError.categories || [];
 
       for (const ctg of ctgs) {

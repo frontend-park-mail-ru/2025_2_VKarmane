@@ -49,12 +49,12 @@ export class CardsPage {
 
         const balanceData = await getBalance();
 
-        const accounts = await this.loadAccounts();
+        let accounts = await this.loadAccounts();
 
         let operations = [];
         try {
             const allOps = await Promise.all(
-                balanceData.accounts.map(async (acc) => {
+                balanceData.accounts.accounts.map(async (acc) => {
                     const { ok, data, error, status } = await apiFetch(
                         `/account/${acc.id}/operations`,
                     );
@@ -76,7 +76,7 @@ export class CardsPage {
 
         container.innerHTML = this.template({
             menu: this.menu.getSelf(),
-            budgets: this.shortNumber(accounts[0].balance),
+            budgets: this.shortNumber(accounts.total_sum),
             profile_block: this.profileBlock.getSelf(
                 profileData.login || "User",
                 profileData.id,
@@ -110,7 +110,6 @@ export class CardsPage {
             let target = e.target as HTMLElement | null;
             if (!target) return;
 
-            // Открытие/закрытие меню
             if (target.closest('.kebab-btn-card')) {
                 const menu = target.closest('.kebab-card-menu')?.querySelector<HTMLElement>('.popup-menu-cards');
                 if (!menu) return;
@@ -125,7 +124,10 @@ export class CardsPage {
             if (deleteBtn) {
                 const card = deleteBtn.closest('.cards__item');
                 if (!card) return;
-                const cardID = card.querySelector('.cards__title')?.textContent?.trim();
+                const cardID = card.querySelector('.cards__title')?.textContent
+                    ?.replace('ID Счета: ', '')
+                    ?.trim();
+                console.log(cardID);
                 if (!cardID) return;
 
                 const { ok, error } = await apiFetch(`/account/${cardID}`, { method: 'DELETE' });
@@ -151,7 +153,7 @@ export class CardsPage {
         try {
             const { ok, data, error } = await apiFetch("/accounts");
             if (ok) {
-                return data.accounts || [];
+                return {"accounts" : data.accounts, "total_sum": data.total_sum };
             }
             console.error("Ошибка загрузки счетов:", error);
             return [];
@@ -165,7 +167,8 @@ export class CardsPage {
 
     private async loadCards() {
         try {
-            const accounts = await this.loadAccounts();
+            let accs = await this.loadAccounts();
+            const accounts = accs.accounts;
             if (!accounts || accounts.length === 0) {
                 console.log("Нет доступных счетов");
                 return [];

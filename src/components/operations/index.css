@@ -12,6 +12,10 @@
     overflow-y: auto;
 }
 
+.operations .Transaction-header{
+    justify-content: flex-start;
+}
+
 .oper_not_exists {
   display: grid;
   place-items: center;

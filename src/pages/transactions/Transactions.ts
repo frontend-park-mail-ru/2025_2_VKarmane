@@ -9,6 +9,7 @@ import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { redactOpers } from "../../components/redactOpers/index.js";
 import { RedactCategory } from "../../components/redactCategory/index.js";
 import { InputField } from "../../components/inputField/index.js";
+import { ImportTransaction } from "../../components/ImportTransaction/index.js";
 import { addEventListeners } from "../transactions/events.js";
 
 import {
@@ -95,6 +96,7 @@ export class TransactionsPage {
   private inputField: InputField;
   private allOperations: Transaction[] = [];
   private searching: SearchByFilters;
+  private importTransaction: ImportTransaction;
 
   constructor() {
     this.template = Handlebars.compile(TransactionsTemplate);
@@ -122,6 +124,7 @@ export class TransactionsPage {
       this.handleOperationTypeChange.bind(this),
     );
 
+
     window.openPopup = openPopup.bind(this);
     window.closePopup = closePopup.bind(this);
     window.openCategoryPopup = openCategoryPopup.bind(this);
@@ -133,6 +136,7 @@ export class TransactionsPage {
   }
 
   async render(container: HTMLElement | null): Promise<void> {
+      this.importTransaction = new ImportTransaction(container);
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
@@ -168,6 +172,7 @@ export class TransactionsPage {
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
         searching : this.searching.getSelf(),
+        importTransaction: this.importTransaction.getSelf(),
     };
 
     container.innerHTML = this.template(data);
@@ -237,7 +242,7 @@ export class TransactionsPage {
                 AccountID: op.account_id,
                 OrganizationTitle: op.name || "Без названия",
                 CategoryName: categoryName,
-                OperationPrice: op.sum?.toString() ?? "0",
+                OperationPrice: this.shortNumber(op.sum)?.toString() ?? "0",
                 OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
                 CategoryLogo: categoryLogo,
               };
@@ -299,6 +304,7 @@ export class TransactionsPage {
     this.menu.setEvents();
     this.profileBlock.setEvents();
     this.searching.setEvents(container);
+    this.importTransaction.setEvents();
     const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
 
     if (searchInput) {
@@ -395,9 +401,9 @@ export class TransactionsPage {
 
     const body = {
       account_id: parseInt(accountInput.value),
-      category_id: parseInt(categoryInput.value),
+      category_id: parseInt(categoryInput.value) || 0,
       sum: parseFloat(costInput.value),
-      name: titleInput.value ? titleInput.value : "no name",
+      name: titleInput.value ? titleInput.value : "Доход",
       type: operationTypeInput.value,
       description: commentInput.value.trim() || "",
       created_at: new Date(operationDateInput.value).toISOString(),
@@ -537,6 +543,18 @@ export class TransactionsPage {
     }
     router.navigate("/transactions");
   }
+
+  private shortNumber(num: number) {
+        const format = new Intl.NumberFormat('ru-RU');
+
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн.";
+
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыc.";
+
+        return format.format(num); // например 10023 → 10 023
+    }
 
   private async handleCategoryRedactRequest(
     form: HTMLFormElement,

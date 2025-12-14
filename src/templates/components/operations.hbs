@@ -2,9 +2,10 @@
   {{#if operations_exists}}
   <div class="Transaction-header" style="margin-left: 3vh">
     <p class="Transact-Category-text" id="transactions-title">Операции</p>
-    <button onclick="openPopups()" class="open-btn" id="oper-btn-add">+</button>
+    <button onclick="openPopups()" class="open-btn" id="btn-btn">+</button>
   </div>
   <div class="operations-list">
+      <div id="loader" class="loader"></div>
       <div class="operations-list__content">
           {{#each operationsItems}}
               <div class="operations-item">
@@ -20,7 +21,7 @@
                           <div class="category_oper">{{CategoryName}}</div>
                       </div>
                       <div class="price_and_time">
-                          <div class="price_oper">{{OperationPrice}}₽</div>
+                          <div class="price_oper">{{OperationPrice}} ₽</div>
                           <div class="time_oper">{{OperationTime}}</div>
                       </div>
                   </div>

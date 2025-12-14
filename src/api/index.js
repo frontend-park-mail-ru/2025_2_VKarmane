@@ -59,10 +59,20 @@ export async function getAllUserTransactionsByAccIDs(accountIDs) {
           }
         }
 
+          const format = new Intl.NumberFormat('ru-RU');
+          let sum = 0;
+          if (operation.sum >= 1_000_000)
+              sum =  Math.round(operation.sum / 100_000) / 10 + " млн.";
+
+          else if (operation.sum  >= 100_000)
+              sum = Math.round(operation.sum / 100) / 10 + " тыc.";
+
+          else sum =  format.format(operation.sum );
+
         return {
           OrganizationTitle: operation.name || "Мок",
           CategoryName: categoryName,
-          OperationPrice: operation.sum,
+          OperationPrice: sum,
           OperationTime: new Date(operation.date).toLocaleDateString("ru-RU"),
           CategoryLogo: categoryLogo,
         };

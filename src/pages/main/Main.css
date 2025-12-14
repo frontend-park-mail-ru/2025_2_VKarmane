@@ -7,6 +7,8 @@
 @import "../../components/scroller/index.css";
 @import "../../components/profileBlock/index.css";
 @import "../../components/addTransactions/index.css";
+@import "../../components/addBudgets/index.css";
+
 .banks {
   font-family: "Montserrat";
   font-weight: 500;
