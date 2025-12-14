@@ -102,9 +102,9 @@ export class MainPage {
         120,
       ),
       cards,
+
       PlanBal: this.planBal.getSelf(
-          budgets.budgets[0].sum, budgets.budgets[0].period_end, budgets.budgets[0].id,
-      ),
+          budgets.budgets),
       menu: this.menu.getSelf(),
       Add: this.add.getSelf(),
       operations: this.operations.getList(operations),

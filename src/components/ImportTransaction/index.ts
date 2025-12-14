@@ -18,6 +18,7 @@ export class ImportTransaction {
 
     setEvents(): void {
         const importBttn = this.container.querySelector(".import-btn");
+        const exportBttn = this.container.querySelector(".export-btn");
         const cancelImportBtn = this.container.querySelector("#cancel-import-btn");
         const fileInput = this.container.querySelector<HTMLInputElement>('#importCsv');
         const fileName = this.container.querySelector<HTMLElement>('#fileName');
@@ -93,6 +94,33 @@ export class ImportTransaction {
                     console.log(err.message);
                 }
             });
+
+
+            if (exportBttn) {
+                exportBttn.addEventListener("click", async () => {
+                    try {
+                        // Передаём флаг raw = true, чтобы получить настоящий Response
+                        const response = await apiFetch('/operations/export', { method: 'GET' }, true);
+
+                        if (!response.ok) throw new Error('Ошибка загрузки');
+
+                        const blob = await response.blob();
+
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = 'export.csv';
+                        document.body.appendChild(link);
+                        link.click();
+                        link.remove();
+
+                        URL.revokeObjectURL(link.href);
+
+                    } catch (err) {
+                        console.error('Ошибка:', err.message);
+                    }
+                });
+            }
+
         }
 
 

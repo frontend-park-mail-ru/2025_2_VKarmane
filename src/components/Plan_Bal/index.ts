@@ -13,16 +13,16 @@ export class PlanBal {
     this.template = Handlebars.compile(planBalTemplate);
 
   }
-  getSelf(PlanSum: number, PlanDate : string, PlanID: string ): string {
-    if (PlanSum === 0) {
+  getSelf(PlanArr : Array ): string {
+    if (PlanArr.length === 0) {
       return this.template({
         is_empty: true,
       });
     }
     return this.template({
-      PlanSum: this.shortNumber(PlanSum),
-        PlanDate: this.formatDate(PlanDate),
-        PlanID: PlanID,
+      PlanSum: this.shortNumber(PlanArr[0].sum),
+        PlanDate: this.formatDate(PlanArr[0].period_end),
+        PlanID:  PlanArr[0].id,
       is_empty: false,
     });
   }
