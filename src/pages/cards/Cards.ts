@@ -11,6 +11,7 @@ import {getBalance} from "../../api/index.js";
 import {AddBills} from "../../components/addBills/index.js";
 import {CardList} from "../../components/card_list/index.js";
 import {EditBill} from "../../components/EditBill/index.js";
+import {AddPeople} from "../../components/addPeople/index.js";
 
 export class CardsPage {
     menu: Menu;
@@ -20,6 +21,7 @@ export class CardsPage {
     AddBill: AddBills;
     cards: CardList;
     EditBill : EditBill;
+    addPeople : AddPeople;
 
 
     constructor() {
@@ -31,9 +33,11 @@ export class CardsPage {
         this.cards = new CardList();
         this.EditBill = new EditBill();
 
+
     }
 
     async render(container: HTMLElement): Promise<void> {
+        this.addPeople = new AddPeople(container);
         if (!container) throw new Error("Container element not found!");
 
         const { ok, status, data: profileData } = await apiFetch("/profile");
@@ -86,6 +90,7 @@ export class CardsPage {
             AddBill: this.AddBill.getSelf(),
             EditBill : this.EditBill.getSelf(),
             cards_list: this.cards.getList(card_list),
+            addPeople: this.addPeople.getSelf(),
         });
 
         setBody();
@@ -98,12 +103,16 @@ export class CardsPage {
         this.profileBlock.setEvents();
         this.AddBill.setEvents();
         this.EditBill.setEvents();
+        this.addPeople.setEvents();
         this.setupCardDelegation()
     }
 
 
     private setupCardDelegation() {
-        const container = document.querySelector('.cards__list'); // общий контейнер карточек
+        const container = document.querySelector('.cards__list');
+
+
+        // общий контейнер карточек
         if (!container) return;
 
         container.addEventListener('click', async (e) => {
@@ -119,7 +128,6 @@ export class CardsPage {
                 return;
             }
 
-            // Удаление карточки
             const deleteBtn = target.closest('.card-del');
             if (deleteBtn) {
                 const card = deleteBtn.closest('.cards__item');
@@ -136,12 +144,11 @@ export class CardsPage {
                 return;
             }
 
-            // Открытие редактирования карточки
             const editBtn = target.closest('.card-edi');
             if (editBtn) {
                 const card = editBtn.closest('.cards__item');
                 if (!card) return;
-                this.EditBill.openPopup(card); // метод, который заполняет popup и показывает его
+                this.EditBill.openPopup(card);
                 return;
             }
         });
@@ -177,11 +184,14 @@ export class CardsPage {
             console.log("Загруженные счета:", accounts);
 
             const cards = accounts.map((account) => {
+                let isJoints = account.type !== "private";
+
                 return {
                     card_id: account.id,
                     card_balance: this.shortNumber(account.balance),
                     card_type: (account.type === "private" ? "Личный" : "Совместный"),
                     card_created_at: this.formatDate(account.created_at),
+                    isJoint : isJoints,
                 };
             });
 
@@ -217,6 +227,9 @@ export class CardsPage {
         if (num >= 100_000)
             return Math.round(num / 100) / 10 + " тыc.";
 
-        return format.format(num); // например 10023 → 10 023
+        return format.format(num);
     }
+
+
+
 }

@@ -220,6 +220,12 @@
     font-family: "Montserrat SemiBold";
 }
 
+.cards_add_people{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 .cards__date_of_creation{
     font-family: "Montserrat SemiBold";
     color: #A7A7A7;

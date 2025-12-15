@@ -33,29 +33,32 @@ export class EditBudget {
         });
 
 
+
         async function loadBudgetData() {
             const { ok, data, error } = await apiFetch(`/budgets`, {
                 method: "GET"
             });
 
+
             if (ok && data) {
                 const dateInput = form.querySelector<HTMLInputElement>('input[type="date"]');
                 const sumInput = form.querySelector<HTMLInputElement>('input[type="text"]');
+                if (data.budgets.length > 0) {
+                    console.log(data.budgets[0]);
+                    if (dateInput && data.budgets[0].period_end) {
+                        const date = new Date(data.budgets[0].period_end);
+                        const formattedDate = date.toISOString().split('T')[0];
+                        dateInput.value = formattedDate;
+                    }
 
-                console.log(data.budgets[0]);
-                if (dateInput && data.budgets[0].period_end) {
-                    const date = new Date(data.budgets[0].period_end);
-                    const formattedDate = date.toISOString().split('T')[0];
-                    dateInput.value = formattedDate;
+                    if (sumInput && data.budgets[0].sum) {
+                        sumInput.value = String(data.budgets[0].sum);
+                    }
+                    id_budget = data.budgets[0].id;
+                } else {
+                    console.log("Ошибка при загрузке данных:", error);
                 }
-
-                if (sumInput && data.budgets[0].sum) {
-                    sumInput.value = String(data.budgets[0].sum);
                 }
-                id_budget = data.budgets[0].id;
-            } else {
-                console.log("Ошибка при загрузке данных:", error);
-            }
         }
 
         loadBudgetData();

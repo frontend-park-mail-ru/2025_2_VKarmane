@@ -13,9 +13,15 @@
                     </div>
                 </div>
             </div>
-            <div class="cards__type">
-                {{ card_type }}
+            <div class="cards_add_people">
+                <div class="cards__type">
+                    {{ card_type }}
+                </div>
+                {{#if isJoint}}
+                    <button class="open-btn" id="btn-add-people" data-card-id="{{ card_id }}">+</button>
+                {{/if}}
             </div>
+
             <div class="cards__date_of_creation">
                 Создан: {{ card_created_at }}
             </div>

@@ -112,7 +112,6 @@ export class TransactionsPage {
 
 
     this.transactions = new TransactionsList();
-    this.categories = new CategoriesList();
     this.profileBlock = new ProfileBlock();
       this.searching = new SearchByFilters(
           this.allOperations,
@@ -137,6 +136,7 @@ export class TransactionsPage {
 
   async render(container: HTMLElement | null): Promise<void> {
       this.importTransaction = new ImportTransaction(container);
+      this.categories = new CategoriesList(container);
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
@@ -305,6 +305,7 @@ export class TransactionsPage {
     this.profileBlock.setEvents();
     this.searching.setEvents(container);
     this.importTransaction.setEvents();
+    this.categories.setEvents();
     const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
 
     if (searchInput) {
@@ -406,7 +407,7 @@ export class TransactionsPage {
       name: titleInput.value ? titleInput.value : "Доход",
       type: operationTypeInput.value,
       description: commentInput.value.trim() || "",
-      created_at: new Date(operationDateInput.value).toISOString(),
+      date: new Date(operationDateInput.value).toISOString(),
     };
 
     try {

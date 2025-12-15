@@ -111,7 +111,7 @@ export class AddOperation {
           name: "Operation",
           type: type,
           description: comment,
-          created_at: convertToISO(date),
+          date: convertToISO(date),
         }),
       });
       if (ok) {
@@ -145,12 +145,11 @@ export class AddOperation {
     const cost = costInput.value.trim();
     const type = typeSelect.value;
     const date = dateInput.value;
+    console.log(dateInput)
     const comment = commentInput?.value.trim() || "";
     const account = accountSelect.value;
     const category = categorySelect.value;
 
-    //пока категорий на беке нет будет так
-    // с именами организций пока нет бд не работаем
     const receiver = type === "expense" ? 1 : null;
 
     return {
