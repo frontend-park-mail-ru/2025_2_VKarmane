@@ -13,7 +13,7 @@
 | **Backend Developer**  | [Рассказов Никита](t.me/spectr516)    | [@frosnikny](https://github.com/frosnikny)         |
 | **Backend Developer**  | [Рыбин Владислав](t.me/demiurgerv)    | [@DemiurgeRV](https://github.com/DemiurgeRV)       |
 | **Frontend Developer** | [Ровда Владимир](t.me/Rovda_V)        | [@Arbit02](https://github.com/Arbit02)             |
-| **Frontend Developer** | [Иванов Николай](t.me/Watermelon_003) | [@Imperialmelon](https://github.com/Imperialmelon) |
+| **Backend Developer**  | [Иванов Николай](t.me/Watermelon_003) | [@Imperialmelon](https://github.com/Imperialmelon) |
 
 ## Менторы
 
@@ -26,6 +26,6 @@
 
 ## Ссылки
 
-- 🌐 [**Деплой**](https://vkarmane-planero.duckdns.org:8000/)
+- 🌐 [**Деплой**](https://vkarmane-planero.duckdns.org/)
 - 🎨 [**Figma**](https://www.figma.com/design/MRITYWRJ9ZEVQrO8k89Vjy/V%D0%9A%D0%B0%D1%80%D0%BC%D0%B0%D0%BD%D0%B5-%7C-PLANERO?node-id=1-2&t=6VUvYldbeFpV7HQB-1)
 - 💻 [**Backend репозиторий**](https://github.com/go-park-mail-ru/2025_2_VKarmane)
