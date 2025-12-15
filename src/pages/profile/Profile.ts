@@ -65,7 +65,7 @@ export class ProfilePage {
         : "";
     const logoMatch = data?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
-      ? `https://vkarmane-planero.duckdns.org/test/${logoMatch[0]}`
+      ? `https://vkarmane-planero-minio.duckdns.org/test/${logoMatch[0]}`
       : "imgs/empty_avatar.png";
     container.innerHTML = this.template({
       menu: this.menu.getSelf(),

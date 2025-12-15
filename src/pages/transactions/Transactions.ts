@@ -42,7 +42,7 @@ import {
 import { setBody } from "../../utils/bodySetters.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { router } from "../../router.js";
-import {SearchByFilters} from "../../components/SearchByFilters/index.js";
+import { SearchByFilters } from "../../components/SearchByFilters/index.js";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -110,19 +110,17 @@ export class TransactionsPage {
     this.inputField = new InputField();
     this.redactCategory = new RedactCategory();
 
-
     this.transactions = new TransactionsList();
     this.profileBlock = new ProfileBlock();
-      this.searching = new SearchByFilters(
-          this.allOperations,
-          this.categories,
-          this.transactions
-      );
+    this.searching = new SearchByFilters(
+      this.allOperations,
+      this.categories,
+      this.transactions,
+    );
     this.redactOpers = new redactOpers(
       closeEditPopup.bind(this),
       this.handleOperationTypeChange.bind(this),
     );
-
 
     window.openPopup = openPopup.bind(this);
     window.closePopup = closePopup.bind(this);
@@ -135,8 +133,8 @@ export class TransactionsPage {
   }
 
   async render(container: HTMLElement | null): Promise<void> {
-      this.importTransaction = new ImportTransaction(container);
-      this.categories = new CategoriesList(container);
+    this.importTransaction = new ImportTransaction(container);
+    this.categories = new CategoriesList(container);
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
@@ -152,10 +150,10 @@ export class TransactionsPage {
     const operations = await this.loadOperations();
     this.allOperations = operations;
     const categories = await this.loadCategories();
-      this.searching.setData(operations, categories);
+    this.searching.setData(operations, categories);
     const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
-      ? `https://vkarmane-planero.duckdns.org/test/${logoMatch[0]}`
+      ? `https://vkarmane-planero-minio.duckdns.org/test/${logoMatch[0]}`
       : "imgs/empty_avatar.png";
 
     const data = {
@@ -171,8 +169,8 @@ export class TransactionsPage {
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
-        searching : this.searching.getSelf(),
-        importTransaction: this.importTransaction.getSelf(),
+      searching: this.searching.getSelf(),
+      importTransaction: this.importTransaction.getSelf(),
     };
 
     container.innerHTML = this.template(data);
@@ -234,7 +232,7 @@ export class TransactionsPage {
               let categoryLogo = "";
               const match = op?.category_logo?.match(/\/images\/[^?]+/);
               if (match) {
-                categoryLogo = `https://vkarmane-planero.duckdns.org/test${match[0]}`;
+                categoryLogo = `https://vkarmane-planero-minio.duckdns.org/test${match[0]}`;
               }
 
               return {
@@ -260,28 +258,25 @@ export class TransactionsPage {
     }
   }
 
-    private filterOperations(query: string, container: HTMLElement) {
-        let filtered: Transaction[];
+  private filterOperations(query: string, container: HTMLElement) {
+    let filtered: Transaction[];
 
-        if (!query) {
-            filtered = this.allOperations;
-        } else {
-            filtered = this.allOperations.filter((op) =>
-                op.OrganizationTitle.toLowerCase().includes(query.toLowerCase())
-            );
-        }
-
-        const list = container.querySelector('.transaction-list');
-
-        if (!list) return;
-
-        list.innerHTML = this.transactions.getCards(filtered);
+    if (!query) {
+      filtered = this.allOperations;
+    } else {
+      filtered = this.allOperations.filter((op) =>
+        op.OrganizationTitle.toLowerCase().includes(query.toLowerCase()),
+      );
     }
 
+    const list = container.querySelector(".transaction-list");
 
+    if (!list) return;
 
+    list.innerHTML = this.transactions.getCards(filtered);
+  }
 
-    private async loadCategories() {
+  private async loadCategories() {
     const { ok, data, error } = await apiFetch("/categories", {
       method: "GET",
     });
@@ -290,7 +285,7 @@ export class TransactionsPage {
         id: ctg.id,
         name: ctg.name,
         logo: ctg?.logo_url?.match(/\/images\/[^\?]+/)
-          ? "https://vkarmane-planero.duckdns.org/test/" +
+          ? "https://vkarmane-planero-minio.duckdns.org/test/" +
             ctg?.logo_url?.match(/\/images\/[^\?]+/)[0]
           : "",
         cnt_op: ctg.operations_count,
@@ -306,14 +301,16 @@ export class TransactionsPage {
     this.searching.setEvents(container);
     this.importTransaction.setEvents();
     this.categories.setEvents();
-    const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
+    const searchInput = container.querySelector(
+      ".search-box input",
+    ) as HTMLInputElement;
 
     if (searchInput) {
-        searchInput.addEventListener("input", () => {
-              const q = searchInput.value.toLowerCase().trim();
-              this.filterOperations(q, container);
-          });
-      }
+      searchInput.addEventListener("input", () => {
+        const q = searchInput.value.toLowerCase().trim();
+        this.filterOperations(q, container);
+      });
+    }
 
     const forms = [
       {
@@ -546,16 +543,14 @@ export class TransactionsPage {
   }
 
   private shortNumber(num: number) {
-        const format = new Intl.NumberFormat('ru-RU');
+    const format = new Intl.NumberFormat("ru-RU");
 
-        if (num >= 1_000_000)
-            return Math.round(num / 100_000) / 10 + " млн.";
+    if (num >= 1_000_000) return Math.round(num / 100_000) / 10 + " млн.";
 
-        if (num >= 100_000)
-            return Math.round(num / 100) / 10 + " тыc.";
+    if (num >= 100_000) return Math.round(num / 100) / 10 + " тыc.";
 
-        return format.format(num); // например 10023 → 10 023
-    }
+    return format.format(num); // например 10023 → 10 023
+  }
 
   private async handleCategoryRedactRequest(
     form: HTMLFormElement,
