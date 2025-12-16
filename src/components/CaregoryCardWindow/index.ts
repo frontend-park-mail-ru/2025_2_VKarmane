@@ -46,8 +46,6 @@ export class CategoriesList {
 
 
 
-
-    /** Загружаем данные отчёта */
     private async loadMetrics(): Promise<MetricData[]> {
         try {
             const today = new Date();
@@ -79,7 +77,6 @@ export class CategoriesList {
         }
     }
 
-    /** Рисуем donut */
     private drawDonut(data: MetricData[]) {
         const canvas = this.container.querySelector(
             "#donutChart"
