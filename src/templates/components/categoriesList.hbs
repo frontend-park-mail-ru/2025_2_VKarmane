@@ -1,5 +1,6 @@
 <div class="Categories">
   <div class="metric-list">
+      {{#if metrics_exists}}
           <canvas id="donutChart" width="250" height="250"></canvas>
           <div class="center-text"></div>
 
@@ -9,6 +10,14 @@
               <div class="legend-item gasoline">Бензин</div>
               <div class="legend-item subscriptions">Подписки</div>
           </div>
+      {{else}}
+          <div>
+              <div class="oper_not_exists">
+                  <div class="oper_not_exists_img"></div>
+                  <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
+              </div>
+          </div>
+      {{/if}}
   </div>
   <div class="category-list">
     {{#if categories_exists}}

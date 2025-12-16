@@ -161,7 +161,7 @@ export class TransactionsPage {
       addOperations: this.addOperations.getSelf(),
       addCategories: this.addCategory.getSelf(),
       transactions: this.transactions.getList(operations),
-      categories: this.categories.getList(categories),
+      categories: await this.categories.getList(categories),
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
         profileData.id,
@@ -177,6 +177,8 @@ export class TransactionsPage {
     setBody();
     addEventListeners(this);
     this.setupEventListeners(container);
+      await this.categories.afterRender();
+
   }
 
   private async loadAccounts() {
@@ -300,7 +302,6 @@ export class TransactionsPage {
     this.profileBlock.setEvents();
     this.searching.setEvents(container);
     this.importTransaction.setEvents();
-    this.categories.setEvents();
     const searchInput = container.querySelector(
       ".search-box input",
     ) as HTMLInputElement;
