@@ -71,6 +71,11 @@ canvas {
     margin: 0 auto;
 }
 
+#oper_not_exists_metrics{
+    position: relative;
+    top: 50%;
+}
+
 .center-text {
     position: absolute;
     bottom: 57%;
