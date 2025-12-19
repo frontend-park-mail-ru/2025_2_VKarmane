@@ -237,7 +237,6 @@ button.btn, button.btn-secondary {
     left: 30px;
     background: none;
     border: none;
-    color: #9F9F9F;
     font-family: "Montserrat SemiBold";
     font-size: 14px;
 }
@@ -278,3 +277,26 @@ button.btn, button.btn-secondary {
     transform: translateY(-1px);
 }
 
+@media (max-width: 760px) {
+    #filterPopup .modal { flex-direction:column;
+        height: 80vh;
+        overflow-y: auto;
+        min-width: 451px;
+    }
+    #filterPopup .modal-left { width:100%; padding:16px; }
+    #filterPopup .modal-right { width:90%; padding:18px; }
+    #filterPopup .buttons{
+        justify-content: flex-end;
+        display: flex;
+        margin-top: 40px;
+        padding-bottom: 10px;
+    }
+
+    #filterPopup .category-card-info-text{
+        gap: 2px;
+    }
+
+    #filterPopup .category-search{
+        height: 27vh;
+    }
+}

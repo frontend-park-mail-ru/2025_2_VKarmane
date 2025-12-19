@@ -213,9 +213,9 @@
 }
 
 @media (max-width: 760px) {
-    .create-account-popup .modal { flex-direction:column; width: 94%; }
-    .create-account-popup .modal-left { width:100%; padding:16px; }
-    .create-account-popup .modal-right { width:100%; padding:18px; }
+    .create-account-popup .modal { flex-direction:column; width: 80%; }
+    .create-account-popup .modal-left { width:90%; padding:16px; }
+    .create-account-popup .modal-right { width:90%; padding:18px; }
 }
 
 

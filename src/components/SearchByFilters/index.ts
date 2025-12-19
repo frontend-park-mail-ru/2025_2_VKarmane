@@ -27,12 +27,25 @@ export class SearchByFilters {
         });
     }
 
+
+
     setEvents(container: HTMLElement) {
         this.setupFilterPopup(container);
         this.populateCategorySelect(container);
         this.enableCategoriesMultiSelect(container);
         this.enableCategorySearch(container);
 
+    }
+    shortNumber(num: number) {
+        const format = new Intl.NumberFormat('ru-RU');
+
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн.";
+
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыc.";
+
+        return format.format(num);
     }
 
     private populateCategorySelect(container: HTMLElement) {
@@ -249,7 +262,7 @@ export class SearchByFilters {
                     <div class="category_oper">${op.category_name}</div>
                 </div>
                 <div class="price_and_time">
-                    <div class="price_oper">${op.sum}₽</div>
+                    <div class="price_oper">${this.shortNumber(op.sum)}₽</div>
                     <div class="time_oper">${this.formatDate(op.date)}</div>
                 </div>
             </div>

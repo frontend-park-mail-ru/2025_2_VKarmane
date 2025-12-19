@@ -204,6 +204,11 @@
     color: black;
 }
 
+.cards__name{
+    font-family: "Montserrat SemiBold";
+    color: #636363;
+}
+
 .cards__status{
     color: #A7A7A7;
     font-family: "Montserrat SemiBold";
@@ -241,6 +246,35 @@
     justify-content: center;
     align-items: center;
     display: flex;
+}
+
+@media (max-width: 768px) {
+    .cards__most_used_card{
+        display: none;
+    }
+
+    .cards__right_section{
+        display: none;
+    }
+
+    .cards__left_section{
+        margin-left: 0;
+        width: 100%;
+        margin-right: 20px;
+    }
+
+    .cards__summary_budget{
+        width: 100%;
+    }
+
+    .cards__list_scroll{
+        max-height: 30vh;
+    }
+
+    .cards__item{
+        font-size: 12px;
+    }
+
 }
 
 

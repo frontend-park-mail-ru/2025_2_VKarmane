@@ -148,9 +148,17 @@
         margin-left: 4px;
     }
 
+    .wrapper {
+        margin-left: 16px;
+    }
+
     .general {
-        margin-left: 2px;
         font-size: 30px;
+        margin-left: 0;
+    }
+
+    .PlanBal-Add{
+        height: 100%;
     }
 
     #profileBlock {
@@ -167,7 +175,9 @@
     }
     .budgets_and_Add{
         display: flex;
-        gap: 4px;
+        gap: 20px;
+        flex-direction: row;
+        margin-right: 16px;
     }
     #main{
         padding-left: 0;
@@ -185,6 +195,16 @@
         justify-content: flex-end;
         height: 100%;
         padding-bottom: 20px ;
+    }
+
+    .left-section{
+        height: max-content;
+    }
+
+    .right-section{
+        margin-left: 0;
+        margin-right: 16px;
+
     }
 
 

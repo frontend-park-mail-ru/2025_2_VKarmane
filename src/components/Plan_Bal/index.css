@@ -91,8 +91,8 @@ display: flex;
 
 @media (max-width: 768px) {
     .Plan-Balance{
-        width: 162px; /* Ширина в пикселях */
-        height: 92px; /* Высота в пикселях */
+        width: 100%;
+        height: 92px;
         background-color: #ffffff;
         border-radius: 10px;
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
@@ -103,22 +103,44 @@ display: flex;
         margin-left: 10px;
     }
     .Fact-Plan-text{
-        font-size: 10px;
         margin-left: 10px;
         padding-top: 5px ;
+        font-size: calc(8px + 1vw);
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .PlanSum{
-        font-size: 10px;
         margin-left: 10px;
         margin-top: 25px;
+        font-size: calc(8px + 1vh);
+        padding-top: 10px;
     }
 
     #scheta{
         display: none;
     }
 
+    #planCheckSum{
+        margin-left: 0;
+    }
 
+    .PlanDate{
+        margin-top: 5px;
+        margin-left: 10px;
+        font-size: calc(7px + 1vw);
+    }
 
+    .plan-settings{
+        transform: scale(0.8);
+        position: absolute;
+        right: 5px;
+        top: 5px;
+    }
+
+    .AddPlanBudgets{
+        font-size: 13px;
+        border-radius: 10px;
+    }
 
 }

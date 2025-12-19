@@ -144,13 +144,6 @@ export class CardsPage {
                 return;
             }
 
-            const editBtn = target.closest('.card-edi');
-            if (editBtn) {
-                const card = editBtn.closest('.cards__item');
-                if (!card) return;
-                this.EditBill.openPopup(card);
-                return;
-            }
         });
     }
 
@@ -192,6 +185,7 @@ export class CardsPage {
                     card_type: (account.type === "private" ? "Личный" : "Совместный"),
                     card_created_at: this.formatDate(account.created_at),
                     isJoint : isJoints,
+                    card_name: account.name,
                 };
             });
 
