@@ -65,7 +65,6 @@ export class SearchByFilters {
     public setData(operations: Transaction[], categories: any[]) {
         this.allOperations = operations;
         this.categoriesList = categories;
-        console.log("Categories set:", categories);
     }
 
     private enableCategoriesMultiSelect(container: HTMLElement) {
@@ -180,10 +179,8 @@ export class SearchByFilters {
     private async loadAccounts() {
         try {
             const accounts = await apiFetch('/accounts', { method: 'GET' });
-            console.log('Счета получены:', accounts);
-            return accounts.data.accounts; // массив объектов счетов
+            return accounts.data.accounts;
         } catch (err) {
-            console.error('Ошибка загрузки счетов', err);
             return [];
         }
     }
@@ -212,14 +209,12 @@ export class SearchByFilters {
                     headers: { 'Content-Type': 'application/json' }
                 });
 
-                console.log(`Фильтры отправлены для счета ID=${account.id}`, response);
 
                 if (response?.data?.operations) {
                     collectedOperations.push(...response.data.operations);
                 }
 
             } catch (err) {
-                console.error(`Ошибка при отправке фильтров для счета ID=${account.id}`, err);
             }
         });
 

@@ -101,13 +101,13 @@ export class PlanBal {
             delButton.addEventListener("click", async () => {
                 const id_budget = this.container.querySelector<HTMLElement>(".PlanID").textContent;
                 console.log(id_budget);
-                const { ok, error } = await apiFetch(`/budgets/${id_budget}`, {
+                const { ok } = await apiFetch(`/budgets/${id_budget}`, {
                     method: "DELETE",
                 });
                 if (ok) {
                     router.navigate("/");
                 } else {
-                    console.log("Ошибка при удалении данных:", error);
+
                 }
             })
         }

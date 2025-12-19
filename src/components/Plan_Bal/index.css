@@ -42,7 +42,8 @@
 }
 
 .AddPlanBudgets{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     background-color: #EB5B1D;
     border-radius: 24px;
     border: none;

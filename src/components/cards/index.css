@@ -37,7 +37,8 @@
 display: flex;
 bottom: 40px;
 color: black;
-font-family: "Montserrat SemiBold";
+font-family: "Montserrat";
+    font-weight: 600;
 font-size: calc(3px + 1vw);
 }
 

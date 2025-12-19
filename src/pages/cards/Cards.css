@@ -40,7 +40,8 @@
 }
 
 .cards_price_budget{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: calc(20px + 3vw);
     text-align: center;
     position: relative;
@@ -64,11 +65,11 @@
     justify-content: center;
     color: #fff;
     font-size: 28px;
-    font-weight: 500;
     cursor: pointer;
     transition: background 0.25s ease, transform 0.25s ease;
     border: none;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 
 }
 
@@ -107,7 +108,8 @@
     margin-bottom: 10px;
     padding-top: 15px;
     padding-left: 15px;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     color: #949494;
     font-size: 20px;
     display: flex;
@@ -200,18 +202,21 @@
 }
 
 .cards__title{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     color: black;
 }
 
 .cards__name{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     color: #636363;
 }
 
 .cards__status{
     color: #A7A7A7;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 0.8rem;
 }
 
@@ -222,7 +227,8 @@
 }
 
 .cards__type{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .cards_add_people{
@@ -232,13 +238,15 @@
 }
 
 .cards__date_of_creation{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     color: #A7A7A7;
 }
 
 .cards__activity_type{
     border-radius: 26px;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     color: #077507;
     background-color: #A1FF89;
     width: 105px;

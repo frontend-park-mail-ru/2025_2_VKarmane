@@ -44,7 +44,6 @@ export class EditBudget {
                 const dateInput = form.querySelector<HTMLInputElement>('input[type="date"]');
                 const sumInput = form.querySelector<HTMLInputElement>('input[type="text"]');
                 if (data.budgets.length > 0) {
-                    console.log(data.budgets[0]);
                     if (dateInput && data.budgets[0].period_end) {
                         const date = new Date(data.budgets[0].period_end);
                         const formattedDate = date.toISOString().split('T')[0];
@@ -56,7 +55,6 @@ export class EditBudget {
                     }
                     id_budget = data.budgets[0].id;
                 } else {
-                    console.log("Ошибка при загрузке данных:", error);
                 }
                 }
         }
@@ -83,7 +81,6 @@ export class EditBudget {
             if (ok) {
                 router.navigate("/");
             } else {
-                console.log("Ошибка при обновлении данных:", error);
             }
         });
 

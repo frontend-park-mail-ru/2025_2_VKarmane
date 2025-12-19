@@ -53,9 +53,7 @@ export class AddOperation {
     sumInput.addEventListener("input", () => {
       this.validateSingleField("sum", sumInput.value, sumInput);
     });
-    console.log(this.GetDataPostRender);
     if (this.GetDataPostRender) {
-      console.log("abaaaaa");
       const categoriesOrError = await this.getCategories();
       if (categoriesOrError instanceof Error) throw categoriesOrError;
       const selectCategory = document.getElementById(

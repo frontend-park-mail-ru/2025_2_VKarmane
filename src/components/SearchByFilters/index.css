@@ -40,7 +40,8 @@
     transition: 0.25s;
     color: #555;
     width: 50%;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .toggle-option.active {
@@ -58,7 +59,8 @@
     color: #000;
     cursor: pointer;
     background: none;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .filter-popup .modal {
@@ -237,7 +239,8 @@ button.btn, button.btn-secondary {
     left: 30px;
     background: none;
     border: none;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 14px;
 }
 

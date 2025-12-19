@@ -5,7 +5,8 @@
 }
 
 .requirements{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .requirements ul ul {
@@ -23,7 +24,8 @@
 }
 
 .requirements{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 15px;
 }
 
@@ -33,7 +35,8 @@
 }
 
 #upload-import-csv{
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
     color: white;
     display: block;
 }

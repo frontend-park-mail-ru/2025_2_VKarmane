@@ -20,14 +20,11 @@ export class AddPeople {
         this.container.addEventListener("click", (event) => {
             const target = event.target as HTMLElement;
 
-            // Проверяем, что клик был по кнопке "add people"
             const addPeopleBtn = target.closest("#btn-add-people") as HTMLElement;
             if (!addPeopleBtn) return;
 
-            // Извлекаем ID счета из атрибута data-card-id
             const cardId = addPeopleBtn.dataset.cardId;
             if (cardId) {
-                console.log("ID счета:", cardId);  // Выводим ID счета в консоль
 
                 const popupAddPeople = this.container.querySelector("#AddPeoplePopup");
                 if (popupAddPeople) {
@@ -47,7 +44,6 @@ export class AddPeople {
             });
         }
 
-        // Обработчик отправки формы
         const form = this.container.querySelector("#AddPeopleForm") as HTMLFormElement;
 
         form.addEventListener("submit", async (event) => {

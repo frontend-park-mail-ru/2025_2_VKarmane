@@ -512,7 +512,8 @@ canvas {
 
 .delete-btn {
     color: #e53935;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .delete-btn:hover {
@@ -520,14 +521,16 @@ canvas {
 }
 
 .edit-btn {
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 
 
 .cat-del {
     color: #e53935;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .cat-del:hover {
@@ -535,7 +538,8 @@ canvas {
 }
 
 .cat-edi {
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .cat-edi:hover {
@@ -686,7 +690,8 @@ canvas {
     font-size: 14px;
     width: 100%;
     outline: none;
-    font-family: "Montserrat SemiBold";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 .search-box .filter-btn {

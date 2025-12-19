@@ -214,7 +214,7 @@ export class MainPage {
       account_id: parseInt(accountInput.value, 10),
       category_id: parseInt(categoryInput.value, 10),
       sum: parseFloat(costInput.value),
-      name: titleInput?.value || "no name",
+      name: titleInput?.value || "Доход",
       type: operationTypeInput.value,
       description: commentInput.value.trim() || "",
       created_at: new Date(operationDateInput.value).toISOString(),

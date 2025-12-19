@@ -170,11 +170,9 @@ export class CardsPage {
             let accs = await this.loadAccounts();
             const accounts = accs.accounts;
             if (!accounts || accounts.length === 0) {
-                console.log("Нет доступных счетов");
                 return [];
             }
 
-            console.log("Загруженные счета:", accounts);
 
             const cards = accounts.map((account) => {
                 let isJoints = account.type !== "private";
@@ -189,11 +187,9 @@ export class CardsPage {
                 };
             });
 
-            console.log("Преобразованные карточки:", cards);
             return cards;
 
         } catch (err) {
-            console.error("Ошибка при загрузке карточек:", err);
             return [];
         }
     }
