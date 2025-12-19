@@ -95,7 +95,7 @@ export class MainPage {
         : [this.card.getSelf(0, null, true, 0, 0, "Нет счетов")];
 
     const data_ = {
-      FactBal: this.factBal.getSelf(balance.total_sum, 100, 120),
+      FactBal: this.factBal.getSelf(balance.total_sum, budgets.budgets, 120),
       cards,
 
       PlanBal: this.planBal.getSelf(budgets.budgets),

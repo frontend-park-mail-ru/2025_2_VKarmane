@@ -10,7 +10,7 @@ export class FactBal {
   }
   getSelf(
     FactSum: number | null,
-    PrevFactSum: number,
+    PrevFactSum: Array<object>,
     updateFactFortwoWeek: number,
   ): string {
     if (FactSum === null) {
@@ -18,15 +18,33 @@ export class FactBal {
         is_empty: true,
       });
     }
-    let informationsAboutSign = updateFactFortwoWeek > 0;
-    let procents = Math.abs(FactSum / (PrevFactSum / 100) - 100).toFixed(1);
-    return this.template({
-      FactSum: this.shortNumber(FactSum),
-      updateFactFortwoWeek: updateFactFortwoWeek,
-      hasUpdateFactPlan: informationsAboutSign,
-      GetBalance: this.shortNumber(procents),
-      is_empty: false,
-    });
+      let flag = 0;
+      if (PrevFactSum.length === 0) {
+         flag = 1;
+      }
+
+      if (flag !== 1){
+          let informationsAboutSign = FactSum > PrevFactSum[0].sum;
+          let procents = Math.abs(FactSum / (PrevFactSum[0].sum / 100) - 100).toFixed(1);
+          return this.template({
+              FactSum: this.shortNumber(FactSum),
+              updateFactFortwoWeek: updateFactFortwoWeek,
+              hasUpdateFactPlan: informationsAboutSign,
+              GetBalance: this.shortNumber(procents),
+              is_empty: false,
+              existsUpdates: !flag,
+          });
+      }
+      else {
+          return this.template({
+              FactSum: this.shortNumber(FactSum),
+              updateFactFortwoWeek: updateFactFortwoWeek,
+              is_empty: false,
+              existsUpdates: !flag,
+          });
+      }
+
+
   }
     shortNumber(num: number) {
         const format = new Intl.NumberFormat('ru-RU');

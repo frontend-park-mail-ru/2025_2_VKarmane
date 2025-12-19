@@ -101,6 +101,14 @@
     justify-content: center;
 }
 
+#neutral{
+    background-color: #a3a3a3;
+}
+
+#neutralText{
+    color: #252424;
+}
+
 .ProcTextUp {
   font-family: Montserrat;
   font-weight: 600;

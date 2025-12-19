@@ -3,6 +3,7 @@
   <div class="CheckSum">
       <div class="priceAndBlock">
           <h2 class="FactSum">{{FactSum}} ₽</h2>
+          {{#if existsUpdates}}
           {{#if hasUpdateFactPlan}}
               <div class="ProcentUp">
                   <p class="ProcTextUp">↑{{GetBalance}}%</p>
@@ -10,6 +11,11 @@
           {{else}}
               <div class="ProcentDown" style="align-items: center">
                   <p class="ProcTextDown">↓{{GetBalance}}%</p>
+              </div>
+          {{/if}}
+          {{else}}
+              <div class="ProcentDown" id="neutral" style="align-items: center">
+                  <p class="ProcTextDown" id="neutralText">0%</p>
               </div>
           {{/if}}
       </div>
