@@ -9,6 +9,7 @@ import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { redactOpers } from "../../components/redactOpers/index.js";
 import { RedactCategory } from "../../components/redactCategory/index.js";
 import { InputField } from "../../components/inputField/index.js";
+import { ImportTransaction } from "../../components/ImportTransaction/index.js";
 import { addEventListeners } from "../transactions/events.js";
 
 import {
@@ -41,7 +42,7 @@ import {
 import { setBody } from "../../utils/bodySetters.js";
 import { apiFetch } from "../../api/fetchWrapper.js";
 import { router } from "../../router.js";
-import {SearchByFilters} from "../../components/SearchByFilters/index.js";
+import { SearchByFilters } from "../../components/SearchByFilters/index.js";
 
 interface Transaction {
   OrganizationTitle: string;
@@ -95,6 +96,7 @@ export class TransactionsPage {
   private inputField: InputField;
   private allOperations: Transaction[] = [];
   private searching: SearchByFilters;
+  private importTransaction: ImportTransaction;
 
   constructor() {
     this.template = Handlebars.compile(TransactionsTemplate);
@@ -108,15 +110,13 @@ export class TransactionsPage {
     this.inputField = new InputField();
     this.redactCategory = new RedactCategory();
 
-
     this.transactions = new TransactionsList();
-    this.categories = new CategoriesList();
     this.profileBlock = new ProfileBlock();
-      this.searching = new SearchByFilters(
-          this.allOperations,
-          this.categories,
-          this.transactions
-      );
+    this.searching = new SearchByFilters(
+      this.allOperations,
+      this.categories,
+      this.transactions,
+    );
     this.redactOpers = new redactOpers(
       closeEditPopup.bind(this),
       this.handleOperationTypeChange.bind(this),
@@ -133,6 +133,8 @@ export class TransactionsPage {
   }
 
   async render(container: HTMLElement | null): Promise<void> {
+    this.importTransaction = new ImportTransaction(container);
+    this.categories = new CategoriesList(container);
     if (!container) throw new Error("Container element not found!");
     document.body.classList.remove("hide-scroller");
 
@@ -148,10 +150,10 @@ export class TransactionsPage {
     const operations = await this.loadOperations();
     this.allOperations = operations;
     const categories = await this.loadCategories();
-      this.searching.setData(operations, categories);
+    this.searching.setData(operations, categories);
     const logoMatch = profileData?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
-      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      ? `https://vkarmane-planero-minio.duckdns.org/test/${logoMatch[0]}`
       : "imgs/empty_avatar.png";
 
     const data = {
@@ -159,7 +161,7 @@ export class TransactionsPage {
       addOperations: this.addOperations.getSelf(),
       addCategories: this.addCategory.getSelf(),
       transactions: this.transactions.getList(operations),
-      categories: this.categories.getList(categories),
+      categories: await this.categories.getList(categories),
       profile_block: this.profileBlock.getSelf(
         profileData.login || "User",
         profileData.id,
@@ -167,13 +169,16 @@ export class TransactionsPage {
       ),
       redactOperations: this.redactOpers.getSelf(),
       redactCategories: this.redactCategory.getSelf(),
-        searching : this.searching.getSelf(),
+      searching: this.searching.getSelf(),
+      importTransaction: this.importTransaction.getSelf(),
     };
 
     container.innerHTML = this.template(data);
     setBody();
     addEventListeners(this);
     this.setupEventListeners(container);
+      await this.categories.afterRender();
+
   }
 
   private async loadAccounts() {
@@ -229,7 +234,7 @@ export class TransactionsPage {
               let categoryLogo = "";
               const match = op?.category_logo?.match(/\/images\/[^?]+/);
               if (match) {
-                categoryLogo = `https://vkarmane.duckdns.org/test${match[0]}`;
+                categoryLogo = `https://vkarmane-planero-minio.duckdns.org/test${match[0]}`;
               }
 
               return {
@@ -237,7 +242,7 @@ export class TransactionsPage {
                 AccountID: op.account_id,
                 OrganizationTitle: op.name || "Без названия",
                 CategoryName: categoryName,
-                OperationPrice: op.sum?.toString() ?? "0",
+                OperationPrice: this.shortNumber(op.sum)?.toString() ?? "0",
                 OperationTime: new Date(op.date).toLocaleDateString("ru-RU"),
                 CategoryLogo: categoryLogo,
               };
@@ -255,28 +260,25 @@ export class TransactionsPage {
     }
   }
 
-    private filterOperations(query: string, container: HTMLElement) {
-        let filtered: Transaction[];
+  private filterOperations(query: string, container: HTMLElement) {
+    let filtered: Transaction[];
 
-        if (!query) {
-            filtered = this.allOperations;
-        } else {
-            filtered = this.allOperations.filter((op) =>
-                op.OrganizationTitle.toLowerCase().includes(query.toLowerCase())
-            );
-        }
-
-        const list = container.querySelector('.transaction-list');
-
-        if (!list) return;
-
-        list.innerHTML = this.transactions.getCards(filtered);
+    if (!query) {
+      filtered = this.allOperations;
+    } else {
+      filtered = this.allOperations.filter((op) =>
+        op.OrganizationTitle.toLowerCase().includes(query.toLowerCase()),
+      );
     }
 
+    const list = container.querySelector(".transaction-list");
 
+    if (!list) return;
 
+    list.innerHTML = this.transactions.getCards(filtered);
+  }
 
-    private async loadCategories() {
+  private async loadCategories() {
     const { ok, data, error } = await apiFetch("/categories", {
       method: "GET",
     });
@@ -285,7 +287,7 @@ export class TransactionsPage {
         id: ctg.id,
         name: ctg.name,
         logo: ctg?.logo_url?.match(/\/images\/[^\?]+/)
-          ? "https://vkarmane.duckdns.org/test/" +
+          ? "https://vkarmane-planero-minio.duckdns.org/test/" +
             ctg?.logo_url?.match(/\/images\/[^\?]+/)[0]
           : "",
         cnt_op: ctg.operations_count,
@@ -299,14 +301,17 @@ export class TransactionsPage {
     this.menu.setEvents();
     this.profileBlock.setEvents();
     this.searching.setEvents(container);
-    const searchInput = container.querySelector('.search-box input') as HTMLInputElement;
+    this.importTransaction.setEvents();
+    const searchInput = container.querySelector(
+      ".search-box input",
+    ) as HTMLInputElement;
 
     if (searchInput) {
-        searchInput.addEventListener("input", () => {
-              const q = searchInput.value.toLowerCase().trim();
-              this.filterOperations(q, container);
-          });
-      }
+      searchInput.addEventListener("input", () => {
+        const q = searchInput.value.toLowerCase().trim();
+        this.filterOperations(q, container);
+      });
+    }
 
     const forms = [
       {
@@ -395,12 +400,12 @@ export class TransactionsPage {
 
     const body = {
       account_id: parseInt(accountInput.value),
-      category_id: parseInt(categoryInput.value),
+      category_id: parseInt(categoryInput.value) || 0,
       sum: parseFloat(costInput.value),
-      name: titleInput.value ? titleInput.value : "no name",
+      name: titleInput.value ? titleInput.value : "Доход",
       type: operationTypeInput.value,
       description: commentInput.value.trim() || "",
-      created_at: new Date(operationDateInput.value).toISOString(),
+      date: new Date(operationDateInput.value).toISOString(),
     };
 
     try {
@@ -536,6 +541,16 @@ export class TransactionsPage {
       else setServerCreateCategoryError();
     }
     router.navigate("/transactions");
+  }
+
+  private shortNumber(num: number) {
+    const format = new Intl.NumberFormat("ru-RU");
+
+    if (num >= 1_000_000) return Math.round(num / 100_000) / 10 + " млн.";
+
+    if (num >= 100_000) return Math.round(num / 100) / 10 + " тыc.";
+
+    return format.format(num); // например 10023 → 10 023
   }
 
   private async handleCategoryRedactRequest(

@@ -3,6 +3,7 @@
   width: 100%;
   max-width: 600px;
   overflow: hidden;
+    height: auto;
 }
 
 .cards-scroll {
@@ -12,6 +13,7 @@
   scroll-behavior: smooth;
   scrollbar-width: none;
   box-sizing: border-box;
+    height: auto;
 }
 
 .cards-scroll::-webkit-scrollbar {

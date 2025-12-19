@@ -30,7 +30,8 @@
     display: flex;
     align-items: center;
     gap: 2vh;
-    font-family: "Montserrat Semibold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -111,7 +112,8 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: "Montserrat Semibold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -147,7 +149,8 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: "Montserrat Semibold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -184,7 +187,8 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: "Montserrat Semibold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -224,7 +228,8 @@
     width: 22vh;
     height: 5vh;
     align-items: center;
-    font-family: "Montserrat Semibold";
+    font-family: "Montserrat";
+    font-weight: 600;
     font-size: 1.02rem;
     color: #6D2100;
     background: none;
@@ -270,20 +275,29 @@
 
 @media (max-width: 768px) {
     .LeftPart{
-        display: block;
-        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: flex-end;
+        padding-bottom: 20px;
+        width: 100%;
         bottom: 0;
+        position: absolute;
     }
 
     .RawMenu{
         display: flex;
         flex-direction: row;
-        width: 72vw;
+        width: 100%;
         justify-content: space-between;
     }
 
     .logoPlanero{
         display: none;
+    }
+
+    .mainPage{
+        margin-right: 20px;
     }
 
     #mainButtn{
@@ -329,9 +343,15 @@
     #logout{
         display: flex;
         flex-direction: column;
-        gap: 2px;
         font-size: 6px;
+        gap: 2px;
         justify-content: center;
+        align-items: center;
+        bottom: 10px;
+        height: 68px;
+        position: relative;
+        width: 100%;
+
     }
 
     .profileRoute button{
@@ -349,13 +369,6 @@
         height: 49px;
     }
 
-    .logoutRoute button{
-        height: 68px;
-        width: 68px;
-        position: relative;
-        bottom: 10px;
-        left: -30px;
-    }
 
     .menu-divider{
         display: none;

@@ -1,13 +1,22 @@
 <div class="Transactions">
     <div class="Transaction-header">
-        <p class="Transact-Category-text">Операции</p>
-        <button onclick="openPopup()" class="open-btn">+</button>
+        <div class="header-add_bttn">
+            <p class="Transact-Category-text">Операции</p>
+            <button onclick="openPopup()" class="open-btn" id="btn-btn">+</button>
+        </div>
+        <div class="import-export-btn">
+            <button class="import-btn">
+            </button>
+            <button class="export-btn">
+            </button>
+        </div>
+
         <div class="search-wrapper">
             <div class="search-box">
                 <img src="/imgs/search.svg" alt="">
                 <input type="text" placeholder="Поиск">
-                <button class="filter-btn">
-                    <img src="/imgs/filters.svg" alt="img-filter">
+                <button class="filter-btn" id="btn-btn">
+                    <img src="/imgs/filters.svg" alt="img-filter" >
                 </button>
             </div>
         </div>

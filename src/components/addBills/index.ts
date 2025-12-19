@@ -65,10 +65,9 @@ export class AddBills {
 
 
         if (stepIndicator) {
-            stepIndicator.textContent = '1 / 4';
+            stepIndicator.textContent = '1 / 3';
         }
 
-        this.resetAvatarUpload();
 
 
         this.resetFormFields();
@@ -112,7 +111,7 @@ export class AddBills {
             }
 
             if (stepIndicator) {
-                stepIndicator.textContent = `${stepNumber} / 4`;
+                stepIndicator.textContent = `${stepNumber} / 3`;
             }
         };
 
@@ -134,10 +133,10 @@ export class AddBills {
                     }
                 }
 
-                if (nextStepNumber <= 4) {
+                if (nextStepNumber <= 3) {
                     goToStep(nextStepNumber);
 
-                    if (nextStepNumber === 4) {
+                    if (nextStepNumber === 3) {
                         this.updateSummary();
                     }
                 }
@@ -183,7 +182,6 @@ export class AddBills {
         }
 
 
-        this.initializeAvatarUpload();
 
         const createBtn = document.getElementById('createBtn');
         if (createBtn) {
@@ -197,6 +195,7 @@ export class AddBills {
                                 balance: accountData.balance,
                                 type: accountData.type === 'personal' ? 'private' : 'shared',
                                 currency_id: 1,
+                                name: accountData.name,
                             }),
                          },
                     );
@@ -232,97 +231,26 @@ export class AddBills {
         goToStep(1);
     }
 
-    private initializeAvatarUpload() {
-        const avatarInput = document.getElementById('avatarUpload') as HTMLInputElement;
-        const fileUploadTrigger = document.getElementById('fileUploadTrigger') as HTMLButtonElement;
-        const fileName = document.getElementById('fileName') as HTMLSpanElement;
-        const imagePreview = document.getElementById('imagePreview') as HTMLDivElement;
-        const previewImage = document.getElementById('previewImage') as HTMLImageElement;
-        const removeImage = document.getElementById('removeImage') as HTMLButtonElement;
 
-        if (!avatarInput || !fileUploadTrigger || !fileName || !imagePreview || !previewImage || !removeImage) {
-            return;
-        }
 
-        fileUploadTrigger.addEventListener('click', () => {
-            avatarInput.click();
-        });
-
-        avatarInput.addEventListener('change', (e) => {
-            const file = (e.target as HTMLInputElement).files?.[0];
-
-            if (file) {
-                if (!file.type.startsWith('image/')) {
-                    alert('Пожалуйста, выберите файл изображения');
-                    this.resetAvatarUpload();
-                    return;
-                }
-
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('Размер файла не должен превышать 5MB');
-                    this.resetAvatarUpload();
-                    return;
-                }
-
-                fileName.textContent = file.name;
-
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    previewImage.src = e.target?.result as string;
-                    imagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        removeImage.addEventListener('click', () => {
-            this.resetAvatarUpload();
-        });
-
-        this.resetAvatarUpload();
-    }
-
-    private resetAvatarUpload() {
-        const avatarInput = document.getElementById('avatarUpload') as HTMLInputElement;
-        const fileName = document.getElementById('fileName') as HTMLSpanElement;
-        const imagePreview = document.getElementById('imagePreview') as HTMLDivElement;
-        const previewImage = document.getElementById('previewImage') as HTMLImageElement;
-
-        if (avatarInput) avatarInput.value = '';
-        if (fileName) fileName.textContent = 'Файл не выбран';
-        if (imagePreview) imagePreview.style.display = 'none';
-        if (previewImage) previewImage.src = '';
-    }
 
     private updateSummary() {
         const summaryBox = document.getElementById('summaryBox');
         if (!summaryBox) return;
 
         const accountType = (document.getElementById('accountType') as HTMLSelectElement)?.value;
-        const accountTypeText = accountType === 'actual' ? 'Фактический' : 'Планируемый';
+        const accountTypeText = accountType === 'personal' ? 'Личный' : 'Совместный';
         const accountName = (document.getElementById('accName') as HTMLInputElement)?.value;
         const comment = (document.getElementById('comment') as HTMLTextAreaElement)?.value;
         const initialBalance = (document.getElementById('initialBalance') as HTMLInputElement)?.value;
-        const currency = (document.getElementById('currency') as HTMLSelectElement)?.value;
         const accountTag = (document.getElementById('accountTag') as HTMLInputElement)?.value;
-
-        const avatarInput = document.getElementById('avatarUpload') as HTMLInputElement;
-        const hasAvatar = avatarInput?.files?.length > 0;
-        const avatarFileName = hasAvatar ? avatarInput.files[0].name : 'Не загружено';
 
         let summaryHTML = `
             <div class="summary-item"><strong>Тип счета:</strong> ${accountTypeText}</div>
             <div class="summary-item"><strong>Название:</strong> ${accountName}</div>
-            <div class="summary-item"><strong>Баланс:</strong> ${initialBalance} рублей</div>
-            <div class="summary-item"><strong>Аватар:</strong> ${avatarFileName}</div>
+            <div class="summary-item"><strong>Баланс:</strong> ${initialBalance} ₽</div>
         `;
 
-        if (accountType === 'planned') {
-            const plannedDate = (document.getElementById('plannedDate') as HTMLInputElement)?.value;
-            const plannedBalance = (document.getElementById('plannedBalance') as HTMLInputElement)?.value;
-            summaryHTML += `<div class="summary-item"><strong>Планируемая дата:</strong> ${plannedDate}</div>`;
-            summaryHTML += `<div class="summary-item"><strong>Планируемый баланс:</strong> ${plannedBalance} ${currency}</div>`;
-        }
 
         if (comment) {
             summaryHTML += `<div class="summary-item"><strong>Комментарий:</strong> ${comment}</div>`;

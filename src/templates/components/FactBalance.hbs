@@ -1,9 +1,9 @@
 <div class="Fact-Balance">
-  {{#if (not is_empty)}}
   <h3 class="Fact-Plan-text">Фактический</h3>
   <div class="CheckSum">
       <div class="priceAndBlock">
           <h2 class="FactSum">{{FactSum}} ₽</h2>
+          {{#if existsUpdates}}
           {{#if hasUpdateFactPlan}}
               <div class="ProcentUp">
                   <p class="ProcTextUp">↑{{GetBalance}}%</p>
@@ -13,23 +13,11 @@
                   <p class="ProcTextDown">↓{{GetBalance}}%</p>
               </div>
           {{/if}}
+          {{else}}
+              <div class="ProcentDown" id="neutral" style="align-items: center">
+                  <p class="ProcTextDown" id="neutralText">0%</p>
+              </div>
+          {{/if}}
       </div>
       </div>
-  {{#if hasUpdateFactPlan}}
-  <div class="Fact-balance-text" style="display: flex">
-    <p class="Fact-plus-text">+{{updateFactFortwoWeek}}₽&nbsp;</p>
-    <p class="Fact-text">за последние 2 недели</p>
-  </div>
-  {{else}}
-  <div class="Fact-balance-text" style="display: flex">
-    <p class="Fact-minus-text">{{updateFactFortwoWeek}}₽&nbsp;</p>
-    <p class="Fact-text">за последние 2 недели</p>
-  </div>
-  {{/if}} {{else}}
-  <div class="balance_not_exists">
-    <div class="balance_not_exists_img"></div>
-    <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
-    <a class="add_operation" href="#">+ Добавить баланс</a>
-  </div>
-  {{/if}}
 </div>

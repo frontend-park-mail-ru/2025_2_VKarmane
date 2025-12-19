@@ -7,12 +7,12 @@
 @import "../../components/scroller/index.css";
 @import "../../components/profileBlock/index.css";
 @import "../../components/addTransactions/index.css";
+@import "../../components/addBudgets/index.css";
+
 .banks {
   font-family: "Montserrat";
   font-weight: 500;
-  margin-left: 30px;
   float: right;
-  height: 100px;
   color: #555353;
   position: relative;
   top: -15px;
@@ -26,21 +26,38 @@
     margin-right: 10px;
     background-color: #f6f6f8;
     border-radius: 48px;
-    padding-right: 20px;
+    padding-right: 15px;
     padding-left: 10px;
     padding-bottom: 20px;
     container-type: size;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.budgets_and_Add{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+    flex: 1;
+}
+
+.PlanBal-Add {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 60vh;
+    flex: 1;
 }
 
 
-
 .wrapper {
-    transform-origin: top left;
-    width: max-content;
-    height: max-content;
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
 }
 
 
@@ -55,17 +72,22 @@
 
 .section {
   display: flex;
+    width: 100%;
+    flex: 1;
 }
 .left-section {
   gap: 2px;
   display: flex;
   flex-direction: column;
+    height: 100%;
 }
 .right-section {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  flex: 1;
+    flex: 1;
+  gap: 15px;
+    margin-left: 15px;
+    height: 100%;
 }
 
 @font-face {
@@ -126,9 +148,17 @@
         margin-left: 4px;
     }
 
+    .wrapper {
+        margin-left: 16px;
+    }
+
     .general {
-        margin-left: 2px;
         font-size: 30px;
+        margin-left: 0;
+    }
+
+    .PlanBal-Add{
+        height: 100%;
     }
 
     #profileBlock {
@@ -145,7 +175,9 @@
     }
     .budgets_and_Add{
         display: flex;
-        gap: 4px;
+        gap: 20px;
+        flex-direction: row;
+        margin-right: 16px;
     }
     #main{
         padding-left: 0;
@@ -163,6 +195,16 @@
         justify-content: flex-end;
         height: 100%;
         padding-bottom: 20px ;
+    }
+
+    .left-section{
+        height: max-content;
+    }
+
+    .right-section{
+        margin-left: 0;
+        margin-right: 16px;
+
     }
 
 

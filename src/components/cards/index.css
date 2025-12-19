@@ -4,123 +4,141 @@
   bottom: 46px;
 }
 
-
+.cards{
+    display: flex;
+    justify-content: flex-start;
+}
 
 .card1 {
   width: 15vw;
-  height: 21vw;
+  height: 15vw;
   background-color: #ffffff;
   border-radius: 26px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
-  position: relative;
-  top: -18px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    justify-content: center;
 }
 .Card-One-text {
-  font-family: "Montserrat";
-  font-weight: bold;
-  color: #949494;
-  margin-left: 20px;
-  padding-top: 37px;
+    color: #949494;
+    font-family: Montserrat;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
+
 .CheckSumCard {
-  display: flex;
-  position: relative;
-  bottom: 40px;
-  color: black;
-  font-family: "Montserrat";
-  font-size: 20px;
-  margin-left: 20px;
-  margin-top: 43px;
+display: flex;
+bottom: 40px;
+color: black;
+font-family: "Montserrat";
+    font-weight: 600;
+font-size: calc(3px + 1vw);
+}
+
+.CheckSumCard h2 {
+margin: 0;
+}
+.rash_card{
+display: flex;
+align-items: center;
+justify-content: center;
+height: 100%;
 }
 
 .rashod-card {
-  background-color: #ffffff;
-  border-radius: 26px;
-  border: 1px solid #000000;
-  height: 103px;
-  width: 221px;
-  margin: 0 auto;
+min-height: 80px;
+min-width: 120px;
+background-color: #ffffff;
+border-radius: 26px;
+border: 1px solid #000000;
+height: max-content;
+width: 80%;
+
 }
 .card1 {
-  justify-content: center;
+justify-content: center;
 }
 
 .NaibolshRashod {
-  margin-left: 16px;
-  font-family: "Montserrat";
-  font-weight: bold;
-  font-size: 11px;
-  position: relative;
-  left: -7px;
-  top: -6px;
-  color: #000000;
+margin-left: 16px;
+font-family: "Montserrat";
+font-weight: bold;
+font-size: 11px;
+position: relative;
+left: -7px;
+top: -6px;
+color: #000000;
+margin-bottom: 0;
 }
 
 .drawing {
-  margin-right: 5px;
-  width: 40px;
-  height: 41px;
+margin-right: 5px;
+width: 40px;
+height: 41px;
 }
 
 .rashod_sum {
-  font-family: "Montserrat";
-  font-weight: 500;
-  font-size: 15px;
-  float: left;
-  margin-left: 10px;
-  color: black;
-  position: relative;
-  top: -10px;
+font-family: "Montserrat";
+font-weight: 500;
+font-size: 15px;
+float: left;
+margin-left: 10px;
+color: black;
+position: relative;
+top: -10px;
+margin-bottom: 0;
 }
 
 .actions {
-  width: 77px;
-  height: 13px;
-  background-color: #c8c8c8;
-  margin-left: 8px;
-  position: relative;
-  top: -6px;
-  text-align: center;
-  border-radius: 50px;
+width: 77px;
+height: 13px;
+background-color: #c8c8c8;
+margin-left: 8px;
+position: relative;
+top: -6px;
+text-align: center;
+border-radius: 50px;
 }
 
 .rashod-sum-action {
-  font-family: "Montserrat";
-  font-weight: 600;
-  font-size: 9px;
-  color: #4c4c4c;
-  position: relative;
-  top: -8px;
+font-family: "Montserrat";
+font-weight: 600;
+font-size: 9px;
+color: #4c4c4c;
+position: relative;
+top: -8px;
 }
 
 .rashod-img {
-  position: relative;
-  left: 90px;
+position: relative;
+left: 90px;
 }
 
 .cards_not_exist {
-  display: grid;
-  place-items: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 18px;
-  position: relative;
-  top: 25%;
-  gap: 5px;
+display: grid;
+place-items: center;
+align-items: center;
+text-align: center;
+gap: 5px;
 }
 
 .add_cards {
-  display: block;
-  background-color: #eb5b1d;
-  border-radius: 8px;
-  width: 80%;
-  margin-top: 25%;
-  height: 43px;
-  font-family: "Montserrat";
-  font-weight: 600;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  line-height: 43px;
+display: block;
+background-color: #eb5b1d;
+border-radius: 8px;
+width: 80%;
+height: 43px;
+font-family: "Montserrat";
+font-weight: 600;
+color: white;
+text-align: center;
+text-decoration: none;
+line-height: 43px;
 }

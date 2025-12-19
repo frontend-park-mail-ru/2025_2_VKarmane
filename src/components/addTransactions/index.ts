@@ -53,9 +53,7 @@ export class AddOperation {
     sumInput.addEventListener("input", () => {
       this.validateSingleField("sum", sumInput.value, sumInput);
     });
-    console.log(this.GetDataPostRender);
     if (this.GetDataPostRender) {
-      console.log("abaaaaa");
       const categoriesOrError = await this.getCategories();
       if (categoriesOrError instanceof Error) throw categoriesOrError;
       const selectCategory = document.getElementById(
@@ -63,7 +61,7 @@ export class AddOperation {
       );
       if (!selectCategory) throw new Error("no category select element");
       selectCategory.innerHTML =
-        '<option value="" disabled selected>Сфера услуг</option>';
+        '<option value="" disabled selected>Выберите категорию</option>';
       const ctgs = categoriesOrError.categories || [];
 
       for (const ctg of ctgs) {
@@ -111,7 +109,7 @@ export class AddOperation {
           name: "Operation",
           type: type,
           description: comment,
-          created_at: convertToISO(date),
+          date: convertToISO(date),
         }),
       });
       if (ok) {
@@ -145,12 +143,11 @@ export class AddOperation {
     const cost = costInput.value.trim();
     const type = typeSelect.value;
     const date = dateInput.value;
+    console.log(dateInput)
     const comment = commentInput?.value.trim() || "";
     const account = accountSelect.value;
     const category = categorySelect.value;
 
-    //пока категорий на беке нет будет так
-    // с именами организций пока нет бд не работаем
     const receiver = type === "expense" ? 1 : null;
 
     return {

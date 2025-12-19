@@ -18,49 +18,42 @@ export async function fetchCSRFToken() {
   csrfToken = data.csrf_token;
 }
 
-export async function apiFetch(url, options = {}) {
-  if (!(options?.method in safeMethods)) {
-    await fetchCSRFToken();
-  }
-  const isFormData = options.body instanceof FormData;
+export async function apiFetch(url, options = {}, raw = false) {
+    if (!(options?.method in safeMethods)) {
+        await fetchCSRFToken();
+    }
 
-  const defaultHeaders = isFormData
-    ? {}
-    : { "Content-Type": "application/json;charset=utf-8" };
+    const isFormData = options.body instanceof FormData;
+    const defaultHeaders = isFormData
+        ? {}
+        : { "Content-Type": "application/json;charset=utf-8" };
 
-  const finalOptions = {
-    ...options,
-    headers: {
-      ...defaultHeaders,
-      ...(options.headers || {}),
-      "X-CSRF-Token": csrfToken,
-    },
-    credentials: "include",
-  };
+    const finalOptions = {
+        ...options,
+        headers: {
+            ...defaultHeaders,
+            ...(options.headers || {}),
+            "X-CSRF-Token": csrfToken,
+        },
+        credentials: "include",
+    };
 
-  try {
     const response = await fetch(API_URL + url, finalOptions);
+
+    if (raw) return response; // возвращаем настоящий Response
+
     const contentType = response.headers.get("Content-Type");
     let data = null;
 
     if (contentType && contentType.includes("application/json")) {
-      data = await response.json();
+        data = await response.json();
     } else {
-      data = await response.text();
+        data = await response.text();
     }
 
     return {
-      ok: response.ok,
-      status: response.status,
-      data,
+        ok: response.ok,
+        status: response.status,
+        data,
     };
-  } catch (error) {
-    console.error("Ошибка запроса:", error);
-    return {
-      ok: false,
-      status: null,
-      data: null,
-      error,
-    };
-  }
 }

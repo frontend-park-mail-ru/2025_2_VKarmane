@@ -207,7 +207,7 @@
 }
 
 @media (max-width: 760px) {
-    .popup-edit-bill .popup-edit-modal { flex-direction:column; width: 94%; }
+    .popup-edit-bill .popup-edit-modal { flex-direction:column; width: 90%; }
     .popup-edit-bill .popup-edit-left { width:100%; padding:16px; }
-    .popup-edit-bill .popup-edit-right { width:100%; padding:18px; }
+    .popup-edit-bill .popup-edit-right { width:90%; padding:18px; }
 }

@@ -55,7 +55,6 @@ export class Menu {
   }
     private setActiveMenuButton(): void {
         const currentPath = router.getCurrentPath();
-        console.log('Setting active menu button for path:', currentPath);
 
         let page = 'main';
         if (currentPath.includes('/profile')) {
@@ -73,7 +72,6 @@ export class Menu {
                 btn.classList.remove('active');
             });
             activeButton.classList.add('active');
-            console.log('Active menu button set to:', page);
         }
     }
 }

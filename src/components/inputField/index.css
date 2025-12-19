@@ -5,6 +5,14 @@
   position: relative;
 }
 
+#file-import{
+    width: 100%;
+}
+#upload-import-container {
+    display: block;
+    width: 100%;
+}
+
 .input-field {
   width: 100%;
   font-family: "Montserrat", sans-serif;

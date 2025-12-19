@@ -1,30 +1,32 @@
 <div class="cards__list">
-    <div class="cards__list_scroll">
     {{#if cards_exists}}
+    <div class="cards__list_scroll">
         {{#each cardsItems}}
         <div class="cards__item">
             <div class="cards__avatar_and_title">
-                <div class="cards__avatar"></div>
                 <div class="cards_info_title">
                     <div class="cards__title">
-                        {{ card_id }}
+                        ID Счета: {{ card_id }}
                     </div>
-                    <div class="cards__status">
-                        Фактический
+                    <div class="cards__name">
+                       Название счета: {{ card_name }}
                     </div>
                     <div class="cards__price">
-                        {{ card_balance }}
+                        {{ card_balance }} ₽
                     </div>
                 </div>
             </div>
-            <div class="cards__type">
-                {{ card_type }}
+            <div class="cards_add_people">
+                <div class="cards__type">
+                    {{ card_type }}
+                </div>
+                {{#if isJoint}}
+                    <button class="open-btn" id="btn-add-people" data-card-id="{{ card_id }}">+</button>
+                {{/if}}
             </div>
+
             <div class="cards__date_of_creation">
                 Создан: {{ card_created_at }}
-            </div>
-            <div class="cards__activity_type">
-                активен
             </div>
             <div class="kebab-card-menu">
                 <button class="kebab-btn-card">&#8942;</button>
@@ -39,14 +41,11 @@
             </div>
         </div>
         {{/each}}
+    </div>
     {{else}}
-        <div>
             <div class="oper_not_exists">
                 <div class="oper_not_exists_img"></div>
                 <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
             </div>
-        </div>
     {{/if}}
-
-    </div>
 </div>

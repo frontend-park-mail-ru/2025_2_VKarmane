@@ -1,23 +1,69 @@
 .Plan-Balance {
-  width: 34vw; /* Ширина в пикселях */
-  height: 10vw; /* Высота в пикселях */
-  background-color: #ffffff;
-  border-radius: 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+    width: 34vw;
+    height: 50%;
+    background-color: #ffffff;
+    border-radius: 26px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
+    position: relative;
 }
 
 .PlanSum {
   font-family: Montserrat;
   font-weight: 600;
   font-size: 32px;
-  margin-left: 32px;
-  margin-top: 35px;
+    margin-bottom: 0;
+}
+
+.plan-settings{
+    background-image: url('/imgs/settings_icon.svg');
+    height: 27px;
+    width: 25px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.plan-settings:hover{
+    background-image: url('/imgs/settings_icon_hover.svg');
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.PlanDate{
+    font-size: 15px;
+    color: #4C4C4C;
+}
+
+#planCheckSum{
+    margin-left: 16px;
+}
+
+.AddPlanBudgets{
+    font-family: "Montserrat";
+    font-weight: 600;
+    background-color: #EB5B1D;
+    border-radius: 24px;
+    border: none;
+    width: 70%;
+    height: 40%;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.AddPlanBudgets:hover{
+    background-color: #C03A00;
+    transform: scale(1.05);
 }
 
 .Plan-Balance-text {
   font-family: Montserrat;
   font-weight: 600;
-  margin-left: 32px;
+  margin-left: 16px;
 }
 
 .Plan-Balance-text {
@@ -34,28 +80,20 @@
   text-align: center;
 }
 
-.balance_not_exists {
-  display: grid;
-  place-items: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 18px;
-  position: relative;
-  top: 25%;
-  gap: 5px;
+.balance_not_exists_plan {
+display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
 }
 
-.balance_not_exists_img {
-  background-image: url(/imgs/not_list.png);
-  height: 73px;
-  width: 74px;
-}
 
 
 @media (max-width: 768px) {
     .Plan-Balance{
-        width: 162px; /* Ширина в пикселях */
-        height: 92px; /* Высота в пикселях */
+        width: 100%;
+        height: 92px;
         background-color: #ffffff;
         border-radius: 10px;
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.04);
@@ -66,22 +104,44 @@
         margin-left: 10px;
     }
     .Fact-Plan-text{
-        font-size: 10px;
         margin-left: 10px;
         padding-top: 5px ;
+        font-size: calc(8px + 1vw);
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     .PlanSum{
-        font-size: 10px;
         margin-left: 10px;
         margin-top: 25px;
+        font-size: calc(8px + 1vh);
+        padding-top: 10px;
     }
 
     #scheta{
         display: none;
     }
 
+    #planCheckSum{
+        margin-left: 0;
+    }
 
+    .PlanDate{
+        margin-top: 5px;
+        margin-left: 10px;
+        font-size: calc(7px + 1vw);
+    }
 
+    .plan-settings{
+        transform: scale(0.8);
+        position: absolute;
+        right: 5px;
+        top: 5px;
+    }
+
+    .AddPlanBudgets{
+        font-size: 13px;
+        border-radius: 10px;
+    }
 
 }

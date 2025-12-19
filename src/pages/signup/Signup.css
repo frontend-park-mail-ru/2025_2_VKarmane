@@ -94,6 +94,7 @@ div {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+    height: 100%;
 }
 
 .planero-logo {
@@ -415,10 +416,6 @@ div {
     }
 
     #signup {
-        position: absolute;
-        bottom: 0;
-        left: 15px;
         transform: scale(0.85);
-        transform-origin: left top;
     }
 }

@@ -1,8 +1,27 @@
 <div class="Categories">
-  <div class="metric-list"></div>
+  <div class="metric-list">
+      {{#if metrics_exists}}
+          <canvas id="donutChart" width="250" height="250"></canvas>
+          <div class="center-text"></div>
+
+          <div class="legend">
+              <div class="legend-item food">Еда/напитки</div>
+              <div class="legend-item entertainment">Развлечения</div>
+              <div class="legend-item gasoline">Бензин</div>
+              <div class="legend-item subscriptions">Подписки</div>
+          </div>
+      {{else}}
+          <div>
+              <div class="oper_not_exists" id="oper_not_exists_metrics">
+                  <div class="oper_not_exists_img"></div>
+                  <h2 style="color: #949494; font-size: 20px">Тут пока ничего нет :(</h2>
+              </div>
+          </div>
+      {{/if}}
+  </div>
   <div class="category-list">
     {{#if categories_exists}}
-    <div class="Transaction-header">
+    <div class="Transaction-header" id="category-head">
       <p class="Transact-Category-text">Категории</p>
       <button onclick="openCategoryPopup()" class="open-btn">+</button>
     </div>
@@ -36,7 +55,7 @@
               </p>
             </div>
           </div>
-          <div class="kebab-menu">
+          <div class="kebab-menu" id="kebab-menu-tr">
             <button class="kebab-btn">&#8942;</button>
             <div class="popup-menu">
               <button class="cat-edi">
