@@ -22,11 +22,29 @@ body {
   background-color: #eb5b1d;
 }
 
+
+
 .hide-scroller::-webkit-scrollbar {
   display: block;
 }
 
 .hide-scroller {
   overflow: hidden;
+}
+
+.loader {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #ec7a00;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 0.9s linear infinite;
+    display: none;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 

@@ -5,6 +5,8 @@ import { Menu } from "../../components/menu/index.js";
 import { Add } from "../../components/add/index.js";
 import { Operations } from "../../components/operations/index.js";
 import { AddCard } from "../../components/addCard/index.js";
+import { AddBudget } from "../../components/addBudgets/index.js";
+import { EditBudget } from "../../components/EditBudgets/index.js";
 import { ProfileBlock } from "../../components/profileBlock/index.js";
 import { AddOperation } from "../../components/addTransactions/index.js";
 import { InputField } from "../../components/inputField/index.js";
@@ -20,7 +22,7 @@ import {
 } from "../transactions/validationForForms.js";
 import { setServerCreateOperError } from "../transactions/validationForForms.js";
 import type { TemplateFn } from "../../types/handlebars.js";
-import {router} from "../../router.js";
+import { router } from "../../router.js";
 
 export class MainPage {
   factBal: FactBal;
@@ -30,6 +32,8 @@ export class MainPage {
   add: Add;
   operations: Operations;
   addCard: AddCard;
+  addBudget: AddBudget;
+  editBudget: EditBudget;
   profileBlock: ProfileBlock;
   addOperations: AddOperation;
   inputField: InputField;
@@ -38,7 +42,6 @@ export class MainPage {
   constructor() {
     this.factBal = new FactBal();
     this.card = new Card();
-    this.planBal = new PlanBal();
     this.menu = new Menu();
     this.add = new Add();
     this.operations = new Operations(this.openPopup);
@@ -54,6 +57,9 @@ export class MainPage {
   }
 
   async render(container: HTMLElement) {
+    this.planBal = new PlanBal(container);
+    this.addBudget = new AddBudget(container);
+    this.editBudget = new EditBudget(container);
     if (!container) throw new Error("Container not found");
     document.body.classList.remove("hide-scroller");
 
@@ -71,7 +77,7 @@ export class MainPage {
 
     const logoMatch = profile?.logo_url?.match(/\/images\/[^?]+/);
     const logo = logoMatch
-      ? `https://vkarmane.duckdns.org/test/${logoMatch[0]}`
+      ? `https://vkarmane-planero-minio.duckdns.org/test/${logoMatch[0]}`
       : "imgs/empty_avatar.png";
 
     const cards =
@@ -79,7 +85,7 @@ export class MainPage {
         ? balance.accounts.map((account) =>
             this.card.getSelf(
               account.id,
-              account.balance,
+              this.shortNumber(account.balance),
               true,
               32323,
               1523,
@@ -89,15 +95,10 @@ export class MainPage {
         : [this.card.getSelf(0, null, true, 0, 0, "Нет счетов")];
 
     const data_ = {
-      FactBal: this.factBal.getSelf(
-        balance.accounts.length !== 0 ? balance.accounts[0].balance : 0,
-        100,
-        120,
-      ),
+      FactBal: this.factBal.getSelf(balance.total_sum, 100, 120),
       cards,
-      PlanBal: this.planBal.getSelf(
-        budgets.budgets.length !== 0 ? budgets.budgets[0].amount : 0,
-      ),
+
+      PlanBal: this.planBal.getSelf(budgets.budgets),
       menu: this.menu.getSelf(),
       Add: this.add.getSelf(),
       operations: this.operations.getList(operations),
@@ -105,6 +106,8 @@ export class MainPage {
       exist_card: true,
       profile_block: this.profileBlock.getSelf(profile.login, profile.id, logo),
       addOperations: this.addOperations.getSelf(),
+      addBudget: this.addBudget.getSelf(),
+      editBudget: this.editBudget.getSelf(),
     };
 
     container.innerHTML = this.template(data_);
@@ -115,6 +118,9 @@ export class MainPage {
   setupEventListeners(container: HTMLElement) {
     this.menu.setEvents();
     this.profileBlock.setEvents();
+    this.planBal.setEvents();
+    this.addBudget.setEvents();
+    this.editBudget.setEvents();
     this.addOperations.setEventListeners();
     this.ngAfterViewInit();
 
@@ -127,22 +133,31 @@ export class MainPage {
     }
   }
 
+  shortNumber(num: number) {
+    const format = new Intl.NumberFormat("ru-RU");
+
+    if (num >= 1_000_000) return Math.round(num / 100_000) / 10 + " млн.";
+
+    if (num >= 100_000) return Math.round(num / 100) / 10 + " тыc.";
+
+    return format.format(num);
+  }
+
   openPopup() {
     const popup = document.getElementById("popup");
     if (popup) popup.style.display = "flex";
   }
-    ngAfterViewInit() {
-        const link = document.querySelector('.add_cards');
-        if (link) {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                 router.navigate("/cards");;
-            });
-        }
+  ngAfterViewInit() {
+    const link = document.querySelector(".add_cards");
+    if (link) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        router.navigate("/cards");
+      });
     }
+  }
 
-
-    closePopup() {
+  closePopup() {
     const popup = document.getElementById("popup");
     if (popup) popup.style.display = "none";
   }
@@ -194,7 +209,6 @@ export class MainPage {
       console.warn("Ошибка валидации данных операции");
       return;
     }
-
 
     const body = {
       account_id: parseInt(accountInput.value, 10),

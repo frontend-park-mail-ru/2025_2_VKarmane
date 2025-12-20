@@ -11,6 +11,7 @@ import {getBalance} from "../../api/index.js";
 import {AddBills} from "../../components/addBills/index.js";
 import {CardList} from "../../components/card_list/index.js";
 import {EditBill} from "../../components/EditBill/index.js";
+import {AddPeople} from "../../components/addPeople/index.js";
 
 export class CardsPage {
     menu: Menu;
@@ -20,6 +21,7 @@ export class CardsPage {
     AddBill: AddBills;
     cards: CardList;
     EditBill : EditBill;
+    addPeople : AddPeople;
 
 
     constructor() {
@@ -31,9 +33,11 @@ export class CardsPage {
         this.cards = new CardList();
         this.EditBill = new EditBill();
 
+
     }
 
     async render(container: HTMLElement): Promise<void> {
+        this.addPeople = new AddPeople(container);
         if (!container) throw new Error("Container element not found!");
 
         const { ok, status, data: profileData } = await apiFetch("/profile");
@@ -48,10 +52,13 @@ export class CardsPage {
         const card_list = await this.loadCards();
 
         const balanceData = await getBalance();
+
+        let accounts = await this.loadAccounts();
+
         let operations = [];
         try {
             const allOps = await Promise.all(
-                balanceData.accounts.map(async (acc) => {
+                balanceData.accounts.accounts.map(async (acc) => {
                     const { ok, data, error, status } = await apiFetch(
                         `/account/${acc.id}/operations`,
                     );
@@ -73,6 +80,7 @@ export class CardsPage {
 
         container.innerHTML = this.template({
             menu: this.menu.getSelf(),
+            budgets: this.shortNumber(accounts.total_sum),
             profile_block: this.profileBlock.getSelf(
                 profileData.login || "User",
                 profileData.id,
@@ -82,6 +90,7 @@ export class CardsPage {
             AddBill: this.AddBill.getSelf(),
             EditBill : this.EditBill.getSelf(),
             cards_list: this.cards.getList(card_list),
+            addPeople: this.addPeople.getSelf(),
         });
 
         setBody();
@@ -94,19 +103,22 @@ export class CardsPage {
         this.profileBlock.setEvents();
         this.AddBill.setEvents();
         this.EditBill.setEvents();
+        this.addPeople.setEvents();
         this.setupCardDelegation()
     }
 
 
     private setupCardDelegation() {
-        const container = document.querySelector('.cards__list'); // общий контейнер карточек
+        const container = document.querySelector('.cards__list');
+
+
+        // общий контейнер карточек
         if (!container) return;
 
         container.addEventListener('click', async (e) => {
             let target = e.target as HTMLElement | null;
             if (!target) return;
 
-            // Открытие/закрытие меню
             if (target.closest('.kebab-btn-card')) {
                 const menu = target.closest('.kebab-card-menu')?.querySelector<HTMLElement>('.popup-menu-cards');
                 if (!menu) return;
@@ -116,12 +128,14 @@ export class CardsPage {
                 return;
             }
 
-            // Удаление карточки
             const deleteBtn = target.closest('.card-del');
             if (deleteBtn) {
                 const card = deleteBtn.closest('.cards__item');
                 if (!card) return;
-                const cardID = card.querySelector('.cards__title')?.textContent?.trim();
+                const cardID = card.querySelector('.cards__title')?.textContent
+                    ?.replace('ID Счета: ', '')
+                    ?.trim();
+                console.log(cardID);
                 if (!cardID) return;
 
                 const { ok, error } = await apiFetch(`/account/${cardID}`, { method: 'DELETE' });
@@ -130,12 +144,11 @@ export class CardsPage {
                 return;
             }
 
-            // Открытие редактирования карточки
             const editBtn = target.closest('.card-edi');
             if (editBtn) {
                 const card = editBtn.closest('.cards__item');
                 if (!card) return;
-                this.EditBill.openPopup(card); // метод, который заполняет popup и показывает его
+                this.EditBill.openPopup(card);
                 return;
             }
         });
@@ -147,7 +160,7 @@ export class CardsPage {
         try {
             const { ok, data, error } = await apiFetch("/accounts");
             if (ok) {
-                return data.accounts || [];
+                return {"accounts" : data.accounts, "total_sum": data.total_sum };
             }
             console.error("Ошибка загрузки счетов:", error);
             return [];
@@ -161,7 +174,8 @@ export class CardsPage {
 
     private async loadCards() {
         try {
-            const accounts = await this.loadAccounts();
+            let accs = await this.loadAccounts();
+            const accounts = accs.accounts;
             if (!accounts || accounts.length === 0) {
                 console.log("Нет доступных счетов");
                 return [];
@@ -170,11 +184,14 @@ export class CardsPage {
             console.log("Загруженные счета:", accounts);
 
             const cards = accounts.map((account) => {
+                let isJoints = account.type !== "private";
+
                 return {
                     card_id: account.id,
-                    card_balance: account.balance,
-                    card_type: account.type,
-                    card_created_at: account.created_at,
+                    card_balance: this.shortNumber(account.balance),
+                    card_type: (account.type === "private" ? "Личный" : "Совместный"),
+                    card_created_at: this.formatDate(account.created_at),
+                    isJoint : isJoints,
                 };
             });
 
@@ -186,4 +203,33 @@ export class CardsPage {
             return [];
         }
     }
+
+    private formatDate(dateString: string): string {
+        if (!dateString) return "";
+
+        const date = new Date(dateString);
+
+        if (isNaN(date.getTime())) return "";
+
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    }
+
+    private shortNumber(num: number) {
+        const format = new Intl.NumberFormat('ru-RU');
+
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн.";
+
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыc.";
+
+        return format.format(num);
+    }
+
+
+
 }

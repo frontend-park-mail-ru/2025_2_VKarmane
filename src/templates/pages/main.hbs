@@ -8,27 +8,29 @@
                     </div>
                     <div class="section">
                         <div class="left-section">
-                            <div style="max-width: 54%">
                                 <div class="balance">
                                     <h2 class="balance-text">Баланс</h2>
                                     <div class="budgets_and_Add">
-                                        {{{FactBal}}} {{{PlanBal}}} {{{Add}}}
+                                        {{{FactBal}}}
+                                        <div class="PlanBal-Add">
+                                            {{{PlanBal}}} {{{Add}}}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <div class="right-section">
                             <div class="banks">
                                 <h2 class="balance-text" id="scheta">Счета</h2>
-
                                 <div class="cards-scroll-container">
                                     <div class="cards-scroll">{{#each cards}} {{{this}}} {{/each}}</div>
                                 </div>
-                                {{{operations}}}
                             </div>
+                            {{{operations}}}
                         </div>
                     </div>
                 </div>
             </div>
   {{{ addOperations }}}
+    {{{addBudget}}}
+    {{{editBudget}}}
 </div>

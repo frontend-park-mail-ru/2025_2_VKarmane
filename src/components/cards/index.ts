@@ -20,14 +20,21 @@ export class Card {
     }
     return this.template({
       id: id,
-      balance: balance,
+      balance: this.shortNumber(balance),
       hasUpdateFactPlan: hasUpdateFactPlan,
       has_update_for_2_week: updateCardFortwoWeek,
-      naibolsh_rashod: naibolsh_rashod,
+      naibolsh_rashod: this.shortNumber(naibolsh_rashod),
       action: action,
       is_empty: false,
     });
   }
+    shortNumber(num: number) {
+        if (num >= 1_000_000)
+            return Math.round(num / 100_000) / 10 + " млн";
+        if (num >= 100_000)
+            return Math.round(num / 100) / 10 + " тыс";
+        return num;
+    }
 
 
 }

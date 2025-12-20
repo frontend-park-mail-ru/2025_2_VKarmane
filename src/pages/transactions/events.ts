@@ -195,6 +195,8 @@ export function addEventListeners(context: any): void {
         else console.error(error);
       });
     }
+
+
   });
 
   // Форма создания операции

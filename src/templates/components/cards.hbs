@@ -5,18 +5,15 @@
     <div class="CheckSumCard">
       <h2>{{balance}} ₽</h2>
     </div>
-    <div class="rashod-card">
-      <p class="NaibolshRashod">наибольший расход за период</p>
-      <div style="display: flex">
-        <div style="display: grid">
-          <h1 class="rashod_sum">{{naibolsh_rashod}} ₽</h1>
-          <div class="actions"><p class="rashod-sum-action">{{action}}</p></div>
-        </div>
-        <div class="rashod-img">
-          <img class="drawing" src="/imgs/draw_for_cards.png" alt="img" />
-        </div>
+      <div class="rash_card">
+          <div class="rashod-card">
+              <p class="NaibolshRashod">наибольший расход за период</p>
+                  <div style="display: grid; gap: 0">
+                      <h1 class="rashod_sum">{{naibolsh_rashod}} ₽</h1>
+                      <div class="actions"><p class="rashod-sum-action">{{action}}</p></div>
+                  </div>
+          </div>
       </div>
-    </div>
   </div>
   {{else}}
   <div class="card1">

@@ -1,0 +1,52 @@
+.requirements ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.requirements{
+    font-family: "Montserrat SemiBold";
+}
+
+.requirements ul ul {
+    list-style-type: circle;
+}
+
+.requirements ul ul ul {
+    list-style-type: disc;
+}
+
+.requirements li {
+    margin: 6px 0;
+    line-height: 1.4;
+    color: #555;
+}
+
+.requirements{
+    font-family: "Montserrat SemiBold";
+    font-size: 15px;
+}
+
+#file-import{
+    margin-top: 20px;
+    width: 100%;
+}
+
+#upload-import-csv{
+    font-family: "Montserrat SemiBold";
+    color: white;
+    display: block;
+}
+
+#ImportPopup .modal{
+    min-height: 550px;
+}
+
+#ImportPopup .modal-left{
+    justify-content: center;
+}
+
+#ImportPopup .modal-left-top{
+    position: absolute;
+    top: 10px;
+}
